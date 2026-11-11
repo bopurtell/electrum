@@ -1,0 +1,56 @@
+; Host_link endpoint fixture and the endpoint suite (serial_host_pilot.md, SP4 and SP5).
+;
+; The real composed Host_link with an active serial-host agent on its pins and a
+; Control_port responder agent behind its port, under one scheduler. The fixture is its
+; own library without inline_tests because the archived HL4a suite (../archived/hl4a/)
+; reaches it through hardware_loader_testbench.ml, its compatibility shim: a library with
+; inline_tests here would link this directory's tests into the HL4a runner. The endpoint
+; suite, every HL4a and SP2 test ported to the fixture and written against it directly,
+; and its scenario helpers (endpoint_scenario.ml) are a second library in this
+; directory.
+
+(library
+ (name protemu_host_link_endpoint)
+ (modules latency fixture scoreboard)
+ (libraries
+  core
+  hardcaml
+  hardcaml_protemu
+  protemu_host_link_wire
+  protemu_serial_host_agent
+  protemu_control_port_agent)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))
+
+(library
+ (name protemu_host_link_endpoint_tests)
+ (wrapped false)
+ (modules
+  endpoint_scenario
+  endpoint_transaction_tests
+  endpoint_framing_tests
+  endpoint_cancellation_tests
+  endpoint_diagnostics_tests
+  endpoint_serial_monitor_tests
+  endpoint_lifecycle_tests)
+ ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ (inline_tests
+  (flags
+   (:standard -source-tree-root .)))
+ (libraries
+  core
+  hardcaml_protemu
+  protemu_host_link_wire
+  protemu_serial_host_agent
+  protemu_control_port_agent
+  protemu_host_link_endpoint)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))

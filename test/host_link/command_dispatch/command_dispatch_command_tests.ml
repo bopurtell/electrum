@@ -150,7 +150,7 @@ let%test_unit "READ, VERIFY, and ABORT are offered once and wait; operands are e
     ~expected:
       (Char.to_int (Handoff.encode ~tag:0x12 (Read_word { address = 0x0042 })).[8])
     (read.payload lsr 16);
-  let word = t.stub.memory 0x42 in
+  let word = t.stub.memory.(0x42) in
   expect_publications
     t
     ~from

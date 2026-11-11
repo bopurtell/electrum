@@ -329,7 +329,7 @@ let%test_unit "robustness: acceptance alone decides; the rejected signals are no
     t
     ~from
     "READ accepted high, rejected high"
-    [ h + 3, response ~tag:0x75 Read_word ~payload:(Word (t.stub.memory 9)) Complete ]
+    [ h + 3, response ~tag:0x75 Read_word ~payload:(Word t.stub.memory.(9)) Complete ]
 ;;
 
 let%test_unit "framing errors publish in the handoff cycle, echo tag and command, and \
@@ -420,7 +420,7 @@ let%test_unit "every response carries the handed-off tag and command, for consec
     ; 0xfe, Load_complete
     ; 0x55, Read_word { address = 0x80 }
     ; 0xaa, Abort
-    ; 0x33, Verify_word { address = 0x80; expected = t.stub.memory 0x80 }
+    ; 0x33, Verify_word { address = 0x80; expected = t.stub.memory.(0x80) }
     ; 0xcc, Info
     ]
   in

@@ -1,0 +1,18 @@
+; Serial-host agent library for the Host_link serial interface (serial_host_pilot.md).
+;
+; Items, configuration, driver, passive monitor and agent for the host side of the P3.5
+; serial link. There are no inline_tests, so endpoint, system and package suites can
+; depend on it without linking another suite's tests; its tests live in the HL4a suite in
+; the parent directory. The driver and monitor work on logical pins as booleans, so
+; nothing here needs Hardcaml; the suite's adapter maps them to the DUT's ports.
+
+(library
+ (name protemu_serial_host_agent)
+ (modules item config driver monitor agent)
+ (libraries core protemu_host_link_wire)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))

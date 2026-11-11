@@ -35,13 +35,13 @@ let%test_unit "READ publishes the word in the response cycle and offers once" =
     t
     ~from
     "READ"
-    [ r, word_response ~tag:0x21 Read_word (t.stub.memory 0x33) Complete ];
+    [ r, word_response ~tag:0x21 Read_word t.stub.memory.(0x33) Complete ];
   expect_busy t ~from "READ" [ o; o + 1; r ]
 ;;
 
 let%test_unit "VERIFY reports a match as Complete and a mismatch with the actual word" =
   let t = create "VERIFY" in
-  let actual = t.stub.memory 0x10 in
+  let actual = t.stub.memory.(0x10) in
   List.iter
     [ 0x51, actual, Wire.Result_code.Complete
     ; 0x52, actual lxor 0x0001, Verification_mismatch
@@ -71,7 +71,7 @@ let%test_unit "robustness: READ ignores readback_response_match" =
     t
     ~from
     "READ"
-    [ h + 3, word_response ~tag:0x54 Read_word (t.stub.memory 0x11) Complete ]
+    [ h + 3, word_response ~tag:0x54 Read_word t.stub.memory.(0x11) Complete ]
 ;;
 
 let%test_unit "robustness: a delayed READ response is waited for, without a repeated \
@@ -95,7 +95,7 @@ let%test_unit "robustness: a delayed READ response is waited for, without a repe
       t
       ~from
       what
-      [ r, word_response ~tag:0x60 Read_word (t.stub.memory 0xfe) Complete ];
+      [ r, word_response ~tag:0x60 Read_word t.stub.memory.(0xfe) Complete ];
     expect_busy t ~from what (List.range o (r + 1)))
 ;;
 
@@ -150,7 +150,7 @@ let%test_unit "robustness: a READBACK response pulse is consumed only in the REA
     t
     ~from
     "a pulse in the dispatch cycle"
-    [ h + 6, word_response ~tag:0x62 Read_word (t.stub.memory 4) Complete ];
+    [ h + 6, word_response ~tag:0x62 Read_word t.stub.memory.(4) Complete ];
   (* During an ABORT wait. *)
   t.stub.abort_completion <- Never;
   set_status t Status.running;
@@ -179,7 +179,7 @@ let%test_unit "robustness: a READBACK response pulse is consumed only in the REA
     t
     ~from
     "a pulse after completion"
-    [ h + 3, word_response ~tag:0x64 Read_word (t.stub.memory 5) Complete ]
+    [ h + 3, word_response ~tag:0x64 Read_word t.stub.memory.(5) Complete ]
 ;;
 
 let%test_unit "inputs the boundary contract leaves free do not disturb a wait's \
@@ -204,7 +204,7 @@ let%test_unit "inputs the boundary contract leaves free do not disturb a wait's 
     ~from
     "VERIFY"
     [ ( h + 23
-      , word_response ~tag:0x65 Verify_word (t.stub.memory 0x20) Verification_mismatch )
+      , word_response ~tag:0x65 Verify_word t.stub.memory.(0x20) Verification_mismatch )
     ];
   (* The same during an ABORT wait: result and echo change, status stages toward clean. *)
   t.stub.abort_completion <- Never;

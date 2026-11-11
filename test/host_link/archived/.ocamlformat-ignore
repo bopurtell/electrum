@@ -1,0 +1,2 @@
+# Frozen archives (docs/serial_host_pilot.md, SP5) are never reformatted.
+hl4a/*.ml

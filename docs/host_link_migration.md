@@ -118,7 +118,7 @@ only their composition. HL2 changed where their constants come from, not their s
 | [`p3_loader_tb.v`](../tinytapeout/test/p3_loader_tb.v) | Emitted `loader_core` top-level ports only. It builds frames and CRC itself. |
 | [`check-adopted-bundle.py`](../tinytapeout/scripts/check-adopted-bundle.py) | Source paths of both files, of `host_link_wire/`, of `control_port.ml`, of `serial_phy.ml`, of `frame_rx.ml`, of `frame_tx.ml`, of `command_dispatch.ml`, and of `wire_crc.ml` and `wire_layout.ml` in the loader manifest |
 | [`test/host_link_wire/`](../test/host_link_wire/wire_tests.ml) | The `Wire` codec only, with fixed vectors from the P3.5 record |
-| [`test/host_link/`](../test/host_link/hardware_loader_testbench.ml) | `Hardware_loader.create` in Cyclesim, through its serial pins and `Control_port` records, with the `Wire` codec and a test-only core stub (HL4a) |
+| [`test/host_link/`](../test/host_link/archived/hl4a/hardware_loader_testbench.ml) | `Hardware_loader.create` in Cyclesim, through its serial pins and `Control_port` records, with the `Wire` codec and a test-only core stub (HL4a) |
 | [`test/host_link/serial_phy/`](../test/host_link/serial_phy/serial_phy_testbench.ml) | `Serial_phy.create` alone in Cyclesim, through its public ports (HL4c1) |
 | [`test/host_link/frame_rx/`](../test/host_link/frame_rx/frame_rx_testbench.ml) | `Frame_rx.create` alone in Cyclesim, through its public ports with explicit PHY-level events (HL4c2) |
 | [`test/host_link/command_dispatch/`](../test/host_link/command_dispatch/command_dispatch_testbench.ml) | `Command_dispatch.create` alone in Cyclesim, through explicit `Frame_rx` handoffs and a test-only `Control_port` stub (HL4c3) |
@@ -160,7 +160,7 @@ the documents name the port.
 
 *Addressed by HL2:* `Wire` is now the one OCaml definition, with a software codec. The
 paragraphs below describe the pre-HL2 state. HL4a closed the Cyclesim gap:
-[`test/host_link/`](../test/host_link/hardware_loader_testbench.ml) drives the unsplit
+[`test/host_link/`](../test/host_link/archived/hl4a/hardware_loader_testbench.ml) drives the unsplit
 loader through its serial pins.
 
 The only encoder and decoder outside the hardware are written by hand in Verilog in
@@ -351,7 +351,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
   Record which P3.5 cases remain full-core/RTL-only; porting must not silently retire
   any existing obligation.
   *Done in the working tree, uncommitted.* Tested revision `89a3fe8` plus the
-  uncommitted HL3 diff, recorded separately. [`test/host_link/`](../test/host_link/hardware_loader_testbench.ml)
+  uncommitted HL3 diff, recorded separately. [`test/host_link/`](../test/host_link/archived/hl4a/hardware_loader_testbench.ml)
   (library `protemu_host_link_tests`, in ordinary `@runtest`) has 32 tests against the
   real, unsplit `Hardware_loader`, driven only through its serial pins with `Wire` and
   answered by a test-only `Control_port` stub. Contract-faithful cases and labelled

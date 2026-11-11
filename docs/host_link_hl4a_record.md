@@ -53,7 +53,7 @@ switch served the baseline and final runs.
 
 ## Harness structure
 
-[`hardware_loader_testbench.ml`](../test/host_link/hardware_loader_testbench.ml) follows
+[`hardware_loader_testbench.ml`](../test/host_link/archived/hl4a/hardware_loader_testbench.ml) follows
 [verification.md](verification.md)'s per-module convention: the testbench owns the
 simulator loop, stub, driver, monitor, and checks, and the four test files only compose
 scenarios. It is not a generic framework and does not use `Env`, whose one-item-per-edge
@@ -268,7 +268,7 @@ decisions, response pulses, status changes, `LRDY` and busy changes, and respons
 When the transcript is truncated it reports how many earlier events were omitted. No
 waveform is produced or required.
 
-In-suite negatives ([`hardware_loader_diagnostics_tests.ml`](../test/host_link/hardware_loader_diagnostics_tests.ml)),
+In-suite negatives ([`hardware_loader_diagnostics_tests.ml`](../test/host_link/archived/hl4a/hardware_loader_diagnostics_tests.ml)),
 which each require a check to raise:
 
 - The retention check applied after the host commits (an expect test that prints the full

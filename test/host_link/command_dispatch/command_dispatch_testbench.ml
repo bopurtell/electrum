@@ -5,13 +5,15 @@
 
    The dispatcher is driven only through its public ports: [Frame_rx]'s handoff (the
    one-cycle [frame_end_i] with its validation result, echo flag, and retained fields) and
-   a test-only core stub behind the [Control_port] decision and status records. Every
-   observation is a public output: the offered [Control_port.Request], [busy_o], and the
-   published response frame. Expected offers, operands, responses, and cycles are written
-   by hand in the tests from the P3.5 record, control_port.ml, and
-   docs/host_link_hl4b3_record.md; none is computed from the dispatcher.
-   [Wire.Request.encode] builds legal handoffs and [Wire.Response.decode] reads published
-   frames with the software CRC, which shares nothing with the hardware CRC.
+   the Control_port agent (test/core/control_port/), whose test-only responder, [t.stub],
+   drives the [Control_port] decision and status records. Every observation is a public
+   output: the offered [Control_port.Request], [busy_o], and the published response frame.
+   The agent's passive monitor records the offers that crossed the port. Expected offers,
+   operands, responses, and cycles are written by hand in the tests from the P3.5 record,
+   control_port.ml, and docs/host_link_hl4b3_record.md; none is computed from the
+   dispatcher. [Wire.Request.encode] builds legal handoffs and [Wire.Response.decode]
+   reads published frames with the software CRC, which shares nothing with the hardware
+   CRC.
 
    Scheduling contract:
 
@@ -25,8 +27,9 @@
    3. Within a cycle: apply the inputs, the stub's status, and the stub's registered
       READBACK response with every decision low; settle; read the offer (more than one
       valid is a failure); apply the stub's combinational decision; settle again and check
-      that the offer did not change; take the pre-edge sample (the observation for cycle
-      n); clock the edge; take the post-edge sample; do the stub's post-edge work.
+      that the offer did not change; pass the Control_port records to the agent's monitor;
+      take the pre-edge sample (the observation for cycle n); clock the edge; take the
+      post-edge sample; do the stub's post-edge work.
    4. [busy_o] is a function of the dispatcher's registers, so its post-edge sample of
       edge n must equal the pre-edge sample of cycle n+1; [cycle] checks this every cycle.
       The offer and the publication are combinational in the handoff, decision, and status
@@ -37,9 +40,10 @@
 
    Contract-faithful stimulus follows what the composed loader and the real core present:
    a handoff only while the dispatcher is idle, with the retained fields stable from the
-   handoff until the response is published, and core behavior as [Core_stub] describes.
-   Anything else is a labelled robustness probe. A dispatcher test establishes nothing
-   about the core's own arbitration, RAM contents, or cleanup timing.
+   handoff until the response is published, and core behavior as the responder
+   ([Control_port_agent.Responder]) describes. Anything else is a labelled robustness
+   probe. A dispatcher test establishes nothing about the core's own arbitration, RAM
+   contents, or cleanup timing.
 *)
 
 open! Core
@@ -47,6 +51,7 @@ open! Hardcaml
 open! Hardcaml_protemu
 module Wire = Protemu_host_link_wire.Wire
 module Sim = Cyclesim.With_interface (Command_dispatch.I) (Command_dispatch.O)
+module Control_port_agent = Protemu_control_port_agent
 
 let hex bytes =
   String.to_list bytes
@@ -76,46 +81,8 @@ module Latency = struct
   let abort_clean_after_offer = 1
 end
 
-(* A decoded [Control_port.Request] offer. READ carries no expected word: that operand is
-   meaningful only with [readback_verify].
-*)
-module Request = struct
-  type t =
-    | Load_start of { length : int }
-    | Load_write of
-        { address : int
-        ; data : int
-        }
-    | Load_complete
-    | Read of { address : int }
-    | Verify of
-        { address : int
-        ; expected : int
-        }
-    | Run
-    | Stop
-    | Abort
-  [@@deriving sexp_of, compare, equal]
-
-  let of_port (r : int Control_port.Request.t) =
-    let valid value = value <> 0 in
-    List.filter_opt
-      [ Option.some_if (valid r.load_start_valid) (Load_start { length = r.load_length })
-      ; Option.some_if
-          (valid r.load_write_valid)
-          (Load_write { address = r.load_address; data = r.load_data })
-      ; Option.some_if (valid r.load_complete_valid) Load_complete
-      ; Option.some_if
-          (valid r.readback_valid)
-          (if valid r.readback_verify
-           then Verify { address = r.readback_address; expected = r.readback_expected }
-           else Read { address = r.readback_address })
-      ; Option.some_if (valid r.run_valid) Run
-      ; Option.some_if (valid r.stop_valid) Stop
-      ; Option.some_if (valid r.abort_valid) Abort
-      ]
-  ;;
-end
+(* Decoded offers come from the Control_port agent's [Item]. *)
+module Request = Control_port_agent.Item.Request
 
 (* The whole request record as integers, for exact operand checks. *)
 module Port = struct
@@ -126,67 +93,15 @@ module Port = struct
   let idle : t = Control_port.Request.map Control_port.Request.port_widths ~f:(fun _ -> 0)
 end
 
-(* Core status as plain integers, one per [Control_port.Status] field. *)
+(* Core status from the Control_port agent's [Item], with this suite's one-line summary
+   for the transcript.
+*)
 module Status = struct
-  type t = int Control_port.Status.t
+  include Control_port_agent.Item.Status
 
-  let sexp_of_t (t : t) = Control_port.Status.sexp_of_t Int.sexp_of_t t
-  let equal = Control_port.Status.equal Int.equal
-
-  let halted_idle : t =
-    { halted = 1
-    ; engines_idle = 1
-    ; image_valid = 0
-    ; load_active = 0
-    ; image_length = 0
-    ; words_written = 0
-    ; words_verified = 0
-    ; verification_failed = 0
-    ; fetch_fault = 0
-    ; execution_active = 0
-    ; normal_halt = 0
-    ; execution_fault = 0
-    ; fault_kind = 0
-    ; pc = 0
-    ; phase = 0
-    ; pin_oe = 0
-    ; software_claim = 0
-    ; engine_claim = 0
-    }
-  ;;
-
-  (* Executing with one engine driving and claiming pin 1. *)
-  let running : t =
-    { halted_idle with
-      halted = 0
-    ; engines_idle = 0
-    ; image_valid = 1
-    ; execution_active = 1
-    ; phase = 5
-    ; pin_oe = 0x02
-    ; engine_claim = 0x02
-    }
-  ;;
-
-  (* Contract item 6: halted, engines idle, and no output enable or claim. The stub also
-     clears [execution_active] and reports the halted phase.
-  *)
-  let cleaned (t : t) : t =
-    { t with
-      halted = 1
-    ; engines_idle = 1
-    ; execution_active = 0
-    ; phase = 0
-    ; pin_oe = 0
-    ; software_claim = 0
-    ; engine_claim = 0
-    }
-  ;;
-
-  (* Nonzero fields only, for the transcript. *)
+  (* Nonzero fields only, as [name=hex] joined by commas. *)
   let summary (t : t) =
-    Control_port.Status.(map2 port_names t ~f:(fun name value -> name, value) |> to_list)
-    |> List.filter ~f:(fun (_, value) -> value <> 0)
+    summary t
     |> List.map ~f:(fun (name, value) -> sprintf "%s=%x" name value)
     |> String.concat ~sep:","
   ;;
@@ -282,201 +197,22 @@ module Handoff = struct
   ;;
 end
 
-(* Test-only stand-in for [Emulator_core] behind the [Control_port]. It is not a RAM or
-   execution model: acceptance comes from [accept], READBACK data from [memory], and
-   status from [status], all set by the test. It never inspects the dispatcher's refusal
-   or dispatch logic.
-
-   Contract-faithful behavior, from control_port.ml:
-
-   - decisions are combinational in the offer cycle; with no offer both are low, and a
-     refusal is [valid & ~accepted] (item 3);
-   - reset or disable refuses every offer and cancels a pending READBACK response and
-     ABORT cleanup (item 8);
-   - an accepted READBACK has its response valid only in the cycle
-     [Latency.readback_after_offer] after the offer (item 5); a second READBACK is refused
-     while it is outstanding; an accepted ABORT or LOAD_START cancels it;
-   - an accepted ABORT makes [Status.cleaned] visible from the cycle after its edge (item
-     6);
-   - [readback_response_match] compares the word with the expected operand for VERIFY and
-     is low for READ, where it is meaningless.
-
-   Robustness probes, each labelled where a test uses it: [Completion.Delayed] and
-   [Never]; [inject_readback_response], an unsolicited pulse; [read_match], which drives
-   the meaningless READ match high; [rejected], which drives every rejected signal to a
-   fixed level whatever the offer; and an [accept] that refuses STOP or ABORT, which the
-   real core accepts whenever enabled and out of reset.
+(* The dispatch suite's name for the Control_port agent's responder
+   (test/core/control_port/), kept as a shim so the tests' spelling ([t.stub.accept],
+   [t.stub.memory.(i)], [t.stub.read_match], [t.stub.rejected], [Core_stub.Offer.t],
+   [Core_stub.inject_readback_response], ...) is unchanged. The responder's header lists
+   its contract-faithful behavior and its robustness probes, each labelled where a test
+   uses it. This suite uses the [Independent] injection policy: an injected pulse never
+   makes a READBACK outstanding, so it cannot cause a refusal.
 *)
 module Core_stub = struct
-  module Completion = struct
-    type t =
-      | Contract
-      | Delayed of int (* extra cycles beyond the contract; robustness only *)
-      | Never (* robustness only *)
-    [@@deriving sexp_of]
-  end
+  module Completion = Control_port_agent.Item.Completion
+  module Offer = Control_port_agent.Item.Offer
+  module Response = Control_port_agent.Item.Response
 
-  module Offer = struct
-    type t =
-      { cycle : int
-      ; request : Request.t
-      ; accepted : bool
-      }
-    [@@deriving sexp_of, compare, equal]
-  end
+  type t = Control_port_agent.Responder.t
 
-  module Response = struct
-    type t =
-      { cycle : int
-      ; data : int
-      ; matches : bool
-      }
-    [@@deriving sexp_of, compare, equal]
-  end
-
-  type t =
-    { mutable status : Status.t
-    ; mutable accept : Request.t -> bool
-    ; mutable memory : int -> int
-    ; mutable readback_completion : Completion.t
-    ; mutable abort_completion : Completion.t
-    ; mutable read_match : bool (* robustness only *)
-    ; mutable rejected : bool option (* robustness only *)
-    ; mutable offers : Offer.t list (* newest first *)
-    ; mutable pending_response : Response.t option
-    ; mutable injected : Response.t list (* robustness only; never outstanding *)
-    ; mutable pending_cleanup : int option (* edge after which cleanup is visible *)
-    }
-
-  let create () =
-    { status = Status.halted_idle
-    ; accept = (fun _ -> true)
-    ; memory = (fun address -> address * 0x0101 lxor 0xa55a)
-    ; readback_completion = Contract
-    ; abort_completion = Contract
-    ; read_match = false
-    ; rejected = None
-    ; offers = []
-    ; pending_response = None
-    ; injected = []
-    ; pending_cleanup = None
-    }
-  ;;
-
-  (* The registered response visible in [cycle], if any: an accepted READBACK's, else an
-     injected one.
-  *)
-  let response t ~cycle =
-    let at (response : Response.t) = response.cycle = cycle in
-    match Option.filter t.pending_response ~f:at with
-    | Some response -> Some response
-    | None -> List.find t.injected ~f:at
-  ;;
-
-  (* Robustness only: a response pulse in [cycle] that no accepted READBACK requested. It
-     does not make a READBACK outstanding, so it cannot cause a refusal.
-  *)
-  let inject_readback_response t ~cycle ~data ~matches =
-    t.injected <- { cycle; data; matches } :: t.injected
-  ;;
-
-  let decide t ~cycle ~reset ~enable request =
-    let outstanding =
-      match request, t.pending_response with
-      | (Request.Read _ | Verify _), Some _ -> true
-      | _ -> false
-    in
-    let accepted = enable && (not reset) && (not outstanding) && t.accept request in
-    t.offers <- { cycle; request; accepted } :: t.offers;
-    accepted
-  ;;
-
-  let decision t ~cycle ~offer : int Control_port.Decision.t =
-    let d = Control_port.Decision.map Control_port.Decision.port_widths ~f:(fun _ -> 0) in
-    let d =
-      match response t ~cycle with
-      | None -> d
-      | Some response ->
-        { d with
-          readback_response_valid = 1
-        ; readback_response_data = response.data
-        ; readback_response_match = Bool.to_int response.matches
-        }
-    in
-    let d =
-      match offer with
-      | None -> d
-      | Some (request, accepted) ->
-        let a = Bool.to_int accepted in
-        let r = Bool.to_int (not accepted) in
-        (match (request : Request.t) with
-         | Load_start _ -> { d with load_start_accepted = a; load_start_rejected = r }
-         | Load_write _ -> { d with load_write_accepted = a; load_write_rejected = r }
-         | Load_complete ->
-           { d with load_complete_accepted = a; load_complete_rejected = r }
-         | Read _ | Verify _ -> { d with readback_accepted = a; readback_rejected = r }
-         | Run -> { d with run_accepted = a; run_rejected = r }
-         | Stop -> { d with stop_accepted = a; stop_rejected = r }
-         | Abort -> { d with abort_accepted = a; abort_rejected = r })
-    in
-    match t.rejected with
-    | None -> d
-    | Some level ->
-      let r = Bool.to_int level in
-      { d with
-        load_start_rejected = r
-      ; load_write_rejected = r
-      ; load_complete_rejected = r
-      ; readback_rejected = r
-      ; run_rejected = r
-      ; stop_rejected = r
-      ; abort_rejected = r
-      }
-  ;;
-
-  let schedule completion ~contract =
-    match (completion : Completion.t) with
-    | Contract -> Some contract
-    | Delayed extra -> Some (contract + extra)
-    | Never -> None
-  ;;
-
-  (* Post-edge work for the edge that ends [cycle]. *)
-  let edge t ~cycle ~reset ~enable ~offer =
-    t.pending_response
-    <- Option.filter t.pending_response ~f:(fun (response : Response.t) ->
-         response.cycle > cycle);
-    t.injected
-    <- List.filter t.injected ~f:(fun (response : Response.t) -> response.cycle > cycle);
-    if reset || not enable
-    then (
-      t.pending_response <- None;
-      t.pending_cleanup <- None);
-    (match offer with
-     | Some (((Request.Read { address } | Verify { address; _ }) as request), true) ->
-       let data = t.memory address in
-       let matches =
-         match request with
-         | Verify { expected; _ } -> expected = data
-         | _ -> t.read_match
-       in
-       t.pending_response
-       <- Option.map
-            (schedule t.readback_completion ~contract:Latency.readback_after_offer)
-            ~f:(fun latency -> { Response.cycle = cycle + latency; data; matches })
-     | Some (Abort, true) ->
-       t.pending_response <- None;
-       t.pending_cleanup
-       <- Option.map (schedule t.abort_completion ~contract:0) ~f:(fun latency ->
-            cycle + latency)
-     | Some (Load_start _, true) -> t.pending_response <- None
-     | _ -> ());
-    match t.pending_cleanup with
-    | Some at when at = cycle ->
-      t.status <- Status.cleaned t.status;
-      t.pending_cleanup <- None
-    | _ -> ()
-  ;;
+  let inject_readback_response = Control_port_agent.Responder.inject_readback_response
 end
 
 (* The inputs applied for one cycle, other than the stub's. *)
@@ -548,7 +284,8 @@ end
 type t =
   { scenario : string
   ; sim : Sim.t
-  ; stub : Core_stub.t
+  ; stub : Core_stub.t (* the Control_port agent's responder *)
+  ; core : Control_port_agent.Agent.t
   ; mutable inputs : Inputs.t (* applied to the next cycle *)
   ; mutable cycle : int (* the next cycle to run *)
   ; mutable settled_busy : bool option (* post-edge [busy_o] of the last edge *)
@@ -608,6 +345,22 @@ let frame_bytes bits =
   |> String.of_char_list
 ;;
 
+(* Control_port adapter: the port records in one cycle as [int]s, read back from the
+   [Command_dispatch] ports pre-edge, so the monitor sees the decision and status the DUT
+   saw.
+*)
+let control_port_sample
+  (i : Bits.t ref Command_dispatch.I.t)
+  (before : Bits.t ref Command_dispatch.O.t)
+  : Control_port_agent.Monitor.Sample.t
+  =
+  let value port = Bits.to_int_trunc !port in
+  { request = Control_port.Request.map before.control_request_o ~f:value
+  ; decision = Control_port.Decision.map i.control_decision_i ~f:value
+  ; status = Control_port.Status.map i.control_status_i ~f:value
+  }
+;;
+
 (* The single owner of simulator advancement; see items 1 to 4 of the contract. *)
 let cycle t =
   let sim = t.sim in
@@ -630,7 +383,7 @@ let cycle t =
   let drive_decision offer =
     Control_port.Decision.iter2
       i.control_decision_i
-      (Core_stub.decision stub ~cycle:t.cycle ~offer)
+      (Control_port_agent.Responder.decision stub ~cycle:t.cycle ~offer)
       ~f:set_int
   in
   drive_decision None;
@@ -646,9 +399,8 @@ let cycle t =
     | [ request ] ->
       Some
         ( request
-        , Core_stub.decide
+        , Control_port_agent.Responder.decide
             stub
-            ~cycle:t.cycle
             ~reset:inputs.reset
             ~enable:inputs.enable
             request )
@@ -671,6 +423,7 @@ let cycle t =
     Port.equal
     ~expected:offered
     (request ());
+  Control_port_agent.Agent.sample t.core ~cycle:t.cycle (control_port_sample i before);
   let sample =
     { Sample.request = offered
     ; busy = Bits.to_bool !(before.busy_o)
@@ -678,7 +431,8 @@ let cycle t =
     ; frame = frame_bytes !(before.response_frame_o)
     ; length = Bits.to_int_trunc !(before.response_length_o)
     ; accepted = Option.map offer ~f:snd
-    ; readback_response = Option.is_some (Core_stub.response stub ~cycle:t.cycle)
+    ; readback_response =
+        Option.is_some (Control_port_agent.Responder.response stub ~cycle:t.cycle)
     ; status = Status.summary stub.status
     }
   in
@@ -697,7 +451,12 @@ let cycle t =
   Cyclesim.cycle_at_clock_edge sim;
   Cyclesim.cycle_after_clock_edge sim;
   t.settled_busy <- Some (Bits.to_bool !(after.busy_o));
-  Core_stub.edge stub ~cycle:t.cycle ~reset:inputs.reset ~enable:inputs.enable ~offer;
+  Control_port_agent.Responder.edge
+    stub
+    ~cycle:t.cycle
+    ~reset:inputs.reset
+    ~enable:inputs.enable
+    ~offer;
   t.inputs <- { inputs with frame_end = false };
   t.cycle <- t.cycle + 1
 ;;
@@ -728,10 +487,15 @@ let reset_cycles = 2
 
 let create ?(transcript_cycles = 12) scenario =
   let sim = Sim.create (Command_dispatch.create (Scope.create ~flatten_design:true ())) in
+  let core =
+    Control_port_agent.Agent.create
+      (Control_port_agent.Config.responder ~injection:Independent)
+  in
   let t =
     { scenario
     ; sim
-    ; stub = Core_stub.create ()
+    ; stub = Control_port_agent.Agent.responder_exn core
+    ; core
     ; inputs =
         { reset = true; enable = true; frame_end = false; handoff = Handoff.cleared }
     ; cycle = 0
@@ -769,9 +533,10 @@ let handoff t handoff =
   at
 ;;
 
-(* Offers recorded by the stub in [since, now), oldest first. *)
+(* Offers in [since, now) as the Control_port monitor observed them, oldest first. *)
 let offers ?(since = 0) t =
-  List.rev t.stub.offers
+  Queue.to_list (Control_port_agent.Agent.observed t.core)
+  |> List.filter_map ~f:Control_port_agent.Item.Observed.offer
   |> List.filter ~f:(fun (offer : Core_stub.Offer.t) -> offer.cycle >= since)
 ;;
 

@@ -92,7 +92,7 @@ let%test_unit "dispatch, waits, and publications follow the handoff at exact cyc
     t
     ~from
     "READ"
-    [ h + 3, response ~tag:0x03 Read_word ~payload:(Word (t.stub.memory 1)) Complete ];
+    [ h + 3, response ~tag:0x03 Read_word ~payload:(Word t.stub.memory.(1)) Complete ];
   (* ABORT from execution: busy from dispatch through the first clean cycle. *)
   let from = t.cycle in
   let h = handoff t (Handoff.request ~tag:0x04 Abort) in
@@ -249,7 +249,7 @@ let%test_unit "reset or disable at each READ wait boundary ends the wait with no
       t
       ~from
       (what ^ ", response cycle")
-      [ h + 3, response ~tag:0x31 Read_word ~payload:(Word (t.stub.memory 7)) Complete ];
+      [ h + 3, response ~tag:0x31 Read_word ~payload:(Word t.stub.memory.(7)) Complete ];
     expect_busy t ~from (what ^ ", response cycle") [ h + 1; h + 2; h + 3 ];
     expect_fresh_info t what)
 ;;
@@ -285,7 +285,7 @@ let%test_unit "robustness: a READ completion coinciding with a framing-error han
     t
     ~from
     "completion and handoff"
-    [ h + 3, response ~tag:0x50 Read_word ~payload:(Word (t.stub.memory 8)) Complete ];
+    [ h + 3, response ~tag:0x50 Read_word ~payload:(Word t.stub.memory.(8)) Complete ];
   expect_busy t ~from "completion and handoff" [ h + 1; h + 2; h + 3 ]
 ;;
 

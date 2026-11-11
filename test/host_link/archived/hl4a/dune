@@ -1,0 +1,42 @@
+; Frozen HL4a archive (serial_host_pilot.md, SP5). The HL4a serial Cyclesim suite for
+; the composed Host_link (host_link_migration.md) and the SP2 serial monitor suite, moved
+; here verbatim from test/host_link/. SP5 ports every test to ../../endpoint/, the
+; authoritative Host_link-level suite; this copy keeps building and running unchanged as
+; a frozen oracle. Never edit or reformat it (../.ocamlformat-ignore). Dropping it from
+; the build is a separate owner decision.
+;
+; The real loader is driven through its serial pins with the host_link_wire codec, and a
+; test-only core stub answers its Control_port. The environment is the endpoint fixture
+; in endpoint/ (protemu_host_link_endpoint); hardware_loader_testbench.ml is its
+; compatibility shim. This is the acceptance baseline for the HL4b extractions. It
+; supplements, and never replaces, the independent emitted-RTL peer in
+; tinytapeout/test/p3_loader_tb.v.
+
+(library
+ (name protemu_host_link_tests)
+ (wrapped false)
+ (modules
+  hardware_loader_testbench
+  hardware_loader_transaction_tests
+  hardware_loader_framing_tests
+  hardware_loader_cancellation_tests
+  hardware_loader_diagnostics_tests
+  serial_host_monitor_tests)
+ ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ (inline_tests
+  (flags
+   (:standard -source-tree-root .)))
+ (libraries
+  core
+  hardcaml
+  hardcaml_protemu
+  protemu_host_link_wire
+  protemu_serial_host_agent
+  protemu_control_port_agent
+  protemu_host_link_endpoint)
+ (preprocess
+  (pps ppx_hardcaml ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))

@@ -20,7 +20,12 @@
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core hardcaml hardcaml_protemu protemu_host_link_wire)
+ (libraries
+  core
+  hardcaml
+  hardcaml_protemu
+  protemu_host_link_wire
+  protemu_control_port_agent)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint
