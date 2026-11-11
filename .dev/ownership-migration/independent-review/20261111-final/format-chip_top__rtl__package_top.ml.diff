@@ -1,0 +1,10 @@
+--- chip_top/rtl/package_top.ml
++++ formatted
+@@ -2,7 +2,6 @@
+ open! Hardcaml
+ open! Hardcaml_asic
+ open! Hardcaml_protemu
+-
+ module I = Tt_cmos5l.I
+ module O = Tt_cmos5l.O
+ 

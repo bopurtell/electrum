@@ -2,10 +2,12 @@
 
 | Document | What it covers |
 | --- | --- |
+| [repository_layout.md](repository_layout.md) | Current RTL/verif/software-test ownership, library boundaries and compatibility paths |
+| [ownership_layout.md](ownership_layout.md) | Delivered ownership migration, identified baseline, exact preservation results and remaining AM/VO/PT.3 scope |
 | [protemu.pdf](protemu.pdf) | Architecture planning brief: problem framing for the protocol emulator ASIC, proposed cores and primitives, protocol mapping (UART, SPI, I²C, USB, Ethernet), and open architecture questions. Start here for the "why". |
 | [construction-plan.md](construction-plan.md) | Construction plan built on the brief: scope, what exists today, stack ownership, primitive and shared-port memory contracts, ISA study, protocol milestones, host control, ASIC/Workbench integration, build sequence, verification, and open decisions. |
 | [phase_plan.md](phase_plan.md) | Actionable breakdown of the construction plan: stable work-item IDs, phase dependencies, deliverables, completion evidence, the first working UART transmit slice, and the parallel ASIC project/memory adoption track. Use this to select and track implementation work. |
-| [architecture_migration.md](architecture_migration.md) | Active architecture-first handoff: AM0–AM6 for Host_link/Protemu_top/core renames, memory/controller ownership, protocol/Codec separation, package extraction, grouped interfaces, responsibility-based decomposition, and preservation gates. Implementation is planned. |
+| [architecture_migration.md](architecture_migration.md) | AM0–AM6 authority and current ownership amendment; existing names and package extraction are implemented, while protocol/Codec and grouped-interface work remain separately pending |
 | [p2-implementation.md](p2-implementation.md) | Phase 2 primitive interfaces, functional-model/RTL evidence, digital latency observations, and remaining verification and physical measurements. |
 | [p3.1a-implementation.md](p3.1a-implementation.md) | P3.1a program-store consumer boundary, verified loading decision, independent contract-port evidence, and later-phase handoff. |
 | [p3.1b-verification.md](p3.1b-verification.md) | P3.1a scenario reuse across ASIC memory backends, emitted-RTL acceptance coverage, and mapped-evidence identity comparison. |
@@ -30,13 +32,17 @@
 | [flow_migration.md](flow_migration.md) | History: the migration that made `./flow.sh` the one implementation path — the plan as written and what it verified at the time. |
 | [environment.md](environment.md) | Entry points and environment layers: `./bootstrap.sh`, `source env.sh`, `dune exec protemu -- <command>`, and what to run on a new machine, a fresh clone or worktree, a new shell, or after a lockfile change. |
 | [verification.md](verification.md) | Verification authority: current evidence and planned VO0–VO7 overhaul after AM6; reusable agents/models/scoreboards, test-owned environments, endpoint/system/package fixtures, memory strategy, coverage, event/formal/emitted checks, and preservation/replay contracts. |
-| [serial_host_pilot.md](serial_host_pilot.md) | Early trial of the verification agent architecture on the Host_link serial interface: colocated agent libraries, per-agent items, driver/monitor/responder roles, and SP1–SP4 steps with implementation records. |
+| [serial_host_pilot.md](serial_host_pilot.md) | Implemented SP1–SP6 agent pilot, pending owner review; interface-owned items/drivers/monitors/responders and preserved endpoint/frozen-oracle evidence |
 | [history/](history/README.md) | Historical-document ownership and navigation. |
 | [history/verification_migration.md](history/verification_migration.md) | Archived previous verification refactor: baseline preservation, `model` → `f_model`, per-block moves, cycle/event conformance, timed/four-state pilots, and recorded checks. Not the active migration checklist. |
 | [formatting_guide.md](formatting_guide.md) | Hardware structure: file headers, `_i`/`_o` port naming, module layout, the `I_Regs`/`I_Wires` paradigm, the `Always` vs `Signal` split, and links to verification conventions. |
 | [comment_guidelines.md](comment_guidelines.md) | Repo-specific examples for explanatory comments and hand formatting in hardware and model source. |
 
 ## Reading order
+
+For current source navigation, start with [repository_layout.md](repository_layout.md)
+and the root README. The documents below retain product contracts and earlier
+implementation evidence; use the ownership map for relocated source paths.
 
 1. **protemu.pdf** — the design problem and proposed direction.
 2. **construction-plan.md** — how the repository gets from scaffold to working system.

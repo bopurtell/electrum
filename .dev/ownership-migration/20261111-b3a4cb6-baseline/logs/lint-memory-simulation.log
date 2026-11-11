@@ -1,0 +1,1027 @@
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:429:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  429 |         program_behavioral[0] <= 16'b0101010101010101;
+      |                               ^~
+                     ... For warning description see https://verilator.org/warn/INITIALDLY?v=5.020
+                     ... Use "/* verilator lint_off INITIALDLY */" and lint_on around source to disable this message.
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:430:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  430 |         program_behavioral[1] <= 16'b1010101010101010;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:431:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  431 |         program_behavioral[2] <= 16'b0101010101010101;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:432:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  432 |         program_behavioral[3] <= 16'b1010101010101010;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:433:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  433 |         program_behavioral[4] <= 16'b0101010101010101;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:434:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  434 |         program_behavioral[5] <= 16'b1010101010101010;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:435:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  435 |         program_behavioral[6] <= 16'b0101010101010101;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:436:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  436 |         program_behavioral[7] <= 16'b1010101010101010;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:437:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  437 |         program_behavioral[8] <= 16'b0101010101010101;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:438:31: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  438 |         program_behavioral[9] <= 16'b1010101010101010;
+      |                               ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:439:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  439 |         program_behavioral[10] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:440:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  440 |         program_behavioral[11] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:441:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  441 |         program_behavioral[12] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:442:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  442 |         program_behavioral[13] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:443:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  443 |         program_behavioral[14] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:444:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  444 |         program_behavioral[15] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:445:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  445 |         program_behavioral[16] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:446:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  446 |         program_behavioral[17] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:447:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  447 |         program_behavioral[18] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:448:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  448 |         program_behavioral[19] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:449:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  449 |         program_behavioral[20] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:450:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  450 |         program_behavioral[21] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:451:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  451 |         program_behavioral[22] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:452:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  452 |         program_behavioral[23] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:453:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  453 |         program_behavioral[24] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:454:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  454 |         program_behavioral[25] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:455:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  455 |         program_behavioral[26] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:456:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  456 |         program_behavioral[27] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:457:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  457 |         program_behavioral[28] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:458:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  458 |         program_behavioral[29] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:459:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  459 |         program_behavioral[30] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:460:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  460 |         program_behavioral[31] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:461:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  461 |         program_behavioral[32] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:462:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  462 |         program_behavioral[33] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:463:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  463 |         program_behavioral[34] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:464:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  464 |         program_behavioral[35] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:465:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  465 |         program_behavioral[36] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:466:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  466 |         program_behavioral[37] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:467:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  467 |         program_behavioral[38] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:468:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  468 |         program_behavioral[39] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:469:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  469 |         program_behavioral[40] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:470:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  470 |         program_behavioral[41] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:471:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  471 |         program_behavioral[42] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:472:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  472 |         program_behavioral[43] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:473:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  473 |         program_behavioral[44] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:474:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  474 |         program_behavioral[45] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:475:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  475 |         program_behavioral[46] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:476:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  476 |         program_behavioral[47] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:477:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  477 |         program_behavioral[48] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:478:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  478 |         program_behavioral[49] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:479:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  479 |         program_behavioral[50] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:480:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  480 |         program_behavioral[51] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:481:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  481 |         program_behavioral[52] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:482:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  482 |         program_behavioral[53] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:483:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  483 |         program_behavioral[54] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:484:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  484 |         program_behavioral[55] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:485:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  485 |         program_behavioral[56] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:486:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  486 |         program_behavioral[57] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:487:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  487 |         program_behavioral[58] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:488:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  488 |         program_behavioral[59] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:489:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  489 |         program_behavioral[60] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:490:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  490 |         program_behavioral[61] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:491:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  491 |         program_behavioral[62] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:492:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  492 |         program_behavioral[63] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:493:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  493 |         program_behavioral[64] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:494:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  494 |         program_behavioral[65] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:495:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  495 |         program_behavioral[66] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:496:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  496 |         program_behavioral[67] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:497:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  497 |         program_behavioral[68] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:498:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  498 |         program_behavioral[69] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:499:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  499 |         program_behavioral[70] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:500:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  500 |         program_behavioral[71] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:501:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  501 |         program_behavioral[72] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:502:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  502 |         program_behavioral[73] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:503:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  503 |         program_behavioral[74] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:504:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  504 |         program_behavioral[75] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:505:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  505 |         program_behavioral[76] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:506:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  506 |         program_behavioral[77] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:507:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  507 |         program_behavioral[78] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:508:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  508 |         program_behavioral[79] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:509:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  509 |         program_behavioral[80] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:510:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  510 |         program_behavioral[81] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:511:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  511 |         program_behavioral[82] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:512:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  512 |         program_behavioral[83] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:513:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  513 |         program_behavioral[84] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:514:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  514 |         program_behavioral[85] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:515:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  515 |         program_behavioral[86] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:516:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  516 |         program_behavioral[87] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:517:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  517 |         program_behavioral[88] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:518:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  518 |         program_behavioral[89] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:519:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  519 |         program_behavioral[90] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:520:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  520 |         program_behavioral[91] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:521:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  521 |         program_behavioral[92] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:522:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  522 |         program_behavioral[93] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:523:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  523 |         program_behavioral[94] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:524:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  524 |         program_behavioral[95] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:525:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  525 |         program_behavioral[96] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:526:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  526 |         program_behavioral[97] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:527:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  527 |         program_behavioral[98] <= 16'b0101010101010101;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:528:32: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  528 |         program_behavioral[99] <= 16'b1010101010101010;
+      |                                ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:529:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  529 |         program_behavioral[100] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:530:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  530 |         program_behavioral[101] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:531:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  531 |         program_behavioral[102] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:532:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  532 |         program_behavioral[103] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:533:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  533 |         program_behavioral[104] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:534:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  534 |         program_behavioral[105] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:535:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  535 |         program_behavioral[106] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:536:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  536 |         program_behavioral[107] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:537:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  537 |         program_behavioral[108] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:538:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  538 |         program_behavioral[109] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:539:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  539 |         program_behavioral[110] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:540:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  540 |         program_behavioral[111] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:541:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  541 |         program_behavioral[112] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:542:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  542 |         program_behavioral[113] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:543:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  543 |         program_behavioral[114] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:544:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  544 |         program_behavioral[115] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:545:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  545 |         program_behavioral[116] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:546:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  546 |         program_behavioral[117] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:547:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  547 |         program_behavioral[118] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:548:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  548 |         program_behavioral[119] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:549:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  549 |         program_behavioral[120] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:550:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  550 |         program_behavioral[121] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:551:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  551 |         program_behavioral[122] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:552:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  552 |         program_behavioral[123] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:553:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  553 |         program_behavioral[124] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:554:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  554 |         program_behavioral[125] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:555:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  555 |         program_behavioral[126] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:556:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  556 |         program_behavioral[127] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:557:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  557 |         program_behavioral[128] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:558:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  558 |         program_behavioral[129] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:559:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  559 |         program_behavioral[130] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:560:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  560 |         program_behavioral[131] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:561:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  561 |         program_behavioral[132] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:562:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  562 |         program_behavioral[133] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:563:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  563 |         program_behavioral[134] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:564:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  564 |         program_behavioral[135] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:565:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  565 |         program_behavioral[136] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:566:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  566 |         program_behavioral[137] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:567:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  567 |         program_behavioral[138] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:568:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  568 |         program_behavioral[139] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:569:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  569 |         program_behavioral[140] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:570:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  570 |         program_behavioral[141] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:571:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  571 |         program_behavioral[142] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:572:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  572 |         program_behavioral[143] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:573:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  573 |         program_behavioral[144] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:574:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  574 |         program_behavioral[145] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:575:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  575 |         program_behavioral[146] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:576:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  576 |         program_behavioral[147] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:577:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  577 |         program_behavioral[148] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:578:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  578 |         program_behavioral[149] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:579:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  579 |         program_behavioral[150] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:580:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  580 |         program_behavioral[151] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:581:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  581 |         program_behavioral[152] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:582:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  582 |         program_behavioral[153] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:583:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  583 |         program_behavioral[154] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:584:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  584 |         program_behavioral[155] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:585:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  585 |         program_behavioral[156] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:586:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  586 |         program_behavioral[157] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:587:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  587 |         program_behavioral[158] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:588:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  588 |         program_behavioral[159] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:589:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  589 |         program_behavioral[160] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:590:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  590 |         program_behavioral[161] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:591:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  591 |         program_behavioral[162] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:592:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  592 |         program_behavioral[163] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:593:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  593 |         program_behavioral[164] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:594:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  594 |         program_behavioral[165] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:595:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  595 |         program_behavioral[166] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:596:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  596 |         program_behavioral[167] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:597:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  597 |         program_behavioral[168] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:598:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  598 |         program_behavioral[169] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:599:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  599 |         program_behavioral[170] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:600:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  600 |         program_behavioral[171] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:601:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  601 |         program_behavioral[172] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:602:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  602 |         program_behavioral[173] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:603:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  603 |         program_behavioral[174] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:604:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  604 |         program_behavioral[175] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:605:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  605 |         program_behavioral[176] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:606:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  606 |         program_behavioral[177] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:607:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  607 |         program_behavioral[178] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:608:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  608 |         program_behavioral[179] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:609:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  609 |         program_behavioral[180] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:610:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  610 |         program_behavioral[181] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:611:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  611 |         program_behavioral[182] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:612:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  612 |         program_behavioral[183] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:613:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  613 |         program_behavioral[184] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:614:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  614 |         program_behavioral[185] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:615:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  615 |         program_behavioral[186] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:616:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  616 |         program_behavioral[187] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:617:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  617 |         program_behavioral[188] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:618:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  618 |         program_behavioral[189] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:619:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  619 |         program_behavioral[190] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:620:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  620 |         program_behavioral[191] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:621:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  621 |         program_behavioral[192] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:622:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  622 |         program_behavioral[193] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:623:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  623 |         program_behavioral[194] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:624:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  624 |         program_behavioral[195] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:625:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  625 |         program_behavioral[196] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:626:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  626 |         program_behavioral[197] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:627:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  627 |         program_behavioral[198] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:628:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  628 |         program_behavioral[199] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:629:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  629 |         program_behavioral[200] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:630:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  630 |         program_behavioral[201] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:631:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  631 |         program_behavioral[202] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:632:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  632 |         program_behavioral[203] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:633:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  633 |         program_behavioral[204] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:634:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  634 |         program_behavioral[205] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:635:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  635 |         program_behavioral[206] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:636:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  636 |         program_behavioral[207] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:637:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  637 |         program_behavioral[208] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:638:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  638 |         program_behavioral[209] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:639:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  639 |         program_behavioral[210] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:640:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  640 |         program_behavioral[211] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:641:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  641 |         program_behavioral[212] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:642:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  642 |         program_behavioral[213] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:643:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  643 |         program_behavioral[214] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:644:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  644 |         program_behavioral[215] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:645:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  645 |         program_behavioral[216] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:646:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  646 |         program_behavioral[217] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:647:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  647 |         program_behavioral[218] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:648:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  648 |         program_behavioral[219] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:649:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  649 |         program_behavioral[220] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:650:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  650 |         program_behavioral[221] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:651:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  651 |         program_behavioral[222] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:652:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  652 |         program_behavioral[223] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:653:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  653 |         program_behavioral[224] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:654:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  654 |         program_behavioral[225] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:655:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  655 |         program_behavioral[226] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:656:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  656 |         program_behavioral[227] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:657:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  657 |         program_behavioral[228] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:658:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  658 |         program_behavioral[229] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:659:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  659 |         program_behavioral[230] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:660:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  660 |         program_behavioral[231] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:661:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  661 |         program_behavioral[232] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:662:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  662 |         program_behavioral[233] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:663:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  663 |         program_behavioral[234] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:664:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  664 |         program_behavioral[235] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:665:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  665 |         program_behavioral[236] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:666:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  666 |         program_behavioral[237] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:667:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  667 |         program_behavioral[238] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:668:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  668 |         program_behavioral[239] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:669:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  669 |         program_behavioral[240] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:670:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  670 |         program_behavioral[241] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:671:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  671 |         program_behavioral[242] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:672:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  672 |         program_behavioral[243] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:673:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  673 |         program_behavioral[244] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:674:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  674 |         program_behavioral[245] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:675:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  675 |         program_behavioral[246] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:676:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  676 |         program_behavioral[247] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:677:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  677 |         program_behavioral[248] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:678:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  678 |         program_behavioral[249] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:679:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  679 |         program_behavioral[250] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:680:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  680 |         program_behavioral[251] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:681:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  681 |         program_behavioral[252] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:682:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  682 |         program_behavioral[253] <= 16'b1010101010101010;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:683:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  683 |         program_behavioral[254] <= 16'b0101010101010101;
+      |                                 ^~
+%Warning-INITIALDLY: /home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v:684:33: Non-blocking assignment '<=' in initial/final block
+                                                                                                                                                                                          : ... This will be executed as a blocking assignment '='!
+  684 |         program_behavioral[255] <= 16'b1010101010101010;
+      |                                 ^~
+%Error: Exiting due to 256 warning(s)

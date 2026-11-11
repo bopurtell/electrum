@@ -63,13 +63,20 @@ def check_bundle(root, bundle, kind):
     assert "create_clock -name clk" in (bundle / "constraints/top.sdc").read_text()
     source_paths = {item["path"] for item in manifest["source_inputs"]}
     expected_source = {
-        "observable": "lib/legacy/p0_observable.ml",
-        "memory": "lib/memory/program_memory_controller.ml",
-        "loader": "lib/host_link/host_link.ml",
+        "observable": "chip_top/rtl/bringup/p0_observable.ml",
+        "memory": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+        "loader": "ip/host_link/rtl/host_link.ml",
     }[kind]
     assert {
-        "bin/asic_bundle.ml", expected_source, "tinytapeout/asic-dependencies.lock"
+        "bin/asic_bundle.ml", expected_source, "tinytapeout/asic-dependencies.lock",
+        "chip_top/project/dune", "chip_top/project/chip_project.ml",
     } <= source_paths
+    package_sources = {
+        "observable": {"chip_top/rtl/observable_design.ml"},
+        "memory": {"chip_top/rtl/memory_design.ml", "chip_top/rtl/program_memory.ml"},
+        "loader": {"chip_top/rtl/package_top.ml", "chip_top/rtl/program_memory.ml"},
+    }
+    assert package_sources[kind] <= source_paths
     if kind == "observable":
         assert '"P0 command valid"' in info
         assert manifest["resources"] == []
@@ -80,14 +87,14 @@ def check_bundle(root, bundle, kind):
         else:
             assert 'ui[0]: "Loader select, active low"' in info
             assert 'uo[1]: "Loader response ready"' in info
-            assert {"lib/system/protemu_top.ml", "lib/emulator_core/emulator_core.ml"} <= source_paths
+            assert {"rtl/protemu_top.ml", "ip/emulator_core/rtl/emulator_core.ml"} <= source_paths
             assert {"host_link_wire/dune", "host_link_wire/wire.ml"} <= source_paths
-            assert "lib/emulator_core/control_port.ml" in source_paths
-            assert "lib/host_link/serial_phy.ml" in source_paths
-            assert "lib/host_link/frame_rx.ml" in source_paths
-            assert "lib/host_link/frame_tx.ml" in source_paths
-            assert "lib/host_link/command_dispatch.ml" in source_paths
-            assert {"lib/host_link/wire_crc.ml", "lib/host_link/wire_layout.ml"} <= source_paths
+            assert "ip/emulator_core/rtl/control_port.ml" in source_paths
+            assert "ip/host_link/rtl/serial_phy.ml" in source_paths
+            assert "ip/host_link/rtl/frame_rx.ml" in source_paths
+            assert "ip/host_link/rtl/frame_tx.ml" in source_paths
+            assert "ip/host_link/rtl/command_dispatch.ml" in source_paths
+            assert {"ip/host_link/rtl/wire_crc.ml", "ip/host_link/rtl/wire_layout.ml"} <= source_paths
         request = (
             "((kind single_port_ram)\n (contract\n  ((width 16) (depth 256) "
             "(read_latency 1) (port 1rw) (disabled_output hold)\n   "
@@ -180,7 +187,7 @@ def main():
                     "-Wno-WIDTHEXPAND",
                     "-Wno-ZERODLY",
                     str(source),
-                    str(root / "tinytapeout/test/p3_loader_tb.v"),
+                    str(root / "verif/system/emitted/p3_loader_tb.v"),
                     "-j",
                     "1",
                     cwd=root,
@@ -201,6 +208,11 @@ def main():
                 f"verilator --lint-only --top-module {top} -Wno-DECLFILENAME -Wno-COMBDLY /bundle/src/{top}.v",
                 f"yosys -p 'read_verilog /bundle/src/{top}.v; hierarchy -check -top {top}; synth -top {top}; stat'",
             ])
+        testbench_dir = (
+            root / "verif/system/emitted"
+            if args.kind == "loader"
+            else root / "chip_top/verif" / args.kind / "emitted"
+        )
         run(
             "docker",
             "run",
@@ -211,7 +223,7 @@ def main():
             "-v",
             f"{first}:/bundle:ro",
             "-v",
-            f"{root / 'tinytapeout/test'}:/test:ro",
+            f"{testbench_dir}:/test:ro",
             "--entrypoint",
             "sh",
             image,

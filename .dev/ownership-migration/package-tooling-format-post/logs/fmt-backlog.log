@@ -1,0 +1,2051 @@
+File "ip/mechanisms/verif/blocks/pin_bank/dune", line 1, characters 0-0:
+------ ip/mechanisms/verif/blocks/pin_bank/dune
+++++++ ip/mechanisms/verif/blocks/pin_bank/dune.corrected
+File "ip/mechanisms/verif/blocks/pin_bank/dune", line 23, characters 0-1:
+ |  hardcaml
+ |  hardcaml_protemu
+ |  protemu_isa
+ |  protemu_f_model
+ |  protemu_test_common
+ |  base_quickcheck)
+ | (preprocess
+ |  (pps ppx_hardcaml ppx_jane))
+ | (lint
+ |  (pps ppx_js_style))
+ | (flags
+ |  (:standard -w -27-57-33-34-35-40-63-47-26)))
+ |
+ |(library
+ | (name protemu_pin_bank_tests)
+ | (wrapped false)
+-| (modules pin_bank_expect_tests pin_bank_unit_quickcheck_tests pin_bank_unit_tests)
++| (modules
++|  pin_bank_expect_tests
++|  pin_bank_unit_quickcheck_tests
++|  pin_bank_unit_tests)
+ | ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ | (inline_tests
+ |  (flags
+ |   (:standard -source-tree-root .)))
+ | (libraries
+ |  core
+ |  hardcaml
+ |  hardcaml_protemu
+ |  protemu_f_model
+ |  protemu_pin_bank_testbench
+ |  protemu_test_common)
+ | (preprocess
+ |  (pps ppx_hardcaml ppx_jane))
+ | (lint
+ |  (pps ppx_js_style))
+ | (flags
+File "f_model/shift_engine.ml", line 1, characters 0-0:
+------ f_model/shift_engine.ml
+++++++ f_model/shift_engine.ml.corrected
+File "f_model/shift_engine.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "shift_engine.ml" *)
+-|(* An independent cycle model of one transfer descriptor. It uses typed transfer
+-|   values and integer pin masks, with no Hardcaml or synthesized helper logic. *)
++|(* An independent cycle model of one transfer descriptor. It uses typed transfer values
++|   and integer pin masks, with no Hardcaml or synthesized helper logic. *)
+ |
+ |open! Core
+ |open! Kinds
+ |
+ |type t =
+ |  { descriptor : Transfer.t option
+ |  ; armed : bool
+ |  ; active : bool
+ |  ; phase : int
+ |  ; index : int
+ |  ; remaining : int
+ |  ; rx : int
+ |  ; rx_data : int
+ |  ; pins : int
+ |  ; output_enable : int
+ |  ; claim : int
+File "f_model/shift_engine.ml", line 51, characters 0-1:
+ |  ; index = 0
+ |  ; remaining = 0
+ |  ; rx = 0
+ |  ; rx_data = 0
+ |  ; pins = 0
+ |  ; output_enable = 0
+ |  ; claim = 0
+ |  ; done_ = false
+ |  ; rx_valid = false
+ |  ; rejected = false
+ |  ; underrun = false
+ |  ; overrun = false
+ |  }
+ |;;
+ |
+ |let bit n = 1 lsl n
+-|let pin_mask = function None -> 0 | Some pin -> bit pin
++|
++|let pin_mask = function
++|  | None -> 0
++|  | Some pin -> bit pin
++|;;
++|
+ |let at word index = word land bit index <> 0
+ |let set word mask value = if value then word lor mask else word land lnot mask
++|
+ |let ordinal descriptor index =
+ |  match descriptor.Transfer.bit_order with
+ |  | Lsb_first -> index
+ |  | Msb_first -> descriptor.bit_count - 1 - index
+ |;;
+ |
+ |let phase_kind descriptor phase =
+-|  let high = if phase = 0 then not descriptor.Transfer.idle_clock else descriptor.idle_clock in
++|  let high =
++|    if phase = 0 then not descriptor.Transfer.idle_clock else descriptor.idle_clock
++|  in
+ |  if high then Clock_phase.On_rising else On_falling
+ |;;
+ |
+ |let preload descriptor =
+ |  let output = pin_mask descriptor.Transfer.output_pin in
+ |  let clock = pin_mask descriptor.clock_pin in
+ |  let output_value =
+ |    if not (Direction.equal descriptor.direction Rx_only)
+ |    then (
+ |      let first =
+ |        if Clock_phase.equal descriptor.launch (phase_kind descriptor 1)
+ |        then at descriptor.tx_value (ordinal descriptor 0)
+ |        else descriptor.idle_output
+ |      in
+ |      if first then output else 0)
+ |    else 0
+File "f_model/shift_engine.ml", line 114, characters 0-1:
+ |  ; pins = preload descriptor
+ |  ; output_enable = claim
+ |  ; claim
+ |  }
+ |;;
+ |
+ |let release t =
+ |  { t with active = false; armed = false; pins = 0; output_enable = 0; claim = 0 }
+ |;;
+ |
+ |let advance t descriptor ~pin_in ~rx_ready =
+ |  let phase = t.phase in
+ |  let kind = phase_kind descriptor phase in
+ |  let output = pin_mask descriptor.output_pin in
+ |  let clock = pin_mask descriptor.clock_pin in
+ |  let pins =
+-|    if clock = 0 then t.pins else set t.pins clock (if descriptor.idle_clock then phase = 1 else phase = 0)
++|    if clock = 0
++|    then t.pins
++|    else set t.pins clock (if descriptor.idle_clock then phase = 1 else phase = 0)
+ |  in
+ |  let next_index = if phase = 1 then t.index + 1 else t.index in
+ |  let pins =
+ |    if output <> 0
+ |       && Clock_phase.equal descriptor.launch kind
+ |       && next_index < descriptor.bit_count
+ |    then set pins output (at descriptor.tx_value (ordinal descriptor next_index))
+ |    else pins
+ |  in
+ |  let rx =
+-|    if not (Direction.equal descriptor.direction Tx_only)
++|    if (not (Direction.equal descriptor.direction Tx_only))
+ |       && Clock_phase.equal descriptor.sample kind
+ |    then (
+ |      let position = ordinal descriptor t.index in
+ |      set t.rx (bit position) (at pin_in (Option.value_exn descriptor.input_pin)))
+ |    else t.rx
+ |  in
+ |  let finishing = phase = 1 && t.index + 1 = descriptor.bit_count in
+ |  if finishing
+ |  then (
+ |    let t = release { t with rx } in
+ |    if Direction.equal descriptor.direction Rx_only
+ |       || Direction.equal descriptor.direction Duplex
+-|    then if rx_ready then { t with done_ = true; rx_valid = true; rx_data = rx }
+-|    else { t with overrun = true }
++|    then
++|      if rx_ready
++|      then { t with done_ = true; rx_valid = true; rx_data = rx }
++|      else { t with overrun = true }
+ |    else { t with done_ = true })
+ |  else
+ |    { t with
+ |      pins
+ |    ; rx
+ |    ; phase = 1 - phase
+ |    ; index = next_index
+ |    ; remaining =
+ |        (match descriptor.pacing with
+ |         | Internal { half_period } -> half_period
+ |         | Observed_edge _ -> 0)
+ |    }
+ |;;
+ |
+ |let step
+-|      t
+-|      ~enable
+-|      ~abort
+-|      ~command
+-|      ~start_event
+-|      ~observed_edge
+-|      ~pin_in
+-|      ~occupied
+-|      ~tx_valid
+-|      ~rx_ready
+-|  =
+-|  let t =
+-|    { t with done_ = false; rx_valid = false; rejected = false; underrun = false; overrun = false }
++|  t
++|  ~enable
++|  ~abort
++|  ~command
++|  ~start_event
++|  ~observed_edge
++|  ~pin_in
++|  ~occupied
++|  ~tx_valid
++|  ~rx_ready
++|  =
++|  let t =
++|    { t with
++|      done_ = false
++|    ; rx_valid = false
++|    ; rejected = false
++|    ; underrun = false
++|    ; overrun = false
++|    }
+ |  in
+-|  if not enable || abort
++|  if (not enable) || abort
+ |  then release t
+ |  else (
+ |    match command with
+-|    | Some (descriptor, arm) when not t.active && not t.armed ->
++|    | Some (descriptor, arm) when (not t.active) && not t.armed ->
+ |      let collision = Transfer.driven_mask descriptor land occupied <> 0 in
+ |      (match Transfer.validate descriptor with
+ |       | Error _ -> { t with rejected = true }
+ |       | Ok () when collision && not arm -> { t with rejected = true }
+-|       | Ok () when not tx_valid && not (Direction.equal descriptor.direction Rx_only) ->
+-|         { t with underrun = true }
++|       | Ok () when (not tx_valid) && not (Direction.equal descriptor.direction Rx_only)
++|         -> { t with underrun = true }
+ |       | Ok () ->
+ |         if arm
+ |         then { t with descriptor = Some descriptor; armed = true }
+ |         else start { t with descriptor = Some descriptor } descriptor)
+ |    | _ when t.armed && start_event ->
+ |      let descriptor = Option.value_exn t.descriptor in
+ |      if Transfer.driven_mask descriptor land occupied <> 0
+ |      then { t with armed = false; rejected = true }
+ |      else start t descriptor
+ |    | _ when t.active ->
+ |      let descriptor = Option.value_exn t.descriptor in
+ |      let edge =
+ |        match descriptor.pacing with
+ |        | Internal _ -> t.remaining = 1
+ |        | Observed_edge _ -> observed_edge
+ |      in
+File "ip/program_memory_controller/verif/controller/protocol_core_testbench.ml", line 1, characters 0-0:
+------ ip/program_memory_controller/verif/controller/protocol_core_testbench.ml
+++++++ ip/program_memory_controller/verif/controller/protocol_core_testbench.ml.corrected
+File "ip/program_memory_controller/verif/controller/protocol_core_testbench.ml", line 16, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "protocol_core_testbench.ml" *)
+ |(* Cycle product testbench for P3.1a.
+ |
+ |   [Program_access] predicts control from scheduled inputs alone. The local RAM model
+ |   independently implements only the external 1RW contract and deliberately varies values
+ |   after writes and unwritten reads. No DUT acceptance or validity output feeds either
+ |   model.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Hardcaml_protemu
+ |open! Protemu_f_model
+-|module Sim = Cyclesim.With_interface (Program_memory_controller.I) (Program_memory_controller.O)
++|
++|module Sim =
++|  Cyclesim.With_interface (Program_memory_controller.I) (Program_memory_controller.O)
+ |
+ |let width = Program_memory_controller.Config.program_width
+ |let depth = Program_memory_controller.Config.program_depth
+ |
+ |module Poison = struct
+ |  type t =
+ |    | Zero
+ |    | Ones
+ |    | Address
+ |  [@@deriving sexp_of, compare, equal, enumerate]
+ |
+ |  let value t ~address =
+ |    match t with
+ |    | Zero -> 0
+ |    | Ones -> (1 lsl width) - 1
+ |    | Address -> address * 257 lxor 0x5a5a land ((1 lsl width) - 1)
+File "ip/program_memory_controller/verif/controller/protocol_core_testbench.ml", line 230, characters 0-1:
+ |  Cyclesim.cycle_check t.sim;
+ |  Cyclesim.cycle_before_clock_edge t.sim;
+ |  let d = check_decisions t input in
+ |  let read_data_at_edge = t.store.read_data in
+ |  Cyclesim.cycle_at_clock_edge t.sim;
+ |  Cyclesim.cycle_after_clock_edge t.sim;
+ |  t.model <- Program_access.step t.model input ~read_data:read_data_at_edge;
+ |  Program_store_stub.clock_edge t.store d.port;
+ |  i.prog_mem_read_data_i := Bits.of_int_trunc ~width t.store.read_data;
+ |  t.edge <- t.edge + 1;
+ |  check_state t
+ |;;
+ |
+ |let create ?(poison = Poison.Zero) ?circuit () =
+ |  let sim =
+ |    match circuit with
+-|    | None -> Sim.create (Program_memory_controller.create (Scope.create ~flatten_design:true ()))
++|    | None ->
++|      Sim.create (Program_memory_controller.create (Scope.create ~flatten_design:true ()))
+ |    | Some circuit -> Sim.coerce (Cyclesim.create circuit)
+ |  in
+ |  let store = Program_store_stub.create poison in
+ |  let t = { sim; store; model = Program_access.create; edge = 0 } in
+ |  let i = Cyclesim.inputs sim in
+ |  i.prog_mem_read_data_i := Bits.of_int_trunc ~width store.read_data;
+ |  step t { Program_access.Input.idle with reset = true };
+ |  t
+ |;;
+ |
+ |let input
+ |  ?(reset = false)
+ |  ?(enable = true)
+ |  ?(engines_idle = true)
+ |  ?load_start
+ |  ?load_write
+File "isa/descriptor.ml", line 1, characters 0-0:
+------ isa/descriptor.ml
+++++++ isa/descriptor.ml.corrected
+File "isa/descriptor.ml", line 14, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "descriptor.ml" *)
+ |(* The transfer descriptor as firmware writes it: nine writable fields, the bit layout of
+ |   the one packed field, and how a field value names a pin or a pacing source.
+ |
+ |   WHY THIS IS SPECIFICATION AND NOT MODEL. construction-plan.md section 4 allows that
+ |   "configuration can take several instructions". This module says how many, by naming the
+ |   pieces, and every number in it is programmer-visible: a [Config] instruction carries a
+ |   field index, and the value it writes is interpreted by the rules below. An RTL decoder
+ |   and the reference model must agree about all of it, so it is written once, here.
+ |
+ |   WHAT IS NOT HERE. Validation, and the typed descriptor the machine latches. A
+-|   descriptor is checked at acceptance by f_model/transfer.ml, which is where an impossible
+-|   phase combination or a pin used twice is refused; the control core turns a [Parsed.t]
+-|   into that typed value. Nothing in this module rejects anything, deliberately: an
+-|   unconfigured descriptor reaches acceptance as one with no pins and a zero half period
+-|   and comes back refused, rather than being quietly repaired here.
++|   descriptor is checked at acceptance by f_model/transfer.ml, which is where an
++|   impossible phase combination or a pin used twice is refused; the control core turns a
++|   [Parsed.t] into that typed value. Nothing in this module rejects anything,
++|   deliberately: an unconfigured descriptor reaches acceptance as one with no pins and a
++|   zero half period and comes back refused, rather than being quietly repaired here.
+ |*)
+ |
+ |open! Core
+ |open! Kinds
+ |
+ |(* One writable piece of the descriptor. [Control] is the one packed field: everything
+ |   that is a choice between two or three alternatives travels together, so a descriptor
+ |   costs nine writes rather than fourteen. *)
+ |module Field = struct
+ |  type t =
+ |    | Control
+ |    | Bit_count
+ |    | Tx_value
+ |    | Output_pin
+ |    | Input_pin
+ |    | Clock_pin
+File "f_model/fifo.ml", line 1, characters 0-0:
+------ f_model/fifo.ml
+++++++ f_model/fifo.ml.corrected
+File "f_model/fifo.ml", line 6, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "fifo.ml" *)
+ |(* The reference model's byte queue, with explicit full/empty and one-edge push/pop.
+ |
+-|   Machine owns the Tx and Rx instances and uses [push] and [pop] when an instruction
+-|   or peripheral action needs them. Those helpers share [step]'s queue rules. This
+-|   module decides queue order and reports rejected operations; it does not advance
+-|   Machine's clock or set sticky fault bits.
+-|
+-|   Depth is a sweep point, not a decision: construction-plan.md section 4 starts the
+-|   study at 4, 8 and 16 entries, so [create] takes it rather than fixing it here.
++|   Machine owns the Tx and Rx instances and uses [push] and [pop] when an instruction or
++|   peripheral action needs them. Those helpers share [step]'s queue rules. This module
++|   decides queue order and reports rejected operations; it does not advance Machine's
++|   clock or set sticky fault bits.
++|
++|   Depth is a sweep point, not a decision: construction-plan.md section 4 starts the study
++|   at 4, 8 and 16 entries, so [create] takes it rather than fixing it here.
+ |
+ |   A pop frees its slot at the same edge as an accompanying push takes one, so a push into
+ |   a full queue succeeds when a pop goes with it. Ordering survives that case: the popped
+ |   word is the oldest present before the edge and the pushed word becomes the newest, so
+ |   nothing is lost or duplicated.
+ |
+ |   Reset clears validity rather than contents (construction-plan.md section 3), which for
+ |   a queue with no initialisation requirement is the same thing: [clear] drops the
+ |   entries.
+ |*)
+ |
+ |open! Core
+ |open! Kinds
+ |
+ |(* The queue state; oldest bytes appear first in [entries].
+ |
+-|   id      : names the queue in rejection reasons;
+-|   depth   : maximum number of entries;
+-|   entries : valid bytes, oldest first; an empty list means an empty queue;
+-|
+-|   There is no mli, so callers can construct this record directly. [create] alone
+-|   checks that [depth] is positive; [step] validates bytes offered to it.
++|   id : names the queue in rejection reasons; depth : maximum number of entries; entries :
++|   valid bytes, oldest first; an empty list means an empty queue;
++|
++|   There is no mli, so callers can construct this record directly. [create] alone checks
++|   that [depth] is positive; [step] validates bytes offered to it.
+ |*)
+ |type t =
+ |  { id : Fifo_id.t
+ |  ; depth : int
+ |  ; (* Oldest first. *)
+ |    entries : int list
+ |  }
+ |[@@deriving sexp, compare, equal]
+ |
+-|(* Make an empty queue; a nonpositive depth raises because it cannot describe a
+-|   usable queue, and Machine.create builds these as part of its initial state. *)
++|(* Make an empty queue; a nonpositive depth raises because it cannot describe a usable
++|   queue, and Machine.create builds these as part of its initial state. *)
+ |let create ~id ~depth =
+ |  (* error check at construction time; *)
+ |  if depth < 1 then raise_s [%message "fifo depth must be positive" (depth : int)];
+ |  { id; depth; entries = [] }
+ |;;
+ |
+ |(* Drop all valid entries while keeping the queue identity and configured depth. *)
+ |let clear t = { t with entries = [] }
+ |
+ |(* Number of valid bytes, used for capacity checks and observation. *)
+ |let occupancy t = List.length t.entries
+ |
+ |(* Whether a pop would have no byte to return. *)
+ |let is_empty t = List.is_empty t.entries
+ |
+ |(* Whether a push needs a simultaneous pop to make room. *)
+ |let is_full t = occupancy t >= t.depth
+ |
+ |(* Observe the oldest byte without removing it; [None] means empty. *)
+ |let peek t = List.hd t.entries
+ |
+ |(* The byte width of a queue entry; wider words are an encoding decision (P1.4). *)
+ |let data_bits = 8
+ |let max_data = (1 lsl data_bits) - 1
+ |
+-|(* A queue entry is an eight-bit unsigned value; report an invalid byte as a
+-|   command rejection so Machine can distinguish it from a hardware fault. *)
++|(* A queue entry is an eight-bit unsigned value; report an invalid byte as a command
++|   rejection so Machine can distinguish it from a hardware fault. *)
+ |let validate_data data =
+ |  if data < 0 || data > max_data
+ |  then Error (Fault.Reject.Data_out_of_range data)
+ |  else Ok ()
+ |;;
+ |
+ |(* Resolve one edge, with an optional push and an optional pop;
+ |
+ |   1. Pop the oldest pre-edge byte, or report Fifo_empty;
+ |   2. Validate the offered push byte, if any;
+ |   3. Check capacity after the pop and append a valid byte if there is room;
+ |
+-|   A full queue therefore accepts a push paired with a successful pop; Each outcome
+-|   is reported separately; [None] means that operation was not requested. 
++|   A full queue therefore accepts a push paired with a successful pop; Each outcome is
++|   reported separately; [None] means that operation was not requested.
+ |
+ |   A rejected push does not undo a successful pop.
+ |*)
+ |let step t ~push ~pop =
+ |  (* create the result tuple *)
+-|  let (popped, pop_result, after_pop) =
++|  let popped, pop_result, after_pop =
+ |    (* match result on queue correctness only if we got a valid return pop *)
+ |    match pop with
+ |    | false -> None, None, t.entries
+-|    | true -> (* i love nested shenanigans *)
++|    | true ->
++|      (* i love nested shenanigans *)
+ |      (match t.entries with
+ |       | [] -> None, Some (Error (Fault.Reject.Fifo_empty t.id)), []
+ |       | oldest :: rest -> Some oldest, Some (Ok ()), rest)
+ |  in
+-|
+ |  (* push variant of the above item *)
+ |  let push_result, entries =
+ |    match push with
+ |    | None -> None, after_pop
+ |    | Some data ->
+ |      (match validate_data data with
+ |       | Error reason -> Some (Error reason), after_pop
+ |       | Ok () ->
+ |         if List.length after_pop >= t.depth
+ |         then Some (Error (Fault.Reject.Fifo_full t.id)), after_pop
+ |         else Some (Ok ()), after_pop @ [ data ])
+ |  in
+-|
+ |  { t with entries }, popped, push_result, pop_result
+ |;;
+ |
+ |(* Push one byte through [step], preserving its capacity and byte checks. *)
+ |let push t data =
+-|
+ |  (* observed construction *)
+ |  let after, _, push, _ = step t ~push:(Some data) ~pop:false in
+-|
+ |  (* prop the error *)
+ |  match push with
+ |  | Some (Ok ()) -> Ok after
+ |  | Some (Error reason) -> Error reason
+ |  | None -> Ok after
+ |;;
+ |
+ |(* Pop one byte through [step], returning Fifo_empty when none is present. *)
+ |let pop t =
+-|
+ |  (* observed construction *)
+ |  let after, popped, _, pop = step t ~push:None ~pop:true in
+-|
+ |  (* prop the error *)
+ |  match pop, popped with
+ |  | Some (Ok ()), Some data -> Ok (after, data)
+ |  | Some (Error reason), _ -> Error reason
+ |  | (Some (Ok ()) | None), _ -> Error (Fault.Reject.Fifo_empty t.id)
+ |;;
+File "test/backend_conformance/backend_conformance.ml", line 1, characters 0-0:
+------ test/backend_conformance/backend_conformance.ml
+++++++ test/backend_conformance/backend_conformance.ml.corrected
+File "test/backend_conformance/backend_conformance.ml", line 5, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "backend_conformance.ml" *)
+ |(* A deliberately tiny circuit and scenario used to characterize the Cyclesim and
+-|   two-state Evsim step-testbench adapters.  This is scheduling evidence, not product
++|   two-state Evsim step-testbench adapters. This is scheduling evidence, not product
+ |   coverage: no production RTL or functional-model behavior is defined here. *)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock : 'a
+ |    ; reset : 'a
+ |    ; enable : 'a
+ |    ; data : 'a [@bits 4]
+ |    ; valid : 'a
+ |    ; payload : 'a [@bits 4]
+ |    }
+ |  [@@deriving hardcaml]
+File "test/backend_conformance/backend_conformance.ml", line 150, characters 0-1:
+ |
+ |let create_cyclesim () = Cycle_sim.create create
+ |
+ |let run_cyclesim () =
+ |  let simulator = create_cyclesim () in
+ |  Cycle_step.run_until_finished
+ |    ~input_default:Cycle_step.input_hold
+ |    ()
+ |    ~simulator
+ |    ~testbench:(fun handler _initial ->
+ |      let samples = ref [] in
+ |      let items = Array.of_list Scenario.all in
+ |      for index = 0 to Array.length items - 1 do
+ |        let item = items.(index) in
+ |        let output = Cycle_step.cycle handler (Scenario.to_inputs item) in
+ |        samples
+-|        := { Edge_sample.before =
+-|               Sample.of_output (Cycle_step.O_data.before_edge output)
++|        := { Edge_sample.before = Sample.of_output (Cycle_step.O_data.before_edge output)
+ |           ; after = Sample.of_output (Cycle_step.O_data.after_edge output)
+ |           ; completed_at = None
+ |           }
+ |           :: !samples
+ |      done;
+ |      List.rev !samples)
+ |;;
+ |
+ |let cyclesim_times_out () =
+ |  let simulator = create_cyclesim () in
+ |  let result =
+ |    Cycle_step.run_with_timeout
+ |      ~input_default:Cycle_step.input_hold
+ |      ~timeout:3
+ |      ()
+ |      ~simulator
+File "test/backend_conformance/backend_conformance.ml", line 238, characters 0-1:
+ |            let items = Array.of_list Scenario.all in
+ |            for index = 0 to Array.length items - 1 do
+ |              let item = items.(index) in
+ |              let output = Event_step.cycle handler (Scenario.to_inputs item) in
+ |              samples
+ |              := { Edge_sample.before =
+ |                     Sample.of_output (Event_step.O_data.before_edge output)
+ |                 ; after = Sample.of_output (Event_step.O_data.after_edge output)
+ |                 ; completed_at = Some (Event_backend.Simulator.Async.current_time ())
+ |                 }
+ |                 :: !samples
+ |            done;
+ |            result := Some (List.rev !samples))
+ |      in
+ |      [ clock_process inputs; clock_monitor inputs.clock.signal transitions; process ])
+ |  in
+-|  (* The fifth step completes at time 50.  Running one extra tick proves completion did
+-|     not depend on stopping exactly on the final falling edge. *)
++|  (* The fifth step completes at time 50. Running one extra tick proves completion did not
++|     depend on stopping exactly on the final falling edge. *)
+ |  Event_backend.Simulator.run testbench.simulator ~time_limit:51;
+ |  Option.value_exn !result, List.rev !transitions
+ |;;
+ |
+ |let run_eventsim () = fst (run_eventsim_with_clock_trace ())
+ |
+ |let eventsim_times_out () =
+ |  let result = ref `Pending in
+ |  let testbench =
+ |    Event_circuit.with_processes create (fun inputs outputs ->
+ |      let process =
+ |        Event_backend.Simulator.Async.create_process (fun () ->
+ |          let open Event_backend.Simulator.Async.Deferred.Let_syntax in
+ |          let run =
+ |            Event_step.deferred
+ |              ~input_default:Event_step.input_hold
+ |              ~timeout:3
+ |              ~simulation_step:Event_step.Simulation_step.cyclesim_compatible
+ |              ()
+ |              ~clock:inputs.clock.signal
+ |              ~inputs:(port_signals inputs)
+ |              ~outputs:(output_signals outputs)
+ |              ~testbench:(fun handler _initial -> Event_step.never handler)
+ |          in
+ |          let%bind completed = run () in
+-|          result := (if Option.is_none completed then `Timed_out else `Completed);
++|          result := if Option.is_none completed then `Timed_out else `Completed;
+ |          Event_backend.Simulator.Async.wait_forever ())
+ |      in
+ |      [ clock_process inputs; process ])
+ |  in
+ |  Event_backend.Simulator.run testbench.simulator ~time_limit:40;
+ |  Poly.equal !result `Timed_out
+ |;;
+ |
+ |let expected : Edge_sample.t list =
+ |  let sample ~q ~ready ~accepted ~out_valid ~out_payload =
+ |    { Sample.q; ready; accepted; out_valid; out_payload }
+ |  in
+ |  [ { before = sample ~q:0 ~ready:1 ~accepted:1 ~out_valid:0 ~out_payload:0
+ |    ; after = sample ~q:10 ~ready:0 ~accepted:0 ~out_valid:1 ~out_payload:6
+ |    ; completed_at = None
+ |    }
+File "ip/emulator_core/verif/execution/control_execution_fault_tests.ml", line 1, characters 0-0:
+------ ip/emulator_core/verif/execution/control_execution_fault_tests.ml
+++++++ ip/emulator_core/verif/execution/control_execution_fault_tests.ml.corrected
+File "ip/emulator_core/verif/execution/control_execution_fault_tests.ml", line 99, characters 0-1:
+ |    encode (Instruction.Ldi { rd = 0; value = 0xffff })
+ |    @ encode (Instruction.Jump_reg { rs = 0 })
+ |    @ encode Instruction.Halt
+ |    |> run_words
+ |  in
+ |  check_fault
+ |    oversized
+ |    Execution_unit.Fault.target_unrepresentable
+ |    ~instruction_slot:2
+ |    ~address:0xffff;
+ |  let physical =
+ |    encode (Instruction.Ldi { rd = 0; value = 256 })
+ |    @ encode (Instruction.Jump_reg { rs = 0 })
+ |    @ encode Instruction.Halt
+ |    |> run_words
+ |  in
+-|  check_fault
+-|    physical
+-|    Execution_unit.Fault.fetch_bounds
+-|    ~instruction_slot:2
+-|    ~address:256
++|  check_fault physical Execution_unit.Fault.fetch_bounds ~instruction_slot:2 ~address:256
+ |;;
+ |
+ |let%test_unit "sequential fallthrough beyond the verified image becomes a fetch fault" =
+ |  let words = encode (Instruction.Mov { rd = 0; rs = 0 }) in
+ |  let t = run_words words in
+ |  check_fault t Execution_unit.Fault.fetch_bounds ~instruction_slot:0 ~address:1;
+ |  [%test_result: int] (int (outputs t).instruction_count_o) ~expect:1
+ |;;
+ |
+ |let%test_unit "accepted RUN is fresh and a disabled pending fetch is cancelled" =
+ |  let t = create () in
+ |  let words =
+ |    encode (Instruction.Ldi { rd = 0; value = 0x1234 }) @ encode Instruction.Halt
+ |  in
+ |  load_image t (Array.of_list words);
+ |  let first = run_until_halted t () in
+File "ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml", line 1, characters 0-0:
+------ ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml
+++++++ ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml.corrected
+File "ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml", line 101, characters 0-1:
+ |    schedule (time + 1) (fun () ->
+ |      set inputs.control_request_i.readback_valid.signal Bits.gnd;
+ |      set inputs.control_request_i.readback_verify.signal Bits.gnd));
+ |  pulse inputs.control_request_i.load_complete_valid.signal ~edge:21 Bits.vdd;
+ |  pulse inputs.control_request_i.run_valid.signal ~edge:22 Bits.vdd;
+ |  Option.iter external_time ~f:(fun time ->
+ |    schedule time (fun () -> set inputs.pin_async_i.signal (bits 8 0x08)));
+ |  let edges = 48 in
+ |  List.iter (List.init edges ~f:Fn.id) ~f:(fun edge ->
+ |    let time = first_rising + (edge * period) in
+ |    schedule time (fun () ->
+ |      let mem_enable = read outputs.prog_mem_enable_o.signal <> 0 in
+ |      let mem_write = read outputs.prog_mem_write_enable_o.signal <> 0 in
+ |      let address = read outputs.prog_mem_address_o.signal in
+ |      let data = read outputs.prog_mem_write_data_o.signal in
+ |      if read outputs.mechanism_completion_valid_o.signal <> 0
+-|         && read outputs.mechanism_kind_o.signal
+-|            = Execution_unit.Mechanism_kind.wait_edge
++|         && read outputs.mechanism_kind_o.signal = Execution_unit.Mechanism_kind.wait_edge
+ |         && Option.is_none !decision
+ |      then decision := Some time;
+ |      if read outputs.mechanism_request_valid_o.signal <> 0
+ |         && read outputs.mechanism_kind_o.signal
+ |            = Execution_unit.Mechanism_kind.write_pins_imm
+ |         && Option.is_some !decision
+ |         && Option.is_none !bank_request
+ |      then bank_request := Some time;
+ |      settle 32 (fun () -> set inputs.clock_i.signal Bits.vdd);
+ |      settle 40 (fun () ->
+ |        if mem_enable
+ |        then
+ |          if mem_write
+ |          then memory.(address) <- data
+ |          else set inputs.prog_mem_read_data_i.signal (bits 16 memory.(address))));
+ |    schedule (time + half_period) (fun () ->
+File "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml", line 1, characters 0-0:
+------ ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml
+++++++ ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml.corrected
+File "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml", line 18, characters 0-1:
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "frame_rx_validation_tests.ml" *)
+ |(* HL4c: [Frame_rx]'s deselect validation, byte bound, sticky overrun, and correlation.
+ |
+ |   Every expected result is written by hand from the P3.5 record's framing rules, not from
+ |   the receiver's expressions:
+ |
+ |   - a twelfth byte is overrun ([Bad_length]), and nothing later in that selection can
+ |     make the frame valid;
+ |   - otherwise a frame that is not whole bytes, or whose length is not the declared
+ |     payload length plus seven, is [Incomplete];
+ |   - otherwise magic, then version, then CRC are checked ([Bad_magic], [Bad_version],
+ |     [Bad_crc]);
+ |   - tag and command are echoed only when all four bytes through the command arrived.
+ |
+ |   Command legality, each command's fixed length, and device bounds are dispatch-stage
+-|   decisions in [Host_link]. Here such frames are [Complete] and the raw fields they
+-|   need are retained.
++|   decisions in [Host_link]. Here such frames are [Complete] and the raw fields they need
++|   are retained.
+ |
+ |   The receiver also maps a declared length above four to [Bad_length] after the header
+ |   checks. No frame reaches that branch: a whole-byte frame of length plus seven bytes has
+ |   at most eleven bytes, so its length is at most four, and a longer frame is overrun
+ |   first. Lengths five to eight are therefore tested through overrun.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml_protemu
+ |open! Frame_rx_testbench
+ |
+ |(* The result, echo, tag, and command presented in the release cycle. *)
+ |let expect_result t ~released what ~result ~echo_valid ~tag ~command =
+ |  let s = observed t released in
+ |  check
+ |    t
+File "rtl/protemu_top.ml", line 1, characters 0-0:
+------ rtl/protemu_top.ml
+++++++ rtl/protemu_top.ml.corrected
+File "rtl/protemu_top.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "protemu_top.ml" *)
+-|(*
+-|  Owning toplevel of the protocol emulator system with the emulator core; Has an external program-memory port that the owning chip_top instantiates connected to this item.
++|(* Owning toplevel of the protocol emulator system with the emulator core; Has an external
++|   program-memory port that the owning chip_top instantiates connected to this item.
+ |
+-|  Composition only; it holds no state, decodes no frames, and owns no RAM.
++|   Composition only; it holds no state, decodes no frames, and owns no RAM.
+ |
+-|  Logical interfaces:
+-|  - Serial host link: [serial_select_n_i], [serial_clock_i], [serial_data_i] in;
+-|    [serial_data_o], [serial_ready_o] out. Passed straight to [Host_link].
+-|  - Program memory: the external latency-one 1RW port, [prog_mem_*]. [Emulator_core]
+-|    drives the request side and consumes [prog_mem_read_data_i]; the package top
+-|    supplies the storage resource at this boundary.
+-|  - Protocol pins: [pin_async_i], [occupied_i] in; [pins_o], [pin_oe_o] out, owned by
+-|    [Emulator_core]'s mechanisms.
+-|  - Internal only: [Host_link] and [Emulator_core] connect through the three
+-|    [Control_port] records (request, decision, status).
+-|
+-|  Unused tie-offs on [Emulator_core]: single-step, software pin claim/release, and the
+-|  TX/RX byte queues are inactive (valid low, masks and data zero, [tx_ready_i] low);
+-|  [transfer_rx_ready_i] is held high (always ready).
+-|
+-|  Emitted instance names stay "core" and "loader" (pre-rename compatibility surface; see
+-|  docs/architecture_migration.md).
++|   Logical interfaces:
++|   - Serial host link: [serial_select_n_i], [serial_clock_i], [serial_data_i] in;
++|     [serial_data_o], [serial_ready_o] out. Passed straight to [Host_link].
++|   - Program memory: the external latency-one 1RW port, [prog_mem_*]. [Emulator_core]
++|     drives the request side and consumes [prog_mem_read_data_i]; the package top supplies
++|     the storage resource at this boundary.
++|   - Protocol pins: [pin_async_i], [occupied_i] in; [pins_o], [pin_oe_o] out, owned by
++|     [Emulator_core]'s mechanisms.
++|   - Internal only: [Host_link] and [Emulator_core] connect through the three
++|     [Control_port] records (request, decision, status).
++|
++|   Unused tie-offs on [Emulator_core]: single-step, software pin claim/release, and the
++|   TX/RX byte queues are inactive (valid low, masks and data zero, [tx_ready_i] low);
++|   [transfer_rx_ready_i] is held high (always ready).
++|
++|   Emitted instance names stay "core" and "loader" (pre-rename compatibility surface; see
++|   docs/architecture_migration.md).
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |[@@@ocamlformat "disable"]
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i               : 'a
+ |    ; reset_i               : 'a
+ |    ; enable_i              : 'a
+ |    ; serial_select_n_i     : 'a
+ |    ; serial_clock_i        : 'a
+ |    ; serial_data_i         : 'a
+ |    ; prog_mem_read_data_i  : 'a [@bits Program_memory_controller.Config.program_width]
+File "rtl/protemu_top.ml", line 123, characters 0-1:
+ |  in
+ |
+ |  (* Knot-tying for forward declares *)
+ |  Control_port.Request.Of_signal.assign request host_link.control_request_o;
+ |
+ |  { O.
+ |    serial_data_o           = host_link.serial_data_o
+ |  ; serial_ready_o          = host_link.serial_ready_o
+ |  ; prog_mem_enable_o       = core.prog_mem_enable_o
+ |  ; prog_mem_write_enable_o = core.prog_mem_write_enable_o
+ |  ; prog_mem_address_o      = core.prog_mem_address_o
+ |  ; prog_mem_write_data_o   = core.prog_mem_write_data_o
+ |  ; pins_o                  = core.pins_o
+ |  ; pin_oe_o                = core.pin_oe_o
+ |  }
+ |[@@@ocamlformat "enable"]
+-|;;
+File "ip/emulator_core/rtl/control_port.ml", line 1, characters 0-0:
+------ ip/emulator_core/rtl/control_port.ml
+++++++ ip/emulator_core/rtl/control_port.ml.corrected
+File "ip/emulator_core/rtl/control_port.ml", line 7, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "control_port.ml" *)
+ |(* The core control port: the request, decision, and status records shared by every
+ |   producer of core control.
+ |
+-|   [Emulator_core] owns this contract. [Host_link] (over serial) and
+-|   [Simulator_backend] (directly in Cyclesim) are two transports over it. The records are
+-|   direction-neutral; a module embeds them with its own [_i] or [_o] suffix, so the fields
+-|   keep the port names they had before the records existed. This module depends only on
+-|   the width definitions of [Program_memory_controller], [Execution_unit], and [Protemu_isa], never
+-|   on a consumer.
++|   [Emulator_core] owns this contract. [Host_link] (over serial) and [Simulator_backend]
++|   (directly in Cyclesim) are two transports over it. The records are direction-neutral; a
++|   module embeds them with its own [_i] or [_o] suffix, so the fields keep the port names
++|   they had before the records existed. This module depends only on the width definitions
++|   of [Program_memory_controller], [Execution_unit], and [Protemu_isa], never on a
++|   consumer.
+ |
+ |   Step, pin claim/release, queues, pads, and program RAM are not part of this port. They
+ |   remain separate ports of [Emulator_core], and a transport that does not use them ties
+ |   them off.
+ |
+-|   Temporal contract. Every statement is derived from [Emulator_core], [Program_memory_controller],
+-|   and both producers as they exist, not from a cleaner handshake.
++|   Temporal contract. Every statement is derived from [Emulator_core],
++|   [Program_memory_controller], and both producers as they exist, not from a cleaner
++|   handshake.
+ |
+ |   1. Offers. Each rising edge of the core clock with a [*_valid] field high is one offer
+ |      of that request, decided in that cycle. There is no ready signal, stall, or held
+ |      offer: the core never defers a decision to a later cycle. A valid that stays high is
+ |      a new offer on the next edge, decided against the updated state. Both producers
+ |      raise a valid for exactly one cycle per operation and never re-offer automatically.
+ |
+ |   2. Operands. An operand is meaningful only in a cycle where its request's valid is
+ |      high. It must be stable before the sampling edge of that cycle. The core consumes it
+ |      then and registers what a later cycle needs (image length, verify flag, expected
+-|      word), so operands need not stay stable after the offer. [Host_link] drives
+-|      them continuously from its retained request registers; [Simulator_backend] drives
+-|      them only in the offer cycle and zeroes them otherwise.
++|      word), so operands need not stay stable after the offer. [Host_link] drives them
++|      continuously from its retained request registers; [Simulator_backend] drives them
++|      only in the offer cycle and zeroes them otherwise.
+ |
+ |   3. Decisions. Acceptance is combinational from the offer and the current core state. It
+ |      is observed in the offer cycle, before the sampling edge. Its effect is visible
+ |      after that edge. Rejection is [valid & ~accepted]: during a valid offer exactly one
+ |      of the pair is high, and with no offer both are low. Both signals are kept even
+ |      though [Host_link] reads only acceptance.
+ |
+ |   4. Arbitration. Neither producer offers two requests in one cycle, but the core
+ |      resolves simultaneous offers as follows.
+ |      - ABORT is accepted whenever offered while enabled and out of reset. It halts
+ |        execution at that edge, which refuses every other request in the same cycle.
+ |      - STOP is accepted whenever offered while enabled, out of reset, and without an
+ |        ABORT offer, whatever the execution state. It refuses a simultaneous RUN. It does
+ |        not itself refuse program requests; only a pause that it causes at an instruction
+ |        boundary in that cycle does.
+ |      - Program requests need the core halted, engines idle, and no execution halt in that
+ |        cycle. Among themselves the order is LOAD_START, LOAD_WRITE, READBACK,
+ |        LOAD_COMPLETE, by validity rather than acceptance: a higher offer refuses the
+ |        lower ones even if it is itself refused.
+ |      - RUN is refused by any program request, STOP or ABORT offer, or step request in the
+ |        same cycle.
+ |
+ |   5. READBACK completion. Acceptance issues the RAM read at the sampling edge. The
+ |      response fields are registered: for an offer accepted at edge E,
+ |      [readback_response_valid] is high for exactly the cycle between edges E+1 and E+2,
+ |      and [readback_response_data] and [readback_response_match] are meaningful only then.
+ |      A second READBACK is refused while the response is outstanding. Reset, disable, an
+ |      accepted ABORT, or an accepted LOAD_START in the cycle between E and E+1 cancels the
+-|      response; it never appears later. [Host_link] waits for the valid pulse with
+-|      no bound. [Simulator_backend] requires it in the next post-edge observation and
+-|      reports its absence as a backend invariant.
++|      response; it never appears later. [Host_link] waits for the valid pulse with no
++|      bound. [Simulator_backend] requires it in the next post-edge observation and reports
++|      its absence as a backend invariant.
+ |
+ |   6. ABORT completion. Acceptance is not cleanup. Cleanup is complete when the status
+ |      shows [halted], [engines_idle], and zero [pin_oe], [software_claim], and
+ |      [engine_claim]. The core completes cleanup at the accepting edge (P3.3's control
+ |      contract; P3.4's prompt completion boundary), so the first observation after that
+-|      edge shows it. [Host_link] waits for that condition with no bound before
+-|      responding. [Simulator_backend] does not wait: it reports completion only if that
+-|      single observation shows it.
++|      edge shows it. [Host_link] waits for that condition with no bound before responding.
++|      [Simulator_backend] does not wait: it reports completion only if that single
++|      observation shows it.
+ |
+ |   7. STOP completion. Acceptance is not halting. If execution is active, the core latches
+ |      the request and halts at the next instruction boundary; there is no bound on how
+ |      long that takes. Halting is observed only through [Status.halted]. A STOP accepted
+ |      while already halted leaves nothing pending, so a later RUN is not paused by it.
+ |
+ |   8. Reset and disable. While [reset_i] is high or [en_i] is low, every offer is refused:
+ |      its accepted signal is low and its rejected signal follows its valid. Either one
+ |      cancels an outstanding READBACK response and any pending STOP. Disable halts
+ |      execution and cancels mechanisms but preserves a completed image; reset also
+ |      invalidates it. [Host_link] also discards its own dispatch, wait, and response
+ |      state; [Simulator_backend] holds no request across cycles.
+ |
+ |   9. Status. Every [Status] field is a live observation of core state, not an event, and
+ |      has no valid qualifier. [Host_link] samples it before an edge: in a command's
+ |      dispatch cycle to classify a refusal or build a STATUS response, and on each cycle
+ |      of an ABORT wait. [Simulator_backend] samples it after an edge, and classifies a
+ |      refusal from the status observed before it drives the offer.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |(* The shared request subset. A field is a valid bit or an operand of the request named by
+-|   its prefix. Addresses and lengths keep [Program_memory_controller]'s request width, one bit wider
+-|   than the physical port, so the core checks bounds before narrowing.
++|   its prefix. Addresses and lengths keep [Program_memory_controller]'s request width, one
++|   bit wider than the physical port, so the core checks bounds before narrowing.
+ |*)
+ |module Request = struct
+ |  type 'a t =
+ |    { load_start_valid : 'a
+ |    ; load_length : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; load_write_valid : 'a
+ |    ; load_address : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; load_data : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; load_complete_valid : 'a
+ |    ; readback_valid : 'a
+ |    ; readback_address : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; readback_verify : 'a
+ |    ; readback_expected : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; run_valid : 'a
+ |    ; stop_valid : 'a
+ |    ; abort_valid : 'a
+File "ip/host_link/rtl/command_dispatch.ml", line 1, characters 0-0:
+------ ip/host_link/rtl/command_dispatch.ml
+++++++ ip/host_link/rtl/command_dispatch.ml.corrected
+File "ip/host_link/rtl/command_dispatch.ml", line 14, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "command_dispatch.ml" *)
+ |(* P3.5 serial loader command dispatch: command legality, fixed lengths and device bounds,
+ |   one-shot core offers, refusal classification, READ/VERIFY and ABORT completion waits,
+ |   and selection of every response frame.
+ |
+ |   It consumes [Frame_rx]'s deselect handoff and retained request fields as plain inputs
+ |   and adds no request register. A frame that failed validation publishes its error
+ |   response in the handoff cycle itself. A valid frame arms [dispatch] for the next cycle,
+ |   which offers a legal core command exactly once (INFO, STATUS, and rejected commands
+ |   offer nothing) and either publishes an immediate response or enters a completion wait;
+ |   each wait ends by publishing its response. Publication is combinational, in the cycle
+-|   the response is decided: [Host_link] stores the frame at that edge, with no
+-|   ready, queue, or pipeline stage. Neither the offers nor the publication are gated by
+-|   reset or disable; the core refuses such an offer and the loader discards such a
+-|   response.
+-|
+-|   [busy_o] covers dispatch and both waits. [Host_link] keeps requests ineligible
+-|   while [busy_o] is high or a response is retained, so the fields read here hold until
+-|   the response is committed. docs/host_link_hl4b3_record.md records the ownership and
+-|   timing contract. [check_wire_encodings] checks the response and payload layouts built
+-|   here, and the fault and phase mapping STATUS relies on, against [Wire] whenever this
+-|   block is elaborated; [Wire_crc] checks the CRC parameters.
++|   the response is decided: [Host_link] stores the frame at that edge, with no ready,
++|   queue, or pipeline stage. Neither the offers nor the publication are gated by reset or
++|   disable; the core refuses such an offer and the loader discards such a response.
++|
++|   [busy_o] covers dispatch and both waits. [Host_link] keeps requests ineligible while
++|   [busy_o] is high or a response is retained, so the fields read here hold until the
++|   response is committed. docs/host_link_hl4b3_record.md records the ownership and timing
++|   contract. [check_wire_encodings] checks the response and payload layouts built here,
++|   and the fault and phase mapping STATUS relies on, against [Wire] whenever this block is
++|   elaborated; [Wire_crc] checks the CRC parameters.
+ |
+ |   The core-facing side is [Control_port]: this block produces its [Request] and consumes
+ |   its [Decision] and [Status], under the temporal contract recorded there.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |module Wire = Protemu_host_link_wire.Wire
+ |
+ |(* Response sizing derived from the wire limits, and the descriptor INFO reports. *)
+ |module Config = struct
+ |  let max_response_bytes = Wire.Response.max_length
+ |  let response_bits = max_response_bytes * 8
+ |
+ |  (* The instruction specification's version, not the wire's. *)
+ |  let isa_version = 1
+ |  let memory_layout = Wire.Info.memory_layout_m16
+ |
+ |  (* Every version-1 capability is implemented. *)
+ |  let capabilities = Wire.Capability.all
+ |end
+ |
+ |(* STATUS reports the execution unit's fault kind and phase by wiring its encodings
+ |   straight into the payload, with no translation logic. That is only correct while each
+ |   stable wire value equals the internal value it reports. These functions are the
+ |   mapping, and [check_wire_encodings] refuses to elaborate if the two diverge; a
+ |   divergence needs an explicit translation here, never a renumbered wire value.
+ |
+-|   Careful: [Execution_unit.Fault] and [Phase] are plain integers with no enumeration,
+-|   so the check covers every wire value but cannot see a new internal value. Adding one
+-|   there is a P3 protocol change that must add its [Wire] value first.
++|   Careful: [Execution_unit.Fault] and [Phase] are plain integers with no enumeration, so
++|   the check covers every wire value but cannot see a new internal value. Adding one there
++|   is a P3 protocol change that must add its [Wire] value first.
+ |*)
+ |let execution_fault : Wire.Fault_kind.t -> int = function
+ |  | No_fault -> Execution_unit.Fault.none
+ |  | Invalid_base -> Execution_unit.Fault.invalid_base
+ |  | Invalid_extension -> Execution_unit.Fault.invalid_extension
+ |  | Fetch_bounds -> Execution_unit.Fault.fetch_bounds
+ |  | Truncated_extension -> Execution_unit.Fault.truncated_extension
+ |  | Target_unrepresentable -> Execution_unit.Fault.target_unrepresentable
+ |  | Mechanism_refused -> Execution_unit.Fault.mechanism_refused
+ |  | Mechanism_completion -> Execution_unit.Fault.mechanism_completion
+ |  | Unsolicited_completion -> Execution_unit.Fault.unsolicited_completion
+ |  | Mechanism_protocol -> Execution_unit.Fault.mechanism_protocol
+ |;;
+ |
+ |let execution_phase : Wire.Phase.t -> int = function
+ |  | Halted -> Execution_unit.Phase.halted
+File "ip/mechanisms/rtl/byte_fifo.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/byte_fifo.ml
+++++++ ip/mechanisms/rtl/byte_fifo.ml.corrected
+File "ip/mechanisms/rtl/byte_fifo.ml", line 6, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "byte_fifo.ml" *)
+ |(* A small flop-backed byte queue with separate push and pop handshakes.
+ |
+-|   Protocol blocks can use [push_ready_o] and [pop_valid_o] to transfer one byte per
+-|   edge. The default depth is eight; [create] also accepts four or sixteen entries.
++|   Protocol blocks can use [push_ready_o] and [pop_valid_o] to transfer one byte per edge.
++|   The default depth is eight; [create] also accepts four or sixteen entries.
+ |
+ |   A pop from a full queue frees a slot for a push on the same edge. Reset clears the
+ |   control registers; disabling the queue clears its occupancy and indices. Neither
+ |   operation clears the data flops, whose contents are ignored while the queue is empty.
+ |   This block does not interpret bytes or decide when a producer should retry.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |(* Inputs to the queue; both handshakes use [clock_i]'s rising edge. *)
+ |module I = struct
+ |  type 'a t =
+ |    { (* Synchronous, active-high reset; [enable_i] gates both handshakes. *)
+ |      clock_i : 'a
+File "ip/emulator_core/rtl/legacy/executable_core.ml", line 1, characters 0-0:
+------ ip/emulator_core/rtl/legacy/executable_core.ml
+++++++ ip/emulator_core/rtl/legacy/executable_core.ml.corrected
+File "ip/emulator_core/rtl/legacy/executable_core.ml", line 8, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "executable_core.ml" *)
+ |(* P3.2 composition of program access and minimal control execution.
+ |
+ |   The external memory port and all load/readback ownership remain
+ |   Program_memory_controller's. The execution client receives only accepted RUN, fetch
+-|   decisions, and owned completions.
+-|   P3.3 supplies the mechanism responder through the exposed command interface.
++|   decisions, and owned completions. P3.3 supplies the mechanism responder through the
++|   exposed command interface.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; en_i : 'a
+ |    ; engines_idle_i : 'a
+ |    ; load_start_valid_i : 'a
+ |    ; load_length_i : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; load_write_valid_i : 'a
+ |    ; load_address_i : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; load_data_i : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; load_complete_valid_i : 'a
+ |    ; readback_valid_i : 'a
+-|    ; readback_address_i : 'a [@bits Program_memory_controller.Config.request_address_bits]
++|    ; readback_address_i : 'a
++|         [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; readback_verify_i : 'a
+ |    ; readback_expected_i : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; run_valid_i : 'a
+ |    ; prog_mem_read_data_i : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; mechanism_accepted_i : 'a
+ |    ; mechanism_refused_i : 'a
+-|    ; mechanism_refusal_reason_i : 'a
+-|         [@bits Execution_unit.Config.mechanism_reason_bits]
++|    ; mechanism_refusal_reason_i : 'a [@bits Execution_unit.Config.mechanism_reason_bits]
+ |    ; mechanism_completion_valid_i : 'a
+ |    ; mechanism_completion_result_i : 'a [@bits 16]
+ |    ; mechanism_completion_fault_i : 'a
+ |    ; mechanism_completion_reason_i : 'a
+ |         [@bits Execution_unit.Config.mechanism_reason_bits]
+ |    }
+ |  [@@deriving hardcaml]
+ |end
+ |
+ |module O = struct
+ |  type 'a t =
+ |    { prog_mem_enable_o : 'a
+ |    ; prog_mem_write_enable_o : 'a
+-|    ; prog_mem_address_o : 'a [@bits Program_memory_controller.Config.program_address_bits]
++|    ; prog_mem_address_o : 'a
++|         [@bits Program_memory_controller.Config.program_address_bits]
+ |    ; prog_mem_write_data_o : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; load_start_accepted_o : 'a
+ |    ; load_start_rejected_o : 'a
+ |    ; load_write_accepted_o : 'a
+ |    ; load_write_rejected_o : 'a
+ |    ; load_complete_accepted_o : 'a
+ |    ; load_complete_rejected_o : 'a
+ |    ; readback_accepted_o : 'a
+ |    ; readback_rejected_o : 'a
+ |    ; run_accepted_o : 'a
+ |    ; run_rejected_o : 'a
+ |    ; readback_response_valid_o : 'a
+ |    ; readback_response_data_o : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; readback_response_match_o : 'a
+ |    ; fetch_completion_valid_o : 'a
+ |    ; fetch_completion_data_o : 'a [@bits Program_memory_controller.Config.program_width]
+File "ip/emulator_core/rtl/emulator_core.ml", line 1, characters 0-0:
+------ ip/emulator_core/rtl/emulator_core.ml
+++++++ ip/emulator_core/rtl/emulator_core.ml.corrected
+File "ip/emulator_core/rtl/emulator_core.ml", line 48, characters 0-1:
+ |    ; software_claim_valid_i : 'a
+ |    ; software_claim_mask_i : 'a [@bits Protemu_isa.Pins.count]
+ |    ; software_release_valid_i : 'a
+ |    ; software_release_mask_i : 'a [@bits Protemu_isa.Pins.count]
+ |    ; tx_ready_i : 'a
+ |    ; rx_valid_i : 'a
+ |    ; rx_data_i : 'a [@bits 8]
+ |    ; transfer_rx_ready_i : 'a
+ |    }
+ |  [@@deriving hardcaml ~rtlmangle:false]
+ |end
+ |
+ |module O = struct
+ |  type 'a t =
+ |    { prog_mem_enable_o : 'a
+ |    ; prog_mem_write_enable_o : 'a
+-|    ; prog_mem_address_o : 'a [@bits Program_memory_controller.Config.program_address_bits]
++|    ; prog_mem_address_o : 'a
++|         [@bits Program_memory_controller.Config.program_address_bits]
+ |    ; prog_mem_write_data_o : 'a [@bits Program_memory_controller.Config.program_width]
+ |    ; (* Shared control decisions; see [Control_port]. Flat names, such as
+ |         [load_start_accepted_o]. [control_status] gathers the shared status below. *)
+ |      control_decision_o : 'a Control_port.Decision.t [@rtlsuffix "_o"]
+ |    ; step_accepted_o : 'a
+ |    ; step_rejected_o : 'a
+ |    ; halted_o : 'a
+ |    ; engines_idle_o : 'a
+ |    ; image_valid_o : 'a
+ |    ; load_active_o : 'a
+ |    ; image_length_o : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; words_written_o : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; words_verified_o : 'a [@bits Program_memory_controller.Config.request_address_bits]
+ |    ; verification_failed_o : 'a
+ |    ; fetch_fault_o : 'a
+ |    ; execution_active_o : 'a
+File "ip/host_link/rtl/host_link.ml", line 1, characters 0-0:
+------ ip/host_link/rtl/host_link.ml
+++++++ ip/host_link/rtl/host_link.ml.corrected
+File "ip/host_link/rtl/host_link.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "host_link.ml" *)
+-|(*
+-|  The complete serial host-control endpoint. This can be thought of as a large IP block that would go into an ASIC where the customer is other people on the chip itself.
++|(* The complete serial host-control endpoint. This can be thought of as a large IP block
++|   that would go into an ASIC where the customer is other people on the chip itself.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+-|  type 'a t = 
+-|  {
+-|      clock_i   : 'a
+-|    ; reset_i   : 'a
+-|    ; enable_i  : 'a
+-|
+-|    (* select is active low, clock idles low; built in loose symmetry to SPI *)
+-|    ; serial_select_n_i : 'a
+-|    ; serial_clock_i    : 'a (* fed from the master; in this case the external clock pin *)
+-|    ; serial_data_i     : 'a
+-|
+-|    (* These are the wrapped words that are input/output *)
+-|    (* do these not have some sort of backpressure emission scheme? *)
+-|    (* The fanout on these is VERY LARGE; be warned here, as the interface nesting is much more intense than you might think; *)
+-|    ; control_decision_i : 'a Control_port.Decision.t [@rtlsuffix "_i"]
+-|
+-|    (* This is our status bus; In theory we include a pin that does some sort of scan chain thing for DFT? *)
+-|    ; control_status_i : 'a Control_port.Status.t [@rtlsuffix "_i"]
+-|  } [@@deriving hardcaml ~rtlmangle:false]
++|  type 'a t =
++|    { clock_i : 'a
++|    ; reset_i : 'a
++|    ; enable_i : 'a
++|        (* select is active low, clock idles low; built in loose symmetry to SPI *)
++|    ; serial_select_n_i : 'a
++|    ; serial_clock_i : 'a (* fed from the master; in this case the external clock pin *)
++|    ; serial_data_i : 'a
++|        (* These are the wrapped words that are input/output *)
++|        (* do these not have some sort of backpressure emission scheme? *)
++|        (* The fanout on these is VERY LARGE; be warned here, as the interface nesting is
++|           much more intense than you might think; *)
++|    ; control_decision_i : 'a Control_port.Decision.t
++|         [@rtlsuffix "_i"]
++|         (* This is our status bus; In theory we include a pin that does some sort of scan
++|            chain thing for DFT? *)
++|    ; control_status_i : 'a Control_port.Status.t [@rtlsuffix "_i"]
++|    }
++|  [@@deriving hardcaml ~rtlmangle:false]
+ |end
+ |
+ |module O = struct
+-|  type 'a t = 
+-|    {
+-|      (* the data *)
+-|      serial_data_o       : 'a
+-|
+-|      (* Highkey no idea what this is for; and why it isnt a valid signal instead? *)
+-|    ; serial_ready_o      : 'a
+-|
+-|    (* This is the emitted request the serial link is making to the control core; *)
+-|    ; control_request_o   : 'a Control_port.Request.t [@rtlsuffix "_o"]
+-|
+-|    (* Main busy designator. A proper CSR block might be in order; we'll see. *)
+-|    ; busy_o              : 'a
+-|    } [@@deriving hardcaml ~rtlmangle:false]
++|  type 'a t =
++|    { (* the data *)
++|      serial_data_o : 'a
++|        (* Highkey no idea what this is for; and why it isnt a valid signal instead? *)
++|    ; serial_ready_o : 'a
++|        (* This is the emitted request the serial link is making to the control core; *)
++|    ; control_request_o : 'a Control_port.Request.t
++|         [@rtlsuffix "_o"]
++|         (* Main busy designator. A proper CSR block might be in order; we'll see. *)
++|    ; busy_o : 'a
++|    }
++|  [@@deriving hardcaml ~rtlmangle:false]
+ |end
+ |
+ |[@@@ocamlformat "disable"]
+ |
+ |let create 
+ |  (scope : Scope.t) 
+ |  (i : _ I.t) 
+ |  : _ O.t =
+ |
+ |  (* Synchronized pins and their one-cycle events; see [Serial_phy] for their timing. *)
+ |  let phy =
+ |    Serial_phy.create
+ |      (Scope.sub_scope scope "serial_phy")
+ |      { Serial_phy.I.clock_i = i.clock_i
+ |      ; reset_i              = i.reset_i
+ |      ; enable_i             = i.enable_i
+File "ip/host_link/rtl/serial_phy.ml", line 1, characters 0-0:
+------ ip/host_link/rtl/serial_phy.ml
+++++++ ip/host_link/rtl/serial_phy.ml.corrected
+File "ip/host_link/rtl/serial_phy.ml", line 19, characters 0-1:
+ |(* Module: "serial_phy.ml" *)
+ |(* P3.5 serial loader PHY: pin synchronizers, edge events, and deselect qualification.
+ |
+ |   [LSEL_N], [LCLK], and [LDI] pass through matching two-stage synchronizers into the
+ |   system clock domain; the host clock never clocks logic. A pin value driven in cycle n
+ |   is visible as a level in cycle n+2, and a change is reported as a one-cycle event in
+ |   that same cycle. Deselect qualification counts synchronized deselected cycles and
+ |   saturates at the threshold response arming uses.
+ |
+ |   Every output is a function of this block's registers alone, so reset and disable act
+ |   only through the next edge. Reset clears every register, which reads as deselected with
+ |   [LCLK] and [LDI] low. Disable clears only the qualification count; the synchronizers
+ |   and edge history keep running.
+ |
+ |   This block interprets no frame. [Frame_rx] owns request arming and framing,
+ |   [Command_dispatch] dispatch, and [Frame_tx] response arming, the retained response, and
+-|   commit; [Host_link] composes them. docs/host_link_hl4b1_record.md records the
+-|   timing contract.
++|   commit; [Host_link] composes them. docs/host_link_hl4b1_record.md records the timing
++|   contract.
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |(* Deselected cycles, not counting the current one, that qualify a selection for a
+ |   response read.
+ |*)
+ |let deselect_qualification = 4
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { (* System clock domain; reset is synchronous and active high. Disable clears the
+ |         deselect qualification only. *)
+ |      clock_i : 'a
+File "ip/mechanisms/rtl/input_events.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/input_events.ml
+++++++ ip/mechanisms/rtl/input_events.ml.corrected
+File "ip/mechanisms/rtl/input_events.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "input_events.ml" *)
+-|(* Two-stage pad synchronizer and six independent sticky event bits. The snapshot and
+-|   edge outputs describe the same registered cycle. New events win over acknowledge. *)
++|(* Two-stage pad synchronizer and six independent sticky event bits. The snapshot and edge
++|   outputs describe the same registered cycle. New events win over acknowledge. *)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; pin_in_i : 'a [@bits 8]
+ |    ; event_set_i : 'a [@bits 6]
+ |    ; event_ack_i : 'a [@bits 6]
+ |    }
+ |  [@@deriving hardcaml]
+ |end
+ |
+File "ip/mechanisms/rtl/input_events.ml", line 55, characters 0-1:
+ |    ; event : 'a [@bits 6]
+ |    ; overflow : 'a [@bits 6]
+ |    }
+ |  [@@deriving hardcaml]
+ |end
+ |
+ |let create (scope : Scope.t) (i : _ I.t) : _ O.t =
+ |  let open Always in
+ |  let spec = Reg_spec.create ~clock:i.clock_i ~clear:i.reset_i () in
+ |  let r = I_Regs.Of_always.reg spec in
+ |  I_Regs.Of_always.apply_names ~prefix:"reg_" ~naming_op:(Scope.naming scope) r;
+ |  let lost = r.event.value &: i.event_set_i &: ~:(i.event_ack_i) in
+ |  compile
+ |    [ r.stage0 <-- i.pin_in_i
+ |    ; r.stage1 <-- r.stage0.value
+ |    ; r.previous <-- r.stage1.value
+-|    ; r.event <-- ((r.event.value &: ~:(i.event_ack_i)) |: i.event_set_i)
+-|    ; r.overflow <-- ((r.overflow.value &: ~:(i.event_ack_i)) |: lost)
++|    ; r.event <-- (r.event.value &: ~:(i.event_ack_i) |: i.event_set_i)
++|    ; r.overflow <-- (r.overflow.value &: ~:(i.event_ack_i) |: lost)
+ |    ];
+ |  { O.snapshot_o = r.stage1.value
+ |  ; rising_o = r.stage1.value &: ~:(r.previous.value)
+ |  ; falling_o = ~:(r.stage1.value) &: r.previous.value
+ |  ; event_o = r.event.value
+ |  ; overflow_o = r.overflow.value
+ |  }
+ |;;
+File "ip/mechanisms/rtl/pin_bank.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/pin_bank.ml
+++++++ ip/mechanisms/rtl/pin_bank.ml.corrected
+File "ip/mechanisms/rtl/pin_bank.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "pin_bank.ml" *)
+-|(* Eight registered protocol pins. Claims are exclusive between software and one engine.
+-|   A commit and its value/enable bits take effect together at the accepting edge. *)
++|(* Eight registered protocol pins. Claims are exclusive between software and one engine. A
++|   commit and its value/enable bits take effect together at the accepting edge. *)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; enable_i : 'a
+ |    ; abort_i : 'a
+ |    ; claim_valid_i : 'a
+ |    ; claim_engine_i : 'a
+ |    ; claim_mask_i : 'a [@bits 8]
+ |    ; release_valid_i : 'a
+ |    ; release_engine_i : 'a
+File "ip/mechanisms/rtl/pin_bank.ml", line 63, characters 0-1:
+ |  type 'a t =
+ |    { pins : 'a [@bits 8]
+ |    ; pin_oe : 'a [@bits 8]
+ |    ; software_claim : 'a [@bits 8]
+ |    ; engine_claim : 'a [@bits 8]
+ |    ; rejected : 'a
+ |    ; conflict : 'a
+ |    }
+ |  [@@deriving hardcaml]
+ |end
+ |
+ |let create (scope : Scope.t) (i : _ I.t) : _ O.t =
+ |  let open Always in
+ |  let spec = Reg_spec.create ~clock:i.clock_i ~clear:i.reset_i () in
+ |  let r = I_Regs.Of_always.reg spec in
+ |  I_Regs.Of_always.apply_names ~prefix:"reg_" ~naming_op:(Scope.naming scope) r;
+-|  let other_claim =
+-|    mux2 i.write_engine_i r.software_claim.value r.engine_claim.value
+-|  in
+-|  let claim_other =
+-|    mux2 i.claim_engine_i r.software_claim.value r.engine_claim.value
+-|  in
++|  let other_claim = mux2 i.write_engine_i r.software_claim.value r.engine_claim.value in
++|  let claim_other = mux2 i.claim_engine_i r.software_claim.value r.engine_claim.value in
+ |  let release_held =
+ |    mux2 i.release_engine_i r.engine_claim.value r.software_claim.value
+ |  in
+-|  let claim_conflict = (i.claim_mask_i &: claim_other) <>:. 0 in
+-|  let write_conflict = (i.write_mask_i &: other_claim) <>:. 0 in
+-|  let release_invalid = (i.release_mask_i &: ~:release_held) <>:. 0 in
+-|  let write_value = mux2 i.write_open_drain_i (zero 8) i.write_value_i in
+-|  (* At most one ownership or write request is accepted per edge. A simultaneous
+-|     request is refused, so there is no ambiguous old/new ownership ordering. *)
+-|  let multiple =
+-|    (i.claim_valid_i &: (i.release_valid_i |: i.write_valid_i))
++|  let claim_conflict = i.claim_mask_i &: claim_other <>:. 0 in
++|  let write_conflict = i.write_mask_i &: other_claim <>:. 0 in
++|  let release_invalid = i.release_mask_i &: ~:release_held <>:. 0 in
++|  let write_value = mux2 i.write_open_drain_i (zero 8) i.write_value_i in
++|  (* At most one ownership or write request is accepted per edge. A simultaneous request
++|     is refused, so there is no ambiguous old/new ownership ordering. *)
++|  let multiple =
++|    i.claim_valid_i
++|    &: (i.release_valid_i |: i.write_valid_i)
+ |    |: (i.release_valid_i &: i.write_valid_i)
+ |  in
+ |  let rejected =
+ |    multiple
+ |    |: (i.claim_valid_i &: claim_conflict)
+ |    |: (i.release_valid_i &: release_invalid)
+ |    |: (i.write_valid_i &: write_conflict)
+ |  in
+ |  compile
+ |    [ r.pins <-- r.pins.value
+ |    ; r.pin_oe <-- r.pin_oe.value
+ |    ; r.software_claim <-- r.software_claim.value
+ |    ; r.engine_claim <-- r.engine_claim.value
+ |    ; r.rejected <--. 0
+ |    ; r.conflict <-- r.conflict.value
+ |    ; if_
+ |        (~:(i.enable_i) |: i.abort_i)
+-|        [ r.pins <--. 0
+-|        ; r.pin_oe <--. 0
+-|        ; r.software_claim <--. 0
+-|        ; r.engine_claim <--. 0
+-|        ]
++|        [ r.pins <--. 0; r.pin_oe <--. 0; r.software_claim <--. 0; r.engine_claim <--. 0 ]
+ |        [ if_
+ |            rejected
+ |            [ r.rejected <--. 1
+ |            ; when_
+-|                ((i.claim_valid_i &: claim_conflict)
+-|                 |: (i.write_valid_i &: write_conflict))
++|                (i.claim_valid_i &: claim_conflict |: (i.write_valid_i &: write_conflict))
+ |                [ r.conflict <--. 1 ]
+ |            ]
+ |            [ when_
+ |                i.claim_valid_i
+ |                [ if_
+ |                    i.claim_engine_i
+ |                    [ r.engine_claim <-- (r.engine_claim.value |: i.claim_mask_i) ]
+ |                    [ r.software_claim <-- (r.software_claim.value |: i.claim_mask_i) ]
+ |                ]
+ |            ; when_
+ |                i.release_valid_i
+ |                [ if_
+ |                    i.release_engine_i
+ |                    [ r.engine_claim <-- (r.engine_claim.value &: ~:(i.release_mask_i)) ]
+-|                    [ r.software_claim <-- (r.software_claim.value &: ~:(i.release_mask_i)) ]
++|                    [ r.software_claim <-- (r.software_claim.value &: ~:(i.release_mask_i))
++|                    ]
+ |                ]
+ |            ; when_
+ |                i.write_valid_i
+ |                [ r.pins
+-|                  <-- ((r.pins.value &: ~:(i.write_mask_i))
++|                  <-- (r.pins.value
++|                       &: ~:(i.write_mask_i)
+ |                       |: (write_value &: i.write_mask_i))
+ |                ; r.pin_oe
+-|                  <-- ((r.pin_oe.value &: ~:(i.write_mask_i))
++|                  <-- (r.pin_oe.value
++|                       &: ~:(i.write_mask_i)
+ |                       |: (i.write_oe_i &: i.write_mask_i))
+ |                ]
+ |            ]
+ |        ]
+ |    ];
+ |  { O.pins_o = r.pins.value
+ |  ; pin_oe_o = r.pin_oe.value
+ |  ; software_claim_o = r.software_claim.value
+ |  ; engine_claim_o = r.engine_claim.value
+ |  ; rejected_o = r.rejected.value
+ |  ; conflict_o = r.conflict.value
+ |  }
+ |;;
+File "ip/mechanisms/rtl/timing.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/timing.ml
+++++++ ip/mechanisms/rtl/timing.ml.corrected
+File "ip/mechanisms/rtl/timing.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "timing.ml" *)
+-|(* Countdown, level/edge wait, and independent periodic tick. A command accepted at
+-|   edge k with delay n completes at k+n. A matching event wins over timeout. *)
++|(* Countdown, level/edge wait, and independent periodic tick. A command accepted at edge k
++|   with delay n completes at k+n. A matching event wins over timeout. *)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; enable_i : 'a
+ |    ; abort_i : 'a
+ |    ; wait_valid_i : 'a
+ |    ; (* 0: cycles, 1: level, 2: rise, 3: fall. *)
+ |      wait_kind_i : 'a [@bits 2]
+ |    ; wait_pin_i : 'a [@bits 3]
+ |    ; wait_level_i : 'a
+File "ip/mechanisms/rtl/timing.ml", line 83, characters 0-1:
+ |
+ |let create (scope : Scope.t) (i : _ I.t) : _ O.t =
+ |  let open Always in
+ |  let spec = Reg_spec.create ~clock:i.clock_i ~clear:i.reset_i () in
+ |  let r = I_Regs.Of_always.reg spec in
+ |  I_Regs.Of_always.apply_names ~prefix:"reg_" ~naming_op:(Scope.naming scope) r;
+ |  let selected word pin = mux pin (List.init 8 ~f:(fun n -> bit word ~pos:n)) in
+ |  let matched =
+ |    mux
+ |      r.kind.value
+ |      [ gnd
+ |      ; selected i.snapshot_i r.pin.value ==: r.level.value
+ |      ; selected i.rising_i r.pin.value
+ |      ; selected i.falling_i r.pin.value
+ |      ]
+ |  in
+-|  let immediate_level =
+-|    selected i.snapshot_i i.wait_pin_i ==: i.wait_level_i
+-|  in
+-|  let bad_delay =
+-|    (i.wait_kind_i ==:. 0 |: i.wait_timeout_enable_i)
+-|    &: (i.wait_delay_i ==:. 0)
++|  let immediate_level = selected i.snapshot_i i.wait_pin_i ==: i.wait_level_i in
++|  let bad_delay =
++|    i.wait_kind_i ==:. 0 |: i.wait_timeout_enable_i &: (i.wait_delay_i ==:. 0)
+ |  in
+ |  compile
+ |    [ r.busy <-- r.busy.value
+ |    ; r.kind <-- r.kind.value
+ |    ; r.pin <-- r.pin.value
+ |    ; r.level <-- r.level.value
+ |    ; r.timeout_enable <-- r.timeout_enable.value
+ |    ; r.remaining <-- r.remaining.value
+ |    ; r.periodic_active <-- r.periodic_active.value
+ |    ; r.period <-- r.period.value
+ |    ; r.phase <-- r.phase.value
+ |    ; r.complete <--. 0
+ |    ; r.timeout <--. 0
+ |    ; r.rejected <--. 0
+ |    ; r.tick <--. 0
+ |    ; if_
+ |        (~:(i.enable_i) |: i.abort_i)
+-|        [ r.busy <--. 0
+-|        ; r.remaining <--. 0
+-|        ; r.periodic_active <--. 0
+-|        ; r.phase <--. 0
+-|        ]
++|        [ r.busy <--. 0; r.remaining <--. 0; r.periodic_active <--. 0; r.phase <--. 0 ]
+ |        [ if_
+ |            r.busy.value
+ |            [ if_
+ |                matched
+ |                [ r.busy <--. 0; r.remaining <--. 0; r.complete <--. 1 ]
+ |                [ if_
+-|                    ((r.kind.value ==:. 0 |: r.timeout_enable.value)
++|                    (r.kind.value
++|                     ==:. 0
++|                     |: r.timeout_enable.value
+ |                     &: (r.remaining.value ==:. 1))
+ |                    [ r.busy <--. 0
+ |                    ; r.remaining <--. 0
+-|                    ; if_
+-|                        (r.kind.value ==:. 0)
+-|                        [ r.complete <--. 1 ]
+-|                        [ r.timeout <--. 1 ]
++|                    ; if_ (r.kind.value ==:. 0) [ r.complete <--. 1 ] [ r.timeout <--. 1 ]
+ |                    ]
+ |                    [ when_
+ |                        (r.kind.value ==:. 0 |: r.timeout_enable.value)
+ |                        [ r.remaining <-- r.remaining.value -:. 1 ]
+ |                    ]
+ |                ]
+ |            ]
+ |            [ when_
+ |                i.wait_valid_i
+ |                [ if_
+ |                    bad_delay
+ |                    [ r.rejected <--. 1 ]
+ |                    [ if_
+-|                        ((i.wait_kind_i ==:. 1) &: immediate_level)
++|                        (i.wait_kind_i ==:. 1 &: immediate_level)
+ |                        []
+ |                        [ r.busy <--. 1
+ |                        ; r.kind <-- i.wait_kind_i
+ |                        ; r.pin <-- i.wait_pin_i
+ |                        ; r.level <-- i.wait_level_i
+ |                        ; r.timeout_enable <-- i.wait_timeout_enable_i
+ |                        ; r.remaining <-- i.wait_delay_i
+ |                        ]
+ |                    ]
+ |                ]
+ |            ]
+-|        ; when_
+-|            i.periodic_stop_i
+-|            [ r.periodic_active <--. 0; r.phase <--. 0 ]
++|        ; when_ i.periodic_stop_i [ r.periodic_active <--. 0; r.phase <--. 0 ]
+ |        ; when_
+ |            i.periodic_start_i
+ |            [ if_
+ |                (i.periodic_period_i ==:. 0)
+ |                [ r.rejected <--. 1 ]
+ |                [ r.periodic_active <--. 1
+ |                ; r.period <-- i.periodic_period_i
+ |                ; r.phase <-- i.periodic_period_i
+ |                ]
+ |            ]
+ |        ; when_
+-|            (r.periodic_active.value
+-|             &: ~:(i.periodic_start_i)
+-|             &: ~:(i.periodic_stop_i))
++|            (r.periodic_active.value &: ~:(i.periodic_start_i) &: ~:(i.periodic_stop_i))
+ |            [ if_
+ |                i.phase_restart_i
+ |                [ r.phase <-- r.period.value ]
+ |                [ if_
+ |                    (r.phase.value ==:. 1)
+ |                    [ r.tick <--. 1; r.phase <-- r.period.value ]
+ |                    [ r.phase <-- r.phase.value -:. 1 ]
+ |                ]
+ |            ]
+ |        ]
+ |    ];
+ |  { O.ready_o = i.enable_i &: ~:(r.busy.value)
+ |  ; busy_o = r.busy.value
+ |  ; complete_o = r.complete.value
+ |  ; timeout_o = r.timeout.value
+ |  ; rejected_o = r.rejected.value
+File "ip/mechanisms/rtl/shift_lane.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/shift_lane.ml
+++++++ ip/mechanisms/rtl/shift_lane.ml.corrected
+File "ip/mechanisms/rtl/shift_lane.ml", line 105, characters 0-1:
+ |    ; prepared_mask : 'a [@bits 8]
+ |    ; prepared_pin_value : 'a [@bits 8]
+ |    ; pin_value : 'a [@bits 8]
+ |    ; pin_oe : 'a [@bits 8]
+ |    ; done_ : 'a
+ |    ; rx_valid : 'a
+ |    ; rejected : 'a
+ |    ; underrun : 'a
+ |    ; overrun : 'a
+ |    }
+ |  [@@deriving hardcaml]
+ |end
+ |
+ |let pin_mask pin = mux pin (List.init 8 ~f:(fun n -> of_int_trunc ~width:8 (1 lsl n)))
+ |let selected word pin = mux pin (List.init 8 ~f:(fun n -> bit word ~pos:n))
+ |let data_bit word index = mux index (List.init 32 ~f:(fun n -> bit word ~pos:n))
+-|let data_mask index = mux index (List.init 32 ~f:(fun n -> of_int_trunc ~width:32 (1 lsl n)))
++|
++|let data_mask index =
++|  mux index (List.init 32 ~f:(fun n -> of_int_trunc ~width:32 (1 lsl n)))
++|;;
+ |
+ |let create (scope : Scope.t) (i : _ I.t) : _ O.t =
+ |  let open Always in
+ |  let spec = Reg_spec.create ~clock:i.clock_i ~clear:i.reset_i () in
+ |  let r = I_Regs.Of_always.reg spec in
+ |  I_Regs.Of_always.apply_names ~prefix:"reg_" ~naming_op:(Scope.naming scope) r;
+ |  let output_mask = pin_mask i.output_pin_i in
+ |  let clock_mask = pin_mask i.clock_pin_i in
+ |  let driven =
+-|    (mux2 i.tx_enable_i output_mask (zero 8))
+-|    |: (mux2 i.clock_enable_i clock_mask (zero 8))
++|    mux2 i.tx_enable_i output_mask (zero 8) |: mux2 i.clock_enable_i clock_mask (zero 8)
+ |  in
+ |  let structural_invalid =
+-|    (i.bit_count_i ==:. 0)
++|    i.bit_count_i
++|    ==:. 0
+ |    |: (i.bit_count_i >:. 32)
+-|    |: ((log_shift ~f:srl i.tx_value_i ~by:i.bit_count_i) <>:. 0)
++|    |: (log_shift ~f:srl i.tx_value_i ~by:i.bit_count_i <>:. 0)
+ |    |: (i.tx_enable_i &: i.clock_enable_i &: (i.output_pin_i ==: i.clock_pin_i))
+ |    |: (i.rx_enable_i &: i.clock_enable_i &: (i.input_pin_i ==: i.clock_pin_i))
+ |    |: (i.observed_i &: i.clock_enable_i)
+ |    |: (~:(i.observed_i) &: (i.half_period_i ==:. 0))
+ |    |: (i.launch_trailing_i ==: i.sample_trailing_i)
+ |    |: (~:(i.tx_enable_i) &: ~:(i.rx_enable_i))
+ |  in
+ |  let preload_value =
+-|((mux2
+-|                              i.tx_enable_i
+-|                              (mux2
+-|                                 i.launch_trailing_i
+-|                                 (mux2
+-|                                    (data_bit
+-|                                       i.tx_value_i
+-|                                       (mux2
+-|                                          i.lsb_first_i
+-|                                          (zero 6)
+-|                                          (i.bit_count_i -:. 1)))
+-|                                    output_mask
+-|                                    (zero 8))
+-|                                 (mux2 i.idle_output_i output_mask (zero 8)))
+-|                              (zero 8))
+-|                           |: (mux2
+-|                                 (i.clock_enable_i &: i.idle_clock_i)
+-|                                 clock_mask
+-|                                 (zero 8))) in
++|    mux2
++|      i.tx_enable_i
++|      (mux2
++|         i.launch_trailing_i
++|         (mux2
++|            (data_bit i.tx_value_i (mux2 i.lsb_first_i (zero 6) (i.bit_count_i -:. 1)))
++|            output_mask
++|            (zero 8))
++|         (mux2 i.idle_output_i output_mask (zero 8)))
++|      (zero 8)
++|    |: mux2 (i.clock_enable_i &: i.idle_clock_i) clock_mask (zero 8)
++|  in
+ |  let accept = i.start_valid_i &: ~:(r.busy.value) &: ~:(r.armed.value) in
+-|  let occupied = (driven &: i.occupied_i) <>:. 0 in
++|  let occupied = driven &: i.occupied_i <>:. 0 in
+ |  let advance =
+-|    r.busy.value
+-|    &: (mux2 r.observed.value i.observed_edge_i (r.remaining.value ==:. 1))
++|    r.busy.value &: mux2 r.observed.value i.observed_edge_i (r.remaining.value ==:. 1)
+ |  in
+ |  let bit_position =
+-|    mux2
+-|      r.lsb_first.value
+-|      r.bit_index.value
+-|      (r.bit_count.value -:. 1 -: r.bit_index.value)
++|    mux2 r.lsb_first.value r.bit_index.value (r.bit_count.value -:. 1 -: r.bit_index.value)
+ |  in
+ |  let launch_position =
+ |    mux2
+ |      r.launch_trailing.value
+ |      (mux2
+ |         r.lsb_first.value
+ |         (r.bit_index.value +:. 1)
+ |         (r.bit_count.value -:. 2 -: r.bit_index.value))
+ |      bit_position
+ |  in
+ |  let tx_bit = data_bit r.tx_value.value launch_position in
+ |  let input_bit = selected i.pin_in_i r.input_pin.value in
+ |  let rx_mask = data_mask bit_position in
+-|  let next_rx =
+-|    (r.rx_value.value &: ~:rx_mask) |: (mux2 input_bit rx_mask (zero 32))
+-|  in
++|  let next_rx = r.rx_value.value &: ~:rx_mask |: mux2 input_bit rx_mask (zero 32) in
+ |  let phase_launch = r.trailing.value ==: r.launch_trailing.value in
+ |  let phase_sample = r.trailing.value ==: r.sample_trailing.value in
+-|  let finishing = r.trailing.value &: (r.bit_index.value ==: (r.bit_count.value -:. 1)) in
++|  let finishing = r.trailing.value &: (r.bit_index.value ==: r.bit_count.value -:. 1) in
+ |  let output_mask = pin_mask r.output_pin.value in
+ |  let clock_updated =
+ |    mux2
+ |      r.clock_enable.value
+ |      (r.pin_value.value ^: pin_mask r.clock_pin.value)
+ |      r.pin_value.value
+ |  in
+ |  let phase_pin_value =
+ |    mux2
+-|      (phase_launch &: r.tx_enable.value &: ~:(finishing))
+-|      ((clock_updated &: ~:output_mask) |: (mux2 tx_bit output_mask (zero 8)))
++|      (phase_launch &: r.tx_enable.value &: ~:finishing)
++|      (clock_updated &: ~:output_mask |: mux2 tx_bit output_mask (zero 8))
+ |      clock_updated
+ |  in
+ |  compile
+ |    [ r.busy <-- r.busy.value
+ |    ; r.armed <-- r.armed.value
+ |    ; r.bit_count <-- r.bit_count.value
+ |    ; r.bit_index <-- r.bit_index.value
+ |    ; r.tx_value <-- r.tx_value.value
+ |    ; r.rx_value <-- r.rx_value.value
+ |    ; r.rx_data <-- r.rx_data.value
+ |    ; r.tx_enable <-- r.tx_enable.value
+ |    ; r.rx_enable <-- r.rx_enable.value
+ |    ; r.lsb_first <-- r.lsb_first.value
+ |    ; r.output_pin <-- r.output_pin.value
+ |    ; r.input_pin <-- r.input_pin.value
+ |    ; r.clock_pin <-- r.clock_pin.value
+File "ip/mechanisms/rtl/shift_lane.ml", line 260, characters 0-1:
+ |                    ; r.bit_index <--. 0
+ |                    ; r.tx_value <-- i.tx_value_i
+ |                    ; r.rx_value <--. 0
+ |                    ; r.tx_enable <-- i.tx_enable_i
+ |                    ; r.rx_enable <-- i.rx_enable_i
+ |                    ; r.lsb_first <-- i.lsb_first_i
+ |                    ; r.output_pin <-- i.output_pin_i
+ |                    ; r.input_pin <-- i.input_pin_i
+ |                    ; r.clock_pin <-- i.clock_pin_i
+ |                    ; r.clock_enable <-- i.clock_enable_i
+ |                    ; r.idle_clock <-- i.idle_clock_i
+ |                    ; r.launch_trailing <-- i.launch_trailing_i
+ |                    ; r.sample_trailing <-- i.sample_trailing_i
+ |                    ; r.observed <-- i.observed_i
+ |                    ; r.half_period <-- i.half_period_i
+ |                    ; r.remaining
+-|                      <-- (mux2
+-|                             (i.initial_delay_i ==:. 0)
+-|                             i.half_period_i
+-|                             i.initial_delay_i)
++|                      <-- mux2
++|                            (i.initial_delay_i ==:. 0)
++|                            i.half_period_i
++|                            i.initial_delay_i
+ |                    ; r.trailing <--. 0
+ |                    ; r.prepared_mask <-- driven
+-|                    ; r.claim_mask <-- (mux2 i.arm_i (zero 8) driven)
+-|                    ; r.pin_oe <-- (mux2 i.arm_i (zero 8) driven)
++|                    ; r.claim_mask <-- mux2 i.arm_i (zero 8) driven
++|                    ; r.pin_oe <-- mux2 i.arm_i (zero 8) driven
+ |                    ; r.prepared_pin_value <-- preload_value
+-|                    ; r.pin_value <-- (mux2 i.arm_i (zero 8) preload_value)
++|                    ; r.pin_value <-- mux2 i.arm_i (zero 8) preload_value
+ |                    ]
+ |                ]
+ |            ]
+ |            [ when_
+ |                (r.armed.value &: i.start_event_i)
+ |                [ r.armed <--. 0
+ |                ; if_
+-|                    ((r.prepared_mask.value &: i.occupied_i) <>:. 0)
++|                    (r.prepared_mask.value &: i.occupied_i <>:. 0)
+ |                    [ r.rejected <--. 1 ]
+ |                    [ r.busy <--. 1
+ |                    ; r.claim_mask <-- r.prepared_mask.value
+ |                    ; r.pin_oe <-- r.prepared_mask.value
+ |                    ; r.pin_value <-- r.prepared_pin_value.value
+ |                    ]
+ |                ]
+ |            ; when_
+ |                r.busy.value
+ |                [ when_
+ |                    (~:(r.observed.value) &: ~:advance)
+ |                    [ r.remaining <-- r.remaining.value -:. 1 ]
+ |                ; when_
+ |                    advance
+-|                    [ when_
+-|                        ~:(r.observed.value)
+-|                        [ r.remaining <-- r.half_period.value ]
++|                    [ when_ ~:(r.observed.value) [ r.remaining <-- r.half_period.value ]
+ |                    ; r.pin_value <-- phase_pin_value
+ |                    ; when_ phase_sample [ r.rx_value <-- next_rx ]
+ |                    ; if_
+ |                        finishing
+ |                        [ if_
+ |                            (r.rx_enable.value &: ~:(i.rx_ready_i))
+ |                            [ r.overrun <--. 1 ]
+ |                            [ r.done_ <--. 1
+ |                            ; when_
+ |                                r.rx_enable.value
+-|                                [ r.rx_data
+-|                                  <-- (mux2 phase_sample next_rx r.rx_value.value)
++|                                [ r.rx_data <-- mux2 phase_sample next_rx r.rx_value.value
+ |                                ; r.rx_valid <--. 1
+ |                                ]
+ |                            ]
+ |                        ; r.busy <--. 0
+ |                        ; r.claim_mask <--. 0
+ |                        ; r.pin_oe <--. 0
+ |                        ]
+ |                        [ if_
+ |                            r.trailing.value
+-|                            [ r.trailing <--. 0
+-|                            ; r.bit_index <-- r.bit_index.value +:. 1
+-|                            ]
++|                            [ r.trailing <--. 0; r.bit_index <-- r.bit_index.value +:. 1 ]
+ |                            [ r.trailing <--. 1 ]
+ |                        ]
+ |                    ]
+ |                ]
+ |            ]
+ |        ]
+ |    ];
+ |  { O.ready_o = i.enable_i &: ~:(r.busy.value) &: ~:(r.armed.value)
+ |  ; busy_o = r.busy.value
+ |  ; armed_o = r.armed.value
+ |  ; claim_mask_o = r.claim_mask.value
+ |  ; pin_value_o = r.pin_value.value
+ |  ; pin_oe_o = r.pin_oe.value
+ |  ; done_o = r.done_.value
+ |  ; rx_valid_o = r.rx_valid.value
+ |  ; rx_data_o = r.rx_data.value
+File "ip/mechanisms/rtl/staging/primitive_demo.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/staging/primitive_demo.ml
+++++++ ip/mechanisms/rtl/staging/primitive_demo.ml.corrected
+File "ip/mechanisms/rtl/staging/primitive_demo.ml", line 4, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "primitive_demo.ml" *)
+-|(* A small independent timer/lane composition. It demonstrates that a core wait
+-|   does not clock-gate a transfer already in progress. *)
++|(* A small independent timer/lane composition. It demonstrates that a core wait does not
++|   clock-gate a transfer already in progress. *)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |module I = struct
+ |  type 'a t =
+ |    { clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; enable_i : 'a
+ |    ; abort_i : 'a
+ |    ; wait_valid_i : 'a
+ |    ; wait_delay_i : 'a [@bits 16]
+ |    ; transfer_valid_i : 'a
+ |    ; transfer_count_i : 'a [@bits 6]
+ |    ; transfer_data_i : 'a [@bits 32]
+File "ip/mechanisms/rtl/staging/uart_tx.ml", line 1, characters 0-0:
+------ ip/mechanisms/rtl/staging/uart_tx.ml
+++++++ ip/mechanisms/rtl/staging/uart_tx.ml.corrected
+File "ip/mechanisms/rtl/staging/uart_tx.ml", line 8, characters 0-1:
+ |(* University of Florida *)
+ |(* Author: Bohdan Purtell *)
+ |(* Module: "uart_tx.ml" *)
+ |(* A transmit-only 8N1 UART wrapper around Shift_lane.
+ |
+ |   A byte offered on [byte_valid_i] while [byte_ready_o] is high requests a ten-bit,
+ |   least-significant-bit-first lane transaction: start=0, eight data bits, stop=1.
+-|   Shift_lane owns the transfer timing and result pulses; this module supplies the
+-|   fixed UART descriptor and maps the lane's drive onto the chosen output pin.
++|   Shift_lane owns the transfer timing and result pulses; this module supplies the fixed
++|   UART descriptor and maps the lane's drive onto the chosen output pin.
+ |
+ |   One bit lasts twice [half_period_i] cycles. A zero half period is rejected by
+-|   Shift_lane. There is no receive path or byte queue here: the producer must use
+-|   the ready/valid handshake for each byte and check [rejected_o].
++|   Shift_lane. There is no receive path or byte queue here: the producer must use the
++|   ready/valid handshake for each byte and check [rejected_o].
+ |*)
+ |
+ |open! Core
+ |open! Hardcaml
+ |open! Signal
+ |
+ |(* UART request and pin selection, sampled in the [clock_i] domain. *)
+ |module I = struct
+ |  type 'a t =
+ |    { (* Synchronous active-high reset; disabling or aborting releases the pin. *)
+ |      clock_i : 'a
+ |    ; reset_i : 'a
+ |    ; enable_i : 'a
+ |    ; abort_i : 'a
+ |    ; (* Producer -> UART. Offered on an edge with [byte_ready_o] high. *)
+ |      byte_valid_i : 'a

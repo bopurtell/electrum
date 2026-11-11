@@ -43,7 +43,7 @@ cp "$repo_root/tinytapeout/src/config.json" "$stage_dir/src/config.json"
 cp "$repo_root/tinytapeout/src/p0_observable.v" "$stage_dir/src/p0_observable.v"
 cp "$repo_root/tinytapeout/src/project.v" "$stage_dir/src/project.v"
 cp "$repo_root/tinytapeout/test/Makefile" "$stage_dir/test/Makefile"
-cp "$repo_root/tinytapeout/test/tb.v" "$stage_dir/test/tb.v"
+cp "$repo_root/chip_top/verif/observable/emitted/tb.v" "$stage_dir/test/tb.v"
 cp "$repo_root/tinytapeout/docs/info.md" "$stage_dir/docs/info.md"
 
 # tt-support-tools' Project.harden() reads the project's git remote and HEAD

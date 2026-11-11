@@ -1,0 +1,13 @@
+--- bin/asic_bundle.ml
++++ formatted
+@@ -14,7 +14,9 @@
+         { key; value = `Int 1; reason = "negative integration check" }
+       in
+       let result =
+-        Chip_project.project ~overrides:(Tt_cmos5l.overrides ~extra:[ conflicting ] ()) kind
++        Chip_project.project
++          ~overrides:(Tt_cmos5l.overrides ~extra:[ conflicting ] ())
++          kind
+         |> Or_error.bind ~f:Project.elaborate_for_flow
+       in
+       match result with

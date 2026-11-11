@@ -1,0 +1,2 @@
+PASS p0 wrapper reset/disable/pin/timer trace
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/verif/observable/emitted/tb.v:108: $finish called at 144000 (1ps)

@@ -1,0 +1,46 @@
+--- test/common/replay.ml
++++ verif/common/replay.ml
+@@ -292,6 +292,25 @@
+ ;;
+ 
+ let to_lines ?(redact_source = false) t =
++  (* Redacted fixtures retain their baseline path spelling; live reports and artifacts
++     keep the actual owner path and executable rerun command. *)
++  let source_file, rerun =
++    if redact_source
++    then (
++      let source_file =
++        List.fold
++          [ "ip/mechanisms/verif/blocks/input_events/", "test/primitives/input_events/"
++          ; "test/verification_support/", "test/common/"
++          ]
++          ~init:t.source_file
++          ~f:(fun path (owner, baseline) ->
++            match String.chop_prefix path ~prefix:owner with
++            | None -> path
++            | Some suffix -> baseline ^ suffix)
++      in
++      source_file, rerun_command ~source_file ~settings:t.settings)
++    else t.source_file, t.rerun
++  in
+   let trial =
+     match t.trial with
+     | None -> "none"
+@@ -299,7 +318,7 @@
+   in
+   List.concat
+     [ [ [%string "  test:             %{t.test}"]
+-      ; [%string "  test file:        %{t.source_file}"]
++      ; [%string "  test file:        %{source_file}"]
+       ; [%string "  seed:             %{t.settings.seed#Int}"]
+       ; [%string "  trials:           %{t.settings.trials#Int}"]
+       ; [%string "  max size:         %{t.settings.size#Int}"]
+@@ -309,7 +328,7 @@
+     ; (if redact_source
+        then Source_identity.redacted_lines
+        else Source_identity.to_lines t.source)
+-    ; [ [%string "  rerun:            %{t.rerun}"] ]
++    ; [ [%string "  rerun:            %{rerun}"] ]
+     ]
+ ;;
+ 

@@ -1,0 +1,22 @@
+--- tinytapeout/test/dune
++++ formatted
+@@ -3,11 +3,18 @@
+ ; require them. The Makefile remains for the staged project and gate-level runs.
+ 
+ ; Compatibility build targets only; each authored bench lives with its DUT owner.
++
+ (copy_files ../../chip_top/verif/observable/emitted/tb.v)
++
+ (copy_files ../../chip_top/verif/memory/emitted/p0_memory_tb.v)
++
+ (copy_files ../../ip/mechanisms/verif/staging/emitted/*.v)
++
+ (copy_files ../../ip/emulator_core/verif/emitted/*.v)
+-(copy_files ../../ip/program_memory_controller/verif/backend_integration/emitted/*.v)
++
++(copy_files
++ ../../ip/program_memory_controller/verif/backend_integration/emitted/*.v)
++
+ (copy_files ../../verif/system/emitted/p3_loader_tb.v)
+ 
+ (rule

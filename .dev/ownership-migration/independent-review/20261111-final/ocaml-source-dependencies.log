@@ -1,0 +1,41 @@
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/rtl/bringup/p0_observable.ml: Always Core Hardcaml Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/rtl/memory_design.ml: Core Elaboration_context Hardcaml Hardcaml_asic Hardcaml_protemu Program_memory Program_memory_controller Reg_spec Signal Tt_cmos5l
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/rtl/observable_design.ml: Core Elaboration_context Hardcaml Hardcaml_asic Hardcaml_protemu P0_observable Signal Tt_cmos5l
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/rtl/package_top.ml: Core Elaboration_context Hardcaml Hardcaml_asic Hardcaml_protemu Program_memory Program_memory_controller Protemu_isa Protemu_top Signal Tt_cmos5l
+/home/wayne/devel/jane/hardcaml_protemu/chip_top/rtl/program_memory.ml: Core Hardcaml_asic Hardcaml_protemu Program_memory_controller Single_port_ram
+/home/wayne/devel/jane/hardcaml_protemu/host_link_wire/wire.ml: Char Core Fn List Result String
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/control_port.ml: Core Hardcaml Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/emulator_core.ml: Always Control_port Core Execution_unit Hardcaml Primitive_dispatch Program_memory_controller Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/execution_unit.ml: Ack_status Alu Alu_imm Always Branch Branch_pin Call Cmp Cmp_imm Core Dbnz Descriptor Encoding Fifo_pop Fifo_push Halt Hardcaml Instruction Instruction_decoder Issue_transfer Jump Jump_reg Ldi List Mov Protemu_isa Read_pins Read_status Reg_spec Scope Shift Signal Start_periodic Stop_periodic Wait_cycles_imm Wait_cycles_reg Wait_edge Wait_level Write_pins_imm Write_pins_reg
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/instruction_decoder.ml: Alu Alu_imm Branch Config Core Descriptor Encoding Form Hardcaml Instruction Kinds Layout List Pins Protemu_isa Scope Shift Signal Start_periodic Wait_cycles_imm Wait_edge Wait_level Write_pins_imm
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/legacy/executable_core.ml: Core Execution_unit Hardcaml Program_memory_controller Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/emulator_core/rtl/primitive_dispatch.ml: Always Byte_fifo Core Descriptor Event_kind Execution_unit Hardcaml Input_events List Pin_bank Pins Protemu_isa Reg_spec Scope Shift_lane Signal Timing
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/command_dispatch.ml: Always Control_port Core Execution_unit Hardcaml List Program_memory_controller Protemu_host_link_wire Protemu_isa Reg_spec Scope Signal Wire_crc Wire_layout
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/frame_rx.ml: Always Core Hardcaml Int Protemu_host_link_wire Reg_spec Scope Signal Wire_crc Wire_layout
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/frame_tx.ml: Always Core Hardcaml Protemu_host_link_wire Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/host_link.ml: Command_dispatch Control_port Core Frame_rx Frame_tx Hardcaml Scope Serial_phy Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/serial_phy.ml: Always Core Hardcaml Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/wire_crc.ml: Core Hardcaml List Protemu_host_link_wire Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/host_link/rtl/wire_layout.ml: Core List Protemu_host_link_wire
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/byte_fifo.ml: Always Core Hardcaml Int List Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/input_events.ml: Always Core Hardcaml Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/pin_bank.ml: Always Core Hardcaml Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/shift_lane.ml: Always Core Hardcaml List Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/staging/observed_transfer.ml: Always Core Hardcaml Input_events Reg_spec Scope Shift_lane Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/staging/observed_transfer_bank.ml: Always Core Hardcaml Observed_transfer Pin_bank Reg_spec Scope Shift_lane Signal State_machine
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/staging/primitive_demo.ml: Core Hardcaml Scope Shift_lane Signal Timing
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/staging/uart_slice.ml: Always Core Hardcaml Pin_bank Reg_spec Scope Shift_lane Signal State_machine Timing Uart_tx
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/staging/uart_tx.ml: Core Hardcaml Scope Shift_lane Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/mechanisms/rtl/timing.ml: Always Core Hardcaml List Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/ip/program_memory_controller/rtl/program_memory_controller.ml: Always Core Hardcaml Int Reg_spec Scope Signal
+/home/wayne/devel/jane/hardcaml_protemu/isa/assembler.ml: Array Core Encoding Instruction Int Invalid List Map Program Result String
+/home/wayne/devel/jane/hardcaml_protemu/isa/descriptor.ml: Bit_order Bool Clock_phase Core Direction Edge Enum Kinds List Option Pins
+/home/wayne/devel/jane/hardcaml_protemu/isa/encoding.ml: Alu_op Array Blocking Bool Cond Core Descriptor Edge Enum Event_kind Fifo_id Fn Instruction Int Invalid Kinds List Option Pin_mode Pins Register Result Shift_dir String
+/home/wayne/devel/jane/hardcaml_protemu/isa/enum.ml: Core Int List
+/home/wayne/devel/jane/hardcaml_protemu/isa/event_kind.ml: Core List Option
+/home/wayne/devel/jane/hardcaml_protemu/isa/instruction.ml: Blocking Core Descriptor Edge Event_kind Fifo_id Int Invalid Kinds Pins Result
+/home/wayne/devel/jane/hardcaml_protemu/isa/invalid.ml: Core
+/home/wayne/devel/jane/hardcaml_protemu/isa/kinds.ml: Core
+/home/wayne/devel/jane/hardcaml_protemu/isa/pins.ml: Core Fn Int List
+/home/wayne/devel/jane/hardcaml_protemu/isa/program.ml: Core Instruction Invalid List Result Set Sexp String
+/home/wayne/devel/jane/hardcaml_protemu/rtl/protemu_top.ml: Control_port Core Emulator_core Hardcaml Host_link Protemu_isa Scope Signal

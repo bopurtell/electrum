@@ -231,7 +231,7 @@ let stage =
       "Writes tinytapeout/build/p0-staged from the committed RTL and the hand-maintained \
        metadata and configuration, for legacy-harden and precheck. The adopted flow \
        reads none of it: ./flow.sh emit renders its inputs from the declaration in \
-       bin/asic_bundle.ml.")
+       chip_top/project/chip_project.ml.")
     (Command.Param.return (fun () -> exec "tinytapeout/scripts/stage-project.sh" []))
 ;;
 

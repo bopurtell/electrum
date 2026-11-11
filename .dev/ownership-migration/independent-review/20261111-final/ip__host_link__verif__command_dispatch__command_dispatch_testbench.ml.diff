@@ -1,0 +1,19 @@
+--- test/host_link/command_dispatch/command_dispatch_testbench.ml
++++ ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml
+@@ -678,5 +678,14 @@
+ let failure_of f =
+   match f () with
+   | (_ : unit) -> None
+-  | exception (Dispatch_failure _ as failure) -> Some [%sexp (failure : exn)]
+-;;
++  | exception (Dispatch_failure _ as failure) ->
++    (* Keep the diagnostic identity stable across the ownership move. *)
++    (match [%sexp (failure : exn)] with
++     | Sexp.List (_ :: fields) ->
++       Some
++         (Sexp.List
++            (Sexp.Atom
++               "test/host_link/command_dispatch/command_dispatch_testbench.ml.Dispatch_failure"
++             :: fields))
++     | sexp -> Some sexp)
++;;

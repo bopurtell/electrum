@@ -25,9 +25,9 @@
 (rule
  (alias verification-long)
  (action
-  (run %{exe:test/verification_sweep.exe} long)))
+  (run %{exe:verif/regression/verification_sweep.exe} long)))
 
 (rule
  (alias verification-four-state)
  (action
-  (run %{exe:test/verification_sweep.exe} four-state)))
+  (run %{exe:verif/regression/verification_sweep.exe} four-state)))

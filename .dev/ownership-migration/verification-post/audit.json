@@ -1,0 +1,3341 @@
+{
+  "summary": {
+    "baseline": "b3a4cb6a420613465f635a616bedba967c4ab307",
+    "moved_files": 142,
+    "byte_identical_moved_files": 135,
+    "moved_inline_registrations": 348,
+    "total_inline_registrations": 475,
+    "registration_map_sha256": "5ce780c72782e2f5434c7015686c5770d61fd97f3528a4316ac3d41448460753",
+    "file_map_sha256": "58df98abf41f70f64b77818b5661d607879e78c50f8e86de358200ec8c2099d3",
+    "all_registration_text_and_expect_bytes_preserved": true,
+    "all_moved_modes_preserved": true,
+    "workflow_mode": "0o775",
+    "groups": {
+      "test/common/": {
+        "files": 9,
+        "byte_identical": 7,
+        "registrations": 6
+      },
+      "test/core/control_execution/": {
+        "files": 8,
+        "byte_identical": 8,
+        "registrations": 25
+      },
+      "test/core/control_port/": {
+        "files": 6,
+        "byte_identical": 6,
+        "registrations": 0
+      },
+      "test/core/protocol_core/": {
+        "files": 4,
+        "byte_identical": 4,
+        "registrations": 3
+      },
+      "test/ sweep": {
+        "files": 2,
+        "byte_identical": 2,
+        "registrations": 0
+      },
+      "test/host_link/": {
+        "files": 48,
+        "byte_identical": 44,
+        "registrations": 186
+      },
+      "test/integration/core_engine/": {
+        "files": 5,
+        "byte_identical": 5,
+        "registrations": 22
+      },
+      "test/integration/host_simulator/": {
+        "files": 9,
+        "byte_identical": 8,
+        "registrations": 16
+      },
+      "test/integration/observed_transfer_bank/": {
+        "files": 4,
+        "byte_identical": 4,
+        "registrations": 13
+      },
+      "test/integration/primitive_demo/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 1
+      },
+      "test/integration/program_memory_backend/": {
+        "files": 4,
+        "byte_identical": 4,
+        "registrations": 4
+      },
+      "test/integration/uart_slice/": {
+        "files": 7,
+        "byte_identical": 7,
+        "registrations": 15
+      },
+      "test/integration/wrapper/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 2
+      },
+      "test/primitives/byte_fifo/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 4
+      },
+      "test/primitives/input_events/": {
+        "files": 8,
+        "byte_identical": 8,
+        "registrations": 14
+      },
+      "test/primitives/observed_transfer/": {
+        "files": 5,
+        "byte_identical": 5,
+        "registrations": 22
+      },
+      "test/primitives/pin_bank/": {
+        "files": 5,
+        "byte_identical": 5,
+        "registrations": 6
+      },
+      "test/primitives/shift_lane/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 4
+      },
+      "test/primitives/timing/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 3
+      },
+      "test/primitives/uart_tx/": {
+        "files": 3,
+        "byte_identical": 3,
+        "registrations": 2
+      }
+    },
+    "changed_moved_files": [
+      "verif/common/dune",
+      "verif/common/replay.ml",
+      "ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml",
+      "ip/host_link/verif/frame_rx/frame_rx_testbench.ml",
+      "ip/host_link/verif/frame_tx/frame_tx_testbench.ml",
+      "ip/host_link/verif/serial_phy/serial_phy_testbench.ml",
+      "test/host_simulator/dune"
+    ],
+    "frozen": [
+      {
+        "path": "ip/host_link/verif/archived/.ocamlformat-ignore",
+        "sha256": "46a7d7ed8a237686a6c0870f2946da93f04c08dd47be6e8f7e29354c1c54b1c0"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/dune",
+        "sha256": "4b1f5cc4cf384bbcc2d7292318c366fb956f5b19593c6f00788c12cc51ee1267"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+        "sha256": "5c5a63b5c5cc641a7731506a13ce2e9009bd95200b132b6ecfabd8b38be29d41"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+        "sha256": "cb9bf2c6dcb63489fc171c8fe9d943e13854e50c49e17bc0a38949aec2ad7558"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+        "sha256": "b28b3e7c80a7eb55f018d284386434dc8be7dafd5bc3df1f3b9c9aa0858f12ff"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/hardware_loader_testbench.ml",
+        "sha256": "92fbbc68deb4b40d88fa59a392474bd0c5f4ae19d906d7396ade66501c90b720"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+        "sha256": "8c1b6fed8d5b258363ea12313b03a84da1aeb06d8de21bc0dc5413a4c41858fe"
+      },
+      {
+        "path": "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+        "sha256": "d5bb01c5ee679fb77a4465c8fa2fc487ad78ae0ea552fb8ab451f2383f4ad095"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old": "test/common/backend_conformance.ml",
+      "new": "test/backend_conformance/backend_conformance.ml",
+      "baseline_sha256": "f648fd8823516702b5dd75904adb83017b01cdb02b9024a37f7b66a0f5d04f59",
+      "sha256": "f648fd8823516702b5dd75904adb83017b01cdb02b9024a37f7b66a0f5d04f59",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/backend_conformance_bench.ml",
+      "new": "test/backend_conformance/backend_conformance_bench.ml",
+      "baseline_sha256": "650310d5d7250975a2b9aaaa905b1a99f8ed7bdb1da4d73e85ff1f58285506d3",
+      "sha256": "650310d5d7250975a2b9aaaa905b1a99f8ed7bdb1da4d73e85ff1f58285506d3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/backend_conformance_expect_tests.ml",
+      "new": "test/backend_conformance/backend_conformance_expect_tests.ml",
+      "baseline_sha256": "b4ed316d84e09f94c6f5f49bf86cd95dbfbd273fd050a9797891c5cdb216759b",
+      "sha256": "b4ed316d84e09f94c6f5f49bf86cd95dbfbd273fd050a9797891c5cdb216759b",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/common/checker_expect_tests.ml",
+      "new": "test/verification_support/checker_expect_tests.ml",
+      "baseline_sha256": "019405def164fa016052e570d2293a72078641cd6ca8071baa2fbf80c0294fdd",
+      "sha256": "019405def164fa016052e570d2293a72078641cd6ca8071baa2fbf80c0294fdd",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/common/dune",
+      "new": "verif/common/dune",
+      "baseline_sha256": "6b366678a084077727372cfd51fac31783ff4276b79394b63e9bb9d9fb45a1c9",
+      "sha256": "baaaeefdbbb51bc9c98644a40e51d2d5519114c494ae725e54b2ae5764a2b4b1",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/env.ml",
+      "new": "verif/common/env.ml",
+      "baseline_sha256": "aa152de33423eef75787e96a56a2f50f0abc7348656edaf335a3eb01f8654bf7",
+      "sha256": "aa152de33423eef75787e96a56a2f50f0abc7348656edaf335a3eb01f8654bf7",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/observation.ml",
+      "new": "verif/common/observation.ml",
+      "baseline_sha256": "fd4aa297c4f5616aa392191da4b33ca021abd56c6961658d94845790344f2f98",
+      "sha256": "fd4aa297c4f5616aa392191da4b33ca021abd56c6961658d94845790344f2f98",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/replay.ml",
+      "new": "verif/common/replay.ml",
+      "baseline_sha256": "8e563579462f991cecf8b970d510d49411317028fd55988aa438b683a918f16e",
+      "sha256": "a9c9ef257f4d030e331ca44546e878bddb3aec30d86d13e9c89d387c09157d75",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/common/replay_expect_tests.ml",
+      "new": "test/verification_support/replay_expect_tests.ml",
+      "baseline_sha256": "935935b4a9e14faaf248d154b4919cdf4cf6f90aea087ed2548416aa684cd229",
+      "sha256": "935935b4a9e14faaf248d154b4919cdf4cf6f90aea087ed2548416aa684cd229",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 3
+    },
+    {
+      "old": "test/core/control_execution/control_execution_fault_tests.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "baseline_sha256": "4e9c6cf274fcb689c1ed978a7e70f546dd08a27d3c14b0e3758fde81436514b8",
+      "sha256": "4e9c6cf274fcb689c1ed978a7e70f546dd08a27d3c14b0e3758fde81436514b8",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 9
+    },
+    {
+      "old": "test/core/control_execution/control_execution_mechanism_tests.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "baseline_sha256": "ff6333043a2358261fb6fc356a073142f3170492be451130e6bbc00dd0dcd75f",
+      "sha256": "ff6333043a2358261fb6fc356a073142f3170492be451130e6bbc00dd0dcd75f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/core/control_execution/control_execution_model_tests.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_model_tests.ml",
+      "baseline_sha256": "73731b1042f9d01fde95e2b83396e6d8947540c74f5e96103533e01986e2b307",
+      "sha256": "73731b1042f9d01fde95e2b83396e6d8947540c74f5e96103533e01986e2b307",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/core/control_execution/control_execution_property_tests.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_property_tests.ml",
+      "baseline_sha256": "f57cdd452efa881dcfa8223ad40407e76c5278adde5e60f1edba63c0691887ce",
+      "sha256": "f57cdd452efa881dcfa8223ad40407e76c5278adde5e60f1edba63c0691887ce",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/core/control_execution/control_execution_testbench.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_testbench.ml",
+      "baseline_sha256": "28659484122a8a83c2758393e230b2c6d2977826383a508d73708061530a5e9b",
+      "sha256": "28659484122a8a83c2758393e230b2c6d2977826383a508d73708061530a5e9b",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_execution/control_execution_unit_tests.ml",
+      "new": "ip/emulator_core/verif/execution/control_execution_unit_tests.ml",
+      "baseline_sha256": "f01f185b1844170e65c58c7e59e90c2e517bf074716cab5c4378749696cdc9e8",
+      "sha256": "f01f185b1844170e65c58c7e59e90c2e517bf074716cab5c4378749696cdc9e8",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/core/control_execution/dune",
+      "new": "ip/emulator_core/verif/execution/dune",
+      "baseline_sha256": "70f8617a49f4f93c1cdaf9b8f372c97b4ac22e288c63122e9947399708bbe9cb",
+      "sha256": "70f8617a49f4f93c1cdaf9b8f372c97b4ac22e288c63122e9947399708bbe9cb",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_execution/instruction_decoder_tests.ml",
+      "new": "ip/emulator_core/verif/execution/instruction_decoder_tests.ml",
+      "baseline_sha256": "934f6d760f79dd7852c69cfa0da52875cbf50baec28a5d56f154087ecb2420f5",
+      "sha256": "934f6d760f79dd7852c69cfa0da52875cbf50baec28a5d56f154087ecb2420f5",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/core/control_port/agent.ml",
+      "new": "ip/emulator_core/verif/control_port/agent.ml",
+      "baseline_sha256": "9d8d65304357cd98b7d72540ee1ce882a43e016108f333c672875739e5d1bbd5",
+      "sha256": "9d8d65304357cd98b7d72540ee1ce882a43e016108f333c672875739e5d1bbd5",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_port/config.ml",
+      "new": "ip/emulator_core/verif/control_port/config.ml",
+      "baseline_sha256": "5a12e13bb3d40c47bf4237563627d877c053a9c3e4505d5adca0fd2c9b73efd6",
+      "sha256": "5a12e13bb3d40c47bf4237563627d877c053a9c3e4505d5adca0fd2c9b73efd6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_port/dune",
+      "new": "ip/emulator_core/verif/control_port/dune",
+      "baseline_sha256": "a686e062faac68f37bcc722b27ea39d8735787af6e6b20b3cbb28e511d72d8e4",
+      "sha256": "a686e062faac68f37bcc722b27ea39d8735787af6e6b20b3cbb28e511d72d8e4",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_port/item.ml",
+      "new": "ip/emulator_core/verif/control_port/item.ml",
+      "baseline_sha256": "6d1658bbfb93c4226d55c5b93c688580baec0927b8cd0644702e7889dff6d473",
+      "sha256": "6d1658bbfb93c4226d55c5b93c688580baec0927b8cd0644702e7889dff6d473",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_port/monitor.ml",
+      "new": "ip/emulator_core/verif/control_port/monitor.ml",
+      "baseline_sha256": "255ed2d0d0bca56dc8c8b2821a65956bd153e10fe2b0f0cd51ddb4d89551e426",
+      "sha256": "255ed2d0d0bca56dc8c8b2821a65956bd153e10fe2b0f0cd51ddb4d89551e426",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/control_port/responder.ml",
+      "new": "ip/emulator_core/verif/control_port/responder.ml",
+      "baseline_sha256": "1d68ec042db06845bbd4220e23de8b715d5774a4ee667feea73747218482a8fa",
+      "sha256": "1d68ec042db06845bbd4220e23de8b715d5774a4ee667feea73747218482a8fa",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/protocol_core/dune",
+      "new": "ip/program_memory_controller/verif/controller/dune",
+      "baseline_sha256": "b66e91697b0c644a7d022d669d37b32edcde253d64c9c7c3b47708f48a1cc57f",
+      "sha256": "b66e91697b0c644a7d022d669d37b32edcde253d64c9c7c3b47708f48a1cc57f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/protocol_core/protocol_core_property_tests.ml",
+      "new": "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml",
+      "baseline_sha256": "0dda468a882d537589fb8aa71d6bcd321fa703d658999345904ea30aab5156c9",
+      "sha256": "0dda468a882d537589fb8aa71d6bcd321fa703d658999345904ea30aab5156c9",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/core/protocol_core/protocol_core_testbench.ml",
+      "new": "ip/program_memory_controller/verif/controller/protocol_core_testbench.ml",
+      "baseline_sha256": "41fa2ada32b074b58c0d4ead2b5579d9f494196587af8c056cd3a7ef08a863f3",
+      "sha256": "41fa2ada32b074b58c0d4ead2b5579d9f494196587af8c056cd3a7ef08a863f3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/core/protocol_core/protocol_core_unit_tests.ml",
+      "new": "ip/program_memory_controller/verif/controller/protocol_core_unit_tests.ml",
+      "baseline_sha256": "37e32f9e67b4ba3e77e22e29a5820b680a11de67f5b5ad56f52aa46ae8356644",
+      "sha256": "37e32f9e67b4ba3e77e22e29a5820b680a11de67f5b5ad56f52aa46ae8356644",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/dune",
+      "new": "verif/regression/dune",
+      "baseline_sha256": "14e242b7e43bf75ada99edf8bb445cbd5f095f2031b8e1d3f4e4f8b141c78674",
+      "sha256": "14e242b7e43bf75ada99edf8bb445cbd5f095f2031b8e1d3f4e4f8b141c78674",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/archived/.ocamlformat-ignore",
+      "new": "ip/host_link/verif/archived/.ocamlformat-ignore",
+      "baseline_sha256": "46a7d7ed8a237686a6c0870f2946da93f04c08dd47be6e8f7e29354c1c54b1c0",
+      "sha256": "46a7d7ed8a237686a6c0870f2946da93f04c08dd47be6e8f7e29354c1c54b1c0",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/archived/hl4a/dune",
+      "new": "ip/host_link/verif/archived/hl4a/dune",
+      "baseline_sha256": "4b1f5cc4cf384bbcc2d7292318c366fb956f5b19593c6f00788c12cc51ee1267",
+      "sha256": "4b1f5cc4cf384bbcc2d7292318c366fb956f5b19593c6f00788c12cc51ee1267",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "new": "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "baseline_sha256": "5c5a63b5c5cc641a7731506a13ce2e9009bd95200b132b6ecfabd8b38be29d41",
+      "sha256": "5c5a63b5c5cc641a7731506a13ce2e9009bd95200b132b6ecfabd8b38be29d41",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 10
+    },
+    {
+      "old": "test/host_link/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "baseline_sha256": "cb9bf2c6dcb63489fc171c8fe9d943e13854e50c49e17bc0a38949aec2ad7558",
+      "sha256": "cb9bf2c6dcb63489fc171c8fe9d943e13854e50c49e17bc0a38949aec2ad7558",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/host_link/archived/hl4a/hardware_loader_framing_tests.ml",
+      "new": "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "baseline_sha256": "b28b3e7c80a7eb55f018d284386434dc8be7dafd5bc3df1f3b9c9aa0858f12ff",
+      "sha256": "b28b3e7c80a7eb55f018d284386434dc8be7dafd5bc3df1f3b9c9aa0858f12ff",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/host_link/archived/hl4a/hardware_loader_testbench.ml",
+      "new": "ip/host_link/verif/archived/hl4a/hardware_loader_testbench.ml",
+      "baseline_sha256": "92fbbc68deb4b40d88fa59a392474bd0c5f4ae19d906d7396ade66501c90b720",
+      "sha256": "92fbbc68deb4b40d88fa59a392474bd0c5f4ae19d906d7396ade66501c90b720",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "new": "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "baseline_sha256": "8c1b6fed8d5b258363ea12313b03a84da1aeb06d8de21bc0dc5413a4c41858fe",
+      "sha256": "8c1b6fed8d5b258363ea12313b03a84da1aeb06d8de21bc0dc5413a4c41858fe",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 10
+    },
+    {
+      "old": "test/host_link/archived/hl4a/serial_host_monitor_tests.ml",
+      "new": "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "baseline_sha256": "d5bb01c5ee679fb77a4465c8fa2fc487ad78ae0ea552fb8ab451f2383f4ad095",
+      "sha256": "d5bb01c5ee679fb77a4465c8fa2fc487ad78ae0ea552fb8ab451f2383f4ad095",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 8
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_command_tests.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "baseline_sha256": "743ab5125dbc7ce9f4368651d0e87586841b65c5bedabeb28b62dd3cbe638fed",
+      "sha256": "743ab5125dbc7ce9f4368651d0e87586841b65c5bedabeb28b62dd3cbe638fed",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "baseline_sha256": "3df99087aebdb8483d4148faa9ba9d711c4716e34b32ed45ace0715b4f8b2518",
+      "sha256": "3df99087aebdb8483d4148faa9ba9d711c4716e34b32ed45ace0715b4f8b2518",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "baseline_sha256": "ef19d44d43ff9c21e9b22b9db6f5b1fe5eac18509f2c139b224777a9cddeeb96",
+      "sha256": "ef19d44d43ff9c21e9b22b9db6f5b1fe5eac18509f2c139b224777a9cddeeb96",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_response_tests.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "baseline_sha256": "abead79e9f9242f4560b482fd3f93c96f182b59ad3459c07f2cf356dc8a13691",
+      "sha256": "abead79e9f9242f4560b482fd3f93c96f182b59ad3459c07f2cf356dc8a13691",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 9
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_testbench.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml",
+      "baseline_sha256": "ddb7bc46ce10afca930a3c9b6382281ab11e5bddc2e9803ad0abbe865a3e8142",
+      "sha256": "cc36f58510a33931f8c99885b930c473e2d60ccad455e488dbab51234471e8df",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/command_dispatch/command_dispatch_wait_tests.ml",
+      "new": "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "baseline_sha256": "6eac58842e3a4a3bbfc88177de7306da15d04024da3bbe6a6b5397398dad2af0",
+      "sha256": "6eac58842e3a4a3bbfc88177de7306da15d04024da3bbe6a6b5397398dad2af0",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 11
+    },
+    {
+      "old": "test/host_link/command_dispatch/dune",
+      "new": "ip/host_link/verif/command_dispatch/dune",
+      "baseline_sha256": "a0a7103d5730ff153ca407d0e1da0d8c7cbb29cc97f58e93ccd4f2949aee660a",
+      "sha256": "a0a7103d5730ff153ca407d0e1da0d8c7cbb29cc97f58e93ccd4f2949aee660a",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/endpoint/dune",
+      "new": "ip/host_link/verif/endpoint/dune",
+      "baseline_sha256": "f2a3a1b2d09ed6032f5fff2519a9d41b649871497a9333e3efa412816bd80c06",
+      "sha256": "f2a3a1b2d09ed6032f5fff2519a9d41b649871497a9333e3efa412816bd80c06",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_cancellation_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "baseline_sha256": "117443269996d74c9e7b81d445f6105efe0ed084dc346da723e203b7605aa2ad",
+      "sha256": "117443269996d74c9e7b81d445f6105efe0ed084dc346da723e203b7605aa2ad",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 10
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "baseline_sha256": "32bad5326bde09f0a058a85b7308dd799604551714fa538b04b93317dec8d9a3",
+      "sha256": "32bad5326bde09f0a058a85b7308dd799604551714fa538b04b93317dec8d9a3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_framing_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "baseline_sha256": "8885c3cd2ff07a13274881a5f8d70839eb5991830e2461f2aefda181c4bd65c9",
+      "sha256": "8885c3cd2ff07a13274881a5f8d70839eb5991830e2461f2aefda181c4bd65c9",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_lifecycle_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_lifecycle_tests.ml",
+      "baseline_sha256": "066a91273589b0ecc1d6da283cba13cc62875f13bf494efdc5cd4243c8f20d13",
+      "sha256": "066a91273589b0ecc1d6da283cba13cc62875f13bf494efdc5cd4243c8f20d13",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_scenario.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_scenario.ml",
+      "baseline_sha256": "8e2dea77d33e1e6e39f27a453f542ad7a2897eae82b01ebe219bbc76c6d00da2",
+      "sha256": "8e2dea77d33e1e6e39f27a453f542ad7a2897eae82b01ebe219bbc76c6d00da2",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_serial_monitor_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "baseline_sha256": "5283edbf10b7e1fc91b8804d034738056ea9d1c8a742096ed0e6a5884bdde9e9",
+      "sha256": "5283edbf10b7e1fc91b8804d034738056ea9d1c8a742096ed0e6a5884bdde9e9",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 8
+    },
+    {
+      "old": "test/host_link/endpoint/endpoint_transaction_tests.ml",
+      "new": "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "baseline_sha256": "2ca62f508314b36ddc6c284f9d0c47e3a13713d204be4d7d0c1245bdbe1eafd6",
+      "sha256": "2ca62f508314b36ddc6c284f9d0c47e3a13713d204be4d7d0c1245bdbe1eafd6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 10
+    },
+    {
+      "old": "test/host_link/endpoint/fixture.ml",
+      "new": "ip/host_link/verif/endpoint/fixture.ml",
+      "baseline_sha256": "4956ed3af543d940b744e3d991ee55911aab2c8db314598ea14816e66cba6cf7",
+      "sha256": "4956ed3af543d940b744e3d991ee55911aab2c8db314598ea14816e66cba6cf7",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/endpoint/latency.ml",
+      "new": "ip/host_link/verif/endpoint/latency.ml",
+      "baseline_sha256": "ab48b49e37ee3588090a14c5045a4994826e31d5c09c64ab143f43e3f3a8f515",
+      "sha256": "ab48b49e37ee3588090a14c5045a4994826e31d5c09c64ab143f43e3f3a8f515",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/endpoint/scoreboard.ml",
+      "new": "ip/host_link/verif/endpoint/scoreboard.ml",
+      "baseline_sha256": "cef31edabae1685fcbbca2d84ad500f9257a542dbecadbc0ae7c5c8afff1f1c0",
+      "sha256": "cef31edabae1685fcbbca2d84ad500f9257a542dbecadbc0ae7c5c8afff1f1c0",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/frame_rx/dune",
+      "new": "ip/host_link/verif/frame_rx/dune",
+      "baseline_sha256": "1a30b1ba93a78896c6b5591839726a2d28bcc7bfc19ac13fdea55d5dab629f24",
+      "sha256": "1a30b1ba93a78896c6b5591839726a2d28bcc7bfc19ac13fdea55d5dab629f24",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/frame_rx/frame_rx_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml",
+      "baseline_sha256": "f1b32ba458fef6a3e55060ce67798f3a2e020676d6ffc75e4b4e96f20a992ef2",
+      "sha256": "f1b32ba458fef6a3e55060ce67798f3a2e020676d6ffc75e4b4e96f20a992ef2",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/host_link/frame_rx/frame_rx_lifecycle_tests.ml",
+      "new": "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "baseline_sha256": "17f6a5c4233253ab18640e84a536c6ae66873adbf73db42a7942e4d534d11fa6",
+      "sha256": "17f6a5c4233253ab18640e84a536c6ae66873adbf73db42a7942e4d534d11fa6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 9
+    },
+    {
+      "old": "test/host_link/frame_rx/frame_rx_receive_tests.ml",
+      "new": "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml",
+      "baseline_sha256": "9a8c3dd4dcacb51460763b52b1d5f6f7ab88fa4ccd838aa7994c6f015813845d",
+      "sha256": "9a8c3dd4dcacb51460763b52b1d5f6f7ab88fa4ccd838aa7994c6f015813845d",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/host_link/frame_rx/frame_rx_testbench.ml",
+      "new": "ip/host_link/verif/frame_rx/frame_rx_testbench.ml",
+      "baseline_sha256": "32f8545efdc82e62239f69ee0f03faa427d822a1ccc5ccff4bddaa80814a5947",
+      "sha256": "64dd1da6e017ece602b6d39c21bf8925f38ac945971f2ee9b7b4f27819fadd16",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/frame_rx/frame_rx_validation_tests.ml",
+      "new": "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "baseline_sha256": "238be82fcd24df774bca1a176608ff2e58633509ab9fe888f93e10404d60f607",
+      "sha256": "238be82fcd24df774bca1a176608ff2e58633509ab9fe888f93e10404d60f607",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 9
+    },
+    {
+      "old": "test/host_link/frame_tx/dune",
+      "new": "ip/host_link/verif/frame_tx/dune",
+      "baseline_sha256": "0d78f7e11a359aea7850e8334234dad235ae17ed7e7f724c552db4433d8cbe0c",
+      "sha256": "0d78f7e11a359aea7850e8334234dad235ae17ed7e7f724c552db4433d8cbe0c",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/frame_tx/frame_tx_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "baseline_sha256": "c148d260719134f181edd5457b47c393c65ad23df68055f63dc266067e53903e",
+      "sha256": "c148d260719134f181edd5457b47c393c65ad23df68055f63dc266067e53903e",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/host_link/frame_tx/frame_tx_lifecycle_tests.ml",
+      "new": "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "baseline_sha256": "d68080213cb22304eb935835810acaaf5f79e462ef724fa27f8aa35189e7c796",
+      "sha256": "d68080213cb22304eb935835810acaaf5f79e462ef724fa27f8aa35189e7c796",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 6
+    },
+    {
+      "old": "test/host_link/frame_tx/frame_tx_publication_tests.ml",
+      "new": "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "baseline_sha256": "88f516c0eb24b7439e1ba89f1f326daa444833207ce530433e22d541c367a5bb",
+      "sha256": "88f516c0eb24b7439e1ba89f1f326daa444833207ce530433e22d541c367a5bb",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 6
+    },
+    {
+      "old": "test/host_link/frame_tx/frame_tx_read_tests.ml",
+      "new": "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "baseline_sha256": "773b283fff87396ecf0ed7839823760e22171fa2d0980f8d7b81a2d49bcd302b",
+      "sha256": "773b283fff87396ecf0ed7839823760e22171fa2d0980f8d7b81a2d49bcd302b",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 12
+    },
+    {
+      "old": "test/host_link/frame_tx/frame_tx_testbench.ml",
+      "new": "ip/host_link/verif/frame_tx/frame_tx_testbench.ml",
+      "baseline_sha256": "02a56ad6b806a2357de391f733fe0c992860098d799e9516e394e47f65be10a1",
+      "sha256": "bf11ff9bb19d46ded26e224d8c9407aca8d845ea50f8ea7f7bf10ee808ff10d6",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/agent.ml",
+      "new": "ip/host_link/verif/serial_host/agent.ml",
+      "baseline_sha256": "bdb7b094efcc729fd4a237240f2baec9528f5cec32403c0851a68860e1f37891",
+      "sha256": "bdb7b094efcc729fd4a237240f2baec9528f5cec32403c0851a68860e1f37891",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/config.ml",
+      "new": "ip/host_link/verif/serial_host/config.ml",
+      "baseline_sha256": "b3b58d9217807b40088dad94ddb435a6a4306498a28efa823e7510e70865e100",
+      "sha256": "b3b58d9217807b40088dad94ddb435a6a4306498a28efa823e7510e70865e100",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/driver.ml",
+      "new": "ip/host_link/verif/serial_host/driver.ml",
+      "baseline_sha256": "4650b6593fdfcf10da9daca41a6c395df47203713d060fb572bc7e62471b09df",
+      "sha256": "4650b6593fdfcf10da9daca41a6c395df47203713d060fb572bc7e62471b09df",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/dune",
+      "new": "ip/host_link/verif/serial_host/dune",
+      "baseline_sha256": "0af47da4c6c6247c4b3bbe02c5813096d45217eeeb30c63154a91962991a6782",
+      "sha256": "0af47da4c6c6247c4b3bbe02c5813096d45217eeeb30c63154a91962991a6782",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/item.ml",
+      "new": "ip/host_link/verif/serial_host/item.ml",
+      "baseline_sha256": "606fd603322a24a01361fb48c4f8d1017c1cd9b15de46e5cccbc365ffa4beeb0",
+      "sha256": "606fd603322a24a01361fb48c4f8d1017c1cd9b15de46e5cccbc365ffa4beeb0",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_host/monitor.ml",
+      "new": "ip/host_link/verif/serial_host/monitor.ml",
+      "baseline_sha256": "ba14408bdca8f496a4d8f0a425f19f5b67a39fd3fdb01e058548b9f31b9c969d",
+      "sha256": "ba14408bdca8f496a4d8f0a425f19f5b67a39fd3fdb01e058548b9f31b9c969d",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_phy/dune",
+      "new": "ip/host_link/verif/serial_phy/dune",
+      "baseline_sha256": "2c1bdea8aa7680a24a51d5680778c5d4620e789404899c140b48ece17cbd5923",
+      "sha256": "2c1bdea8aa7680a24a51d5680778c5d4620e789404899c140b48ece17cbd5923",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_phy/serial_phy_diagnostics_tests.ml",
+      "new": "ip/host_link/verif/serial_phy/serial_phy_diagnostics_tests.ml",
+      "baseline_sha256": "b427cc3a3db545b0e6fd6c97f4fe4bf47f4a0913bebcfce0424efea4828a1550",
+      "sha256": "b427cc3a3db545b0e6fd6c97f4fe4bf47f4a0913bebcfce0424efea4828a1550",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 3
+    },
+    {
+      "old": "test/host_link/serial_phy/serial_phy_testbench.ml",
+      "new": "ip/host_link/verif/serial_phy/serial_phy_testbench.ml",
+      "baseline_sha256": "dbe26fe6a94270f765d0bbd2e5147fe4fc37b5b529256986d287b25a1ef78bc8",
+      "sha256": "c3d6145d16fb95137dd811bccc320580049282abc711f47ff7ea775cf5512b5d",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/host_link/serial_phy/serial_phy_tests.ml",
+      "new": "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "baseline_sha256": "bd7da6e6e8ce767037857f7319254cdb5f659a11176eacefb0efb4e19411d9d3",
+      "sha256": "bd7da6e6e8ce767037857f7319254cdb5f659a11176eacefb0efb4e19411d9d3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 8
+    },
+    {
+      "old": "test/integration/core_engine/core_engine_control_port_tests.ml",
+      "new": "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "baseline_sha256": "e17b02b0bd960d5bc15ad67b0bfdccfe3acea32cac3c7e814762adf5a579a05d",
+      "sha256": "e17b02b0bd960d5bc15ad67b0bfdccfe3acea32cac3c7e814762adf5a579a05d",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/integration/core_engine/core_engine_testbench.ml",
+      "new": "ip/emulator_core/verif/core_engine/core_engine_testbench.ml",
+      "baseline_sha256": "13957d6ef5926484dc2ffec14756ef790d4822dd45802cdea82d88214e77c0b5",
+      "sha256": "13957d6ef5926484dc2ffec14756ef790d4822dd45802cdea82d88214e77c0b5",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/core_engine/core_engine_tests.ml",
+      "new": "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "baseline_sha256": "5547717c73b85e4bfe465ec3be42b94e210f92560d0f03186b19e5ff1155f042",
+      "sha256": "5547717c73b85e4bfe465ec3be42b94e210f92560d0f03186b19e5ff1155f042",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 16
+    },
+    {
+      "old": "test/integration/core_engine/core_engine_timing_tests.ml",
+      "new": "ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml",
+      "baseline_sha256": "6030a06a1232442b3411de2293c5ac8f3c035ebfea34ce323b3c4d1e5543be0f",
+      "sha256": "6030a06a1232442b3411de2293c5ac8f3c035ebfea34ce323b3c4d1e5543be0f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/integration/core_engine/dune",
+      "new": "ip/emulator_core/verif/core_engine/dune",
+      "baseline_sha256": "79ecf20bf97dfd1cc61ed3ca00599650878ff2bc17e1ee376fdcbba046d3454b",
+      "sha256": "79ecf20bf97dfd1cc61ed3ca00599650878ff2bc17e1ee376fdcbba046d3454b",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/dune",
+      "new": "test/host_simulator/dune",
+      "baseline_sha256": "4070d9b891374769d64c3d741fdf9513c76ce7e836f8f8d47d1901fbdad788cd",
+      "sha256": "d23717fdc8cecb8d97732c3783a7e8dab88eff5935f61d4557e1f16d38623a8b",
+      "byte_identical": false,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/host_simulator_tests.ml",
+      "new": "test/host_simulator/host_simulator_tests.ml",
+      "baseline_sha256": "4e55b4e2a30fbb09ba258f817002366682723ef85b8f9c67d134a6d95f59037e",
+      "sha256": "4e55b4e2a30fbb09ba258f817002366682723ef85b8f9c67d134a6d95f59037e",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 16
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-empty.expected",
+      "new": "test/host_simulator/p3.4-empty.expected",
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-failing-workflow.stderr.expected",
+      "new": "test/host_simulator/p3.4-failing-workflow.stderr.expected",
+      "baseline_sha256": "ec141a6e3e2bfc5c5e5f1e738c6de41634f57e501888c0df306b1e41cfcd72cd",
+      "sha256": "ec141a6e3e2bfc5c5e5f1e738c6de41634f57e501888c0df306b1e41cfcd72cd",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-failing-workflow.stdout.expected",
+      "new": "test/host_simulator/p3.4-failing-workflow.stdout.expected",
+      "baseline_sha256": "cf15bfe6e479290eb2887baa07e53b5e7051a5e6e3882a34b53cec88d6712703",
+      "sha256": "cf15bfe6e479290eb2887baa07e53b5e7051a5e6e3882a34b53cec88d6712703",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-invalid-capacity.expected",
+      "new": "test/host_simulator/p3.4-invalid-capacity.expected",
+      "baseline_sha256": "fc653f8b50bfb714037e243f9b9494fcbecc57890d575822a326fc0c27380b6f",
+      "sha256": "fc653f8b50bfb714037e243f9b9494fcbecc57890d575822a326fc0c27380b6f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-mismatched-expect.expected",
+      "new": "test/host_simulator/p3.4-mismatched-expect.expected",
+      "baseline_sha256": "6b4830b4d7a9d6494025c7c061247fb78563f5e20f18bffc7fa393dda353ddf3",
+      "sha256": "6b4830b4d7a9d6494025c7c061247fb78563f5e20f18bffc7fa393dda353ddf3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-mismatched-expect.stderr.expected",
+      "new": "test/host_simulator/p3.4-mismatched-expect.stderr.expected",
+      "baseline_sha256": "8e9c70abe84f07e86e8b9820fcbd51dc34829f1bd4f62c3f04bc7135a7057ac9",
+      "sha256": "8e9c70abe84f07e86e8b9820fcbd51dc34829f1bd4f62c3f04bc7135a7057ac9",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/host_simulator/p3.4-transfer-timeout.expected",
+      "new": "test/host_simulator/p3.4-transfer-timeout.expected",
+      "baseline_sha256": "68c2fd9eb7ba6802cec9ff7ff99ca6ddc38b749458bc08818345fa4beaf32bf6",
+      "sha256": "68c2fd9eb7ba6802cec9ff7ff99ca6ddc38b749458bc08818345fa4beaf32bf6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/observed_transfer_bank/dune",
+      "new": "ip/mechanisms/verif/staging/observed_transfer_bank/dune",
+      "baseline_sha256": "3edac3f2b8340674a03704783f76e2ffadc5a2fb9626e539d1c242320387fb4d",
+      "sha256": "3edac3f2b8340674a03704783f76e2ffadc5a2fb9626e539d1c242320387fb4d",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/observed_transfer_bank/observed_transfer_bank_timing_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_testbench.ml",
+      "baseline_sha256": "121c121caa906cfa3e80da117f2beb3f794d9f10ce551f406f2ed68055b894ce",
+      "sha256": "121c121caa906cfa3e80da117f2beb3f794d9f10ce551f406f2ed68055b894ce",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "baseline_sha256": "b2025770f1992fba061f6f8beb281ae788b94e3a3a847d608c822610807641d9",
+      "sha256": "b2025770f1992fba061f6f8beb281ae788b94e3a3a847d608c822610807641d9",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 9
+    },
+    {
+      "old": "test/integration/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "baseline_sha256": "a45bc3f1e22405072577125bd3d3aea7868d9036bd1ef8729f4227171e40ac83",
+      "sha256": "a45bc3f1e22405072577125bd3d3aea7868d9036bd1ef8729f4227171e40ac83",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/integration/primitive_demo/dune",
+      "new": "ip/mechanisms/verif/staging/primitive_demo/dune",
+      "baseline_sha256": "37050e038fbb799fe7c6ec67976d8e693e8dee18084ffe1baee024a303b21d8f",
+      "sha256": "37050e038fbb799fe7c6ec67976d8e693e8dee18084ffe1baee024a303b21d8f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/primitive_demo/primitive_demo_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/primitive_demo/primitive_demo_testbench.ml",
+      "baseline_sha256": "e6d0cc3795246526801e0ef94a0510024d7220f69d8bcd40d4519b8329bdcf32",
+      "sha256": "e6d0cc3795246526801e0ef94a0510024d7220f69d8bcd40d4519b8329bdcf32",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/primitive_demo/primitive_demo_unit_tests.ml",
+      "new": "ip/mechanisms/verif/staging/primitive_demo/primitive_demo_unit_tests.ml",
+      "baseline_sha256": "878d62860a514f3c2a7323310931a7add694f370f8960c0cb2f3af2aa5547af5",
+      "sha256": "878d62860a514f3c2a7323310931a7add694f370f8960c0cb2f3af2aa5547af5",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/integration/program_memory_backend/dune",
+      "new": "ip/program_memory_controller/verif/backend_integration/dune",
+      "baseline_sha256": "e1c4cab2a73e0d7ce94ecd1fd604daeebe4f270de09276124c1983d7df18c552",
+      "sha256": "e1c4cab2a73e0d7ce94ecd1fd604daeebe4f270de09276124c1983d7df18c552",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/program_memory_backend/emit_program_memory_backend.ml",
+      "new": "ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.ml",
+      "baseline_sha256": "a4555ab2a3f617b4956d85087530ec1e60f7ad7c89ebeedc2e10f577ba20eac6",
+      "sha256": "a4555ab2a3f617b4956d85087530ec1e60f7ad7c89ebeedc2e10f577ba20eac6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/program_memory_backend/program_memory_backend_design.ml",
+      "new": "ip/program_memory_controller/verif/backend_integration/program_memory_backend_design.ml",
+      "baseline_sha256": "7299b0677f4625f151772ab088f9882cf1ec6277a84598fab21a08f4d93f8903",
+      "sha256": "7299b0677f4625f151772ab088f9882cf1ec6277a84598fab21a08f4d93f8903",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/program_memory_backend/program_memory_backend_tests.ml",
+      "new": "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml",
+      "baseline_sha256": "92da5aa553bee8fc7ff3021e59d0bd1ec08c4b9c7b2f0572b1fa42e1715b346f",
+      "sha256": "92da5aa553bee8fc7ff3021e59d0bd1ec08c4b9c7b2f0572b1fa42e1715b346f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/integration/uart_slice/dune",
+      "new": "ip/mechanisms/verif/staging/uart_slice/dune",
+      "baseline_sha256": "ea83252b21f7bfb13ab970795946ba06404a86de35ac16ddad4971fd29361854",
+      "sha256": "ea83252b21f7bfb13ab970795946ba06404a86de35ac16ddad4971fd29361854",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/uart_slice/emit_uart_frame_trace.ml",
+      "new": "ip/mechanisms/verif/staging/uart_slice/emit_uart_frame_trace.ml",
+      "baseline_sha256": "c0e1121e8843bdd7ee645834b81bbda83a7c43ec6d5ebe723aa38f3962138213",
+      "sha256": "c0e1121e8843bdd7ee645834b81bbda83a7c43ec6d5ebe723aa38f3962138213",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/uart_slice/uart_frame.trace",
+      "new": "ip/mechanisms/verif/staging/uart_slice/uart_frame.trace",
+      "baseline_sha256": "ebab7913309f0fba514af7bdd1bacee9b46dec9932b4012b2c599138e5a56c2f",
+      "sha256": "ebab7913309f0fba514af7bdd1bacee9b46dec9932b4012b2c599138e5a56c2f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/uart_slice/uart_frame_monitor.ml",
+      "new": "ip/mechanisms/verif/staging/uart_slice/uart_frame_monitor.ml",
+      "baseline_sha256": "6d492637a942af027fc5a552522ec51cc6ee9cfc08671d8ca82723e9b2bfed12",
+      "sha256": "6d492637a942af027fc5a552522ec51cc6ee9cfc08671d8ca82723e9b2bfed12",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/uart_slice/uart_slice_property_tests.ml",
+      "new": "ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml",
+      "baseline_sha256": "643a8cedb87cdea7fa608ced445491a1e25be69329b07c4d240344bc1a7592d3",
+      "sha256": "643a8cedb87cdea7fa608ced445491a1e25be69329b07c4d240344bc1a7592d3",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/integration/uart_slice/uart_slice_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/uart_slice/uart_slice_testbench.ml",
+      "baseline_sha256": "4ce8f4bdac96f2f36086f41790e64e987a764914fad9ec9b9d1d953566aa874d",
+      "sha256": "4ce8f4bdac96f2f36086f41790e64e987a764914fad9ec9b9d1d953566aa874d",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/uart_slice/uart_slice_unit_tests.ml",
+      "new": "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "baseline_sha256": "850faf6746fff6400bede8b5792721ce91fdb4ba3c32b9d1ac810a0bb5bc1bcc",
+      "sha256": "850faf6746fff6400bede8b5792721ce91fdb4ba3c32b9d1ac810a0bb5bc1bcc",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 13
+    },
+    {
+      "old": "test/integration/wrapper/dune",
+      "new": "chip_top/verif/observable/core/dune",
+      "baseline_sha256": "0bf18fd949f6055de07a1312a6fc3a7d3ec2133407dee026e16fe2480bc8e07e",
+      "sha256": "0bf18fd949f6055de07a1312a6fc3a7d3ec2133407dee026e16fe2480bc8e07e",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/wrapper/wrapper_testbench.ml",
+      "new": "chip_top/verif/observable/core/wrapper_testbench.ml",
+      "baseline_sha256": "bc67e9381c63d4a2042b9b85459a66894425639cb770353207a9884889712526",
+      "sha256": "bc67e9381c63d4a2042b9b85459a66894425639cb770353207a9884889712526",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/integration/wrapper/wrapper_unit_tests.ml",
+      "new": "chip_top/verif/observable/core/wrapper_unit_tests.ml",
+      "baseline_sha256": "7a4064a98f98bea171d63338cf526f3200a5a418ee34d01ce66ddff9a61e4586",
+      "sha256": "7a4064a98f98bea171d63338cf526f3200a5a418ee34d01ce66ddff9a61e4586",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/primitives/byte_fifo/byte_fifo_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_testbench.ml",
+      "baseline_sha256": "c6b4982f28e68b116f59cf7647d88e695e2517ea78641e2828bc6557f93359b6",
+      "sha256": "c6b4982f28e68b116f59cf7647d88e695e2517ea78641e2828bc6557f93359b6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/byte_fifo/byte_fifo_unit_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml",
+      "baseline_sha256": "ba52ec3b2c293556a7b5c56fa27ea82459a58bcb428bb4c5d7de84ffbd9d946a",
+      "sha256": "ba52ec3b2c293556a7b5c56fa27ea82459a58bcb428bb4c5d7de84ffbd9d946a",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/primitives/byte_fifo/dune",
+      "new": "ip/mechanisms/verif/blocks/byte_fifo/dune",
+      "baseline_sha256": "039f80f305d6ad78e893b5f884cf6019fb916c10b406e9c6b89552ac2b6c880a",
+      "sha256": "039f80f305d6ad78e893b5f884cf6019fb916c10b406e9c6b89552ac2b6c880a",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/dune",
+      "new": "ip/mechanisms/verif/blocks/input_events/dune",
+      "baseline_sha256": "ce29b84a249d5c45cd1f72f2ace457b2311faf5b0dc19b75ead375131d070101",
+      "sha256": "ce29b84a249d5c45cd1f72f2ace457b2311faf5b0dc19b75ead375131d070101",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/input_events_four_state_bench.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_four_state_bench.ml",
+      "baseline_sha256": "9135ff1ef897de98f80c1d4aeaa56a69ef7e2258cfd69e942232ee3f594650a1",
+      "sha256": "9135ff1ef897de98f80c1d4aeaa56a69ef7e2258cfd69e942232ee3f594650a1",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/input_events_four_state_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_four_state_testbench.ml",
+      "baseline_sha256": "8a511343c0ff300c569839908c5f017c2514c56cf4a68103d6abf14a44099e77",
+      "sha256": "8a511343c0ff300c569839908c5f017c2514c56cf4a68103d6abf14a44099e77",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/input_events_four_state_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "baseline_sha256": "0da298cd371e02973f18e9237e2fcddaf0e4c3534e80479d3f102baa04d643ad",
+      "sha256": "0da298cd371e02973f18e9237e2fcddaf0e4c3534e80479d3f102baa04d643ad",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/primitives/input_events/input_events_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_testbench.ml",
+      "baseline_sha256": "cdd14beab2afd7cfaba61c268ef1eaa062fb8b5f7996bf65646c0e39b6c3b665",
+      "sha256": "cdd14beab2afd7cfaba61c268ef1eaa062fb8b5f7996bf65646c0e39b6c3b665",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/input_events_timing_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_timing_testbench.ml",
+      "baseline_sha256": "7b58480c67f68bb8f864765cc93f3795b3f30da396d55081f9aaeedb76399e6c",
+      "sha256": "7b58480c67f68bb8f864765cc93f3795b3f30da396d55081f9aaeedb76399e6c",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/input_events/input_events_timing_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "baseline_sha256": "d9bc94854618fa2f5a6b938221ca31f1ee9d0a69a805ef1e7f7a64e494e20f9b",
+      "sha256": "d9bc94854618fa2f5a6b938221ca31f1ee9d0a69a805ef1e7f7a64e494e20f9b",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 5
+    },
+    {
+      "old": "test/primitives/input_events/input_events_unit_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/input_events/input_events_unit_tests.ml",
+      "baseline_sha256": "465beaaf243a33664b0bc7f2b84c9388d04449f87d98ef6300abff6f4ce4766f",
+      "sha256": "465beaaf243a33664b0bc7f2b84c9388d04449f87d98ef6300abff6f4ce4766f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/primitives/observed_transfer/dune",
+      "new": "ip/mechanisms/verif/staging/observed_transfer/dune",
+      "baseline_sha256": "8093758387bbeabe7bf2d6c136964bd62b0088e067dae5c268d5168c82b02cb6",
+      "sha256": "8093758387bbeabe7bf2d6c136964bd62b0088e067dae5c268d5168c82b02cb6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/observed_transfer/observed_transfer_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_testbench.ml",
+      "baseline_sha256": "d206ca55a4c53c150e024f58e3840fe6da97b650b180a22f7c4a22b58d585847",
+      "sha256": "d206ca55a4c53c150e024f58e3840fe6da97b650b180a22f7c4a22b58d585847",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/observed_transfer/observed_transfer_timing_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_testbench.ml",
+      "baseline_sha256": "36608d0ac7f3bc9ea55c36d4d4c76c9d3abce5416f583b6c264750a49dd28440",
+      "sha256": "36608d0ac7f3bc9ea55c36d4d4c76c9d3abce5416f583b6c264750a49dd28440",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/observed_transfer/observed_transfer_timing_tests.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "baseline_sha256": "50fe0015e216111fc564ced89aa501d0663ca1366d145e86a301f4e3044e5b1c",
+      "sha256": "50fe0015e216111fc564ced89aa501d0663ca1366d145e86a301f4e3044e5b1c",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 15
+    },
+    {
+      "old": "test/primitives/observed_transfer/observed_transfer_unit_tests.ml",
+      "new": "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "baseline_sha256": "83758bf9315d83f33b75054d384215157b3f065171706c13278e12e9b9b34d7f",
+      "sha256": "83758bf9315d83f33b75054d384215157b3f065171706c13278e12e9b9b34d7f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 7
+    },
+    {
+      "old": "test/primitives/pin_bank/dune",
+      "new": "ip/mechanisms/verif/blocks/pin_bank/dune",
+      "baseline_sha256": "de6806a882f16724c71ecbe3d210a91dcef44572e4f0d3c6f49eb0feddb0dfba",
+      "sha256": "de6806a882f16724c71ecbe3d210a91dcef44572e4f0d3c6f49eb0feddb0dfba",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/pin_bank/pin_bank_expect_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/pin_bank/pin_bank_expect_tests.ml",
+      "baseline_sha256": "1357c37cc0cd469bba80d4aa914b4cdb91afefe72a82f35cef2e32ca2a16511a",
+      "sha256": "1357c37cc0cd469bba80d4aa914b4cdb91afefe72a82f35cef2e32ca2a16511a",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/primitives/pin_bank/pin_bank_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/pin_bank/pin_bank_testbench.ml",
+      "baseline_sha256": "bc66db160ff7c923f022fd0d3e235c7c1f449a4ad43be1a5721281360d0716be",
+      "sha256": "bc66db160ff7c923f022fd0d3e235c7c1f449a4ad43be1a5721281360d0716be",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/pin_bank/pin_bank_unit_quickcheck_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_quickcheck_tests.ml",
+      "baseline_sha256": "62560f30ed1f8e000d4efbe9019837706af2e5501234cd0aae50351933fc40a0",
+      "sha256": "62560f30ed1f8e000d4efbe9019837706af2e5501234cd0aae50351933fc40a0",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 1
+    },
+    {
+      "old": "test/primitives/pin_bank/pin_bank_unit_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml",
+      "baseline_sha256": "c7254d3d40b57de3f3a440404523d0c121f8881bdeb9c77111c0973cb22af0c2",
+      "sha256": "c7254d3d40b57de3f3a440404523d0c121f8881bdeb9c77111c0973cb22af0c2",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/primitives/shift_lane/dune",
+      "new": "ip/mechanisms/verif/blocks/shift_lane/dune",
+      "baseline_sha256": "3c26734453cc82c1774247d666b2be68377e6793f688f8aa576f9f23a6b2221f",
+      "sha256": "3c26734453cc82c1774247d666b2be68377e6793f688f8aa576f9f23a6b2221f",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/shift_lane/shift_lane_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/shift_lane/shift_lane_testbench.ml",
+      "baseline_sha256": "d3bb835737fc5120da8edacba8824aa8642f8a757b126c51631345ec99262002",
+      "sha256": "d3bb835737fc5120da8edacba8824aa8642f8a757b126c51631345ec99262002",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/shift_lane/shift_lane_unit_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml",
+      "baseline_sha256": "086644f0952a8c43743446e9e2e5fe9e99c1bae150c8c08bb0d42c618a51f919",
+      "sha256": "086644f0952a8c43743446e9e2e5fe9e99c1bae150c8c08bb0d42c618a51f919",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 4
+    },
+    {
+      "old": "test/primitives/timing/dune",
+      "new": "ip/mechanisms/verif/blocks/timing/dune",
+      "baseline_sha256": "e29a0022d5b4d046081acc70ae524efc8e7d1872f749482c1e959b40a46b3550",
+      "sha256": "e29a0022d5b4d046081acc70ae524efc8e7d1872f749482c1e959b40a46b3550",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/timing/timing_testbench.ml",
+      "new": "ip/mechanisms/verif/blocks/timing/timing_testbench.ml",
+      "baseline_sha256": "37dc950d392978ff2f09ce9b79d1326eee98254893aff2fb73a427732d6a848c",
+      "sha256": "37dc950d392978ff2f09ce9b79d1326eee98254893aff2fb73a427732d6a848c",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/timing/timing_unit_tests.ml",
+      "new": "ip/mechanisms/verif/blocks/timing/timing_unit_tests.ml",
+      "baseline_sha256": "7c3cf951780bf6c77494f638cc1ba732152c8736e1f3c68e7ea09b765616a262",
+      "sha256": "7c3cf951780bf6c77494f638cc1ba732152c8736e1f3c68e7ea09b765616a262",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 3
+    },
+    {
+      "old": "test/primitives/uart_tx/dune",
+      "new": "ip/mechanisms/verif/staging/uart_tx/dune",
+      "baseline_sha256": "498da84be4ea49815b93325eaf0354087bf4897524e25981e2b474a67261be93",
+      "sha256": "498da84be4ea49815b93325eaf0354087bf4897524e25981e2b474a67261be93",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/uart_tx/uart_tx_testbench.ml",
+      "new": "ip/mechanisms/verif/staging/uart_tx/uart_tx_testbench.ml",
+      "baseline_sha256": "724f941f233a41b694a91984fd4d37e1f4dd15dec092276aede61a532e3049e6",
+      "sha256": "724f941f233a41b694a91984fd4d37e1f4dd15dec092276aede61a532e3049e6",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    },
+    {
+      "old": "test/primitives/uart_tx/uart_tx_unit_tests.ml",
+      "new": "ip/mechanisms/verif/staging/uart_tx/uart_tx_unit_tests.ml",
+      "baseline_sha256": "c5b17bc3fea87aa453029b03c7d383963a9d7b00a234b73f9412b10e1786b040",
+      "sha256": "c5b17bc3fea87aa453029b03c7d383963a9d7b00a234b73f9412b10e1786b040",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 2
+    },
+    {
+      "old": "test/verification_sweep.ml",
+      "new": "verif/regression/verification_sweep.ml",
+      "baseline_sha256": "c5b789473fe9db41262f184b9b10a7ea350e179510ea95ce02f2e3416a5b92df",
+      "sha256": "c5b789473fe9db41262f184b9b10a7ea350e179510ea95ce02f2e3416a5b92df",
+      "byte_identical": true,
+      "mode": "0o664",
+      "registrations": 0
+    }
+  ],
+  "registrations": [
+    [
+      "test/backend_conformance/backend_conformance_expect_tests.ml",
+      "let%expect_test \"Cyclesim and two-state Evsim agree at the adapter sampling points\" ="
+    ],
+    [
+      "test/backend_conformance/backend_conformance_expect_tests.ml",
+      "let%test_unit \"both adapters terminate a non-completing testbench at the step budget\" ="
+    ],
+    [
+      "test/verification_support/checker_expect_tests.ml",
+      "let%expect_test \"the checker keeps unavailable, unspecified and defined apart\" ="
+    ],
+    [
+      "test/verification_support/replay_expect_tests.ml",
+      "let%expect_test \"a failure artifact retains dependency, tool, and exact patch data\" ="
+    ],
+    [
+      "test/verification_support/replay_expect_tests.ml",
+      "let%expect_test \"artifact paths are valid from a dune runner directory\" ="
+    ],
+    [
+      "test/verification_support/replay_expect_tests.ml",
+      "let%expect_test \"a controlled mismatch is found, shrunk, and reproduced from its seed\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"reserved opcode, spare bits, and invalid enum fault as base words\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"invalid and truncated extensions fault without partial commit\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"negative, oversized, and loaded-image targets never wrap\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"sequential fallthrough beyond the verified image becomes a fetch fault\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"accepted RUN is fresh and a disabled pending fetch is cancelled\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"execution halt wins over a simultaneous RUN acceptance\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"reset establishes the architectural cleared descriptor\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"live host writes cannot steal autonomous fetches\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_fault_tests.ml",
+      "let%test_unit \"the first instruction can jump to the final physical image slot\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"every delegated non-branch instruction is issued with retained operands\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"branch_pin commits its decision only on completion\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"delayed acceptance and completion hold one request without reissue\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"refusal and completion fault are distinct non-retiring boundaries\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"an unsolicited completion faults without consuming a result\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"an unsolicited completion cannot retire a simultaneous local instruction\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml",
+      "let%test_unit \"reset and disable suppress a retained mechanism request before the edge\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_model_tests.ml",
+      "let%test_unit \"state, every ALU operation, compare, shifts, and descriptor state agree\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_model_tests.ml",
+      "let%test_unit \"every flag condition takes and falls through\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_model_tests.ml",
+      "let%test_unit \"dbnz counts zero, one, and two agree and preserve flags\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_model_tests.ml",
+      "let%test_unit \"jump, call, return, and computed jump agree\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_property_tests.ml",
+      "let%expect_test \"bounded assembled programs agree with the independent core\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_property_tests.ml",
+      "let%expect_test \"generated P3.2 programs record an executable rerun\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/control_execution_unit_tests.ml",
+      "let%test_unit \"extended arithmetic, taken branch, loop, and halt take sixteen cycles\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/instruction_decoder_tests.ml",
+      "let%test_unit \"all base words agree with Encoding.decode\" ="
+    ],
+    [
+      "ip/emulator_core/verif/execution/instruction_decoder_tests.ml",
+      "let%test_unit \"extension resolution agrees at semantic boundaries\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml",
+      "let%expect_test \"bounded load/access/fetch schedules agree with the independent model\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml",
+      "let%expect_test \"generated core scenarios record an executable rerun\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/controller/protocol_core_unit_tests.ml",
+      "let%test_unit \"directed P3.1a scenarios\" = run_all (fun poison -> create ~poison ())"
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"reset releases the pins, clears status, and halts\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"reset does not disturb the program store\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"disabling aborts work in flight and releases the protocol pins\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a timed command accepted at edge k with delay n fires at k + n\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"zero delay is rejected\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"ready is a Moore output, so the edge a wait finishes still refuses\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"parameters are latched at acceptance, not read again later\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a level wait completes immediately when the condition already holds\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a level wait that must wait times out at its deadline\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"an edge wait ignores a stale edge and arms for the next one\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a matching event and an expiring timeout at the same edge: the event \\"
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"set wins over acknowledge in the same cycle\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a lost occurrence is recorded as overflow, not counted\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a periodic tick keeps running while the core is stalled\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a fetch reads through one latency-one port\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"an unspecified word is never accepted as an instruction\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"the store output holds while the port is disabled\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a program write is refused while running and never reaches the port\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"STOP halts at an instruction boundary\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"ABORT releases the pins promptly and reports the work incomplete\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"a command offered at the same edge as ABORT is refused\" ="
+    ],
+    [
+      "test/f_model/test_cycle.ml",
+      "let%expect_test \"single step runs one instruction, and only with engines idle\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"every instruction encodes and decodes back to itself\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"what costs a second word at sixteen bits\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the same program as instruction words, memory words and transport bytes\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"a decoder accepts only words that were built as instructions\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"how many words decode\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"an extension word reached as an instruction\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"a program with no halt runs into what follows it\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"a branch out of range\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"an image larger than the store is refused\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the cost of one instruction, and of each branch path\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the same UART frame, bit-banged three ways\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the shortest bit period each candidate can drive\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"a mode-0 SPI exchange receives the target's byte\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"an I2C write transaction reaches the target and reads its acknowledges\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the descriptor program configures and issues a validated transfer\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"program sizes and cycle counts\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the cycle accounting closes\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"what arithmetic leaves in the registers and the flags\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"the queue instructions\" ="
+    ],
+    [
+      "test/f_model/test_encoding.ml",
+      "let%expect_test \"what a second frame costs the engine\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a bit-banged 8N1 frame drives the expected waveform\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a mode-0 SPI exchange clocks out a byte and reads the target's\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"an I2C write transaction drives, samples, and waits out a stretched \\"
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a frame costs one descriptor or twenty-two operations, and decodes the \\"
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a target that stretches past the timeout reports a timeout\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"an empty open-drain bus acknowledges nothing\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"an unaddressed target does not acknowledge and keeps nothing\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a refused operation ends the run and names the reason\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a blocking pop with nothing to drain it runs out of cycles\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"a sequence that cannot be built says why\" ="
+    ],
+    [
+      "test/f_model/test_firmware.ml",
+      "let%expect_test \"operation counts and response latency for each helper\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"the published instruction layout\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"the layout is consistent\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"every instruction encodes and decodes back to itself\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"what costs a second word\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"a labeled program as instruction words, memory words and transport bytes\""
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"slots, displacements and encoded words\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"a decoder accepts only words that were built as instructions\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"what an extension word decodes to on its own\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"how much of the word space decodes\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"the committed encoding is the candidate P1.4 measured\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"what the assembler refuses\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"a program larger than the store\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"loaded event decision commits a pin in the reference core\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"UART 8N1 transmit, three ways\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"an independent receiver reads the transmitted byte\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"the same frame as a transfer descriptor\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"SPI mode 0, against an independent target\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"I2C write, inlined against called\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"what the call is worth\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"a call returns to where it was called from\" ="
+    ],
+    [
+      "test/f_model/test_isa.ml",
+      "let%expect_test \"a bad word stops the core where it is\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a masked write commits value and enable together and preserves the rest\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"open drain drives low or releases, never high\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"an out-of-range pin mask is refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a software write into an engine's pin is refused and raises a sticky \\"
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"two engines cannot claim the same pin\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"releasing a pin an owner does not hold is refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a legal descriptor validates and is latched unchanged\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"bit counts outside 1..32 are refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a preload wider than the transfer is refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"launching and sampling on the same edge is an impossible phase \\"
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a pin may carry only one role, except a half-duplex data wire\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a lane cannot both generate and follow a clock\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"direction decides which pins are required and which are refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a zero initial delay and a zero half period are refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"an out-of-range pin is refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a nonblocking push into a full queue is refused, and does not disturb it\""
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a blocking push into a full queue stalls the core until a pop frees a \\"
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"ABORT is the way out of a blocked queue operation, and it is recorded\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a nonblocking pop from an empty queue is refused\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a pop returns the oldest word and frees exactly one slot\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a simultaneous push and pop on a full queue keeps order and occupancy\" ="
+    ],
+    [
+      "test/f_model/test_mechanisms.ml",
+      "let%expect_test \"a queue word wider than a byte is refused\" ="
+    ],
+    [
+      "test/host/host_api_tests.ml",
+      "let%test_unit \"image serialization round trips complete words\" ="
+    ],
+    [
+      "test/host/host_api_tests.ml",
+      "let%test_unit \"image compatibility failures are typed and pre-mutation\" ="
+    ],
+    [
+      "test/host/host_api_tests.ml",
+      "let%test_unit \"API and ISA requirements reject incompatible peers\" ="
+    ],
+    [
+      "test/host/host_api_tests.ml",
+      "let%test_unit \"control and transfer timeout codes are distinct\" ="
+    ],
+    [
+      "test/host/host_api_tests.ml",
+      "let%test_unit \"authoritative refusal reasons have stable codes\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"an early selection during dispatch cannot consume or overwrite the command\""
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"an early selection during a READ wait cannot consume or overwrite it\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"an early selection during an ABORT wait cannot consume or overwrite it\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"consecutive distinct tags and commands each correlate with their own \\"
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"reset and disable cancel a partial request\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"reset or disable in the dispatch cycle cancels the command\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"reset or disable during a READ wait cancels its response\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"robustness: reset or disable during an ABORT wait cancels its response\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"disable discards a retained response in the same cycle\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+      "let%test_unit \"reset discards a partially read response\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "let%expect_test \"the retention check detects a response that the host committed\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "let%test_unit \"the offer check detects a one-cycle change in offer timing\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "let%test_unit \"the quiet check detects a response that was not cancelled\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "let%test_unit \"waits are bounded and time out with a report\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+      "let%test_unit \"the harness refuses host timing outside the P3.5 envelope\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"the maximum legal frame dispatches; a twelfth byte latches overrun\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"long zero prefixes and valid-looking suffixes cannot dispatch\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"bad magic, version, CRC, command, and payload length are rejected\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"device bounds refuse lengths and addresses without an offer\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"truncated frames and partial bytes are incomplete, echoed from four bytes\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"a zeroed echo can match INFO with tag 0 but is still an error\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+      "let%test_unit \"the peer's sixteen malformed trials at seed 20260921 are rejected\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"INFO and STATUS report the fixed descriptor and the core's status\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"each shared command is offered once with its operands and completes on \\"
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"a refused command reports the status-derived class and has no side effect\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"VERIFY reports a mismatch with the actual word; READ ignores the match \\"
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"a selected request may pause for a long finite time between and within \\"
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"asymmetric and slower whole-cycle host timing keeps the same offer timing\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"a selected response may pause for a long finite time and resume\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"an abandoned partial read replays from byte zero without re-offering\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"final-bit validation rejection retains the response; a later read commits\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+      "let%test_unit \"a response selection arms only after four deselected cycles and with LRDY \\"
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%expect_test \"the monitor's items for one WRITE_WORD transaction\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"legal INFO, READ, and VERIFY transactions\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"a malformed request is observed as the raw bytes clocked\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"a request with trailing extra bits keeps them apart from its bytes\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"a replayed response, then its commit\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"abandoned reads before and after the header\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%test_unit \"the agent is active only with a driver\" ="
+    ],
+    [
+      "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+      "let%expect_test \"the scoreboard reports an LDI bit the driver did not send\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"each immediate command is offered once, in the cycle after the handoff, \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"READ, VERIFY, and ABORT are offered once and wait; operands are exact\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"nothing is offered while idle, while waiting, or after completion\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"unknown command bytes publish Bad_command with the raw byte and offer \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"every known command with a wrong fixed length publishes Bad_length and \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"device bounds are checked on the full sixteen-bit operand before narrowing\""
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml",
+      "let%test_unit \"results resolve in the existing precedence: length, then bounds, then the \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "let%expect_test \"a wrong refusal class is reported with the recent cycles\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "let%test_unit \"a publication expected one cycle late is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "let%test_unit \"a repeated offer is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "let%test_unit \"a lost correlation is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml",
+      "let%test_unit \"waits are bounded and time out with a report\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"dispatch, waits, and publications follow the handoff at exact cycles\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"reset or disable in the handoff cycle discards the request; a framing \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"reset or disable in the dispatch cycle: the offer stays visible and is \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"reset or disable at each READ wait boundary ends the wait with no later \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"reset or disable in the ABORT cleanup cycle presents the completion and \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a READ completion coinciding with a framing-error handoff \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a handoff in the dispatch cycle neither re-arms dispatch nor \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"INFO reports the fixed descriptor whatever the status\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"STATUS reports the status observed in its dispatch cycle\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"accepted immediate operations report Complete; STOP reports \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"a refused command reports the class of the status observed in its \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"robustness: a refused STOP or ABORT reports the refusal class; the real \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"robustness: acceptance alone decides; the rejected signals are not read\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"framing errors publish in the handoff cycle, echo tag and command, and \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"a framing error without an echo zeroes tag and command, whatever the \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml",
+      "let%test_unit \"every response carries the handed-off tag and command, for consecutive \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"READ publishes the word in the response cycle and offers once\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"VERIFY reports a match as Complete and a mismatch with the actual word\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"robustness: READ ignores readback_response_match\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"robustness: a delayed READ response is waited for, without a repeated \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"robustness: a READ response that never arrives keeps the wait with one \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"robustness: a READBACK response pulse is consumed only in the READ wait\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"inputs the boundary contract leaves free do not disturb a wait's \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"ABORT completes at the first wait cycle whose status shows cleanup\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"each missing cleanup condition prevents ABORT completion\" ="
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"robustness: staged and delayed ABORT cleanup completes in the cycle the \\"
+    ],
+    [
+      "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml",
+      "let%test_unit \"reset and disable cancel an ABORT wait; later cleanup publishes nothing\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"an early selection during dispatch cannot consume or overwrite the command\""
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"an early selection during a READ wait cannot consume or overwrite it\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"an early selection during an ABORT wait cannot consume or overwrite it\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"consecutive distinct tags and commands each correlate with their own \\"
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"reset and disable cancel a partial request\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"reset or disable in the dispatch cycle cancels the command\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"reset or disable during a READ wait cancels its response\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"robustness: reset or disable during an ABORT wait cancels its response\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"disable discards a retained response in the same cycle\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml",
+      "let%test_unit \"reset discards a partially read response\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "let%expect_test \"the retention check detects a response that the host committed\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "let%test_unit \"the offer check detects a one-cycle change in offer timing\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "let%test_unit \"the quiet check detects a response that was not cancelled\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "let%test_unit \"waits are bounded and time out with a report\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml",
+      "let%test_unit \"the harness refuses host timing outside the P3.5 envelope\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"the maximum legal frame dispatches; a twelfth byte latches overrun\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"long zero prefixes and valid-looking suffixes cannot dispatch\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"bad magic, version, CRC, command, and payload length are rejected\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"device bounds refuse lengths and addresses without an offer\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"truncated frames and partial bytes are incomplete, echoed from four bytes\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"a zeroed echo can match INFO with tag 0 but is still an error\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_framing_tests.ml",
+      "let%test_unit \"the peer's sixteen malformed trials at seed 20260921 are rejected\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_lifecycle_tests.ml",
+      "let%test_unit \"two scoped runs share no monitor items, transcript, offers, or responder \\"
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%expect_test \"the monitor's items for one WRITE_WORD transaction\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"legal INFO, READ, and VERIFY transactions\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"a malformed request is observed as the raw bytes clocked\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"a request with trailing extra bits keeps them apart from its bytes\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"a replayed response, then its commit\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"abandoned reads before and after the header\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%test_unit \"the agent is active only with a driver\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml",
+      "let%expect_test \"the scoreboard reports an LDI bit the driver did not send\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"INFO and STATUS report the fixed descriptor and the core's status\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"each shared command is offered once with its operands and completes on \\"
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"a refused command reports the status-derived class and has no side effect\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"VERIFY reports a mismatch with the actual word; READ ignores the match \\"
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"a selected request may pause for a long finite time between and within \\"
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"asymmetric and slower whole-cycle host timing keeps the same offer timing\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"a selected response may pause for a long finite time and resume\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"an abandoned partial read replays from byte zero without re-offering\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"final-bit validation rejection retains the response; a later read commits\" ="
+    ],
+    [
+      "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml",
+      "let%test_unit \"a response selection arms only after four deselected cycles and with LRDY \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml",
+      "let%expect_test \"a wrong validation result is reported with the recent cycles\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml",
+      "let%test_unit \"a handoff expected one cycle late is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml",
+      "let%test_unit \"an echo expected below the four-byte threshold is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml",
+      "let%test_unit \"waits are bounded and time out with a report\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"a handed-off request's fields hold while ineligible, through intruding \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"eligibility is sampled only in the select-assert cycle\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"robustness: eligibility falling after the assert does not end a request\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"reset and disable cancel at every receive and validation boundary\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"reset or disable held across an assert prevents that request\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"disable clears a latched overrun before the frame ends\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"clock rises while deselected and idle change nothing\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a clock rise coincident with the assert or the release is not \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a second assert while active does not restart the request\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml",
+      "let%test_unit \"every legal request is received with its exact fields and handed off once \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml",
+      "let%test_unit \"the short payloads keep their operands in the low bytes\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml",
+      "let%test_unit \"each byte is assembled most significant bit first from the data level in \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml",
+      "let%test_unit \"a selected request may pause for a long finite time and resume without \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"truncated header, payload, and CRC are incomplete; the echo needs four \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"a partial final byte is incomplete, whether extra or missing bits\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"whole extra bytes are incomplete up to eleven; the twelfth latches overrun\""
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"overrun is sticky: no suffix restores validity, and the header is not \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"long prefixes of the historical counter-wrap shapes cannot hand off a \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"a declared length is checked against the bytes received; command sizes \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"bad magic, version, and CRC are rejected; unknown commands and device \\"
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"several defects resolve in the existing precedence\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml",
+      "let%test_unit \"correlation just below and at the four-byte threshold, and the zeroed echo\""
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "let%expect_test \"a wrong bit is reported with the recent cycles\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "let%test_unit \"a first bit expected in the assert cycle is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "let%test_unit \"a commit expected one cycle early is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "let%test_unit \"a replay that does not restart at byte zero is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml",
+      "let%test_unit \"waits are bounded and time out with a report\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"reset and disable at each point discard the response; a fresh one follows\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"a publication in a reset or disabled cycle leaves nothing to read\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"disable coinciding with an assert, a fall, or a release still discards \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"a release coinciding with a fall after the read is drained commits\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a final fall coinciding with the release does not commit\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml",
+      "let%test_unit \"robustness: a publication while a response is retained\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"each legal response length is captured at the publication edge and read \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"a retained frame is unchanged by time and by other inputs until it is \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"the store and the shifted copy are independent: every read starts from \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"consecutive publications and commits each deliver their own frame\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"robustness: frame and length inputs without the strobe are ignored\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml",
+      "let%test_unit \"robustness: out-of-contract lengths and nonzero padding\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"an unqualified selection is not armed, and cannot shift or consume the \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"a publication in the select-assert cycle does not arm that selection; one \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"an early selection before the publication cannot shift or consume it\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"each fall advances exactly one bit, at its edge, at any spacing\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"falls outside an armed read are ignored and the read still starts at bit \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"a selected pause holds the presented bit indefinitely\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"the final bit, the drained boundary, and the output after it\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"a release before the final fall retains the response; the next read \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"the final bit presented without the final fall is a replay, whatever the \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"a committed response is consumed exactly once, with no stale readiness or \\"
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"repeated replays leave the retained frame unchanged\" ="
+    ],
+    [
+      "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml",
+      "let%test_unit \"robustness: frame content is not interpreted; a first bit of one is \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_diagnostics_tests.ml",
+      "let%expect_test \"an event expected one cycle late is reported with the recent cycles\" ="
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_diagnostics_tests.ml",
+      "let%test_unit \"qualification expected one cycle early is detected\" ="
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_diagnostics_tests.ml",
+      "let%test_unit \"a wait for an event that never happens stops at its budget\" ="
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"each pin reaches its synchronized level two cycles after it changes\" ="
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"each pin change is one event in the cycle its level is first visible, and \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"deselect qualification: below, at, and above four cycles, saturating over \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"a selection is qualified exactly when LSEL_N was high for at least four \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"short deselected gaps do not accumulate toward qualification\" ="
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"coincident select, clock, and data changes are reported in the same \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"reset clears the synchronizers, edge history, and qualification at its \\"
+    ],
+    [
+      "ip/host_link/verif/serial_phy/serial_phy_tests.ml",
+      "let%test_unit \"disable clears only the qualification; synchronizers and events keep \\"
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"frame constants match the P3.5 record\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"CRC-8/ATM parameters and check values\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"command codes\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"result codes\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"fault kind and phase values\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"capability and STATUS flag bit positions\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"fixed request payload lengths\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"every command encodes to its fixed vector\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"encoder rejects out-of-range fields instead of narrowing them\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"request correlation names the tag and command byte\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"INFO decodes every documented field\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"STATUS decodes flags, little-endian counters, fault and phase\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"READ_WORD and VERIFY_WORD carry the actual word\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"empty successes, including STOP's Accepted_pending\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"device-reported framing errors are valid responses\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"refusals are valid responses\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"truncation and extra bytes\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"bad magic, version and oversized lengths\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"CRC failure\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"unknown result codes\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"results that never answer the echoed command\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"payload length inconsistent with command and result\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"reserved bits and undefined INFO/STATUS values\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"correlated decode accepts only the request's tag and command\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"an echoed unsupported command correlates by its raw byte\" ="
+    ],
+    [
+      "test/host_link_wire/wire_tests.ml",
+      "let%test_unit \"encoded frames have a zero CRC residue\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "let%test_unit \"with no offer every shared decision is low\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "let%test_unit \"reset and disable refuse every shared offer\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "let%test_unit \"ABORT, STOP, RUN, and program requests arbitrate across groups\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "let%test_unit \"READBACK responds once, one edge after acceptance, unless cancelled\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml",
+      "let%test_unit \"STOP acceptance is not a halt, and a STOP accepted while halted is not \\"
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"prepared P2.6b program reaches the committed pin bank\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"status acknowledgement clears selected bits and waits leave periodic \\"
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"a synchronized event wins on the exact timeout completion edge\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"FIFO pressure blocks only the core and preserves byte ordering\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"pin snapshots, register writes, level waits, branches, and FIFO pop \\"
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"accepted transfers run in the background and latch their descriptor\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"RX and duplex transfers return independently sampled data\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"observed pacing advances only on synchronized selected edges\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"engine ownership refuses a conflicting core write without partial effect\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"external occupancy refuses transfer issue before retirement\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"single-step can start background work but is then gated by real engine \\"
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"STOP waits for a boundary, ABORT releases, and step retires exactly one\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"ABORT suppresses a same-edge wait completion and retirement\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"ABORT, STOP, single-step, and RUN obey simultaneous priority\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"disable clears blocked and active engines while reset also invalidates \\"
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_tests.ml",
+      "let%test_unit \"fixed generated wait programs retire with exact accepted delays\" ="
+    ],
+    [
+      "ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml",
+      "let%test_unit \"P2.6b sweeps the real loaded core path across every external phase\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"discovery advertises an explicit simulator capability set\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"program reads validate the full logical range before advancing\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"step without a verified image reports the authoritative cause\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"verify length mismatch preserves a valid loaded image\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"load, readback, live refusal, and real queue echo\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"STOP timeout preserves accepted work; step and ABORT recover\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"halted background engine still rejects program access\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"engine pin ownership rejects host changes and ABORT observes release\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"partial receive progress resumes without loss or duplication\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"full host TX queue accepts a concurrent core pop exactly once\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"queue boundaries and bounded trace overflow are explicit\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"trace clear preserves sequence and same-timestamp categories are ordered\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"control offer trace outcomes follow the pre-edge decision\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"defined execution fault is inspectable and recoverable\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"external pad changes are applied before the next edge\" ="
+    ],
+    [
+      "test/host_simulator/host_simulator_tests.ml",
+      "let%test_unit \"architectural flags are exposed through the integrated top\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"bank adds exactly one clock to the observed lane response\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"every ordinary lane data transition commits one clock later\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"external peer receives every bank-committed TX and duplex bit\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"RX-only retains the standalone capture envelope and claims no output\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"thirty-nine-tick bank deadlines fail at some phases\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"cancellation clears the bank before releasing ownership\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"reset, disable, and explicit abort release bank drive and ownership\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"synchronized cancellation can rearm and complete a fresh transfer\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml",
+      "let%test_unit \"bounded generated bank-boundary schedules meet the peer contract\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "let%test_unit \"software-owned unrelated pins survive transfer commits and cleanup\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "let%test_unit \"conflicting software ownership refuses the arm claim and retry recovers\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "let%test_unit \"a concurrent software request is explicitly refused\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml",
+      "let%test_unit \"a rejected software operation cannot abort or strand an armed transfer\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/primitive_demo/primitive_demo_unit_tests.ml",
+      "let%test_unit \"P2.3 an active transfer advances while the core timer waits\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml",
+      "let%test_unit \"behavioral RAM elaboration serves the protemu consumer\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml",
+      "let%test_unit \"explicit flop RAM elaboration serves the protemu consumer\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml",
+      "let%test_unit \"behavioral RAM reruns P3.1a directed and generated acceptance\" ="
+    ],
+    [
+      "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml",
+      "let%test_unit \"explicit flop RAM reruns P3.1a directed and generated acceptance\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml",
+      "let%expect_test \"bounded frames and interruptions preserve the slice contracts\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml",
+      "let%expect_test \"the generated property prints its executable reproduction command\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 the pin bank carries the frame an independent receiver decodes\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 the model, the engine and the hardware agree on the frame\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 generalized producer comparison uses the requested period\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%expect_test \"P2.7 the saved frame trace\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 the frame is timed by the timer and owned by the engine\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 only the selected pin is ever driven\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 a frame transmits on any selected pin\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 several bytes and bit periods decode\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 reset during transmission releases the pin and its ownership\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 disable during transmission releases the pin and its ownership\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 abort during transmission releases the pin and its ownership\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 the monitor rejects a frame it should not accept\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml",
+      "let%test_unit \"P2.7 the monitor rejects a frame with no idle before it\" ="
+    ],
+    [
+      "chip_top/verif/observable/core/wrapper_unit_tests.ml",
+      "let%test_unit \"P0 pin/timer command commits at k+n\" ="
+    ],
+    [
+      "chip_top/verif/observable/core/wrapper_unit_tests.ml",
+      "let%test_unit \"P0 rejects delay zero and disable aborts safely\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml",
+      "let%test_unit \"P2.4 full simultaneous pop/push preserves byte order\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml",
+      "let%test_unit \"P2.4 simultaneous queue operations track the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml",
+      "let%test_unit \"P2.4 overflow and reset validity\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml",
+      "let%test_unit \"P2.4 all configured FIFO depths preserve ordering\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%expect_test \"an unknown pad sample is contained, isolated, and recovered\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%test_unit \"the property is not vacuous: the directed case really does observe X\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%test_unit \"an unknown pin does not make its neighbours unknown\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%test_unit \"a synchronous reset clears an unknown synchronizer at that edge\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%expect_test \"generated unknown-pad scenarios satisfy the property\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%expect_test \"a pad leak into the event path fails the isolation check\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+      "let%expect_test \"an observer that reads X as zero fails the contamination check\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "let%expect_test \"timestamped phase, pulse, reset, and event interactions\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "let%test_unit \"the deterministic digital phase sweep has a 10-to-19 tick capture latency\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "let%test_unit \"a short pulse crossing a sampling edge is captured and one between edges \\"
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "let%expect_test \"generated timestamped scenarios agree with the independent sampler\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+      "let%expect_test \"a controlled timed mismatch shrinks and replays from its seed\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_unit_tests.ml",
+      "let%test_unit \"P2.2 synchronizer, set-wins acknowledge, and overflow\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/input_events/input_events_unit_tests.ml",
+      "let%test_unit \"P2.2 snapshots and sticky events track the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%expect_test \"timestamped event-to-engine-to-pin transactions match the independent \\"
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"all integer phases have the predicted event-to-pin latency\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"a timestamped interruption releases the externally visible pin\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"reset, disable, and explicit abort have next-edge release priority\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"synchronized events take one clock period to reach the engine\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"external cancellation clears armed and active transactions at every phase\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"multi-bit external transfers cover directions, orders, phases, and edges\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"all phases support ten-tick pulses and ten-tick start lead\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"every start and pacing edge selection passes every integer phase\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"TX preload precedes a peer sampling clock after a thirty-tick lead\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"external peer receives every TX and duplex bit inside the wire envelope\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"capture-rate clocks and twenty-nine-tick deadlines fail the TX peer\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"external peer receives the 32-bit TX and duplex boundary cases\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"data must be present when the pacing transition reaches a sampling edge\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml",
+      "let%test_unit \"bounded generated external schedules match the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 observed edges pace a preconfigured lane and abort releases pins\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 arm latches parameters and starts only on a later event\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.5/P2.6 shift timing and results match the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 synchronized start and pacing use the same input snapshot\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 wrapper latches selectors and select withdrawal cancels active work\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 validates selectors and ownership at the actual start\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml",
+      "let%test_unit \"P2.6 queue faults release cleanly and permit a valid retry\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_expect_tests.ml",
+      "let%expect_test \"a directed pin-bank scenario, edge by edge\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_quickcheck_tests.ml",
+      "let%expect_test \"bounded scenarios agree with the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml",
+      "let%test_unit \"P2.1 masked commits, claims, conflict, and release\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml",
+      "let%test_unit \"P2.1 pin commits and ownership track the independent model\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml",
+      "let%test_unit \"P2.1 open drain commit never drives a high\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml",
+      "let%test_unit \"P2.1 reset and disable release driven pins\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml",
+      "let%test_unit \"P2.5 internal lane preloads, clocks, samples, and completes\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml",
+      "let%test_unit \"P2.5 invalid descriptor and missing TX data never drive pins\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml",
+      "let%test_unit \"P2.5 receive-only overrun aborts and invalid data width is refused\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml",
+      "let%test_unit \"P2.5 pin conflict and 32-bit boundary\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/timing/timing_unit_tests.ml",
+      "let%test_unit \"P2.3 exact delay, immediate level, stale edge, and timeout precedence\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/timing/timing_unit_tests.ml",
+      "let%test_unit \"P2.3 periodic ticks continue during waits and restart from an event\" ="
+    ],
+    [
+      "ip/mechanisms/verif/blocks/timing/timing_unit_tests.ml",
+      "let%test_unit \"P2.3 waits and periodic ticks track the independent machine\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_tx/uart_tx_unit_tests.ml",
+      "let%test_unit \"P2.7 independent 8N1 receiver sees idle, start, data, and stop\" ="
+    ],
+    [
+      "ip/mechanisms/verif/staging/uart_tx/uart_tx_unit_tests.ml",
+      "let%test_unit \"P2.7 typed UART descriptor matches hardware frame trace\" ="
+    ]
+  ]
+}

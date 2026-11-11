@@ -1,0 +1,42 @@
+; Build facade for the existing flat, wrapped hardware library. Authored sources
+; live with their owners; these explicit copies exist only in the build tree.
+; Keep plain copy_files (not copy_files#): PPX lint reads the generated .pp.ml
+; source path in this directory. ASIC-dependent package modules are separate.
+
+(copy_files ../ip/mechanisms/rtl/byte_fifo.ml)
+(copy_files ../ip/mechanisms/rtl/input_events.ml)
+(copy_files ../ip/mechanisms/rtl/pin_bank.ml)
+(copy_files ../ip/mechanisms/rtl/shift_lane.ml)
+(copy_files ../ip/mechanisms/rtl/timing.ml)
+(copy_files ../ip/mechanisms/rtl/staging/observed_transfer.ml)
+(copy_files ../ip/mechanisms/rtl/staging/observed_transfer_bank.ml)
+(copy_files ../ip/mechanisms/rtl/staging/primitive_demo.ml)
+(copy_files ../ip/mechanisms/rtl/staging/uart_slice.ml)
+(copy_files ../ip/mechanisms/rtl/staging/uart_tx.ml)
+(copy_files ../ip/program_memory_controller/rtl/program_memory_controller.ml)
+(copy_files ../ip/emulator_core/rtl/control_port.ml)
+(copy_files ../ip/emulator_core/rtl/emulator_core.ml)
+(copy_files ../ip/emulator_core/rtl/execution_unit.ml)
+(copy_files ../ip/emulator_core/rtl/instruction_decoder.ml)
+(copy_files ../ip/emulator_core/rtl/primitive_dispatch.ml)
+(copy_files ../ip/emulator_core/rtl/legacy/executable_core.ml)
+(copy_files ../ip/host_link/rtl/command_dispatch.ml)
+(copy_files ../ip/host_link/rtl/frame_rx.ml)
+(copy_files ../ip/host_link/rtl/frame_tx.ml)
+(copy_files ../ip/host_link/rtl/host_link.ml)
+(copy_files ../ip/host_link/rtl/serial_phy.ml)
+(copy_files ../ip/host_link/rtl/wire_crc.ml)
+(copy_files ../ip/host_link/rtl/wire_layout.ml)
+(copy_files ../rtl/protemu_top.ml)
+(copy_files ../chip_top/rtl/bringup/p0_observable.ml)
+
+(library
+ (name hardcaml_protemu)
+ (public_name hardcaml_protemu)
+ (libraries core hardcaml protemu_isa protemu_host_link_wire)
+ (preprocess
+  (pps ppx_hardcaml ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))

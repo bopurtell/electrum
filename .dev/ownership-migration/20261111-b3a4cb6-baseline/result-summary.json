@@ -1,0 +1,43 @@
+{
+  "commands": 65,
+  "failures": [
+    {
+      "label": "lint-memory-simulation",
+      "argv": [
+        "verilator",
+        "--lint-only",
+        "--top-module",
+        "tt_um_leemperor_hardcaml_protemu_memory",
+        "-Wno-DECLFILENAME",
+        "-Wno-COMBDLY",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "started": "2026-11-11T03:54:17.765689+00:00",
+      "exit_code": 1,
+      "elapsed_seconds": 0.056,
+      "log": "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/logs/lint-memory-simulation.log"
+    },
+    {
+      "label": "lint-loader-simulation",
+      "argv": [
+        "verilator",
+        "--lint-only",
+        "--top-module",
+        "tt_um_leemperor_hardcaml_protemu_loader",
+        "-Wno-DECLFILENAME",
+        "-Wno-COMBDLY",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/bundles/loader/simulation/tt_um_leemperor_hardcaml_protemu_loader.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "started": "2026-11-11T03:54:41.185597+00:00",
+      "exit_code": 1,
+      "elapsed_seconds": 0.425,
+      "log": "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/20261111-b3a4cb6-baseline/logs/lint-loader-simulation.log"
+    }
+  ],
+  "tracked_files": 356,
+  "test_registrations": 475,
+  "generated_rtl": 17,
+  "bundle_roles": 6
+}

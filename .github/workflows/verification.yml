@@ -35,4 +35,4 @@ jobs:
 
       - name: Run every required verification tier
         working-directory: scaf
-        run: ./scripts/with-switch.sh dune build @verification
+        run: ./scripts/with-switch.sh dune build @verification -j5

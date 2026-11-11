@@ -1,0 +1,2972 @@
+[
+  {
+    "path": "hardcaml/META",
+    "sha256": "557bf101ef26d2bb1fe2ce43aaba08b38f2eb9096d0f5aadbcbaac5fb4e1e9a7",
+    "size": 6029
+  },
+  {
+    "path": "hardcaml/architecture.ml",
+    "sha256": "cdc965f07c2fa60a968902b80f699b2ab7a4e454ea58e024252f69c8130e2f37",
+    "size": 270
+  },
+  {
+    "path": "hardcaml/architecture.mli",
+    "sha256": "fcce28c32d64a81651811350283d28df8008f3ef1845dce009f8a26636f92fe9",
+    "size": 436
+  },
+  {
+    "path": "hardcaml/assertion_manager.ml",
+    "sha256": "6f80f1c3c16defc781db5093c75a932fbbb126895fcc3ae3b1f87f32ac9b5dd5",
+    "size": 532
+  },
+  {
+    "path": "hardcaml/assertion_manager.mli",
+    "sha256": "0e14f85871bc34d766968a28036979987106fced56b9d3cc355fc4221200da60",
+    "size": 443
+  },
+  {
+    "path": "hardcaml/assertions.ml",
+    "sha256": "adc690c7fb14580fe3538f3a9ad4a48f428093a14061545a870cd402495e4170",
+    "size": 2533
+  },
+  {
+    "path": "hardcaml/assertions.mli",
+    "sha256": "4a7cb9d6173528ed6f45f7017e81aab92c5412562c785edf95816e3f0644d59b",
+    "size": 1199
+  },
+  {
+    "path": "hardcaml/async_fifo.ml",
+    "sha256": "b20d1c00c23c2814169daa2a0b35a8ba5feb9cdddcc703c22bada5e91053492a",
+    "size": 17299
+  },
+  {
+    "path": "hardcaml/async_fifo.mli",
+    "sha256": "1ec7658086a4df9d8c0a00dd2e883a0c6d11b79817d0ca5d2279b7e55a9eadd4",
+    "size": 4915
+  },
+  {
+    "path": "hardcaml/before_and_after_edge.ml",
+    "sha256": "d0bd06691646bcaefcb2924b172624c4f2fb53aa778029856dd9d67fbb58c4f0",
+    "size": 421
+  },
+  {
+    "path": "hardcaml/before_and_after_edge.mli",
+    "sha256": "88ecd1067fcda0b780d63a06d06b19def0f0cbc686efa364efab01cb475c6471",
+    "size": 317
+  },
+  {
+    "path": "hardcaml/binable_circuit.ml",
+    "sha256": "076d3b62964cda3fdcbc84042505cc2a79bdf30e5c0b4694d016da762a2352da",
+    "size": 5099
+  },
+  {
+    "path": "hardcaml/binable_circuit.mli",
+    "sha256": "c4a4e724c6959a9ed1e433dee18a19d60e6562bf2ebb13e3fd60b3ccb8065d40",
+    "size": 122
+  },
+  {
+    "path": "hardcaml/bits_packed.ml",
+    "sha256": "d6b568f5cc3a78d9c35a14cb849c767d4e603fd555857ad61e96a97b9935ae65",
+    "size": 11840
+  },
+  {
+    "path": "hardcaml/bits_packed.mli",
+    "sha256": "047fc2975cc2c9d7eebcc1013e154143560247c56d4a6930cca66f94b73fb5de",
+    "size": 1846
+  },
+  {
+    "path": "hardcaml/build_mode.ml",
+    "sha256": "ce67822987e38c7c93880015e81018914ea5f7cd2acac2bff8b918a8ec2ebee7",
+    "size": 279
+  },
+  {
+    "path": "hardcaml/build_mode.mli",
+    "sha256": "52b7ef401ee62d85b9836d107395fe4696867601ff71c954e5dacbf734d49d8d",
+    "size": 216
+  },
+  {
+    "path": "hardcaml/circuit.ml",
+    "sha256": "efc389e16422216caf0f9d27d4ee615e1ed4a931a988a77104d4d68c20315293",
+    "size": 22830
+  },
+  {
+    "path": "hardcaml/circuit.mli",
+    "sha256": "0f297dd743ce463f974ad54fd7f30ae3e2955340a42e1bd1b12f909c0ed474e7",
+    "size": 4815
+  },
+  {
+    "path": "hardcaml/circuit_coverage.ml",
+    "sha256": "9e8087850a1a09e904dfe1ba5aefd44de8029d01d85d6df478b95c6a175976b5",
+    "size": 1941
+  },
+  {
+    "path": "hardcaml/circuit_coverage.mli",
+    "sha256": "7a6e2d5f9fc5d3bce15fe39fe60a242426ba7106f4d8b34ee3edbd95be76679b",
+    "size": 911
+  },
+  {
+    "path": "hardcaml/circuit_database.ml",
+    "sha256": "aeca889c91409c1109541ff3cdccb3264435d3f8f92eb98390b3cd1f434a6aa8",
+    "size": 1982
+  },
+  {
+    "path": "hardcaml/circuit_database.mli",
+    "sha256": "7abbd465837e88a4c46bd619cd74ed7b13d872092e85e4741b2234a94474421e",
+    "size": 1044
+  },
+  {
+    "path": "hardcaml/circuit_utilization.ml",
+    "sha256": "cfb55a2970249207fc6d06de6caa31b557e9c090f0735556c250ce8989d544e1",
+    "size": 10675
+  },
+  {
+    "path": "hardcaml/circuit_utilization.mli",
+    "sha256": "e638423ffac3f21cf76dd8b6f1cc6a581586568397833486cef7e3bbcca4bf52",
+    "size": 998
+  },
+  {
+    "path": "hardcaml/clocked_design.ml",
+    "sha256": "be7858d75cef814310121a65c6a13db2297a9912133e5f8c64ce2d9467739277",
+    "size": 464
+  },
+  {
+    "path": "hardcaml/clocked_design.mli",
+    "sha256": "9af884e7a7d1265a95f3241f41f83ce2d7f1a20d5884411d1ffa13300a51f88b",
+    "size": 334
+  },
+  {
+    "path": "hardcaml/combinational_op.ml",
+    "sha256": "01ff8a4535569f3155a5b1917b88263d2f77eaca2b0ddc95a2bd148121c408b9",
+    "size": 4439
+  },
+  {
+    "path": "hardcaml/combinational_op.mli",
+    "sha256": "a83ffb11b5e7f5f3589913f20f059e30d7e446129e9c5cde6a5c9668f648f976",
+    "size": 1666
+  },
+  {
+    "path": "hardcaml/combinational_ops_database.ml",
+    "sha256": "db498745b10bf01b96c5c71b39c49f8fd8661b44cc56594b6affccd115ab5c14",
+    "size": 779
+  },
+  {
+    "path": "hardcaml/combinational_ops_database.mli",
+    "sha256": "d91f3afe739acd04b2415abba6e1ac1145cc7e25bb678d17359afe3a4d9a5738",
+    "size": 693
+  },
+  {
+    "path": "hardcaml/core0.ml",
+    "sha256": "a8ca3235fb41d97614f3e44fbfa87baaf978e3f4092b3a4abf95bca93b8f1431",
+    "size": 37
+  },
+  {
+    "path": "hardcaml/core0.mli",
+    "sha256": "cd1de13f23ed481388de0fb7df3f19741a2f44437df1f11b3e9fe91a5899ac1e",
+    "size": 193
+  },
+  {
+    "path": "hardcaml/coverage.ml",
+    "sha256": "fb9d67a0a0bd09f886d9578e61230180c1fd4a2997f80c866ca1d7516d210fdd",
+    "size": 256
+  },
+  {
+    "path": "hardcaml/coverage.mli",
+    "sha256": "6d2a477e4b9b4f3830ed8b42451aa2f9af4c2f66d0c688862bb17e2bf38954e8",
+    "size": 31
+  },
+  {
+    "path": "hardcaml/coverage_debug.ml",
+    "sha256": "1521a8f9727cf8c1b69c5b71a1c8f8b1f3801c656d8b33a5d071256e84ed475d",
+    "size": 377
+  },
+  {
+    "path": "hardcaml/coverage_debug.mli",
+    "sha256": "462729f9b9d8f84de08c913fe11817a6d0e0a27e451aeb5c144902959ab785dd",
+    "size": 465
+  },
+  {
+    "path": "hardcaml/coverage_instance.ml",
+    "sha256": "b3055000b18f46f8c93a43b8fc0ee38a007ca93830ccc8e1f9dc0a020876e784",
+    "size": 6885
+  },
+  {
+    "path": "hardcaml/coverage_instance.mli",
+    "sha256": "41f4b587624f168b57bd6ba3c0e43d061c6c7f0beee1869e2474c539b3dc2329",
+    "size": 301
+  },
+  {
+    "path": "hardcaml/coverage_intf.ml",
+    "sha256": "bd19795c80841c3d507fc7285ed61cbbaa61b67a6fa12fddc24ee9d095e3df42",
+    "size": 779
+  },
+  {
+    "path": "hardcaml/coverage_report.ml",
+    "sha256": "9f7e92108d8f9d58e4d097110a500d590a5774cc51a79c694fcfe705d8fa6073",
+    "size": 12099
+  },
+  {
+    "path": "hardcaml/coverage_report.mli",
+    "sha256": "9127b0677b4e863bc7fd1d798508fcb6f3853273cbd546e1c6558a1087915e4c",
+    "size": 501
+  },
+  {
+    "path": "hardcaml/cyclesim.ml",
+    "sha256": "8755e84f34478a1df7de1a3d7bfe699d7a598f4a490981aa2f114b5d7563dc43",
+    "size": 11172
+  },
+  {
+    "path": "hardcaml/cyclesim.mli",
+    "sha256": "18d9815a3c0c6cb88ce114a72bf2c57b3c2f1801a1b7349fbd8f1920a2954fe9",
+    "size": 79
+  },
+  {
+    "path": "hardcaml/cyclesim0.ml",
+    "sha256": "b7a07d4e557760391141fb0a2551b19921106be79b4753766847c1fd34e4e828",
+    "size": 8510
+  },
+  {
+    "path": "hardcaml/cyclesim0.mli",
+    "sha256": "976017d1872c8640cf2dea80039b79b8857a1f1940627a3a23cbfda4ad7e9a7c",
+    "size": 48
+  },
+  {
+    "path": "hardcaml/cyclesim0_intf.ml",
+    "sha256": "7a46b4cedbf989ff48a586d7fc7581011b1b332555b42d438bad184b4f0947bb",
+    "size": 6021
+  },
+  {
+    "path": "hardcaml/cyclesim_clock_domain.ml",
+    "sha256": "5e6499af2aeff43b4e329ee67d8e547af167c58bf9fcd09a727f0117b01bf3ca",
+    "size": 2708
+  },
+  {
+    "path": "hardcaml/cyclesim_clock_domain.mli",
+    "sha256": "5193236d37ba5525c125df8cbed04c6a74032e0d440801f80e61b171ca2419af",
+    "size": 1845
+  },
+  {
+    "path": "hardcaml/cyclesim_combine.ml",
+    "sha256": "28945c1876351e5d7724ab39dc21b71bac42c57a1548a4575fd5bd41b38bffcf",
+    "size": 3367
+  },
+  {
+    "path": "hardcaml/cyclesim_combine.mli",
+    "sha256": "1664a19e7c9d861d1b9cadf33728bc2cd2ab333bdcaf4db4ca71ff7d6daca48a",
+    "size": 780
+  },
+  {
+    "path": "hardcaml/cyclesim_compile.ml",
+    "sha256": "da96242f828c38446344e9c8a85809353837c223ec7832fc18fe575263fbf1bd",
+    "size": 40742
+  },
+  {
+    "path": "hardcaml/cyclesim_compile.mli",
+    "sha256": "cafbacfdc0f1132dc3c0175a6df3e072c52f238b73025f82605aee71bc343a97",
+    "size": 195
+  },
+  {
+    "path": "hardcaml/cyclesim_coverage.ml",
+    "sha256": "89789c6f42e703f333656239bfb1321f18d5333dce9fd2dd04e925422bd3904b",
+    "size": 2966
+  },
+  {
+    "path": "hardcaml/cyclesim_coverage.mli",
+    "sha256": "b7ccbac5625331fe0bacf2751ea4d1d8948b905e77a414ca6b59614fafdcd420",
+    "size": 334
+  },
+  {
+    "path": "hardcaml/cyclesim_float_ops.ml",
+    "sha256": "046decfeb4c2cf815e22384ac2ff461ebb54c74ff95021bd6374c83ce60a00a3",
+    "size": 3812
+  },
+  {
+    "path": "hardcaml/cyclesim_float_ops.mli",
+    "sha256": "8249b7e356b549e8b53c8716ecb16c16d1dabdbb3cb34d0f9bcc29b98d25bdc6",
+    "size": 116
+  },
+  {
+    "path": "hardcaml/cyclesim_float_ops_intf.ml",
+    "sha256": "c2a969bd017601a77657ecd2ec82aa13b3c59b985be9da1c3383d0f556772b6c",
+    "size": 1090
+  },
+  {
+    "path": "hardcaml/cyclesim_intf.ml",
+    "sha256": "226d047fcf86306aaa682559a3edc811eec497be630a2cf54946ca6effa24a07",
+    "size": 6116
+  },
+  {
+    "path": "hardcaml/cyclesim_lookup.ml",
+    "sha256": "0fb00f1a705a3357a30fd30d0a0a0ab281969a7a66c5c4e3993deb80fb48cebe",
+    "size": 7505
+  },
+  {
+    "path": "hardcaml/cyclesim_lookup.mli",
+    "sha256": "2a97fe1416fb18be7f85083735452dcb038089e775e714f461adb7a76246568d",
+    "size": 45
+  },
+  {
+    "path": "hardcaml/cyclesim_lookup_intf.ml",
+    "sha256": "5916b74f6233b2a839694b5bf63f2a739df2e04046fcc2bdc33a184ae0377e29",
+    "size": 2832
+  },
+  {
+    "path": "hardcaml/cyclesim_ops.ml",
+    "sha256": "06120e2558db6f44b522df634c6bf6c07dbec17fc936ca47b380eaeda11042c6",
+    "size": 12122
+  },
+  {
+    "path": "hardcaml/cyclesim_ops.mli",
+    "sha256": "4c8089ce17be111165ac8ea25f517b97ddcd785ec9c605b63a6ba1cc7a91c049",
+    "size": 2702
+  },
+  {
+    "path": "hardcaml/dedup.ml",
+    "sha256": "f0c920dadcea15d4bd3695603325545ee186cd7071319ed7d5240ab136526352",
+    "size": 9074
+  },
+  {
+    "path": "hardcaml/dedup.mli",
+    "sha256": "1b7f14de4542f9cf8c80ececd3f58e4aec6f7c8a441df4059426294af5dc12f5",
+    "size": 226
+  },
+  {
+    "path": "hardcaml/design_rule_checks.ml",
+    "sha256": "0e421aacf6a989029f5b808ae039c72065d01dc0a36cab122fe5d48b58a32d13",
+    "size": 2090
+  },
+  {
+    "path": "hardcaml/design_rule_checks.mli",
+    "sha256": "01941039959107619434332b46eb09dceef83cc3eb08f5abbeb2d01c489bfd72",
+    "size": 355
+  },
+  {
+    "path": "hardcaml/dune-package",
+    "sha256": "a08f41c135f02fb9d4ddb7d5d3a5fb21aaab013744612da576efae2cc094a683",
+    "size": 76993
+  },
+  {
+    "path": "hardcaml/fifo.ml",
+    "sha256": "30440dce26749601ceffbf9b0e08c0d5d570805ccab77da329009d0d6141ed45",
+    "size": 24798
+  },
+  {
+    "path": "hardcaml/fifo.mli",
+    "sha256": "d63f5c9a3b7c5f73a77524a10206b05cbb1820e84fdf2a9018a0dd5e893a82a2",
+    "size": 38
+  },
+  {
+    "path": "hardcaml/fifo_intf.ml",
+    "sha256": "68801b276b0eb41fcb11d8f7fa279816a8fe3494fc0df64ddedb46928379531b",
+    "size": 10257
+  },
+  {
+    "path": "hardcaml/flags_vector.ml",
+    "sha256": "bada30922a83e50f6669fef4365c4ffa2d398fba60ee5ce0f072d2ea817fa40a",
+    "size": 3141
+  },
+  {
+    "path": "hardcaml/flags_vector.mli",
+    "sha256": "9833870c9107875a98bd411f7f03b0750a7dc8f2f13748a6d7281cf484f96942",
+    "size": 39
+  },
+  {
+    "path": "hardcaml/flags_vector_intf.ml",
+    "sha256": "c359f6a5e94d5a0aa3b3cd2cb7bad66a7d2b8e876488d6b2d513cf5c0124e4fd",
+    "size": 1770
+  },
+  {
+    "path": "hardcaml/hardcaml.ml",
+    "sha256": "b2943bb5c5a4e76fdf50396d2131af099c23229c7e75a16cda2be795469fad54",
+    "size": 3195
+  },
+  {
+    "path": "hardcaml/hardcaml__.ml",
+    "sha256": "30659131f269875d37ce0ec66c104319aa567f019a8bb25e75dd279b08eab0c3",
+    "size": 6514
+  },
+  {
+    "path": "hardcaml/hierarchy.ml",
+    "sha256": "a7adad25bdc802ed06545284442d7b20e9c019949d9074f62c9b48b1683f30a0",
+    "size": 20986
+  },
+  {
+    "path": "hardcaml/hierarchy.mli",
+    "sha256": "939933898494058466cf33e44fa65419b2c4a74272a1383ca5eb353892f43192",
+    "size": 5881
+  },
+  {
+    "path": "hardcaml/instantiation.ml",
+    "sha256": "e524dd03dcc3001e0f0f480361dd354dcea709ac62913f5bc706c077006b8e99",
+    "size": 4563
+  },
+  {
+    "path": "hardcaml/instantiation.mli",
+    "sha256": "3a24c5297d42f9105ed8c5bc8ece4b80df23123bc99a50f822e6df33a14e1b3a",
+    "size": 1322
+  },
+  {
+    "path": "hardcaml/interface_types/hardcaml_interface_types.ml",
+    "sha256": "dffa4e06cd993513fe11259137d50069c309a747edabaf3b340d6295f0f0722d",
+    "size": 477
+  },
+  {
+    "path": "hardcaml/kernel/always.ml",
+    "sha256": "e061e9407f08dbd9380ccec78f4280c090165329a2b68b204f6ccb1ad6933288",
+    "size": 21022
+  },
+  {
+    "path": "hardcaml/kernel/always.mli",
+    "sha256": "09671475ecf91c1c3b816e9f40736cddc7ad83224abbb9ac6d48b23f38f15d8d",
+    "size": 42
+  },
+  {
+    "path": "hardcaml/kernel/always_coverage.ml",
+    "sha256": "872e0f099aefb6f35b6c79295182742a7abef8e51d13b1c159e103e8d39387e2",
+    "size": 12333
+  },
+  {
+    "path": "hardcaml/kernel/always_coverage.mli",
+    "sha256": "f79f0089c6786e3d3d525b7b4498031f91a8e39ce0eb7fb3827c7f764101cdcd",
+    "size": 60
+  },
+  {
+    "path": "hardcaml/kernel/always_coverage_intf.ml",
+    "sha256": "e868ad3974c3b82b775ab50276dfecdc359078d5d220afd90ffecd3f610b32e3",
+    "size": 1478
+  },
+  {
+    "path": "hardcaml/kernel/always_intf.ml",
+    "sha256": "3aba92a4b5337df5358ea2f7d24cab53295ea873a3ac7cd37f86aff96dd55ddb",
+    "size": 6878
+  },
+  {
+    "path": "hardcaml/kernel/always_prim.ml",
+    "sha256": "d8d9613a6a4bc9ac015815c2e12686782b13facbb1fe8324d62dc5bfd986939a",
+    "size": 1810
+  },
+  {
+    "path": "hardcaml/kernel/always_prim.mli",
+    "sha256": "e060c53d138161054181284c30a48c04185df9cd6217cbc2fd471519d9e853c1",
+    "size": 52
+  },
+  {
+    "path": "hardcaml/kernel/always_prim_intf.ml",
+    "sha256": "4caf20f89f7ac97385602b3d6a7c0e99dbcd71032e5b7e97677474ec75a98241",
+    "size": 1897
+  },
+  {
+    "path": "hardcaml/kernel/bits.ml",
+    "sha256": "1d1d4c71a0e216eb4fe192f901ae5c595a848b6e5acf3a939b64735ee5816c08",
+    "size": 20765
+  },
+  {
+    "path": "hardcaml/kernel/bits.mli",
+    "sha256": "5b54975423c661075c61f87f2f472c3bf6456c56ec062aeda2edc0c303fff7dd",
+    "size": 210
+  },
+  {
+    "path": "hardcaml/kernel/bits0.ml",
+    "sha256": "ec76953c6bf9c229dfe1ae512889546f06292ec2074cab695b224bb49a13799d",
+    "size": 4097
+  },
+  {
+    "path": "hardcaml/kernel/bits0.mli",
+    "sha256": "9aa6d422532a92c858f2855fac687513fbe2d3210863dee47c876fc7f2ce54e3",
+    "size": 2471
+  },
+  {
+    "path": "hardcaml/kernel/bits_intf.ml",
+    "sha256": "d49bcf4d247e179e6287f384fc64d235719d514f18f5a43f9cf4f85992cbb268",
+    "size": 3813
+  },
+  {
+    "path": "hardcaml/kernel/bits_list.ml",
+    "sha256": "f5c670386f5e0911edb3f4a02e43e0ce75257d45eab413d1546514082d0203f1",
+    "size": 5378
+  },
+  {
+    "path": "hardcaml/kernel/bits_list.mli",
+    "sha256": "20da4acf2041ad33384f93e9cd0b0bc9ff9fb5cbf6e054a98ee75e6fe9866a90",
+    "size": 48
+  },
+  {
+    "path": "hardcaml/kernel/bits_list_intf.ml",
+    "sha256": "5f3e21a14d56997f103dafbd4d80c9c9ea2edbd8439615c5b9ec2a7e5213b9ad",
+    "size": 1840
+  },
+  {
+    "path": "hardcaml/kernel/call_stack.ml",
+    "sha256": "9e9f98c7873f1d8efe9df5e4b4ad776b74613ccb58bc68c343819d5eba346322",
+    "size": 1044
+  },
+  {
+    "path": "hardcaml/kernel/call_stack.mli",
+    "sha256": "cbc213c22db19ba7c8d736a5a1db35cec3ca8954dcbeea6c1077ee578dcf7284",
+    "size": 364
+  },
+  {
+    "path": "hardcaml/kernel/caller_id.ml",
+    "sha256": "9bf81892b44cb1e6ef1d79e337b28ffd3adf669993ead5e0a53dca521181b195",
+    "size": 3440
+  },
+  {
+    "path": "hardcaml/kernel/caller_id.mli",
+    "sha256": "f6703afe83c60514e82af485e7b269997cba4d784dd1ebb49681818a614f748f",
+    "size": 936
+  },
+  {
+    "path": "hardcaml/kernel/clock_domain.ml",
+    "sha256": "b70c69bf5364189d8110be4fdf7f749dff01b2046a6a4eb84f606ee9b3730847",
+    "size": 3766
+  },
+  {
+    "path": "hardcaml/kernel/clock_domain.mli",
+    "sha256": "a0323462fa48c60ab37de054abd5eafdc262b65583a1dcecdf309655bdf13ffe",
+    "size": 3204
+  },
+  {
+    "path": "hardcaml/kernel/clocked_signal.ml",
+    "sha256": "8dee56babc2dc75ca0ba4b1d4f21ab0347dd255300e54ded611dbd16665b0a79",
+    "size": 15880
+  },
+  {
+    "path": "hardcaml/kernel/clocked_signal.mli",
+    "sha256": "27614b1405ace3181271a330d32de823a3b3ec588c4e2166208de38dc9af8d71",
+    "size": 3435
+  },
+  {
+    "path": "hardcaml/kernel/clocking.ml",
+    "sha256": "57af57eaf2496fbdcbaa382c8d7caaf885d8be611c1b3393c23dd748c051f6a2",
+    "size": 3915
+  },
+  {
+    "path": "hardcaml/kernel/clocking.mli",
+    "sha256": "cee775f18a4e26504d1a2c6c3b21f794a982d3372857973366b54f642b0de509",
+    "size": 31
+  },
+  {
+    "path": "hardcaml/kernel/clocking_intf.ml",
+    "sha256": "861f0b24e631eefbf44fc486d972944c689a0bdd0f58aebc7c83a2bb45952891",
+    "size": 4454
+  },
+  {
+    "path": "hardcaml/kernel/comb.ml",
+    "sha256": "edc472436cb50ded0dc2e2f9b34673d76963a1b556c0e2cbb439205f8120cbaa",
+    "size": 51607
+  },
+  {
+    "path": "hardcaml/kernel/comb.mli",
+    "sha256": "63df312bd31f550da305043550b223ea860116f73949b5e439c9b0986f6a5262",
+    "size": 492
+  },
+  {
+    "path": "hardcaml/kernel/comb_intf.ml",
+    "sha256": "f6b9cb96128ddf1fc1671fd05595a16d8abc6422122a1c111fc64089d0d0af7b",
+    "size": 27057
+  },
+  {
+    "path": "hardcaml/kernel/constant.ml",
+    "sha256": "711d0cbf5eb4e8ee614cc8810b3a890791b8eff3bf204cb99e121047bf28caac",
+    "size": 8489
+  },
+  {
+    "path": "hardcaml/kernel/constant.mli",
+    "sha256": "6ac7d7289153f2c691fbc596c8a2b968bc5f55078823d327a691503f9018683e",
+    "size": 3297
+  },
+  {
+    "path": "hardcaml/kernel/core0.ml",
+    "sha256": "1ed3c2229c27501a9fe419c91afca470d457a3e46671c3554d291f699585ebec",
+    "size": 13
+  },
+  {
+    "path": "hardcaml/kernel/core0.mli",
+    "sha256": "bd140bafb0511e19efdca790db307056906dd1404284c51a8f5b7af7bdeffdd5",
+    "size": 154
+  },
+  {
+    "path": "hardcaml/kernel/coverage_global_config.ml",
+    "sha256": "ebece5be9c4bea4403c566ec39cb8e6ecfba08f0ee2f3f25f25759a7342d3173",
+    "size": 972
+  },
+  {
+    "path": "hardcaml/kernel/coverage_global_config.mli",
+    "sha256": "7ad4b1b0b9441efa99b0a3a543c83903cf9488b61d00c8b1ed5da7f0b8a81f7f",
+    "size": 353
+  },
+  {
+    "path": "hardcaml/kernel/coverage_metadata.ml",
+    "sha256": "573c71d81fdd8e841ad3230a4804c214ca02461c1b13abba5256da64c92e8d58",
+    "size": 3509
+  },
+  {
+    "path": "hardcaml/kernel/coverage_metadata.mli",
+    "sha256": "00e94ea709d70fc55c67ab9d5cf01e3a80d4532d63db1eeee7a4e8e5c798800a",
+    "size": 1210
+  },
+  {
+    "path": "hardcaml/kernel/coverage_prim.ml",
+    "sha256": "6c5e96f5f1eb07722a3dbc4f0bf817130f96956ae164370b32ad045251cd7045",
+    "size": 7480
+  },
+  {
+    "path": "hardcaml/kernel/coverage_prim.mli",
+    "sha256": "42dfdb01eac26214bab8c9605077aa592cd7cbb00ec091797c11eff280a0e12b",
+    "size": 4387
+  },
+  {
+    "path": "hardcaml/kernel/cross_product.ml",
+    "sha256": "66043242151d66763d17aa18f5f9c633fbb45706e4d86282ebb896ff507c41b9",
+    "size": 957
+  },
+  {
+    "path": "hardcaml/kernel/cross_product.mli",
+    "sha256": "6019a950490f836fbb0f96b61c814d201cc3e2ff0f13cf9cfeadb8bfbb2dbab6",
+    "size": 41
+  },
+  {
+    "path": "hardcaml/kernel/cross_product_intf.ml",
+    "sha256": "53e94b314f67e560b500bdf24eaa0729d26f0031eb7d9a15675ebccdfdfd1188",
+    "size": 434
+  },
+  {
+    "path": "hardcaml/kernel/edge.ml",
+    "sha256": "789296205d3a7437ea317213f91f781175d8ac433a7cce53dda2dfc8563c7ed7",
+    "size": 156
+  },
+  {
+    "path": "hardcaml/kernel/edge.mli",
+    "sha256": "db603d2b39f1587e9cb4a39781210c0464afc625dd4bdcb29ca4dde53a29c31e",
+    "size": 200
+  },
+  {
+    "path": "hardcaml/kernel/enum.ml",
+    "sha256": "43d33cafc9309c570fbe7b39114b0465f44704ef978873ee764641f6a4734476",
+    "size": 7044
+  },
+  {
+    "path": "hardcaml/kernel/enum.mli",
+    "sha256": "655352d8f1a59206290499008a76b28952ccc2054dec78f2dead80c420b65999",
+    "size": 200
+  },
+  {
+    "path": "hardcaml/kernel/enum_intf.ml",
+    "sha256": "c1131f51fe048cd154a0b334720679454dbca9e7cf564a730fdc18819e605cb6",
+    "size": 4659
+  },
+  {
+    "path": "hardcaml/kernel/hardcaml_kernel.ml",
+    "sha256": "d72510d8f94386e5efaa21c3f243264695a6a0acb4c1ebf25f5a51d44c6f4aa6",
+    "size": 1114
+  },
+  {
+    "path": "hardcaml/kernel/hardcaml_kernel__.ml",
+    "sha256": "a55a0d6788848aacef0a3608cf02df0a97a1c8965b424be6a6db00bc4a98d8f2",
+    "size": 6276
+  },
+  {
+    "path": "hardcaml/kernel/interface.ml",
+    "sha256": "ad455985f56af97d542aadaada45d8af3b3fe0c30e56d1c5063b7df32d16b4a1",
+    "size": 17982
+  },
+  {
+    "path": "hardcaml/kernel/interface.mli",
+    "sha256": "ebbf0ce9c7a604ad90175f871c81c99979956e70ee4d75f0b6934ec29e891d3b",
+    "size": 479
+  },
+  {
+    "path": "hardcaml/kernel/interface_intf.ml",
+    "sha256": "5fddd655c9aa16f5388d62c2d029f86357b13bb78392cd6e0087154628ad3e64",
+    "size": 14807
+  },
+  {
+    "path": "hardcaml/kernel/level.ml",
+    "sha256": "daa1b13a4c4ca7e49f24c57ab1c3715a48c3083a54caf79ad837059b4407421d",
+    "size": 144
+  },
+  {
+    "path": "hardcaml/kernel/level.mli",
+    "sha256": "e103bf22d073143c4bf2c844538455b4c9220427516cbef5530aa690a007aaec",
+    "size": 170
+  },
+  {
+    "path": "hardcaml/kernel/logic.ml",
+    "sha256": "e60dce6ec2d95331841743c7bf626f131e4c1f4675505626add7646aeb15dabc",
+    "size": 3104
+  },
+  {
+    "path": "hardcaml/kernel/logic.mli",
+    "sha256": "6d43de4863798549e42b041d268a5d0a68a306f6a8ae231cf7efaeed9b94638c",
+    "size": 25
+  },
+  {
+    "path": "hardcaml/kernel/logic_intf.ml",
+    "sha256": "bdd2a527836439758fa58ccd5081b845b90fd77f616ca8573470e5a5e393ad27",
+    "size": 1555
+  },
+  {
+    "path": "hardcaml/kernel/multiport_memory.ml",
+    "sha256": "41944a6627446435ac286cee757cfb6139e01d4075cf5913b9783284016dd5c1",
+    "size": 17195
+  },
+  {
+    "path": "hardcaml/kernel/multiport_memory.mli",
+    "sha256": "d484ac0ecf6b67fad17c173569cac934adf8c7f1654e44d197b63e84a724aa47",
+    "size": 832
+  },
+  {
+    "path": "hardcaml/kernel/name_and_loc.ml",
+    "sha256": "34a956a5f5ad2093256c1181ff9bd4e96c3bfcfd9c3f3a2c92462d55fe778eb3",
+    "size": 305
+  },
+  {
+    "path": "hardcaml/kernel/name_and_loc.mli",
+    "sha256": "a1bd45a418605789d9373d02430223973f120212e006a01ac2fc0a076ad2aa5a",
+    "size": 206
+  },
+  {
+    "path": "hardcaml/kernel/pair.ml",
+    "sha256": "b06009c937f34f3fd08423c2382a76f2729ebb7746aa85df34a27e1ef90ad2fd",
+    "size": 815
+  },
+  {
+    "path": "hardcaml/kernel/pair.mli",
+    "sha256": "6294ef88728a193134de4faf647d782bf50c22a384005a0ae984f0e221aa39ee",
+    "size": 23
+  },
+  {
+    "path": "hardcaml/kernel/pair_intf.ml",
+    "sha256": "84ed9f6dfb632597faf5bd1c8d95fa83b4c7ec78577f6dd6726a092cc92c4cdb",
+    "size": 438
+  },
+  {
+    "path": "hardcaml/kernel/parameter.ml",
+    "sha256": "d6829023f91c97aceb1792e115625299965d9512ed050433cd542a7b8ab7767b",
+    "size": 1328
+  },
+  {
+    "path": "hardcaml/kernel/parameter.mli",
+    "sha256": "db7f53d8eeb731f39dc70149ca45fcee74181a95567f2cc8fd5cb993d56d672a",
+    "size": 1147
+  },
+  {
+    "path": "hardcaml/kernel/parameter_name.ml",
+    "sha256": "57ee15e8bbed4e03dfb3575a09aea0a362dc395d887657a0768ede7f816c052b",
+    "size": 202
+  },
+  {
+    "path": "hardcaml/kernel/parameter_name.mli",
+    "sha256": "a191047386a9511912e2b4804cca3c9789e0c863ba49106373d09b6d7e17b9c3",
+    "size": 217
+  },
+  {
+    "path": "hardcaml/kernel/ppx_hardcaml_runtime.ml",
+    "sha256": "f24b60dd5313626c7e7ca90dfa6ed911bcd698698a294c33c0025b2eb1a94a0b",
+    "size": 92
+  },
+  {
+    "path": "hardcaml/kernel/ppx_hardcaml_runtime.mli",
+    "sha256": "12db802bf3a5884b7b32a17da99137990f066518e9d8bd437f921b9a90d0e8e9",
+    "size": 453
+  },
+  {
+    "path": "hardcaml/kernel/read_port.ml",
+    "sha256": "b0c7d494eae0d8381b5ffdea2970cc83b14a0a27d68531e530795398e28d543f",
+    "size": 899
+  },
+  {
+    "path": "hardcaml/kernel/read_port.mli",
+    "sha256": "52f091aab596b9a0855e32e8b8a2c57deced3729831358a89501facf75ad41ab",
+    "size": 33
+  },
+  {
+    "path": "hardcaml/kernel/read_port_intf.ml",
+    "sha256": "978f23de6780c441e1b548981517d240ab4c56cf54a3f1e01aa24dd1b9ec7043",
+    "size": 387
+  },
+  {
+    "path": "hardcaml/kernel/reg_spec.ml",
+    "sha256": "a4db1e2ad5ec9045742f520aece8cb54f5d8308bf35d591b3bad1174b533a11a",
+    "size": 1818
+  },
+  {
+    "path": "hardcaml/kernel/reg_spec.mli",
+    "sha256": "87fc70113d83b0feab938376af7ba66cf751c6552a703c93d038d726146da93c",
+    "size": 31
+  },
+  {
+    "path": "hardcaml/kernel/reg_spec_intf.ml",
+    "sha256": "4f3eb792aaa319b7205999d59a754967bced88f71157a019c5aad11de907cfbf",
+    "size": 1172
+  },
+  {
+    "path": "hardcaml/kernel/rtl_attribute.ml",
+    "sha256": "27b86f9d7f9739b12acc18f434e01244af0cbaf532f4cd66f83309c2c94165d8",
+    "size": 4189
+  },
+  {
+    "path": "hardcaml/kernel/rtl_attribute.mli",
+    "sha256": "e2e18390f21b80e1ec3e633ac94edde7dca3ade2fc54735155652ce2d755b0b4",
+    "size": 5580
+  },
+  {
+    "path": "hardcaml/kernel/scalar.ml",
+    "sha256": "c439469aa1037128bc83ba2c6c07e5f8b91593f89048ae6217f347d9df2b5d7c",
+    "size": 1800
+  },
+  {
+    "path": "hardcaml/kernel/scalar.mli",
+    "sha256": "93a534e7c74fa86d0415dd905edbb568bf08dfc42935b6ed868f643ec52275a0",
+    "size": 27
+  },
+  {
+    "path": "hardcaml/kernel/scalar_intf.ml",
+    "sha256": "f97284209d40097afa5a1f07dca3eaa568021778ceead3c6cc64712f714f9f3d",
+    "size": 1075
+  },
+  {
+    "path": "hardcaml/kernel/signal.ml",
+    "sha256": "3ecb0de0d099d71c765a333e430fc612f9ec0f4f8a707e512bde817aecd4acfe",
+    "size": 11299
+  },
+  {
+    "path": "hardcaml/kernel/signal.mli",
+    "sha256": "0deba0ba7ab82a1e049a556573f45868197f295f22b5c09a603f23b5fce7afca",
+    "size": 122
+  },
+  {
+    "path": "hardcaml/kernel/signal__type.ml",
+    "sha256": "7ee1a1dcd2e96fd89d57613447ae4b5392db654cd210a0bb402fd10d3f8272da",
+    "size": 35470
+  },
+  {
+    "path": "hardcaml/kernel/signal__type.mli",
+    "sha256": "ffb8f1ea554ee15674e3ab17cd881eadc0048716d78c640e648f97fc7a8a8b8b",
+    "size": 39
+  },
+  {
+    "path": "hardcaml/kernel/signal__type_intf.ml",
+    "sha256": "5b13b1b2f719803e507c613ca80698621c7b064eeecf62812d2efeb96b6c2a56",
+    "size": 14365
+  },
+  {
+    "path": "hardcaml/kernel/signal_builders.ml",
+    "sha256": "0a4c9e099474a5535e14f5b3fca5f0d627d2c919192858c5a47e88b360234cf0",
+    "size": 9170
+  },
+  {
+    "path": "hardcaml/kernel/signal_builders.mli",
+    "sha256": "1954553dc6d9c88e50088b24db40ff54cf5f18f2cf91471fbe109ba623feb808",
+    "size": 4792
+  },
+  {
+    "path": "hardcaml/kernel/signal_intf.ml",
+    "sha256": "7e19ed1d24e25406de2225fccbc4137337f0b8a168c33ab36134b3e5af15e22f",
+    "size": 12885
+  },
+  {
+    "path": "hardcaml/kernel/signedness.ml",
+    "sha256": "7e7f7b0b329717371edc7b04c3e8a3c955dbf44d79d64d14e5167d3cfd663241",
+    "size": 84
+  },
+  {
+    "path": "hardcaml/kernel/signedness.mli",
+    "sha256": "7e7f7b0b329717371edc7b04c3e8a3c955dbf44d79d64d14e5167d3cfd663241",
+    "size": 84
+  },
+  {
+    "path": "hardcaml/kernel/types.ml",
+    "sha256": "c8cff4c675ad765d22c80ce986d7f4445da635e01f40b6cb6fb01ca3af1b8ed1",
+    "size": 2407
+  },
+  {
+    "path": "hardcaml/kernel/types.mli",
+    "sha256": "2a02f6164388524a83403be8a28df4e87c96db77c7c7432b578ef74a6da6db48",
+    "size": 1386
+  },
+  {
+    "path": "hardcaml/kernel/uid_builder.ml",
+    "sha256": "23e3467d22a186b4e34a843c06cd3a2050c6300a8748d8fabec33a6884340808",
+    "size": 1343
+  },
+  {
+    "path": "hardcaml/kernel/uid_builder.mli",
+    "sha256": "0ba9552d04cc411644da1097e8564d89154acf2b790aba7d945921231fe05f90",
+    "size": 37
+  },
+  {
+    "path": "hardcaml/kernel/uid_builder_intf.ml",
+    "sha256": "c52c31654521402db9d85a40cad649f63b9e55e45d5d4903b15621369138f119",
+    "size": 758
+  },
+  {
+    "path": "hardcaml/kernel/value.ml",
+    "sha256": "793f60674ae52bc3b455173f44a9d68e94bd4458fa4a68508e861432e992be73",
+    "size": 1051
+  },
+  {
+    "path": "hardcaml/kernel/value.mli",
+    "sha256": "1f0c29236b8b6063d8ae3c59308c6207082694840df6bf85c9320f8d981c32b7",
+    "size": 25
+  },
+  {
+    "path": "hardcaml/kernel/value_intf.ml",
+    "sha256": "d48d314e217f26d4b22c8a09862be15313d466ff4a66e0dfad66350640a397d1",
+    "size": 530
+  },
+  {
+    "path": "hardcaml/kernel/wave_format.ml",
+    "sha256": "3ed6c36f207d2ae90938a08a77117014b32276ba52c78aa32c2f22c9cca2007f",
+    "size": 3260
+  },
+  {
+    "path": "hardcaml/kernel/wave_format.mli",
+    "sha256": "03bc8577fc74f2d2198a574eda09a856478a9ef76c0867ddcfd93f670801274e",
+    "size": 1368
+  },
+  {
+    "path": "hardcaml/kernel/with_valid.ml",
+    "sha256": "719e48bd723a159c5656d77a0b4806cc03f0c74db4c8385eac08be79557dde4b",
+    "size": 7047
+  },
+  {
+    "path": "hardcaml/kernel/with_valid.mli",
+    "sha256": "d2f2ab16ded41690f2a7a783e77ead4294d9d5ca80d77081f79138e73e87ce37",
+    "size": 35
+  },
+  {
+    "path": "hardcaml/kernel/with_valid_intf.ml",
+    "sha256": "a4ebc301b2b958e8a1880ba6d5cde2eb25c74e773af207d7934a1ef6c2aa4932",
+    "size": 6078
+  },
+  {
+    "path": "hardcaml/kernel/write_port.ml",
+    "sha256": "0f46b52c89a163c25c9f21cfbae5bbc1dae92e45f3f1febe0002fb7d4201e3e1",
+    "size": 1143
+  },
+  {
+    "path": "hardcaml/kernel/write_port.mli",
+    "sha256": "74e4db73acf0e311b8f10f3e66b7c6c294f6e1df1178a46f78071ffd52c9b4c9",
+    "size": 35
+  },
+  {
+    "path": "hardcaml/kernel/write_port_intf.ml",
+    "sha256": "90cf91a344041d17a11bfe6121d3fed8d45b1128ae9722c0e107839d47ed64a0",
+    "size": 459
+  },
+  {
+    "path": "hardcaml/mangler.ml",
+    "sha256": "e6abc96e55a1fa226dd9d473d60e6a2f2068a7d94da53233ad0129ca0a8cb382",
+    "size": 919
+  },
+  {
+    "path": "hardcaml/mangler.mli",
+    "sha256": "130932298af73cb8346c9a7f9ff2ae8a78083eebf40fbb197b22e436f776aaf9",
+    "size": 729
+  },
+  {
+    "path": "hardcaml/opam",
+    "sha256": "c2ea660d7c08617c68300b985363637ef8d633c7aca2718fd72dfa6c6e5120b3",
+    "size": 1185
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/apply_names.ml",
+    "sha256": "d634f9d63460a4a5b626e6ec72fb9ad5875683e455ddeec9293ad168043be351",
+    "size": 10839
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/apply_names.mli",
+    "sha256": "1e3955cdada30b3731b7cefc110c038f104999b78b28c6a9cc94835ff6a4ec98",
+    "size": 77
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/collection.ml",
+    "sha256": "c8901cc377e68cd5fae29466f34d16d2fd3d4f896c45d001c2d7eb517b50f332",
+    "size": 2308
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/collection.mli",
+    "sha256": "f65a467d37023a7ab94cbc4ebe9b74230f91ee7831cb25e52fc26af9d0076935",
+    "size": 580
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/deriving_hardcaml_records.ml",
+    "sha256": "c5f54373e60f7eed1bc3cb3600f5a72fad209e1b8a4b441751d7e4767e23e079",
+    "size": 29797
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/deriving_hardcaml_records.mli",
+    "sha256": "b342b6da60f3aac12c4b73f17e082499557aab75def5190f69ce90cafd68a6a4",
+    "size": 76
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/deriving_hardcaml_variants.ml",
+    "sha256": "52d23d30237bbc8cb2171bd1ce167c91367a8392d5f000ec6c2fdf03bf196e1a",
+    "size": 19989
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/deriving_hardcaml_variants.mli",
+    "sha256": "b2a07ededd96a827841e91c6330cb42505a2a2d3d4a87fec9799dd4baec27891",
+    "size": 102
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/function_subscopes.ml",
+    "sha256": "e298935a8e19756788aa647bc56be728e2b15867a7103974df4ddde2e16585f5",
+    "size": 3779
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/function_subscopes.mli",
+    "sha256": "aa19ee7ea381f74e91dad353e6b378fb472c3ee4a2a732e852b4dec96a27c46c",
+    "size": 96
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/interface_options.ml",
+    "sha256": "3d9e29b64267c93c4cc952a13f76140de590b1df3ac357a5c4bc7853302338c3",
+    "size": 186
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/interface_options.mli",
+    "sha256": "3d9e29b64267c93c4cc952a13f76140de590b1df3ac357a5c4bc7853302338c3",
+    "size": 186
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/iter_or_map.ml",
+    "sha256": "247902ed22d93f2af90c4dc60af9e6759a70e53a8a0bfae1a56b477aee4e1f20",
+    "size": 439
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/iter_or_map.mli",
+    "sha256": "de56a42feb20104d1be98fa4f74e4b942731ff7b264c010c9486bcccc01e81bd",
+    "size": 182
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/label_attribute.ml",
+    "sha256": "eae86ad7f48365178754fafe26244c5be699ffb3d433af90c5a7ec61aaafa67a",
+    "size": 3144
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/label_attribute.mli",
+    "sha256": "f2147a13d6eed6f3e98bc2f9a6f53330663cd42c05ed6fa80f409ee378b98108",
+    "size": 1173
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/ppx_hardcaml0.ml",
+    "sha256": "28c07fb56bb1ffd1fd6356b16dcdf20e99c8b598567f967b68a7226de1d57954",
+    "size": 45
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/ppx_hardcaml0__.ml",
+    "sha256": "f45b59fc45367b29eb00286ec26aadaa8fda6ff4050ca0764c9d3e4389b705eb",
+    "size": 1092
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/ppx_hardcaml_zero.ml",
+    "sha256": "e47f1cbb712782996af4a35edc7c7950546f7bd1e9ed69cdad45ba9c46ff957f",
+    "size": 155
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml0/ppx_hardcaml_zero.mli",
+    "sha256": "33e32ddcdf55af8db7a74de56ffd261ad6985d87bcc693c2a6a5677161ecd953",
+    "size": 45
+  },
+  {
+    "path": "hardcaml/ppx_hardcaml_runtime0/ppx_hardcaml_runtime0.ml",
+    "sha256": "5364ffe3af8a51320c66e83e42658e5b5e519f64dc6d619693696636b802cc58",
+    "size": 934
+  },
+  {
+    "path": "hardcaml/property.ml",
+    "sha256": "466b860b61df21b4c33748aa5f7b9122ee1d24a611062cdfd590ec33c4690a9a",
+    "size": 7032
+  },
+  {
+    "path": "hardcaml/property.mli",
+    "sha256": "6396dea1cebda8c11dcf73566161682ca5e7184c9ef2d80f0b74fda31cf36f3f",
+    "size": 3189
+  },
+  {
+    "path": "hardcaml/property_manager.ml",
+    "sha256": "b3cff97ee55c22da5ea90f819aae2f8ad041d27cc4a6cef33f6bae3b79a8ef70",
+    "size": 828
+  },
+  {
+    "path": "hardcaml/property_manager.mli",
+    "sha256": "7995f0b7f2f6fa1ebb2242d4f36f69e2451677e465f16185dfd9e83226e45593",
+    "size": 560
+  },
+  {
+    "path": "hardcaml/ram.ml",
+    "sha256": "780f8f9b0d38c597c505c9ae2e98cb613c25f5fd46d43771f9125d0755f98258",
+    "size": 3848
+  },
+  {
+    "path": "hardcaml/ram.mli",
+    "sha256": "80e846d59faa7934a303d9f1450ed0413755e13b1770e721bf8e1419145260df",
+    "size": 2673
+  },
+  {
+    "path": "hardcaml/read_write_port.ml",
+    "sha256": "5a90b9e2b6aed3d3823575582c6ffc7507fca87b1f5955d405b67b53056bbdf5",
+    "size": 1355
+  },
+  {
+    "path": "hardcaml/read_write_port.mli",
+    "sha256": "c1af9dd3451aa19dc55d1e83551cc98fb521e1b69c50df94b978b4fe891c149a",
+    "size": 510
+  },
+  {
+    "path": "hardcaml/reserved_words.ml",
+    "sha256": "647be51121a113def65dd3c17e69dcf4459c4fd25b2d43860a9be2be2da0d91f",
+    "size": 6261
+  },
+  {
+    "path": "hardcaml/reserved_words.mli",
+    "sha256": "797d6723e33ce498c5f05640fb1c7f7f895a8ab46fb9e7ad5189f62f4d0769cd",
+    "size": 179
+  },
+  {
+    "path": "hardcaml/rtl.ml",
+    "sha256": "0c6d256548c4ed1f98b505b07f2270908e927026f54589c24871cc5f353476f8",
+    "size": 6484
+  },
+  {
+    "path": "hardcaml/rtl.mli",
+    "sha256": "0a25dd965b119a03d022e75e8eed03ba972faa6cfca53add2c0a8cd3b3e57d22",
+    "size": 80
+  },
+  {
+    "path": "hardcaml/rtl_ast.ml",
+    "sha256": "001c7f1974c159cb45960ef21a5fe0ec4cc45c9e962c42c00498a6ee923acbd2",
+    "size": 23737
+  },
+  {
+    "path": "hardcaml/rtl_ast.mli",
+    "sha256": "04b38481bcb147218060c5069b443389114a63f4adb3545eed0b999b72b0233e",
+    "size": 4648
+  },
+  {
+    "path": "hardcaml/rtl_compatibility.ml",
+    "sha256": "06257eeb5e257d2d7c14c199e11d01b3008f6f0a4c927c82be78d40a2307c650",
+    "size": 160
+  },
+  {
+    "path": "hardcaml/rtl_compatibility.mli",
+    "sha256": "9c50c51467b42d60566b73679bb7d2eec3a6bce54dc0d37ad4d9b8c0dbd22b0c",
+    "size": 396
+  },
+  {
+    "path": "hardcaml/rtl_config.ml",
+    "sha256": "06199acdd4259d9df41c04da82aa22b1b92399cc927d4a5719e1ff62d450d6b6",
+    "size": 175
+  },
+  {
+    "path": "hardcaml/rtl_config.mli",
+    "sha256": "afd74624d08db3e64a743ea14876b2d3d9b18bbe3fdb5ef57438c04cb5e3d43e",
+    "size": 220
+  },
+  {
+    "path": "hardcaml/rtl_intf.ml",
+    "sha256": "33f9c3984acb004fccc3af4681c574ffcdccaf5d4834b94ca0096c8b2f9fda2c",
+    "size": 2828
+  },
+  {
+    "path": "hardcaml/rtl_language.ml",
+    "sha256": "a01832b13d642139f28e4fb68dfefb7d48e1f46e74317241ce1b12e6368889bb",
+    "size": 204
+  },
+  {
+    "path": "hardcaml/rtl_language.mli",
+    "sha256": "f58b7358be9ff6832f0f8948048f05eff5c48c21e0ad9b35788f344381f4a161",
+    "size": 189
+  },
+  {
+    "path": "hardcaml/rtl_name.ml",
+    "sha256": "ba86b8862e97b17b6e901e119ba60d21f2b9e4dc5a33cbff2383c7ce7504dc17",
+    "size": 7908
+  },
+  {
+    "path": "hardcaml/rtl_name.mli",
+    "sha256": "d0ec54241149bfb9211e7e64c0d28a22d59271f634e7fd872d70b58e1f504e5e",
+    "size": 983
+  },
+  {
+    "path": "hardcaml/rtl_verilog_of_ast.ml",
+    "sha256": "97af9d390f925572a6f646ebd6833051e53bf10ea68913248862fe6400660b55",
+    "size": 15168
+  },
+  {
+    "path": "hardcaml/rtl_verilog_of_ast.mli",
+    "sha256": "339de19dee3bd9ae140b96932d0cbda85c94e835c053a0060b771d3c0f925f1a",
+    "size": 47
+  },
+  {
+    "path": "hardcaml/rtl_vhdl_of_ast.ml",
+    "sha256": "7bb9c936bec8a2411b84455189b5bcdcce12471d2b1ab9ae5ad9fd049bb8324f",
+    "size": 22714
+  },
+  {
+    "path": "hardcaml/rtl_vhdl_of_ast.mli",
+    "sha256": "339de19dee3bd9ae140b96932d0cbda85c94e835c053a0060b771d3c0f925f1a",
+    "size": 47
+  },
+  {
+    "path": "hardcaml/scope.ml",
+    "sha256": "9c887a2f407a6ef98cb2f208bb84997f547c0fce45398cba75548d71412301af",
+    "size": 3352
+  },
+  {
+    "path": "hardcaml/scope.mli",
+    "sha256": "b7ecae1c30d26b7b52b7b26a4cce5837c54a4c168296b58c2b09ca04d05bd8ca",
+    "size": 4759
+  },
+  {
+    "path": "hardcaml/side.ml",
+    "sha256": "4a3349794bd86a28ac9d48b760bf2ef9a388c63b368dfb2fe5425ee97cf6c75b",
+    "size": 70
+  },
+  {
+    "path": "hardcaml/side.mli",
+    "sha256": "2332fa1f5ec1e0b63348674331c6854a78d65b3b4efa0a97ac2891667cf6e2ba",
+    "size": 182
+  },
+  {
+    "path": "hardcaml/signal_coverage.ml",
+    "sha256": "773831d3d52d32c2080f2ad266fda4c868a39fbc6489bb0fbe887f0c1b498e35",
+    "size": 18254
+  },
+  {
+    "path": "hardcaml/signal_coverage.mli",
+    "sha256": "f9fd865091c1a7c11f9eaaad2a54fe36079b822eead48f865583483d9fe1b6ae",
+    "size": 2538
+  },
+  {
+    "path": "hardcaml/signal_graph.ml",
+    "sha256": "a5d74bd1c784944060f00af012f3b4260b5ce08aa250f92506da018a9e46aebe",
+    "size": 15736
+  },
+  {
+    "path": "hardcaml/signal_graph.mli",
+    "sha256": "054a72fde0b2646ff67ea27c6197b7cbaebf5514139c3822fccf62153286a644",
+    "size": 5654
+  },
+  {
+    "path": "hardcaml/simulation_memory.ml",
+    "sha256": "36c5bb8f4bbca4209fef6655d83f82de2c2897aa4000ccd159b12d1a7a267133",
+    "size": 577
+  },
+  {
+    "path": "hardcaml/simulation_memory.mli",
+    "sha256": "1fec578868eaa07c75a241d52110d3ef98ef3e84ff79c94b029b65b40e0e2cc6",
+    "size": 333
+  },
+  {
+    "path": "hardcaml/structural.ml",
+    "sha256": "9ba950000dd4287831ae5f082efa557e1126d7f35f20b65625e1bf69bdec7d40",
+    "size": 29093
+  },
+  {
+    "path": "hardcaml/structural.mli",
+    "sha256": "ca3cdce12f352c9d189561614da2fecbfcbb3501c90940ec4d8db7b1d5f4d7ff",
+    "size": 255
+  },
+  {
+    "path": "hardcaml/structural_intf.ml",
+    "sha256": "b98d352b47ffd56cbaa942383021ca41b33a478a0edd09415ebfbe1b8843cbc8",
+    "size": 5241
+  },
+  {
+    "path": "hardcaml/topsort.ml",
+    "sha256": "f3d9e471dfdb414220021c430e3881fb4d13b20162403e96bfa97f60edae9ca2",
+    "size": 2749
+  },
+  {
+    "path": "hardcaml/topsort.mli",
+    "sha256": "23265c843e5a79681c0663b657b8295ac366fd915de33ada95c0c627689073c2",
+    "size": 450
+  },
+  {
+    "path": "hardcaml/vcd/hardcaml_vcd.ml",
+    "sha256": "42af163761d1d0606c4942b81a81c5fa326bf6e63288b0093e5bdd5ba47856a4",
+    "size": 79
+  },
+  {
+    "path": "hardcaml/vcd/hardcaml_vcd__.ml",
+    "sha256": "633e2df12561e7f797da98fd2b7fcf4c63fad528d0498c60e1e3fa63eba1a71c",
+    "size": 396
+  },
+  {
+    "path": "hardcaml/vcd/lexer.ml",
+    "sha256": "0938e187158c0a80496ed0a0396a8539675ff0fd18e36b711dbc6eb7ab7932fd",
+    "size": 103210
+  },
+  {
+    "path": "hardcaml/vcd/parse.ml",
+    "sha256": "2cffc2e33fd11ba55ae7e3f0526037b4413c6a9c723d5458233a4563f74031c0",
+    "size": 1214
+  },
+  {
+    "path": "hardcaml/vcd/parse.mli",
+    "sha256": "35c98c1283991c6d38db8efbc357ef75c9bbbccf4e7aecd728266c1f5461fe70",
+    "size": 109
+  },
+  {
+    "path": "hardcaml/vcd/parser.ml",
+    "sha256": "1bc878f6866ddc86fe401135ff79439ade957bd8c7dd9dc48dffd144a40cb9a0",
+    "size": 25575
+  },
+  {
+    "path": "hardcaml/vcd/parser.mli",
+    "sha256": "789eb6e4df814af2f39c62be4596ec1ff6fb238baccea68a68a04320ee291453",
+    "size": 1946
+  },
+  {
+    "path": "hardcaml/vcd/types.ml",
+    "sha256": "71c4040e363d9dd240d707fa5e3b363daf7f58ca39def2432164bacff15d00d4",
+    "size": 1831
+  },
+  {
+    "path": "hardcaml/vcd/types.mli",
+    "sha256": "a6939767e0e0ae044e3e6a71faeaca1d542f50053b72316120a60454eaa74f86",
+    "size": 1805
+  },
+  {
+    "path": "hardcaml/vcd.ml",
+    "sha256": "27b210a8ab4114f284c95aa6ff51bf36e0302ddd9bcc2953ae637bc4ba782440",
+    "size": 28800
+  },
+  {
+    "path": "hardcaml/vcd.mli",
+    "sha256": "82b1dc3a22a57d4086430a5c9d8da0ab6c6a36c41dd669d7ca5180d174870984",
+    "size": 6586
+  },
+  {
+    "path": "hardcaml/wave_data.ml",
+    "sha256": "7d59ae58d361d32f7d748ca9049b390af674b6d06d1a9d28771fde2e558b6542",
+    "size": 2163
+  },
+  {
+    "path": "hardcaml/wave_data.mli",
+    "sha256": "694b17a5cc3e930fd7958ef8f9bee1f8f1c287b5d0bb1db5d35faa67cad9c23b",
+    "size": 33
+  },
+  {
+    "path": "hardcaml/wave_data_in_cycles.ml",
+    "sha256": "877eda4824e4a803f1b91dcd95808dcf2b4ff9078668f5c953e1801b5906bb61",
+    "size": 14508
+  },
+  {
+    "path": "hardcaml/wave_data_in_cycles.mli",
+    "sha256": "f123d34ad90f6c21976fcf24cb996f4d302154b8667fb1f8cf51f8f695e445d6",
+    "size": 53
+  },
+  {
+    "path": "hardcaml/wave_data_in_cycles_intf.ml",
+    "sha256": "80bc00f528c1d076a0470a2f909d0156ad113ba4eb514b940dd0db86334e47fe",
+    "size": 593
+  },
+  {
+    "path": "hardcaml/wave_data_in_events.ml",
+    "sha256": "3c6f565f2a0c0586ec1156e18e01d5a194e2b9fba0d448cdaaec41aaaa14c172",
+    "size": 4444
+  },
+  {
+    "path": "hardcaml/wave_data_in_events.mli",
+    "sha256": "f1eec910e9de31fce8250fabd34d66cbf319bf2d5ae4a706c8cf9d393c89dc0c",
+    "size": 53
+  },
+  {
+    "path": "hardcaml/wave_data_in_events_intf.ml",
+    "sha256": "88927f5554df855ec12b9a2fd16a10adcb34284933aced129f89b1414ca143b1",
+    "size": 1328
+  },
+  {
+    "path": "hardcaml/wave_data_intf.ml",
+    "sha256": "9ba1053aea08278642bf044ba208bd26f86a7f229aec95c1a3f0122f62137585",
+    "size": 1231
+  },
+  {
+    "path": "hardcaml_asic/META",
+    "sha256": "df5dddf28227f470aa49d064a5006e56a633268e1ae61c4822a1871d76320f3b",
+    "size": 928
+  },
+  {
+    "path": "hardcaml_asic/build.ml",
+    "sha256": "5c56c00f0bcb9e94cf6e8c570b7a6048ba22bd9d8aa9f5bc6d653989b521d22a",
+    "size": 4634
+  },
+  {
+    "path": "hardcaml_asic/build.mli",
+    "sha256": "bf1f0466779058aa8b378bc9481bb4e4d0ca33da05d8e53bb892746512b253e5",
+    "size": 2154
+  },
+  {
+    "path": "hardcaml_asic/bundle.ml",
+    "sha256": "54c3a197a5843bba51d50f73b9bcdcbad816a3c47f7802d6599ef0263776d95d",
+    "size": 30738
+  },
+  {
+    "path": "hardcaml_asic/bundle.mli",
+    "sha256": "dcadee4fa32c0ab704dd3f395170a00c95002385b78ce5aa9190eb83f0dd273a",
+    "size": 3389
+  },
+  {
+    "path": "hardcaml_asic/clock.ml",
+    "sha256": "c7a1f9ee162372263386bc2a215c7bc65ac9d7146b3313627ee7868034b48d23",
+    "size": 3420
+  },
+  {
+    "path": "hardcaml_asic/dune-package",
+    "sha256": "91c41943821f935cdf0cbedd342d964267e9e6d34ffbf08960bd98d966515221",
+    "size": 9290
+  },
+  {
+    "path": "hardcaml_asic/elaboration_context.ml",
+    "sha256": "89b0c22147193d387fb0b7717f8944242e99caa4289b2caa919d4e126534737a",
+    "size": 12286
+  },
+  {
+    "path": "hardcaml_asic/elaboration_context.mli",
+    "sha256": "e0c2b0149ac5d08834fef4dc3ff1296c33583cc4fbc2efc6244499e0f417ad82",
+    "size": 2341
+  },
+  {
+    "path": "hardcaml_asic/elaboration_mode.ml",
+    "sha256": "a5e875defa10a94800f587f540df133d30f646b85bba950d3f8fdaa430d74834",
+    "size": 1216
+  },
+  {
+    "path": "hardcaml_asic/flow.ml",
+    "sha256": "c669481d0bebb0264900bfd096fd1996055443495b42885d41d88e982717eb5c",
+    "size": 9375
+  },
+  {
+    "path": "hardcaml_asic/hardcaml_asic.ml",
+    "sha256": "608e8d61855cd7354029b1e443f5b35dd0ce25d2a0ea868c79f36d3bbfa3b8c0",
+    "size": 1911
+  },
+  {
+    "path": "hardcaml_asic/harness.ml",
+    "sha256": "24cac4b5f6b091b1b7a754c83238848cd83c8768dfd0d9588333043e2fda08ae",
+    "size": 1972
+  },
+  {
+    "path": "hardcaml_asic/metadata.ml",
+    "sha256": "179c2d9d7f28449aef8b05ab6647bf1ff14c66b19462e71573dfa5c362c1047f",
+    "size": 1708
+  },
+  {
+    "path": "hardcaml_asic/opam",
+    "sha256": "45c3890f4cad4a8c1db926ab746c16b5d1ac12ab744ae83d291c6559f73f7d40",
+    "size": 922
+  },
+  {
+    "path": "hardcaml_asic/pinout.ml",
+    "sha256": "d4151f6cb0890faf8fc7ef26f31a16788a1632f72c8f896c32bc410d61fcb8d7",
+    "size": 5343
+  },
+  {
+    "path": "hardcaml_asic/project.ml",
+    "sha256": "c74122eb6ca2bd3919dbf579ff4f65d63c280270f7201b733adcf6015fa64216",
+    "size": 5411
+  },
+  {
+    "path": "hardcaml_asic/project.mli",
+    "sha256": "0cac11f9efdc4d1d4b386e100941fc9c022447b4fe0d3763dfc9e828ddf28cee",
+    "size": 3221
+  },
+  {
+    "path": "hardcaml_asic/resolved_build.ml",
+    "sha256": "579d09ad7e25bb18e3050d47b33b691acd769c2f6a1c38d91662e76b24ad9912",
+    "size": 29225
+  },
+  {
+    "path": "hardcaml_asic/resource_id.ml",
+    "sha256": "ad4dbc85bdc55dcb2d9b89fb96197bd612895a18bbde2b6bed276d68d0009258",
+    "size": 4467
+  },
+  {
+    "path": "hardcaml_asic/resource_id.mli",
+    "sha256": "a329ea976da723b348f245df0dd9ae7ce1561d9082499744f01acc097390dd6f",
+    "size": 2402
+  },
+  {
+    "path": "hardcaml_asic/resource_policy.ml",
+    "sha256": "5f5676d422c0329d98ed21620276effd6dcb17b1591899f27fd6c5fa6cfead73",
+    "size": 7585
+  },
+  {
+    "path": "hardcaml_asic/resource_policy.mli",
+    "sha256": "029790c497d2e35a5235e951c4143ccba1452024c20190a0daeb23b7c0b2acaf",
+    "size": 2046
+  },
+  {
+    "path": "hardcaml_asic/resource_record.ml",
+    "sha256": "d8324f809d9b0f55a2e8aafc605ade762b6b2529d224aa782f831870454267fa",
+    "size": 3408
+  },
+  {
+    "path": "hardcaml_asic/resource_request.ml",
+    "sha256": "269f564283c81d7634280d5e332658b8eb5c2975b89e00028a05ffcb4a48d0f7",
+    "size": 738
+  },
+  {
+    "path": "hardcaml_asic/resource_request.mli",
+    "sha256": "509f40a33e6d84ee1e8ed44452c78988e3008553fc35eb260d392212730a1fa4",
+    "size": 849
+  },
+  {
+    "path": "hardcaml_asic/selection.ml",
+    "sha256": "75d949c9f6afd153fcacf713fe2b1410ef8c51288caaab93a81e3151a71c4d2a",
+    "size": 6068
+  },
+  {
+    "path": "hardcaml_asic/single_port_ram.ml",
+    "sha256": "8478d0a90bc6ff0c0edfea228d0195fc8915476a4ca28202b9747d1e500ce103",
+    "size": 15088
+  },
+  {
+    "path": "hardcaml_asic/single_port_ram.mli",
+    "sha256": "7069fd4bbf8109ef06e5082dc883d1f8114dcf4991d8a76a42323906ac972bc3",
+    "size": 5007
+  },
+  {
+    "path": "hardcaml_asic/target.ml",
+    "sha256": "936e3262525e944f97fc41f0467d2025af5746ff3c371282c8f7ec8e94da836a",
+    "size": 23160
+  },
+  {
+    "path": "hardcaml_asic/target.mli",
+    "sha256": "a86974d9f382dfa474085f45dd519268ad4a3d1577d82129f0b88180a48985e2",
+    "size": 7371
+  },
+  {
+    "path": "hardcaml_asic/technology.ml",
+    "sha256": "c5a5e4b2e326dfcc88f5f0443e60c034b28dc4a50e871a9bc23a855244c28bf8",
+    "size": 10581
+  },
+  {
+    "path": "hardcaml_asic/technology.mli",
+    "sha256": "4a934475d19bc9fd0036f773822115641d73a14dc20de61aeaaf17ff8f2b2645",
+    "size": 6296
+  },
+  {
+    "path": "hardcaml_asic/timing.ml",
+    "sha256": "7061484a9f228d513fa92452fcc1f4d59067342ffbd57475d43370fca0ed2a05",
+    "size": 3701
+  },
+  {
+    "path": "hardcaml_asic/tt_cmos5l.ml",
+    "sha256": "32a8428defaebe6ebd976e03ff134840d3352d9fdf3b8ccc8e7efc6c86ce1bb5",
+    "size": 12779
+  },
+  {
+    "path": "hardcaml_asic/tt_cmos5l.mli",
+    "sha256": "0ac2a3f8eb7d9acd76402f6ffa1dfd011ec4470164d6bf29f8cd47ae1953cb40",
+    "size": 5878
+  },
+  {
+    "path": "hardcaml_circuits/META",
+    "sha256": "43ec28c255846f4e68a03557dee08adebe83c5e6a06fadc11f173c3787df17b5",
+    "size": 939
+  },
+  {
+    "path": "hardcaml_circuits/add.ml",
+    "sha256": "25a0a82cdee8f145a450b4a6a6e8f7485b3f48c263bf6c8d451c825b5cb1bf44",
+    "size": 1301
+  },
+  {
+    "path": "hardcaml_circuits/add.mli",
+    "sha256": "f75c4a17aa7426f446b596584ca9f9b3acb7afaab513c4c20227ec536dc141c4",
+    "size": 36
+  },
+  {
+    "path": "hardcaml_circuits/add_intf.ml",
+    "sha256": "2b79a8315fb61231639dad24440a0331dcd0df86b7d29e6c7f3c467543156a7c",
+    "size": 1895
+  },
+  {
+    "path": "hardcaml_circuits/arbiters.ml",
+    "sha256": "c39965cd3f0fd55a367a14810f7f009ec946922c6b586b0b26cc4c058c48c7ec",
+    "size": 6470
+  },
+  {
+    "path": "hardcaml_circuits/arbiters.mli",
+    "sha256": "aa2eb5a466eb23da81ba3058ce079c33ab0de9cf35e075b209011d6c4ac08eb1",
+    "size": 2728
+  },
+  {
+    "path": "hardcaml_circuits/catmull_rom_spline.ml",
+    "sha256": "bd78c45a2af2275b16eadb19fc931a689354fc156c01fc6efd2e139e6a48d07e",
+    "size": 2886
+  },
+  {
+    "path": "hardcaml_circuits/catmull_rom_spline.mli",
+    "sha256": "19f6674350449fd39dd801e862977ae8281fabaf177f5374f183c407e3ba946b",
+    "size": 2716
+  },
+  {
+    "path": "hardcaml_circuits/clear_fanout_tree.ml",
+    "sha256": "3ca766d45be3d0bf7c8ec47aa84ae639bb926b57678aac3097940fa75903a70f",
+    "size": 1411
+  },
+  {
+    "path": "hardcaml_circuits/clear_fanout_tree.mli",
+    "sha256": "a9be7a79df05381f0e7c3c4acb8993e15e0f0968d370d4ea1ddf4c3e7a265608",
+    "size": 1714
+  },
+  {
+    "path": "hardcaml_circuits/cordic.ml",
+    "sha256": "663ae68b25aa7ae583f764822582dd57e357f1f5012bb0bd12af7173782b6881",
+    "size": 5515
+  },
+  {
+    "path": "hardcaml_circuits/cordic.mli",
+    "sha256": "8978665df79d5db72565ae148a1b1c539959346f3fd643b1d49c07ac8b49e8e4",
+    "size": 1396
+  },
+  {
+    "path": "hardcaml_circuits/cordic_intf.ml",
+    "sha256": "f9dfaeda5f50c158a37033a218dd1bb2686926883dd091a350de954ded9fb5d3",
+    "size": 1171
+  },
+  {
+    "path": "hardcaml_circuits/cordic_reference.ml",
+    "sha256": "981008f2cb2efd95a9d1e345959d6bc3e151dbee6eafd7c17864605af13bdbd7",
+    "size": 3648
+  },
+  {
+    "path": "hardcaml_circuits/cordic_reference.mli",
+    "sha256": "cebfc356f880ff46c111a044b0ef25fbadcadf9541ac7757acdc3890436535b6",
+    "size": 1369
+  },
+  {
+    "path": "hardcaml_circuits/cordic_special_functions.ml",
+    "sha256": "34e3b649380152034500199ea9329e061f870ba9d06526b9d2e2765f2f8b070b",
+    "size": 10504
+  },
+  {
+    "path": "hardcaml_circuits/cordic_special_functions.mli",
+    "sha256": "3cca7cb0d7d538d4686cd42eab0ec8c3a2e5c0cac307abe489616c470dc91bca",
+    "size": 141
+  },
+  {
+    "path": "hardcaml_circuits/cordic_special_functions_intf.ml",
+    "sha256": "e6c567bb430d46da36eb9cd41ba57069c0cb3e8cb0feb0a1b349ad6a763d24e5",
+    "size": 4948
+  },
+  {
+    "path": "hardcaml_circuits/counter_div_mod.ml",
+    "sha256": "0f80bc0426f5bbdc9a7504e24d9cbe663297f13a9fd13c5baefd05d430fa989b",
+    "size": 2836
+  },
+  {
+    "path": "hardcaml_circuits/counter_div_mod.mli",
+    "sha256": "01df1658aac78d775956feebe55feeb049a819033f9370e1e8b35ee6d9e5fcfb",
+    "size": 1331
+  },
+  {
+    "path": "hardcaml_circuits/datapath_register.ml",
+    "sha256": "91f30435f91aecb9ec9aa4556bb1e724c679d30c0b21afe671032e2a6f4ba2b4",
+    "size": 3154
+  },
+  {
+    "path": "hardcaml_circuits/datapath_register.mli",
+    "sha256": "fabff4b340d7773931e0505e5b6f6e0eae3e539a607c962bd3ff432eb63f15f3",
+    "size": 64
+  },
+  {
+    "path": "hardcaml_circuits/datapath_register_intf.ml",
+    "sha256": "86070baf5891228fec03006fde4ef78d829cd385f98d403f59506a84cd4fd24a",
+    "size": 1058
+  },
+  {
+    "path": "hardcaml_circuits/divide_by_constant.ml",
+    "sha256": "53171cfc9efd96b3ed96fadbbb3596bb734eea54ce765fd04feee496cf174886",
+    "size": 1997
+  },
+  {
+    "path": "hardcaml_circuits/divide_by_constant.mli",
+    "sha256": "1f17bd21eca85d4daf09c5e27a50a19616a06de70a1b796b151354221e4fb57c",
+    "size": 870
+  },
+  {
+    "path": "hardcaml_circuits/divider.ml",
+    "sha256": "49d781b2c3b195adc95ecf6516fa24cf0b27ec918cc648ad5d5acecbd89fc240",
+    "size": 8214
+  },
+  {
+    "path": "hardcaml_circuits/divider.mli",
+    "sha256": "1c49095620abdc0c5f0871075bc26fc416b5563b044b88378b6d5eccba54ec16",
+    "size": 44
+  },
+  {
+    "path": "hardcaml_circuits/divider_intf.ml",
+    "sha256": "10c4a17bfa62c241cc8a1549bd49406b40d602716f0f207caf512f09d8c0b4bd",
+    "size": 2406
+  },
+  {
+    "path": "hardcaml_circuits/dune-package",
+    "sha256": "62162dbd92552fbe67fcfb6c852f0bcc4e1e8d5779192003340e563011313be8",
+    "size": 19425
+  },
+  {
+    "path": "hardcaml_circuits/exactly_divisible_by_constant_power.ml",
+    "sha256": "f67a957715c68f6ebdde62328c74d858bdcca14233e7b9d725bc2baa5a7e6e8e",
+    "size": 9043
+  },
+  {
+    "path": "hardcaml_circuits/exactly_divisible_by_constant_power.mli",
+    "sha256": "8ea0c80290c93fba774df5eaf4ed39844e76cccf4c398f9753534ff1742582a5",
+    "size": 4780
+  },
+  {
+    "path": "hardcaml_circuits/fanout_tree.ml",
+    "sha256": "e8020c58da6fb84705609a1116a5286c41a597bd01e0b6f9e34581ac8adb696c",
+    "size": 4581
+  },
+  {
+    "path": "hardcaml_circuits/fanout_tree.mli",
+    "sha256": "3f2765cf2aa47a33686101b28d61a4143f59aa89cd0546b52d3695d30e6c8d51",
+    "size": 2156
+  },
+  {
+    "path": "hardcaml_circuits/fast_fifo.ml",
+    "sha256": "b5c0976bc5f0f6824d91023e1a8874b8987d18d61fef28054c5b7285a4ce7ae1",
+    "size": 2293
+  },
+  {
+    "path": "hardcaml_circuits/fast_fifo.mli",
+    "sha256": "46261753f0b82b9893d94c1c9355f44bc42780cc328c33d1cb77a13e3167f95f",
+    "size": 1233
+  },
+  {
+    "path": "hardcaml_circuits/fixnum.ml",
+    "sha256": "4297f291201d9f5cf461073b3d967e7b0998730160e44fa02447e6e947860aff",
+    "size": 780
+  },
+  {
+    "path": "hardcaml_circuits/fixnum.mli",
+    "sha256": "bb927e7bf2206ba1989baaca94e70ca7d0147cb3dadc938895c70202023839f6",
+    "size": 42
+  },
+  {
+    "path": "hardcaml_circuits/fixnum_intf.ml",
+    "sha256": "ae02245c26147d351d63e518ebdca262c48a1888ec705a11cada9a96c250832f",
+    "size": 1004
+  },
+  {
+    "path": "hardcaml_circuits/hardcaml_circuits.ml",
+    "sha256": "69a9083d64df073f4e11af463dd20ccf437ab71e2494b68c80fc903a8a4c20a8",
+    "size": 1035
+  },
+  {
+    "path": "hardcaml_circuits/hardcaml_circuits__.ml",
+    "sha256": "c18c0e5a1d05fa46dfde21bb2ab1d93bae991a19f86ab5e2e92d25699cecd514",
+    "size": 4210
+  },
+  {
+    "path": "hardcaml_circuits/index_vec.ml",
+    "sha256": "33ea49b2997209c007fe9f83b9e7bcb621c2d2d9760e4b9cb9d15b81fa59082a",
+    "size": 4947
+  },
+  {
+    "path": "hardcaml_circuits/index_vec.mli",
+    "sha256": "afa2abf5282fd923883d8b0719938b9cf01b3db80680c0c84434ab8aa776ff82",
+    "size": 33
+  },
+  {
+    "path": "hardcaml_circuits/index_vec_intf.ml",
+    "sha256": "b8899b9fd85e83dda482aeaba4a4b89ceb6606f7055f01a3565ac675e6366588",
+    "size": 5368
+  },
+  {
+    "path": "hardcaml_circuits/lfsr.ml",
+    "sha256": "7484c17e735f4ee6ea050809c7acb3b9e7f704056cd2b1910c7c4370f9ff9f9a",
+    "size": 5394
+  },
+  {
+    "path": "hardcaml_circuits/lfsr.mli",
+    "sha256": "713b094d5310906d6b995803f163f10b72c18803961ecfb7c63ccc99af818ad8",
+    "size": 1223
+  },
+  {
+    "path": "hardcaml_circuits/modulo.ml",
+    "sha256": "c9a04990ccc53a98f26e9bbc263460a2b009132bcc7f84b3b94b46429a638fd4",
+    "size": 787
+  },
+  {
+    "path": "hardcaml_circuits/modulo.mli",
+    "sha256": "d976692dabc33007fc85a0d04bb2a494bf739085bb4da3e53a7f5d05a0d8477d",
+    "size": 311
+  },
+  {
+    "path": "hardcaml_circuits/mul.ml",
+    "sha256": "3faeb062acd0705350853b294dd6c8a53c24a0af3a6597ecc01b925c5938f15e",
+    "size": 4971
+  },
+  {
+    "path": "hardcaml_circuits/mul.mli",
+    "sha256": "9bf7ba9f32e5a145873f24f65df1581389540c44c6730265e603699bb11b476a",
+    "size": 2102
+  },
+  {
+    "path": "hardcaml_circuits/mul_intf.ml",
+    "sha256": "bdb2f9d7e0415e567b3c60f6e23defbb7b8045de653795730b006a8a3ff901d5",
+    "size": 535
+  },
+  {
+    "path": "hardcaml_circuits/onehot_clean.ml",
+    "sha256": "67575ce5b65bc163f2af4286a79b0f399f939a99784d2e6a83420d17df03774a",
+    "size": 876
+  },
+  {
+    "path": "hardcaml_circuits/onehot_clean.mli",
+    "sha256": "3b66260070fa1059bfd9fc618dd2360227df1add267b27607b63ad603aa673e3",
+    "size": 542
+  },
+  {
+    "path": "hardcaml_circuits/opam",
+    "sha256": "a837cfaecf9bc497538a4ccd5a0d246ee48cdc4e20a066dec8aeb74d9e967876",
+    "size": 837
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_adder.ml",
+    "sha256": "3fdcddda9c15e43f66f6397320cd6948453ea9bd35905542a2d0087e43d066c7",
+    "size": 4062
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_adder.mli",
+    "sha256": "a42d513443720bd8cdfe39b7d3c5c72dccac0c7f2a9374f3d39ffbe4d8affd6f",
+    "size": 1156
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_incrementer.ml",
+    "sha256": "f7d0aad83307a62b6472ce6526e10ae12b6024dd97d9765c910220a16139b930",
+    "size": 962
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_incrementer.mli",
+    "sha256": "300290c019ba765c38332c437013aebecb0bcfa16a630f025ab1ac946e80bd89",
+    "size": 368
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_tree_mux.ml",
+    "sha256": "de5ae7421e7f94f08bc7081814986b3c9227206859c141626c6ec1002fd43b07",
+    "size": 4352
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_tree_mux.mli",
+    "sha256": "6c5b974976cf6cf365442d2372ae858fae70599583049522f95e9d1d2f387a2b",
+    "size": 550
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_tree_reduce.ml",
+    "sha256": "ca7d9638a62850eb03d5297f9bc094402f0bedb94cb0fc77255d15acb9b2184c",
+    "size": 1036
+  },
+  {
+    "path": "hardcaml_circuits/pipelined_tree_reduce.mli",
+    "sha256": "d6c3d7c00d2731f792ffefbff81837cfe1653fb343d6c4563344e0b7868cba33",
+    "size": 324
+  },
+  {
+    "path": "hardcaml_circuits/prefix_sum.ml",
+    "sha256": "91eed0ef7d1c31136137b53ce4083bbe030ad27cea1b5763fe02a1b6660d5c9d",
+    "size": 4133
+  },
+  {
+    "path": "hardcaml_circuits/prefix_sum.mli",
+    "sha256": "7d1546690d7a5ad1aab611fdb9d9173837b6466141a1c439823aa5e317463bf0",
+    "size": 828
+  },
+  {
+    "path": "hardcaml_circuits/rac.ml",
+    "sha256": "723fb75ab090ffacc5cf80c3d46833cb0c5b2a207c07b1a8e85e0fe107f201c7",
+    "size": 3213
+  },
+  {
+    "path": "hardcaml_circuits/rac.mli",
+    "sha256": "4f4256de0ef88e0296354dfd4a4104494f98589dba09e4fd8db407612ac745ba",
+    "size": 2265
+  },
+  {
+    "path": "hardcaml_circuits/sorting_network.ml",
+    "sha256": "528ddc884d4a02b8d794bb4207bfeed9f8c8f2aa8b0d54f6b75d34e4573373f4",
+    "size": 5625
+  },
+  {
+    "path": "hardcaml_circuits/sorting_network.mli",
+    "sha256": "4369a5bb503447c3ff33b47b3d5832082ca3086002680cfa8dbbc63a4b28a39c",
+    "size": 1518
+  },
+  {
+    "path": "hardcaml_circuits/stack.ml",
+    "sha256": "7a728203f3239d253d6f0c481ffdc1e39e4dbda3d33bbbed7bf095a582c96b9c",
+    "size": 3377
+  },
+  {
+    "path": "hardcaml_circuits/stack.mli",
+    "sha256": "680c03e57ade00573f8906a04ce890f36a7c53f7708a56a4110a5cc2fe9d8724",
+    "size": 1003
+  },
+  {
+    "path": "hardcaml_circuits/stages.ml",
+    "sha256": "1aba8b7852286de0efbef62b8c910cf1d9bc799d813494afa01e20141421ed52",
+    "size": 994
+  },
+  {
+    "path": "hardcaml_circuits/stages.mli",
+    "sha256": "b933cbd2218b1c9a0f05e8726f5ed2f16b7b553a30da4df0e4b44975faddec6d",
+    "size": 1322
+  },
+  {
+    "path": "hardcaml_circuits/vec.ml",
+    "sha256": "0db5f66f0625b1a6f7ab40effedad9ef42be4ccedf3f57abb05c14516b01e3b7",
+    "size": 2272
+  },
+  {
+    "path": "hardcaml_circuits/vec.mli",
+    "sha256": "fc8d71e08157c86119ee3524f2f38ef67153000574faf27d1d9b7297d3c1f96d",
+    "size": 128
+  },
+  {
+    "path": "hardcaml_circuits/vec_intf.ml",
+    "sha256": "36953a33fb266dc347fa6c886b7a6f4af4a18596351a5dd884c4490d098486c4",
+    "size": 1690
+  },
+  {
+    "path": "hardcaml_event_driven_sim/META",
+    "sha256": "a9e181d63e999eabc85ba7b5b0dce22c33921a702e6c7d2a40912f16a0fafbaa",
+    "size": 1895
+  },
+  {
+    "path": "hardcaml_event_driven_sim/clock_domain_splitting.ml",
+    "sha256": "8ea8e048352e6382c41e89ab6b81a4ba44b994a90528c8fc8bc287ea243349c3",
+    "size": 30929
+  },
+  {
+    "path": "hardcaml_event_driven_sim/clock_domain_splitting.mli",
+    "sha256": "4d215618c2bc43d7b94b54dabebe706ce913be1042cb62fe34d498958f9c84ad",
+    "size": 3928
+  },
+  {
+    "path": "hardcaml_event_driven_sim/combine_wires.ml",
+    "sha256": "4151d742c01c8f4b2128114aa32f0144c410b8da7cdf5a9ef6cc908ce672f512",
+    "size": 8424
+  },
+  {
+    "path": "hardcaml_event_driven_sim/combine_wires.mli",
+    "sha256": "01fe633ab909f0df389e0f0207393868408908ce63a5d31418297a4ec15f2cfb",
+    "size": 751
+  },
+  {
+    "path": "hardcaml_event_driven_sim/dune-package",
+    "sha256": "08ca6485144542e9a0f7766840ee0fe5492cad994d124db3243fd5edff5e1aac",
+    "size": 12438
+  },
+  {
+    "path": "hardcaml_event_driven_sim/four_state_logic.ml",
+    "sha256": "10efdaf32871d1eaeca741d7fc4dae408ce11899af7eeaac15264e7292e29afc",
+    "size": 7200
+  },
+  {
+    "path": "hardcaml_event_driven_sim/four_state_logic.mli",
+    "sha256": "d04b6bded8503aae2176e0cc8aa6ebb8a8487c86f3a460413cdf0787e625654c",
+    "size": 178
+  },
+  {
+    "path": "hardcaml_event_driven_sim/hardcaml_event_driven_sim.ml",
+    "sha256": "9e6c1042dc7770c1aecba3f80db605edd9acf4d90c01588166f1cfca9c623cd2",
+    "size": 1484
+  },
+  {
+    "path": "hardcaml_event_driven_sim/hardcaml_event_driven_sim__.ml",
+    "sha256": "9ea6a795c9e8e07a2950b183b46602bbf21b881d0bedbab55e6d435dab49cd7d",
+    "size": 1887
+  },
+  {
+    "path": "hardcaml_event_driven_sim/hybrid_sim_options.ml",
+    "sha256": "1fcbf46e65e44b979dc6723430fb8b94573d996792fa26d84f247336ec48c612",
+    "size": 342
+  },
+  {
+    "path": "hardcaml_event_driven_sim/hybrid_sim_options.mli",
+    "sha256": "fcbe293315d044dcc369cb51ed6d3f1de7a0e12b70b72f0019735094579aeb1b",
+    "size": 204
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/event_driven_sim.ml",
+    "sha256": "db12466471d6c98320bda5215107cc83a1045272186f57b769d9c4446c4aff81",
+    "size": 60
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/event_driven_sim__.ml",
+    "sha256": "439454d111c77f3771a1852dd35fcef16427dce9c3e3b260df2bbfddfe633d9a",
+    "size": 294
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/mini_async.ml",
+    "sha256": "95acaf4285bb1f74d88ab81685d98e66a6b938cbd536179a236c3f31d3b5625c",
+    "size": 5529
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/mini_async.mli",
+    "sha256": "d11f8dc48e1074e745ddf773559dcf8e97c0889e093c0b2144254daac178515e",
+    "size": 388
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/simulator.ml",
+    "sha256": "4763eb0947b104a89c00115675ec4586b8f61d00d0264c6ab6c9ea52383dc6d7",
+    "size": 17458
+  },
+  {
+    "path": "hardcaml_event_driven_sim/kernel/simulator.mli",
+    "sha256": "80baa15923722a5ac2409e56c49acca7d08b415c85392dcebf5658220b9ffa9c",
+    "size": 4897
+  },
+  {
+    "path": "hardcaml_event_driven_sim/logic.ml",
+    "sha256": "99f62ab3394589b99c51d13264313d6d6955d93294e0ba9f6c365760d2b180a8",
+    "size": 29
+  },
+  {
+    "path": "hardcaml_event_driven_sim/logic.mli",
+    "sha256": "6d43de4863798549e42b041d268a5d0a68a306f6a8ae231cf7efaeed9b94638c",
+    "size": 25
+  },
+  {
+    "path": "hardcaml_event_driven_sim/logic_intf.ml",
+    "sha256": "e26c5df6bab0ef435b41289ccb2a567f9cfa2c5616e3004597206322b4fac8a3",
+    "size": 724
+  },
+  {
+    "path": "hardcaml_event_driven_sim/opam",
+    "sha256": "7f4dd5fdddcd0e35c95331372261c1513c201ed39de05b67d5911597a072a4e0",
+    "size": 1032
+  },
+  {
+    "path": "hardcaml_event_driven_sim/ops.ml",
+    "sha256": "c6a5ba82fa21ee9d26a948904d7d3fc51771da1eaecdbd053c80317033ecfc0f",
+    "size": 33447
+  },
+  {
+    "path": "hardcaml_event_driven_sim/ops.mli",
+    "sha256": "cbadb453d4e77cbf546c6d283d2e0c7467f4527028bf31db833e0284ff01e4ab",
+    "size": 21
+  },
+  {
+    "path": "hardcaml_event_driven_sim/ops_intf.ml",
+    "sha256": "128aac9d82d45c9d718b8e42e2ba63311324300d1ff15579a49f43cae5b9d84e",
+    "size": 2112
+  },
+  {
+    "path": "hardcaml_event_driven_sim/port.ml",
+    "sha256": "1a194cd0a18e6d8f79a9470aa28e30da0f303a6a0093b51a4cc7479f4e9c1b64",
+    "size": 144
+  },
+  {
+    "path": "hardcaml_event_driven_sim/port.mli",
+    "sha256": "1a194cd0a18e6d8f79a9470aa28e30da0f303a6a0093b51a4cc7479f4e9c1b64",
+    "size": 144
+  },
+  {
+    "path": "hardcaml_event_driven_sim/two_state_logic.ml",
+    "sha256": "9cd4c903de0436298325494e94b37119777c618179641a99164d760c252f9192",
+    "size": 1170
+  },
+  {
+    "path": "hardcaml_event_driven_sim/two_state_logic.mli",
+    "sha256": "8ef9d91fdfc07de945257c1c945254ea1371b922ac1e1b9ef06c2175d788d41d",
+    "size": 46
+  },
+  {
+    "path": "hardcaml_event_driven_sim/vcd.ml",
+    "sha256": "16b29a947e1404610488322d80c09cb713dcce1dce8eb0544708658a30f08186",
+    "size": 1758
+  },
+  {
+    "path": "hardcaml_event_driven_sim/vcd.mli",
+    "sha256": "cbd61180a2bfff8ac6a7ece072fcf2c076d00a2acb6f2ffee6faf6e39a963f61",
+    "size": 253
+  },
+  {
+    "path": "hardcaml_event_driven_sim/waveterm.ml",
+    "sha256": "8ab3a21c46d40c67749b9c5bf0c2a1cfdb65832f12bc5c3cc042675e780892b6",
+    "size": 2995
+  },
+  {
+    "path": "hardcaml_event_driven_sim/waveterm.mli",
+    "sha256": "c70043510c23467b352ed746a1a511d2002c182e57c5de574b5b03646617c544",
+    "size": 31
+  },
+  {
+    "path": "hardcaml_event_driven_sim/waveterm_intf.ml",
+    "sha256": "1eaa2636818499b379f1432cd993e8831f52392faf1b31db69bd6313af6ca652",
+    "size": 433
+  },
+  {
+    "path": "hardcaml_event_driven_sim/with_interface.ml",
+    "sha256": "0d5656449515fd2a87936c322f1a61bb35f622118be411c6a2c62eeef0a19b75",
+    "size": 6031
+  },
+  {
+    "path": "hardcaml_event_driven_sim/with_interface.mli",
+    "sha256": "7ff28c7520b711dc11240a39c36fde498cb3796203a9bafc156248b19d455b64",
+    "size": 43
+  },
+  {
+    "path": "hardcaml_event_driven_sim/with_interface_intf.ml",
+    "sha256": "513b2c0045c6d620fe8d60e0bb85cae90f865dca213ec5cd0fb13b127ba9fea7",
+    "size": 3613
+  },
+  {
+    "path": "hardcaml_fixed_point/META",
+    "sha256": "990286a12890429fb7545bb0b2803fcf1772514f31c3ee1d86e9a8b564db31c4",
+    "size": 868
+  },
+  {
+    "path": "hardcaml_fixed_point/dune-package",
+    "sha256": "1959f7937849c6090427be1ff788048a37497e312e5f91f7d2b12f77d93e3bd3",
+    "size": 3689
+  },
+  {
+    "path": "hardcaml_fixed_point/fixed_intf.ml",
+    "sha256": "ff84b2f6b26b8ac6cc4eafdc5309b3f0bf914a4aceaa01e07948f93a3a3b175c",
+    "size": 5561
+  },
+  {
+    "path": "hardcaml_fixed_point/hardcaml_fixed_point.ml",
+    "sha256": "865cf3677180569e614eeaf8c5524ad17562720b1d3ec7a7d6c527e30b5fdf55",
+    "size": 356
+  },
+  {
+    "path": "hardcaml_fixed_point/hardcaml_fixed_point__.ml",
+    "sha256": "8a7703a6ad3f98c3ba6489557dc9fc209b6f1204aa99e2191642b216d3b33b16",
+    "size": 492
+  },
+  {
+    "path": "hardcaml_fixed_point/opam",
+    "sha256": "0e48c665eef07fa469efc23596408567c87eb2f652f7cac3d35a260d1e4b8d35",
+    "size": 849
+  },
+  {
+    "path": "hardcaml_fixed_point/signed.ml",
+    "sha256": "334496bcea5e9a2332de7325514f06c97a5369d793c0d20587c83fe6e185d892",
+    "size": 7192
+  },
+  {
+    "path": "hardcaml_fixed_point/signed.mli",
+    "sha256": "5651cb5eb528d9789704f544458f69e3159b3a66bc3adc70ed3d634ebf43ee8a",
+    "size": 149
+  },
+  {
+    "path": "hardcaml_fixed_point/unsigned.ml",
+    "sha256": "0da176296bfea16e9ac9432b138eabd2595234be4d5a93934d6c99bb61054ef5",
+    "size": 6862
+  },
+  {
+    "path": "hardcaml_fixed_point/unsigned.mli",
+    "sha256": "5651cb5eb528d9789704f544458f69e3159b3a66bc3adc70ed3d634ebf43ee8a",
+    "size": 149
+  },
+  {
+    "path": "hardcaml_fixed_point/utils.ml",
+    "sha256": "958d08bd61d4efe54d5938b9333ff05a58ca68be0b7f62476a0b9f8d3c9a864c",
+    "size": 2544
+  },
+  {
+    "path": "hardcaml_fixed_point/utils.mli",
+    "sha256": "7895d32fab14599baa3829de8de16fcb70fbf3c261e3ce20189cbbb5836defd2",
+    "size": 802
+  },
+  {
+    "path": "hardcaml_step_testbench/META",
+    "sha256": "8b15f10a34bcb95ea2f08dc8c0b2463c348242b8cb3b4f943bdf429ff76e7347",
+    "size": 1999
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/component.ml",
+    "sha256": "f3085e222ffd35941099f05d21461591e8a545949b2a5f71c9256bfdd44fe6cb",
+    "size": 8143
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/component.mli",
+    "sha256": "f94e76cc1bf5cfe53cdf7975d1b07b06769c8f4d38adf387a762b75236528b16",
+    "size": 48
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/component_finished.ml",
+    "sha256": "e893f65a38cbfc943596a477a466c50213c1e89e18718ecad2213ee19a8e558c",
+    "size": 75
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/component_finished.mli",
+    "sha256": "e893f65a38cbfc943596a477a466c50213c1e89e18718ecad2213ee19a8e558c",
+    "size": 75
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/component_intf.ml",
+    "sha256": "868eca96e27eae663c346853aafb94051bcca6324ceee6087129f3dac06e266e",
+    "size": 4832
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/data.ml",
+    "sha256": "a0e631ac5fab0294a8748c7012e4041fafe321e566a9d44eb7e659353dda61ce",
+    "size": 777
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/data.mli",
+    "sha256": "6b34c39469b688d5e1ef9195f0c1defbb52ac0ff1884a191b779f4215d143485",
+    "size": 38
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/data_intf.ml",
+    "sha256": "a8d7d558cf2950ecf0dc633a0d10d914466db03c5603dc55e57ad9f63aa653eb",
+    "size": 740
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/digital_components.ml",
+    "sha256": "35f2f074584d134acd460376c443dec38c2b53170b0b4ca2674fbb11c87e62f0",
+    "size": 110
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/digital_components__.ml",
+    "sha256": "b83ff18aaeeb6ae8766678b7b59a03579e724276def89eaf1ec7f92d744cfb17",
+    "size": 1134
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/event.ml",
+    "sha256": "cae51922511da23a7122e931f239fb72585f3502cfc407acc1ba62f13426dcf0",
+    "size": 286
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/event.mli",
+    "sha256": "c481ffb89792c220df03d5839fac547552a6abc1668b3860bd9e7c35b6917947",
+    "size": 123
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_core.ml",
+    "sha256": "beeef9ab0c02cc298d03abe5a9d01a0e900ce2e2aca0f593e63415badc609e81",
+    "size": 8455
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_core.mli",
+    "sha256": "2c48d14b2f85f62f8859a2cf0636a04b9beaa21f1b0c4bc7e22fd89ac452ec97",
+    "size": 33
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_core_intf.ml",
+    "sha256": "c9766e12b89081fa47ab45195be47c0281897b94c40bb897e8e982d3fa614b86",
+    "size": 1960
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_effect.ml",
+    "sha256": "73c9604409134a9251470a7ed8a10d750c9f89b6d1f164d0f9530f33dc5a67df",
+    "size": 3557
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_effect.mli",
+    "sha256": "6b20ff75c808e2f9aa1873b0ffaa99e2f62c3a33b41cbadfc74242e05621ccb9",
+    "size": 37
+  },
+  {
+    "path": "hardcaml_step_testbench/digital_components/step_effect_intf.ml",
+    "sha256": "b8e10c81c1735f55215202ee77974f35ed73cda0867b1d9e9145339e962970ae",
+    "size": 3427
+  },
+  {
+    "path": "hardcaml_step_testbench/dune-package",
+    "sha256": "d128638593a7f4663e809e2f78c640bdcd55747cba1d27822c3049fdfc82e9c9",
+    "size": 17767
+  },
+  {
+    "path": "hardcaml_step_testbench/functional.ml",
+    "sha256": "086d6bab756032b9b9820e8dccf889d0a9d5c2f56a7796c9835dde09d718a7d5",
+    "size": 6687
+  },
+  {
+    "path": "hardcaml_step_testbench/functional.mli",
+    "sha256": "cd2d600ef040c5676af604998abe3f3e3f98d709544abd57bc287ef69962fa96",
+    "size": 35
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_cyclesim.ml",
+    "sha256": "03b4018be5d7577bfb21542328445804c851fd48e9c15c686ff28b050cb0accc",
+    "size": 2784
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_cyclesim.mli",
+    "sha256": "1e5fb4e40f8470cf1fd0672832bcea827e041ffe89eae3f17bffffc0c0c2f9c2",
+    "size": 53
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_cyclesim_intf.ml",
+    "sha256": "42488a4ff48a3b4bc6a2fe705f4c9dae39538e17bd22a8d5679f9ac02d3b3eea",
+    "size": 1839
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_event_driven_sim.ml",
+    "sha256": "001ea8301fb331dbef3eee59088bb8e3350d136f18fbaafcd34e3713fea1fd17",
+    "size": 5156
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_event_driven_sim.mli",
+    "sha256": "8bb88d9360291955b4a4e76cec6a160dc88eae047ad41b3005cf61dc60501fab",
+    "size": 69
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_event_driven_sim_intf.ml",
+    "sha256": "509184f3c7fbd8e31a755c7d954d385171497302910185ffed6c98e596f02b69",
+    "size": 1798
+  },
+  {
+    "path": "hardcaml_step_testbench/functional_intf.ml",
+    "sha256": "6447ee64d54e6c1c45fe4abfa5ec637c3a42918bfecfde1997a344036ed59443",
+    "size": 6177
+  },
+  {
+    "path": "hardcaml_step_testbench/hardcaml_step_testbench.ml",
+    "sha256": "177a408cf4f1089c9d38a0fde21a1112c52591c311c020a05ba1c6c7b25aa807",
+    "size": 529
+  },
+  {
+    "path": "hardcaml_step_testbench/hardcaml_step_testbench__.ml",
+    "sha256": "b66981f4697bcb37c78d9727ee635ddae88ca3fe8c40180cf41a6f2c63119560",
+    "size": 2114
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative.ml",
+    "sha256": "aadd071f7ca2bc650221713d11436692d8a71e6f7f1f039d351033716c383f34",
+    "size": 3936
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative.mli",
+    "sha256": "6e5175bdc40145d7fa19af9a9ca8b663073c0e23a608e6205eb00fa24f45bd5a",
+    "size": 35
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_cyclesim.ml",
+    "sha256": "0f467390bb4bd940dc10cc9223ccd18f28148c62c2bf0b10a52a5b91297fbc10",
+    "size": 2572
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_cyclesim.mli",
+    "sha256": "0004dd02a989e6eb86088343ab8ab43bcbcc7d5608e050ab066bf6b91cda5d52",
+    "size": 53
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_cyclesim_intf.ml",
+    "sha256": "fd8cf0b6bc1b6ac78e0ba35f2457f9c104c2cf6a581eaa05541025119be1fdbb",
+    "size": 2608
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_event_driven_sim.ml",
+    "sha256": "58bca7680ecf02f9327d72ef11c0d26eb2b20d17f2c5c2c6eacf1587cff5bdc4",
+    "size": 3027
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_event_driven_sim.mli",
+    "sha256": "92c29803c2684219d398707b966e82c13267588aaf14507f3949c112d6c1f164",
+    "size": 69
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_event_driven_sim_intf.ml",
+    "sha256": "1bc819bf904d3d99ef8722e1b93217ba0db87c7ee07a847bc76a86e1df1738c9",
+    "size": 1295
+  },
+  {
+    "path": "hardcaml_step_testbench/imperative_intf.ml",
+    "sha256": "94095d24684ada9f4220720bd49607f8ac1274a8875e634331f45ad48ccc3adf",
+    "size": 3265
+  },
+  {
+    "path": "hardcaml_step_testbench/io_ports_for_imperative.ml",
+    "sha256": "5d394ae1f59c61bd4365866d4b8db73d81e9bbf46a398ffcf3ed0967c11c99fa",
+    "size": 94
+  },
+  {
+    "path": "hardcaml_step_testbench/io_ports_for_imperative.mli",
+    "sha256": "5efa0928cefb75d8eca893502ddfa96fc34bbc19396552784d73ec0b11b2018e",
+    "size": 168
+  },
+  {
+    "path": "hardcaml_step_testbench/opam",
+    "sha256": "2100f079bab26e239fc385801144e23c98fdff8cb6b16f1293e7abe4fdce117b",
+    "size": 1011
+  },
+  {
+    "path": "hardcaml_step_testbench/step_modules_intf.ml",
+    "sha256": "f15cc6f296c96bbb26533daa49f09f2050ccd1348ecedd81a90a9a71b0e3cfe5",
+    "size": 440
+  },
+  {
+    "path": "hardcaml_waveterm/META",
+    "sha256": "5146b004f863947c43079241c4e39b607538acdb3cc723e24cc6bddcf5bdbf47",
+    "size": 3122
+  },
+  {
+    "path": "hardcaml_waveterm/crypto.ml",
+    "sha256": "b476b3ae82ab5fdef1efbbea867a390c8889005430f4e8224db23928b0b47687",
+    "size": 93
+  },
+  {
+    "path": "hardcaml_waveterm/dune-package",
+    "sha256": "55756b7a8fcef4a3601a37beb931b4db86ee02b5345d8e198fc1b6b96ecfe59f",
+    "size": 34644
+  },
+  {
+    "path": "hardcaml_waveterm/expect.ml",
+    "sha256": "eec65653a146e5dce3d9e41a4efd5ee55586285e0ab09bd8d2ea9962a4853c52",
+    "size": 1825
+  },
+  {
+    "path": "hardcaml_waveterm/expect.mli",
+    "sha256": "0e6726f5ec7c4e68b1af651f1eb3c0dca2f6e32a9cb8b6ed476fd12fd8f0bb7a",
+    "size": 27
+  },
+  {
+    "path": "hardcaml_waveterm/expect_intf.ml",
+    "sha256": "d7c3ae1b997ce6f5d6455c60df9c92ad0901501eca2505f111ea8b8627176adc",
+    "size": 1080
+  },
+  {
+    "path": "hardcaml_waveterm/hardcaml_waveterm.ml",
+    "sha256": "2d952fa55856bf7fa9b437289dd8c1b307f5a6080aa22746c2f6b5336de7b9c3",
+    "size": 340
+  },
+  {
+    "path": "hardcaml_waveterm/hardcaml_waveterm__.ml",
+    "sha256": "3a99097dc635aee48a73d44d0e97a10566976a3d9e4a247afb366885bb09a337",
+    "size": 879
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/cursors.ml",
+    "sha256": "dcab57a3e930b2911aa1257e2538c5e57d50bed7583fdf34758987d93a1b461a",
+    "size": 1577
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/cursors.mli",
+    "sha256": "402058f76f6ac235555ee2f6a53c5b4a0c19b23daaa8e377b518ba4704b84ad2",
+    "size": 381
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/draw_notty.ml",
+    "sha256": "347851dda84cee2ea40f50eb913e39eb6f9a90b1f1b148fcaae26864351901fb",
+    "size": 949
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/draw_notty.mli",
+    "sha256": "94d1b7c4320b95b524b2359241eaf4d33b30bc2e1d72a8bed14d875788b4a5d0",
+    "size": 315
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/event_response.ml",
+    "sha256": "e0a5ad15acca27a2ec162372932ebc887c665675dad828128e6bcb7fdf04e1dc",
+    "size": 104
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/event_response.mli",
+    "sha256": "e0a5ad15acca27a2ec162372932ebc887c665675dad828128e6bcb7fdf04e1dc",
+    "size": 104
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/hardcaml_waveterm_interactive.ml",
+    "sha256": "2d9071bed5cec089b5cd29934d1a4e17cecc07340d6c022d42a149bab04f14dc",
+    "size": 440
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/hardcaml_waveterm_interactive__.ml",
+    "sha256": "081b413779a1cf0cd0c0e6cef63bbb96efe5515f3db0fe6a98f7ea337515b607",
+    "size": 3113
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/help_window.ml",
+    "sha256": "01d9f72d68fecc0204a92f34913f7f9af39a4a5f151497058943a951ebf5088a",
+    "size": 3059
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/help_window.mli",
+    "sha256": "638836695a42aad1fe63af415d074755b0c5f4158c67bfebea63df8e38cce21b",
+    "size": 37
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/help_window_intf.ml",
+    "sha256": "a19f1b406443c5436ae6008ea3293fcd704bafeec0279414cf138d4889d7be17",
+    "size": 417
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/hierarchy.ml",
+    "sha256": "581bb09e29567fbb9470a35a3f3801f67f3cc9a11497dbfd7bbc278090d19957",
+    "size": 8345
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/hierarchy.mli",
+    "sha256": "7a19d5af538ae6c5f7ec3c8789bddc71daef8c8ec7a6ca14bff0f0d91da1665c",
+    "size": 33
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/hierarchy_intf.ml",
+    "sha256": "b27509b70dfe39668d0d32d521239bdacb2aca0502981034da09b31a9b1d10e7",
+    "size": 1563
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/key_actions.ml",
+    "sha256": "7e49358bffcdc16edfe54ad7a22a6cacbf3cab98cf29574c39f769cdc6261a1c",
+    "size": 6786
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/key_actions.mli",
+    "sha256": "18abf3c7f75c6287e4f596c7e54f1ad808c7b223d59473727a7ba0e018181769",
+    "size": 2794
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/key_handlers.ml",
+    "sha256": "f16463d98c610074a3a4bfd70635291be3aa08b01783b978ebd339bb80a690a2",
+    "size": 11665
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/key_handlers.mli",
+    "sha256": "9a69ca1179df117b52512bbb898973d1ed1299b3688c5f1c570c70aa411caf95",
+    "size": 39
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/key_handlers_intf.ml",
+    "sha256": "6b11055b99f0848dde0cd6d190050486c3612aad15ad556c154c02bc2570ef20",
+    "size": 1463
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/scroll.ml",
+    "sha256": "3aa47c55103e6f3f2c6e284f8906fc535aa98952aab9856636b158df239fe8c6",
+    "size": 10089
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/scroll.mli",
+    "sha256": "cee978a15073add63396582f5899884f9f93e4107380a8b8526254e32307cd62",
+    "size": 2066
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/signals_window.ml",
+    "sha256": "43c486459b6387442bd98b125728c40f1d022cac3040bd10f263a7202c91df60",
+    "size": 870
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/signals_window.mli",
+    "sha256": "b0b29718cd4048ad7506fe16b2eba64ddd082698ab24fad8916ed67718ce7845",
+    "size": 43
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/signals_window_intf.ml",
+    "sha256": "3621b7212ffcc3b75445b187d04919ae6d6dafe3b622c29a9d3fac908f403657",
+    "size": 651
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/ui_state.ml",
+    "sha256": "078941197d047e134498260b01efe768a1456cdd508b2fa4e5a46d0c1aa2dcb1",
+    "size": 1101
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/ui_state.mli",
+    "sha256": "abb6e63d6be507f0b6de6bc6fa7e57134257e6ac157d64fd4894b9f8e572e1fb",
+    "size": 31
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/ui_state_intf.ml",
+    "sha256": "54c84b8f9f294cb92496d633e85518c0e1a79d37f4d9744c1298f52d808b91c0",
+    "size": 649
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/values_window.ml",
+    "sha256": "918aef9bbe67e3138a0b18245ebe60575f101ae0f91d32ee1715aedda119e2c6",
+    "size": 1070
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/values_window.mli",
+    "sha256": "67b503f3bdf02aca19f59791a3955f9a5691c577d3b5e21ab279dee5d0fa00a2",
+    "size": 41
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/values_window_intf.ml",
+    "sha256": "2ac7e5e5b1d92bdbb6fc2153fddf0a72c10e82217357c54ebf405fc7dbea8b3d",
+    "size": 613
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waveform_window.ml",
+    "sha256": "f587ebd95b7e134af821cb1b86086977495d573e63f5e45b901993f82ca0987b",
+    "size": 16102
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waveform_window.mli",
+    "sha256": "d8e611139a9cc39476e3318497c36456a090f0139c0dbcfa320bf61303f5ac7d",
+    "size": 45
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waveform_window_intf.ml",
+    "sha256": "7c4eb0da494ad2089ca8f6398127680dc0f9eaa703c9ed87fecbc5a81bbe45e3",
+    "size": 797
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waves_window.ml",
+    "sha256": "3c9df0a59354b11d03fd1fb8c9b7836abdecc70502ab4ca105ee8b8369bbdc74",
+    "size": 691
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waves_window.mli",
+    "sha256": "64e28b99deba4ec71827285f5fb7caad501b9c0b3d62331f983979a65141738d",
+    "size": 39
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/waves_window_intf.ml",
+    "sha256": "020f00935f26937b67a583c8a306148a2fe9c306c461fb3305deb3ab32f5c402",
+    "size": 585
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/widget.ml",
+    "sha256": "bf2eda7d4d777928bb6a06e775dafecb5cbe55c6470ae3036c7e869f841c0ab8",
+    "size": 8257
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/widget.mli",
+    "sha256": "5fac652ae14408298788cc21b596a20342095621ee2c4a69cb404810444e1b62",
+    "size": 27
+  },
+  {
+    "path": "hardcaml_waveterm/interactive/widget_intf.ml",
+    "sha256": "c95113b07fd33ce47347bf1006edc0a7d58c2a0ac704551586bc54871d3a5ae2",
+    "size": 966
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/display_rule.ml",
+    "sha256": "15d54ecc78454d855f0b777b257e7455cba2138e6e4ab9f8a8a3ddb6e44d36c1",
+    "size": 1924
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/display_rule.mli",
+    "sha256": "b2319e218ff012f0a87a03c1bdccc3214e1729992fa7aaaa99a7ed211621f22f",
+    "size": 2342
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/display_rules.ml",
+    "sha256": "c529eb2ecf3c197fb16469551331667dc08d3213b9602db97acb5b589a8c1d24",
+    "size": 4767
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/display_rules.mli",
+    "sha256": "ee5dfcddd640268ecf6673974dfb03d890715bf5e16d179e3aa2193c6b484247",
+    "size": 1698
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/draw.ml",
+    "sha256": "0d2079e5927f2090817421de161edbc9a7d522e9080ae84456487105a76069e0",
+    "size": 3574
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/draw.mli",
+    "sha256": "3c47d356bf1c87866b018a1999f2c6969b2f2e7726773a616de609b4a9ef8823",
+    "size": 1996
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/hardcaml_waveterm_kernel.ml",
+    "sha256": "0eed791f42bc60fe5de1c88463f765fa5a58b4eb12f80aaac7636f7a712652a8",
+    "size": 750
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/hardcaml_waveterm_kernel__.ml",
+    "sha256": "22f28203785cdd895924c9b6fcfb9b20261d9bab5cc92e8919b46aed0a65d3b1",
+    "size": 2387
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/key_help.ml",
+    "sha256": "0883610ca5d938a31f7c757cbba715eabd0eb6931b12d58fc60f343cb7a53e59",
+    "size": 49
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/key_help.mli",
+    "sha256": "0883610ca5d938a31f7c757cbba715eabd0eb6931b12d58fc60f343cb7a53e59",
+    "size": 49
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/port.ml",
+    "sha256": "f715b34a0e87e230bd050072021ac729cbce54d6e884df62320e8d9f5657460f",
+    "size": 182
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/port.mli",
+    "sha256": "02fb99b630c300baea60382ffdefb1983d28a1f72786fb3908c74dad8623821d",
+    "size": 219
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/port_name.ml",
+    "sha256": "bfe936adbb90d19ad41c2c9bb2f5079ab458de513a59a951b1bd557bbde1bde8",
+    "size": 20
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/port_name.mli",
+    "sha256": "30b1e09ac6fb36b0d4752693d26080833ba19532a47afb8dc68006c6d9f17055",
+    "size": 263
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/rect.ml",
+    "sha256": "88321aa06758555f74edbafad023d77d472d54693a8dfbe3a76e902fe07f6029",
+    "size": 1324
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/rect.mli",
+    "sha256": "fec3292264baf65fc177d01f59301ce5ad4a9436ef58f3ef907eb2ba92ed6722",
+    "size": 243
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/render.ml",
+    "sha256": "6b583e0914253b807dc5d0e196c9e219f78256a0324ab79becf1a35ac19616a0",
+    "size": 30293
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/render.mli",
+    "sha256": "ac4ca606a21f990331b341bf04642c69e735fda22994eb6e7583c4e9fdf02b5a",
+    "size": 27
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/render_intf.ml",
+    "sha256": "0046c7fe4a39c3ce83563bded368e682bca28b7e32246757d0508fcbef6cca43",
+    "size": 4356
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/style.ml",
+    "sha256": "fbdf92bd15077f023edbeb5241cdb24c3c1ad0dc9909a7ff0dddaaeb4753e24d",
+    "size": 336
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/style.mli",
+    "sha256": "a1b56f8c7b1edb84cdffd868f6c1b7c7f708c420477f96cd49c1e3e30743ace7",
+    "size": 416
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/text_alignment.ml",
+    "sha256": "d99430206a9a5e7be14f0b0c7a99e375b4a984bf505469ae5c711569a10809d9",
+    "size": 78
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/text_alignment.mli",
+    "sha256": "d99430206a9a5e7be14f0b0c7a99e375b4a984bf505469ae5c711569a10809d9",
+    "size": 78
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/wave.ml",
+    "sha256": "457594d6ae89b2969ac2f9b6f5e5699f15e99bb554a14eb941ef5ea81074f848",
+    "size": 2794
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/wave.mli",
+    "sha256": "451dfabdedb20015486e65d24ca92cabc41d63d28cd4ea22580232392f6e47c1",
+    "size": 23
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/wave_condition.ml",
+    "sha256": "a4d4cbdc30a9a59c5f8fe0e36a60b908b3825070a7be1e2f779d43eed3b197ab",
+    "size": 195
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/wave_condition.mli",
+    "sha256": "37774ef61dac2d283aeb44f9f100780012cd8aeed771f39212d64049700ec66d",
+    "size": 338
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/wave_intf.ml",
+    "sha256": "a07f311e467f90e542a8c709ab929dee0e7495bcb854fa82eb557a818cefc195",
+    "size": 1207
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waveform.ml",
+    "sha256": "3ba13088c678cab853c6f71bedfedc189b13f83e35d3f67c23694607c506179b",
+    "size": 13140
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waveform.mli",
+    "sha256": "f912ff8a4a802496accc66027cc664614c4f826d3e92fa741879da6042e5f64a",
+    "size": 31
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waveform_intf.ml",
+    "sha256": "308a5c6c253c1fa150ce0ff41d30ad15ac09afb032793993321ee3845170beef",
+    "size": 3762
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waves.ml",
+    "sha256": "52747a5564ff33f847f0046892c5d2bcd08c53219513f4d764d2269c0ac99587",
+    "size": 701
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waves.mli",
+    "sha256": "6350a3f054e5165c325a3ca4d11505a03de7f3e80540eb97efd15c746bd00f7b",
+    "size": 25
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/waves_intf.ml",
+    "sha256": "4e7b0dd94aad152646b51186ea73b158b49d0a08d00bc590feb1ea60d05b7a24",
+    "size": 582
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/window_bounds.ml",
+    "sha256": "297f31f91e03a2c15e80fb351a4e39effa811d1e02793bbd0f641216c4335a62",
+    "size": 2240
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/window_bounds.mli",
+    "sha256": "664af2d3a0b2c4cbbd26acc149e880592bc0855b492f51f1598a5dd09769c27f",
+    "size": 339
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/window_styles.ml",
+    "sha256": "670e7321e845737755ef6d01f9e2e4277723cc7b448c996022b469e80a613d46",
+    "size": 684
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/window_styles.mli",
+    "sha256": "ad50512a5481f234605fb303921ded0bea292978cd6b768a8b3198fa9553f8f7",
+    "size": 278
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/write.ml",
+    "sha256": "7c73f769d1c1c7f64813cd1d8e4c77e1464a7007e9f2ca05eec3cc43c44a25b0",
+    "size": 4509
+  },
+  {
+    "path": "hardcaml_waveterm/kernel/write.mli",
+    "sha256": "f34960e752a770960599116656d54c4aa2ee6784ef4fa3d8df1e854915c36639",
+    "size": 876
+  },
+  {
+    "path": "hardcaml_waveterm/opam",
+    "sha256": "3d39c51616fdfaee926b5fd0e972a21b822678eea0d16a368975b56958d8b7ca",
+    "size": 1239
+  },
+  {
+    "path": "hardcaml_waveterm/serialize_waveform.ml",
+    "sha256": "e765248dcb6c75bef599e7422e1e05602a75c99abe1708e3fa5b6461ed3ee8b2",
+    "size": 3308
+  },
+  {
+    "path": "hardcaml_waveterm/serialize_waveform.mli",
+    "sha256": "d8f1bdda1cad76e2e0aade9635d9c7b41898ef327bb7cb68956bf8952bc90003",
+    "size": 51
+  },
+  {
+    "path": "hardcaml_waveterm/serialize_waveform_intf.ml",
+    "sha256": "be06524c0c74638580127d69bbd03ccc905c5721eb4e0e748f876fa967244aae",
+    "size": 474
+  },
+  {
+    "path": "hardcaml_waveterm/waveform_digest.ml",
+    "sha256": "5678e465301cc056f3912528b36df615be32a0bf9972b84bace2e7a59e1412d1",
+    "size": 984
+  },
+  {
+    "path": "hardcaml_waveterm/waveform_digest.mli",
+    "sha256": "76f8471987bef1f30c21212ea196558cbf2788cb90379dd112a1c52eaa3133bf",
+    "size": 45
+  },
+  {
+    "path": "hardcaml_waveterm/waveform_digest_intf.ml",
+    "sha256": "d93652034ea17600c6c24e469f1301d0531c1f23bf0155c46f9b6573b4c1dbb4",
+    "size": 192
+  },
+  {
+    "path": "hardcaml_xilinx_reports/META",
+    "sha256": "22a2a916dba91bbea313434c641e488e642f2212752f7d7b224ce4aeb7e7fea4",
+    "size": 1014
+  },
+  {
+    "path": "hardcaml_xilinx_reports/clock.ml",
+    "sha256": "162e8eba641608a880082429558c35a8e8b85f5ee69266c7b37e13c6408c673f",
+    "size": 335
+  },
+  {
+    "path": "hardcaml_xilinx_reports/clock.mli",
+    "sha256": "44c761c4367c55945f23c2465a9d8bc68eb1653afe198610cc7c34f72da670b3",
+    "size": 766
+  },
+  {
+    "path": "hardcaml_xilinx_reports/command.ml",
+    "sha256": "893ed95cf0fb960b58d99a2f90cb53106fdfb35a00b7e7e5f91ca4b00044f221",
+    "size": 12865
+  },
+  {
+    "path": "hardcaml_xilinx_reports/command.mli",
+    "sha256": "1bde7f71a861db520b5464580117e157c251f0c52ca635343badab4197f5dec1",
+    "size": 1941
+  },
+  {
+    "path": "hardcaml_xilinx_reports/dune-package",
+    "sha256": "f9d111e37b4bc7b000aae1a13a15adbdd99764c2f124977ed67fe3cb5c23293a",
+    "size": 6188
+  },
+  {
+    "path": "hardcaml_xilinx_reports/file_path_and_name.ml",
+    "sha256": "b647b384359045a9e9fa733ba9bc46ceddb128bbb9d52b3ec50d0248d877d8cc",
+    "size": 391
+  },
+  {
+    "path": "hardcaml_xilinx_reports/file_path_and_name.mli",
+    "sha256": "0c049b18dc8b8718464350b5da18f34c2da6ec1b60f42650d6f0d7bf1b8a2a5e",
+    "size": 327
+  },
+  {
+    "path": "hardcaml_xilinx_reports/hardcaml_xilinx_reports.ml",
+    "sha256": "bca284d41cb15e4742b76bfc30546cdbca1401436a879f49c5f5b81e0fb1c4dc",
+    "size": 270
+  },
+  {
+    "path": "hardcaml_xilinx_reports/hardcaml_xilinx_reports__.ml",
+    "sha256": "97380b2c7a7a5922c8e4d219d79532badb3a69d975676976f8a08b7874d3b85f",
+    "size": 1001
+  },
+  {
+    "path": "hardcaml_xilinx_reports/import.ml",
+    "sha256": "cb503b393a1b6d2e7f24564791cec5933211c4bf1c317feb74f627b3131de7bc",
+    "size": 44
+  },
+  {
+    "path": "hardcaml_xilinx_reports/opam",
+    "sha256": "6a9a93d89462849f6278d412a622456419da2bf56a22df765ce590794ef5ce1c",
+    "size": 1249
+  },
+  {
+    "path": "hardcaml_xilinx_reports/primitive_group.ml",
+    "sha256": "a6d4d9962cdff69277e2126729589d67b0505640a099adc708c883ef76d004f8",
+    "size": 2991
+  },
+  {
+    "path": "hardcaml_xilinx_reports/primitive_group.mli",
+    "sha256": "ea4ad5bb8e00aa30c76fbf081f1e926162c6fc47136e7132420383f1178b4117",
+    "size": 2896
+  },
+  {
+    "path": "hardcaml_xilinx_reports/project.ml",
+    "sha256": "0c6d450b387860dfdceb2d829c4fb42319c404e8a99a44d9ccbe87943a8ec6f5",
+    "size": 11237
+  },
+  {
+    "path": "hardcaml_xilinx_reports/project.mli",
+    "sha256": "f5e3bcb3ea8d5d7214d51d3d5556c86752857ef9c2bcb7c54e1020baa760b6f6",
+    "size": 2139
+  },
+  {
+    "path": "hardcaml_xilinx_reports/report.ml",
+    "sha256": "4ab88b2f88c2e50c3e852faa41e11e01c6a4b3c0fa8909fb93474e01f4bd2f61",
+    "size": 6405
+  },
+  {
+    "path": "hardcaml_xilinx_reports/report.mli",
+    "sha256": "7fdc4baf53ffa4de14afcf04396e7fa302f844127a9d97eb00689f057edbab4c",
+    "size": 1187
+  },
+  {
+    "path": "hardcaml_xilinx_reports/wrap_with_registers.ml",
+    "sha256": "16a4aae7d03450e93d7878612810ac6c0a01aa741c076864c95b935b5ad87a02",
+    "size": 3721
+  },
+  {
+    "path": "hardcaml_xilinx_reports/wrap_with_registers.mli",
+    "sha256": "e3743c588f85e5aea63d3137712eba2326798c893259ecd1cec46093c472f45c",
+    "size": 1929
+  }
+]

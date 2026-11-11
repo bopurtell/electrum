@@ -2,6 +2,21 @@
 ; (iverilog, verilator, yosys). Kept out of runtest so the Hardcaml tests do not
 ; require them. The Makefile remains for the staged project and gate-level runs.
 
+; Compatibility build targets only; each authored bench lives with its DUT owner.
+
+(copy_files ../../chip_top/verif/observable/emitted/tb.v)
+
+(copy_files ../../chip_top/verif/memory/emitted/p0_memory_tb.v)
+
+(copy_files ../../ip/mechanisms/verif/staging/emitted/*.v)
+
+(copy_files ../../ip/emulator_core/verif/emitted/*.v)
+
+(copy_files
+ ../../ip/program_memory_controller/verif/backend_integration/emitted/*.v)
+
+(copy_files ../../verif/system/emitted/p3_loader_tb.v)
+
 (rule
  (alias rtl)
  (deps
@@ -76,7 +91,7 @@
  (deps
   p2_uart_slice_tb.v
   ../src/uart_slice.generated.v
-  ../../test/integration/uart_slice/uart_frame.trace
+  ../../ip/mechanisms/verif/staging/uart_slice/uart_frame.trace
   (sandbox always))
  (action
   (progn
@@ -97,12 +112,12 @@
    (run
     diff
     -u
-    ../../test/integration/uart_slice/uart_frame.trace
+    ../../ip/mechanisms/verif/staging/uart_slice/uart_frame.trace
     uart_slice_rtl.trace))))
 
 ; P3.1a emitted-RTL generation, HDL lint, and generic synthesis smoke. This proves the
 ; consumer elaborates without an ASIC-library dependency; behavioral evidence remains in
-; test/core/protocol_core and backend integration remains P3.1b/P0.7.
+; ip/program_memory_controller/verif/controller and backend integration remains P3.1b/P0.7.
 
 (rule
  (alias rtl)

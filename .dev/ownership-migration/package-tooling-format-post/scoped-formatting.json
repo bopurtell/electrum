@@ -1,0 +1,33 @@
+[
+  {
+    "exit": 0,
+    "path": "bin/asic_bundle.ml"
+  },
+  {
+    "exit": 0,
+    "path": "chip_top/rtl/observable_design.ml"
+  },
+  {
+    "exit": 0,
+    "path": "chip_top/rtl/memory_design.ml"
+  },
+  {
+    "exit": 0,
+    "path": "chip_top/rtl/package_top.ml"
+  },
+  {
+    "exit": 0,
+    "format_equal": true,
+    "path": "lib/dune"
+  },
+  {
+    "exit": 0,
+    "format_equal": true,
+    "path": "chip_top/project/dune"
+  },
+  {
+    "exit": 0,
+    "format_equal": true,
+    "path": "tinytapeout/test/dune"
+  }
+]

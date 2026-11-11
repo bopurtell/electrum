@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/architecture_migration.md",
+    "line": 226,
+    "text": "  affected by the migration. Record the root `loader_core.v` snapshot's provenance and"
+  },
+  {
+    "path": "docs/architecture_migration.md",
+    "line": 393,
+    "text": "belongs to VO. The root `loader_core.v` snapshot is untouched."
+  },
+  {
+    "path": "docs/host_link_migration.md",
+    "line": 315,
+    "text": "  `@runtest` and `@rtl` pass, `loader_core.v` is byte-identical or differs only in"
+  }
+]

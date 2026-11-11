@@ -1,0 +1,552 @@
+{
+  "baseline_format_failure_count": 23,
+  "commands": [
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "ocamlformat",
+        "--check",
+        "bin/asic_bundle.ml"
+      ],
+      "exit": 0,
+      "name": "format-bin__asic_bundle.ml",
+      "seconds": 0.038
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "ocamlformat",
+        "--check",
+        "chip_top/rtl/observable_design.ml"
+      ],
+      "exit": 0,
+      "name": "format-chip_top__rtl__observable_design.ml",
+      "seconds": 0.036
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "ocamlformat",
+        "--check",
+        "chip_top/rtl/memory_design.ml"
+      ],
+      "exit": 0,
+      "name": "format-chip_top__rtl__memory_design.ml",
+      "seconds": 0.034
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "ocamlformat",
+        "--check",
+        "chip_top/rtl/package_top.ml"
+      ],
+      "exit": 0,
+      "name": "format-chip_top__rtl__package_top.ml",
+      "seconds": 0.035
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "format-dune-file",
+        "lib/dune"
+      ],
+      "exit": 0,
+      "name": "format-lib__dune",
+      "seconds": 0.034
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "format-dune-file",
+        "chip_top/project/dune"
+      ],
+      "exit": 0,
+      "name": "format-chip_top__project__dune",
+      "seconds": 0.031
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "format-dune-file",
+        "tinytapeout/test/dune"
+      ],
+      "exit": 0,
+      "name": "format-tinytapeout__test__dune",
+      "seconds": 0.033
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@install",
+        "@lint",
+        "-j5"
+      ],
+      "exit": 0,
+      "name": "build-install-lint",
+      "seconds": 0.28
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@fmt",
+        "-j5"
+      ],
+      "exit": 1,
+      "name": "fmt-backlog",
+      "seconds": 0.309
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate.exe",
+        "--",
+        "-output",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/p0_observable.v",
+        "-module-name",
+        "p0_observable"
+      ],
+      "exit": 0,
+      "name": "generate-observable",
+      "seconds": 0.18
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "access",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/access.v"
+      ],
+      "exit": 0,
+      "name": "generate-core-access",
+      "seconds": 0.18
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "executable",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/executable.v"
+      ],
+      "exit": 0,
+      "name": "generate-core-executable",
+      "seconds": 0.191
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "integrated",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/integrated.v"
+      ],
+      "exit": 0,
+      "name": "generate-core-integrated",
+      "seconds": 0.22
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "loader",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/loader.v"
+      ],
+      "exit": 0,
+      "name": "generate-core-loader",
+      "seconds": 0.247
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "pin_bank",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/pin_bank.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-pin_bank",
+      "seconds": 0.172
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "input_events",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/input_events.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-input_events",
+      "seconds": 0.166
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "timing",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/timing.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-timing",
+      "seconds": 0.174
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "byte_fifo_8",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/byte_fifo_8.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-byte_fifo_8",
+      "seconds": 0.175
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "shift_lane",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/shift_lane.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-shift_lane",
+      "seconds": 0.173
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "observed_transfer",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/observed_transfer.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-observed_transfer",
+      "seconds": 0.174
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "observed_transfer_bank",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/observed_transfer_bank.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-observed_transfer_bank",
+      "seconds": 0.187
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "primitive_demo",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/primitive_demo.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-primitive_demo",
+      "seconds": 0.176
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "uart_tx",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/uart_tx.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-uart_tx",
+      "seconds": 0.186
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "uart_slice",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/uart_slice.v"
+      ],
+      "exit": 0,
+      "name": "generate-p2-uart_slice",
+      "seconds": 0.166
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe",
+        "--",
+        "simulation",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/program_memory_backend.simulation.v"
+      ],
+      "exit": 0,
+      "name": "generate-backend-simulation",
+      "seconds": 0.174
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe",
+        "--",
+        "implementation",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/generated/program_memory_backend.implementation.v"
+      ],
+      "exit": 0,
+      "name": "generate-backend-implementation",
+      "seconds": 0.185
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "observable",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/bundles/observable",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "exit": 0,
+      "name": "bundle-observable",
+      "seconds": 2.753
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "observable",
+        "--metadata-only"
+      ],
+      "exit": 0,
+      "name": "check-bundle-observable",
+      "seconds": 0.134
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "memory",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/bundles/memory",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "exit": 0,
+      "name": "bundle-memory",
+      "seconds": 0.228
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "memory",
+        "--metadata-only"
+      ],
+      "exit": 0,
+      "name": "check-bundle-memory",
+      "seconds": 0.185
+    },
+    {
+      "argv": [
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "loader",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/ownership-migration/package-tooling-format-post/bundles/loader",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "exit": 0,
+      "name": "bundle-loader",
+      "seconds": 0.425
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "loader",
+        "--metadata-only"
+      ],
+      "exit": 0,
+      "name": "check-bundle-loader",
+      "seconds": 0.692
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "name": "diff-check",
+      "seconds": 0.015
+    }
+  ],
+  "failures": [],
+  "reason": "Only reviewed whitespace/comment layout changed; all regenerated RTL and all six fresh bundle roles are byte-identical.",
+  "rtl_regression_rerun": false,
+  "synthesis_rerun": false
+}

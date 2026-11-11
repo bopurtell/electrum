@@ -1,0 +1,182 @@
+[
+  {
+    "path": "default/bin/dune",
+    "sha256": "7eea065504a20242fb9a1de9eb4a9e86c52e8905dbee588bb416bf3b326aa79b",
+    "size": 1455
+  },
+  {
+    "path": "default/dune-project",
+    "sha256": "035e7f82a1032a40653f9a4d77b2098182e9a88cce138f4e2f983cfaa06f5e10",
+    "size": 1528
+  },
+  {
+    "path": "default/host_link_wire/dune",
+    "sha256": "6283886dfeb36994c18e84ce87b370cc894702b05f55870131593351f6fd1d3d",
+    "size": 954
+  },
+  {
+    "path": "default/isa/dune",
+    "sha256": "c806422f5fbeef66405ab4614414e30521357b0cedeab45df3d8f526a7882843",
+    "size": 1062
+  },
+  {
+    "path": "default/lib/dune",
+    "sha256": "c7c24ae340a735893cad15893f13ba73c7c01c30c7d629454b74105e9ef7edf7",
+    "size": 691
+  },
+  {
+    "path": "default/test/core/control_port/dune",
+    "sha256": "a686e062faac68f37bcc722b27ea39d8735787af6e6b20b3cbb28e511d72d8e4",
+    "size": 752
+  },
+  {
+    "path": "default/test/host_link/archived/hl4a/dune",
+    "sha256": "4b1f5cc4cf384bbcc2d7292318c366fb956f5b19593c6f00788c12cc51ee1267",
+    "size": 1621
+  },
+  {
+    "path": "default/test/host_link/command_dispatch/dune",
+    "sha256": "a0a7103d5730ff153ca407d0e1da0d8c7cbb29cc97f58e93ccd4f2949aee660a",
+    "size": 1081
+  },
+  {
+    "path": "default/test/host_link/endpoint/dune",
+    "sha256": "f2a3a1b2d09ed6032f5fff2519a9d41b649871497a9333e3efa412816bd80c06",
+    "size": 1710
+  },
+  {
+    "path": "default/test/host_link/frame_rx/dune",
+    "sha256": "1a30b1ba93a78896c6b5591839726a2d28bcc7bfc19ac13fdea55d5dab629f24",
+    "size": 912
+  },
+  {
+    "path": "default/test/host_link/frame_tx/dune",
+    "sha256": "0d78f7e11a359aea7850e8334234dad235ae17ed7e7f724c552db4433d8cbe0c",
+    "size": 905
+  },
+  {
+    "path": "default/test/host_link/serial_host/dune",
+    "sha256": "0af47da4c6c6247c4b3bbe02c5813096d45217eeeb30c63154a91962991a6782",
+    "size": 761
+  },
+  {
+    "path": "default/test/host_link/serial_phy/dune",
+    "sha256": "2c1bdea8aa7680a24a51d5680778c5d4620e789404899c140b48ece17cbd5923",
+    "size": 765
+  },
+  {
+    "path": "default/test/integration/uart_slice/uart_frame.generated.trace",
+    "sha256": "ebab7913309f0fba514af7bdd1bacee9b46dec9932b4012b2c599138e5a56c2f",
+    "size": 271
+  },
+  {
+    "path": "default/test/integration/uart_slice/uart_frame.trace",
+    "sha256": "ebab7913309f0fba514af7bdd1bacee9b46dec9932b4012b2c599138e5a56c2f",
+    "size": 271
+  },
+  {
+    "path": "default/tinytapeout/src/executable_core.generated.v",
+    "sha256": "7473662697c0b1636f77bad7ac35b547b38c10919fc4d6e2c87e0100d8be9116",
+    "size": 160091
+  },
+  {
+    "path": "default/tinytapeout/src/integrated_core.generated.v",
+    "sha256": "3af601b6b7ce88a58bacba1c58a9e69435098d846d9eb687670046b9786eadec",
+    "size": 347390
+  },
+  {
+    "path": "default/tinytapeout/src/loader_core.generated.v",
+    "sha256": "3f675f120118df88fded0e30b5cdb383339bf0f5ef199e42a183d4f018d3b7cb",
+    "size": 901579
+  },
+  {
+    "path": "default/tinytapeout/src/loader_wrapper.simulation.generated.v",
+    "sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+    "size": 917829
+  },
+  {
+    "path": "default/tinytapeout/src/loader_wrapper.synthesis.generated.v",
+    "sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+    "size": 1043875
+  },
+  {
+    "path": "default/tinytapeout/src/p0_observable.generated.v",
+    "sha256": "c9f5e31aa3845c32810245b0ed568af67dcf253cf86ffc76ba66a704b59b7042",
+    "size": 7374
+  },
+  {
+    "path": "default/tinytapeout/src/p0_observable.regenerated.v",
+    "sha256": "c9f5e31aa3845c32810245b0ed568af67dcf253cf86ffc76ba66a704b59b7042",
+    "size": 7374
+  },
+  {
+    "path": "default/tinytapeout/src/p0_observable.v",
+    "sha256": "c9f5e31aa3845c32810245b0ed568af67dcf253cf86ffc76ba66a704b59b7042",
+    "size": 7374
+  },
+  {
+    "path": "default/tinytapeout/src/program_memory_backend.implementation.generated.v",
+    "sha256": "5eda47c26425740ae085cb09858268e6716d10896aa5b1f7e1b0830cfa7f53bb",
+    "size": 164880
+  },
+  {
+    "path": "default/tinytapeout/src/program_memory_backend.simulation.generated.v",
+    "sha256": "a3a23f38a8799ebbdb33b709722cc76cac8c67874de0a163c3ccaa0811e2673a",
+    "size": 40730
+  },
+  {
+    "path": "default/tinytapeout/src/project.v",
+    "sha256": "95089d874a38f39bed2d6c46112801ca9ac687ed652493578975232d617f934b",
+    "size": 2118
+  },
+  {
+    "path": "default/tinytapeout/src/protocol_core.generated.v",
+    "sha256": "66c91d2f44524fa9c38c8a1b38528f5789c32465cd52782ca05ac6075171b8a8",
+    "size": 25484
+  },
+  {
+    "path": "default/tinytapeout/src/uart_slice.generated.v",
+    "sha256": "e7d3886907003a8376961e695f227b5f3398fefc7cfc9d033721a39c27016cb0",
+    "size": 52722
+  },
+  {
+    "path": "default/tinytapeout/src/uart_tx.generated.v",
+    "sha256": "ce4454c0b15fe20e6b22eb290f0b029b11625e0e4c8188d0a109450affd9dd72",
+    "size": 28586
+  },
+  {
+    "path": "default/tinytapeout/test/p2_uart_slice_tb.v",
+    "sha256": "7bb3779b13eb940b6298b30cae40f514a9da25202f56a6a1c074392a4f51d196",
+    "size": 10255
+  },
+  {
+    "path": "default/tinytapeout/test/p2_uart_tb.v",
+    "sha256": "dc554d5ba3c337443847391949f7cb421f9a0e413fe61b9615077e2365d8074d",
+    "size": 2090
+  },
+  {
+    "path": "default/tinytapeout/test/p3_control_tb.v",
+    "sha256": "2bfb27d07378b711c7bae01f618d59ad7542f491c9651360dc4113e3497071af",
+    "size": 6930
+  },
+  {
+    "path": "default/tinytapeout/test/p3_integration_tb.v",
+    "sha256": "8f54c0a39846f11846f4335a0954930a61c99245aba001e199c273e2c03fcb6b",
+    "size": 6671
+  },
+  {
+    "path": "default/tinytapeout/test/p3_loader_tb.v",
+    "sha256": "40d9341f32ad02202f78784dbf4c6f9a7685691d8f7da78a50c2303cd2e2c9c9",
+    "size": 29320
+  },
+  {
+    "path": "default/tinytapeout/test/p3_memory_backend_tb.v",
+    "sha256": "a2327eba4000725050e3ca0668e2aef179d45db0f2f0fa03eb5cba6b67780f97",
+    "size": 11489
+  },
+  {
+    "path": "default/tinytapeout/test/tb.v",
+    "sha256": "377c79829755c4e75e2370261112f8fb87ed954c5c0e81b837f09eeccf661dee",
+    "size": 3253
+  }
+]

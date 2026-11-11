@@ -1,5 +1,12 @@
 # Serial-host agent pilot
 
+**Layout update, 2026-11-11:** the [ownership migration](ownership_layout.md) moved
+serial/endpoint/block/archive code intact to `ip/host_link/verif/` and the
+control-port agent to `ip/emulator_core/verif/control_port/`. Pilot roles, library
+names, scheduling and scenarios are preserved; all eight frozen files match the
+baseline and the active archive still runs. Paths in the historical pilot records
+below describe their original execution. See [current layout](repository_layout.md).
+
 Status: started 2026-10-18. SP1–SP6 are complete, pending owner review: every HL4a and
 SP2 test runs as the endpoint suite, and the originals are frozen in the archive; since
 SP6 the scoreboard also expects abandoned reads, and T3, T8, and C10 run under it. This is

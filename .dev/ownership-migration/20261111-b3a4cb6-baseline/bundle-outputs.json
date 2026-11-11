@@ -1,0 +1,372 @@
+[
+  {
+    "path": "bundles/loader/constraints/top.sdc",
+    "sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+    "size": 1275
+  },
+  {
+    "path": "bundles/loader/info.yaml",
+    "sha256": "5bbf18ff174bf01095b92db42e7499438b1dac95c837400f162895c748b934a2",
+    "size": 1038
+  },
+  {
+    "path": "bundles/loader/inputs/bin/asic_bundle.ml",
+    "sha256": "4fd216c1f0dddb4a12055dc2d14b6195cd0b23173928107bcf09b54d6fba837c",
+    "size": 16195
+  },
+  {
+    "path": "bundles/loader/inputs/bin/dune",
+    "sha256": "7eea065504a20242fb9a1de9eb4a9e86c52e8905dbee588bb416bf3b326aa79b",
+    "size": 1455
+  },
+  {
+    "path": "bundles/loader/inputs/dune-project",
+    "sha256": "035e7f82a1032a40653f9a4d77b2098182e9a88cce138f4e2f983cfaa06f5e10",
+    "size": 1528
+  },
+  {
+    "path": "bundles/loader/inputs/hardcaml_protemu.opam",
+    "sha256": "ee2efebf722fe9c1f48e3f5914d0e4f9780bf3fa4782c625cbcb3c696fd9d443",
+    "size": 1331
+  },
+  {
+    "path": "bundles/loader/inputs/host_link_wire/dune",
+    "sha256": "6283886dfeb36994c18e84ce87b370cc894702b05f55870131593351f6fd1d3d",
+    "size": 954
+  },
+  {
+    "path": "bundles/loader/inputs/host_link_wire/wire.ml",
+    "sha256": "23b46d8a57f5bd7ee7e36ce15221f7bbcf1d1c297f18b256bc2e8d6c515dcb9f",
+    "size": 24249
+  },
+  {
+    "path": "bundles/loader/inputs/isa/assembler.ml",
+    "sha256": "2deeab81b689a85dfa7b02f7b968226903cb2fc43bbfa1cfb1615985e8298dd3",
+    "size": 8244
+  },
+  {
+    "path": "bundles/loader/inputs/isa/descriptor.ml",
+    "sha256": "3c15f0683ba6c944ccc254d7134a6acd51c7fdaf285f8cf39e8ee0b2e898781f",
+    "size": 7569
+  },
+  {
+    "path": "bundles/loader/inputs/isa/dune",
+    "sha256": "c806422f5fbeef66405ab4614414e30521357b0cedeab45df3d8f526a7882843",
+    "size": 1062
+  },
+  {
+    "path": "bundles/loader/inputs/isa/encoding.ml",
+    "sha256": "c14cd97ed2842bae9945052b7683a5d89cf15196028a2a8cb632819006f29a27",
+    "size": 35138
+  },
+  {
+    "path": "bundles/loader/inputs/isa/enum.ml",
+    "sha256": "860728d2dc650972ec112ee2c0bb1d21bfb20a79f76ce27297e1e77993cc5543",
+    "size": 1389
+  },
+  {
+    "path": "bundles/loader/inputs/isa/event_kind.ml",
+    "sha256": "badce841d517ffc095171cc49c0236e20d9e517c4a621ba1031da22ad9fd57cd",
+    "size": 1557
+  },
+  {
+    "path": "bundles/loader/inputs/isa/instruction.ml",
+    "sha256": "34bcfcf51468ba59394acd50571c5bcc6b0654738ca4afb788828ca162e5db39",
+    "size": 12945
+  },
+  {
+    "path": "bundles/loader/inputs/isa/invalid.ml",
+    "sha256": "0adacb4ba43b14c2b6319466af12bd76589cf5daef239af012b5525269899e03",
+    "size": 1832
+  },
+  {
+    "path": "bundles/loader/inputs/isa/kinds.ml",
+    "sha256": "cb224b98017963b38a6e6c52668ff647113f1f8aa336a20e5fb33e5736ca2fdd",
+    "size": 3232
+  },
+  {
+    "path": "bundles/loader/inputs/isa/pins.ml",
+    "sha256": "478e30cb2d7a47892e069c37c195231abb1e61b97c9242f36f9c8f65aacf7c40",
+    "size": 1294
+  },
+  {
+    "path": "bundles/loader/inputs/isa/program.ml",
+    "sha256": "030174e3e74ba4f1af429c745e508316730a8eb179f8d5efc80f689aa1d09b18",
+    "size": 3246
+  },
+  {
+    "path": "bundles/loader/inputs/lib/dune",
+    "sha256": "c7c24ae340a735893cad15893f13ba73c7c01c30c7d629454b74105e9ef7edf7",
+    "size": 691
+  },
+  {
+    "path": "bundles/loader/inputs/lib/emulator_core/control_port.ml",
+    "sha256": "fc3e9511ed1f5d5f553b54b70e7198f027e4e684cdae364b6b9d366aa5be6872",
+    "size": 8842
+  },
+  {
+    "path": "bundles/loader/inputs/lib/emulator_core/emulator_core.ml",
+    "sha256": "99517da9194bd67ce885e9c1dfb1dcd9ad4623140ba73df85f7d2239264e0245",
+    "size": 17231
+  },
+  {
+    "path": "bundles/loader/inputs/lib/emulator_core/execution_unit.ml",
+    "sha256": "88c435fa87e6a5fb4c14485b5de671929bc8a279212c8b750b48a29e67c33993",
+    "size": 33975
+  },
+  {
+    "path": "bundles/loader/inputs/lib/emulator_core/instruction_decoder.ml",
+    "sha256": "cd857fdd0730fc7eeaddad72bcbdc132fb55f15ec307cfedf64496f57a71ebe1",
+    "size": 6095
+  },
+  {
+    "path": "bundles/loader/inputs/lib/emulator_core/primitive_dispatch.ml",
+    "sha256": "a22640caa2cfa4a7a1e372ed53a23772aadf99cbba314d4d0f533542ec2004d5",
+    "size": 26913
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/command_dispatch.ml",
+    "sha256": "718284d85b94e6b366fdb20044bdbd0639140d5ee0a6015ad8587874c5bf93e6",
+    "size": 23517
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/frame_rx.ml",
+    "sha256": "08b8f81767b934793f7be6d7188301d0f85cb8e8b9fc400a82b6b5ceb65fff06",
+    "size": 11440
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/frame_tx.ml",
+    "sha256": "e981c3cb08d14bc376a46d2842124c7de3b880aef015c43d981baf95eb077fd2",
+    "size": 7882
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/host_link.ml",
+    "sha256": "9118371f55c401cfd54dea409509f1e9d56d2946d2b60e768426f24d7651819a",
+    "size": 5883
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/serial_phy.ml",
+    "sha256": "a2cc83e102d7da3c900d8b089a455433f784dd59e0a3572880fa6ed4361788a7",
+    "size": 4905
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/wire_crc.ml",
+    "sha256": "40a15744ea3c7c878306c960cd707e4cc4ee2f95dd7a6fbdf5cc7365406a8bdf",
+    "size": 1505
+  },
+  {
+    "path": "bundles/loader/inputs/lib/host_link/wire_layout.ml",
+    "sha256": "adaaefeef062b5469eb0c3480bddf37fb5e14ce911630e7b91caa1150b6e4ac7",
+    "size": 1653
+  },
+  {
+    "path": "bundles/loader/inputs/lib/memory/program_memory_controller.ml",
+    "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1",
+    "size": 14690
+  },
+  {
+    "path": "bundles/loader/inputs/lib/pluggable_primitives/byte_fifo.ml",
+    "sha256": "78ec48549dbde1626498d54be76bebacea0c7202ebb9ebc86ccebd78777b444b",
+    "size": 6310
+  },
+  {
+    "path": "bundles/loader/inputs/lib/pluggable_primitives/input_events.ml",
+    "sha256": "1a9ca08d6cb57c13559d16772666da410e60cb0ac14181e00d7b7db067db9357",
+    "size": 1804
+  },
+  {
+    "path": "bundles/loader/inputs/lib/pluggable_primitives/pin_bank.ml",
+    "sha256": "c7d64792d20bfad41fae16db7dc58ba851ca0b83d84a8c9be4a9333cfe5d5c87",
+    "size": 4514
+  },
+  {
+    "path": "bundles/loader/inputs/lib/pluggable_primitives/shift_lane.ml",
+    "sha256": "2d280698ae28fbd44959d4bdf61e2592ce425fe2c5e645076117adc98ba805ab",
+    "size": 12014
+  },
+  {
+    "path": "bundles/loader/inputs/lib/pluggable_primitives/timing.ml",
+    "sha256": "c54d13d17f9d5b874407002061b99bff1181de0c9fedadad02338eb4a5f1d651",
+    "size": 5476
+  },
+  {
+    "path": "bundles/loader/inputs/lib/staging/observed_transfer.ml",
+    "sha256": "1ba17cdd8e3ab20140cff225784bd6af37db655b36f921ebbd5dc21ad890201e",
+    "size": 5999
+  },
+  {
+    "path": "bundles/loader/inputs/lib/system/protemu_top.ml",
+    "sha256": "a03edd04c893d4428007ceaa725abaca1a2c7225402a4b0cdb19850430125280",
+    "size": 4424
+  },
+  {
+    "path": "bundles/loader/inputs/tinytapeout/asic-dependencies.lock",
+    "sha256": "8aafcc1457b1dc4ca90a3c7ef4d9c1b1bdb7843fb617952f7132642ec5c5594f",
+    "size": 433
+  },
+  {
+    "path": "bundles/loader/inputs/tinytapeout/toolchain.lock",
+    "sha256": "2df08bb3f96e7015234f3aff11dc5abb4438e935e410f5e4cdb05d60bbcf4dde",
+    "size": 1129
+  },
+  {
+    "path": "bundles/loader/manifest.json",
+    "sha256": "0caf1399ecb2cece3b1d5a05ebb6a3de520203a5735b8c4b0bec125b76384160",
+    "size": 28441
+  },
+  {
+    "path": "bundles/loader/simulation/tt_um_leemperor_hardcaml_protemu_loader.v",
+    "sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+    "size": 917829
+  },
+  {
+    "path": "bundles/loader/src/config.json",
+    "sha256": "83580832849fb1f3b60dbf03a1d25ef2bb062ddd4888f2094693f0bea16f51ff",
+    "size": 1379
+  },
+  {
+    "path": "bundles/loader/src/tt_um_leemperor_hardcaml_protemu_loader.v",
+    "sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+    "size": 1043875
+  },
+  {
+    "path": "bundles/memory/constraints/top.sdc",
+    "sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+    "size": 1275
+  },
+  {
+    "path": "bundles/memory/info.yaml",
+    "sha256": "4a30cb3af1065c0c6160b3447170ea35ccb2851f89ff6699796b5c4643957eed",
+    "size": 1503
+  },
+  {
+    "path": "bundles/memory/inputs/bin/asic_bundle.ml",
+    "sha256": "4fd216c1f0dddb4a12055dc2d14b6195cd0b23173928107bcf09b54d6fba837c",
+    "size": 16195
+  },
+  {
+    "path": "bundles/memory/inputs/bin/dune",
+    "sha256": "7eea065504a20242fb9a1de9eb4a9e86c52e8905dbee588bb416bf3b326aa79b",
+    "size": 1455
+  },
+  {
+    "path": "bundles/memory/inputs/dune-project",
+    "sha256": "035e7f82a1032a40653f9a4d77b2098182e9a88cce138f4e2f983cfaa06f5e10",
+    "size": 1528
+  },
+  {
+    "path": "bundles/memory/inputs/hardcaml_protemu.opam",
+    "sha256": "ee2efebf722fe9c1f48e3f5914d0e4f9780bf3fa4782c625cbcb3c696fd9d443",
+    "size": 1331
+  },
+  {
+    "path": "bundles/memory/inputs/lib/dune",
+    "sha256": "c7c24ae340a735893cad15893f13ba73c7c01c30c7d629454b74105e9ef7edf7",
+    "size": 691
+  },
+  {
+    "path": "bundles/memory/inputs/lib/memory/program_memory_controller.ml",
+    "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1",
+    "size": 14690
+  },
+  {
+    "path": "bundles/memory/inputs/tinytapeout/asic-dependencies.lock",
+    "sha256": "8aafcc1457b1dc4ca90a3c7ef4d9c1b1bdb7843fb617952f7132642ec5c5594f",
+    "size": 433
+  },
+  {
+    "path": "bundles/memory/inputs/tinytapeout/toolchain.lock",
+    "sha256": "2df08bb3f96e7015234f3aff11dc5abb4438e935e410f5e4cdb05d60bbcf4dde",
+    "size": 1129
+  },
+  {
+    "path": "bundles/memory/manifest.json",
+    "sha256": "98761489a0201c0713f0507b6bfb18ead4de64d50f86e8d1fd43247ac972cfd7",
+    "size": 16935
+  },
+  {
+    "path": "bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v",
+    "sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+    "size": 37065
+  },
+  {
+    "path": "bundles/memory/src/config.json",
+    "sha256": "ebe245d16d650ab7368e41d5cac29238fd72bcd2ba17858f4269879c0328ae83",
+    "size": 1379
+  },
+  {
+    "path": "bundles/memory/src/tt_um_leemperor_hardcaml_protemu_memory.v",
+    "sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+    "size": 161365
+  },
+  {
+    "path": "bundles/observable/constraints/top.sdc",
+    "sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+    "size": 1275
+  },
+  {
+    "path": "bundles/observable/info.yaml",
+    "sha256": "3a4beef1d4bf5934fc1b0fbac4a596e91cb9b3c9b907a7b7419995c91d63c12a",
+    "size": 1010
+  },
+  {
+    "path": "bundles/observable/inputs/bin/asic_bundle.ml",
+    "sha256": "4fd216c1f0dddb4a12055dc2d14b6195cd0b23173928107bcf09b54d6fba837c",
+    "size": 16195
+  },
+  {
+    "path": "bundles/observable/inputs/bin/dune",
+    "sha256": "7eea065504a20242fb9a1de9eb4a9e86c52e8905dbee588bb416bf3b326aa79b",
+    "size": 1455
+  },
+  {
+    "path": "bundles/observable/inputs/dune-project",
+    "sha256": "035e7f82a1032a40653f9a4d77b2098182e9a88cce138f4e2f983cfaa06f5e10",
+    "size": 1528
+  },
+  {
+    "path": "bundles/observable/inputs/hardcaml_protemu.opam",
+    "sha256": "ee2efebf722fe9c1f48e3f5914d0e4f9780bf3fa4782c625cbcb3c696fd9d443",
+    "size": 1331
+  },
+  {
+    "path": "bundles/observable/inputs/lib/dune",
+    "sha256": "c7c24ae340a735893cad15893f13ba73c7c01c30c7d629454b74105e9ef7edf7",
+    "size": 691
+  },
+  {
+    "path": "bundles/observable/inputs/lib/legacy/p0_observable.ml",
+    "sha256": "96423492cc3ec25f8f6e49f052611adc20666505ea437bb9c9d5092691ce42dd",
+    "size": 3141
+  },
+  {
+    "path": "bundles/observable/inputs/tinytapeout/asic-dependencies.lock",
+    "sha256": "8aafcc1457b1dc4ca90a3c7ef4d9c1b1bdb7843fb617952f7132642ec5c5594f",
+    "size": 433
+  },
+  {
+    "path": "bundles/observable/inputs/tinytapeout/toolchain.lock",
+    "sha256": "2df08bb3f96e7015234f3aff11dc5abb4438e935e410f5e4cdb05d60bbcf4dde",
+    "size": 1129
+  },
+  {
+    "path": "bundles/observable/manifest.json",
+    "sha256": "a3eab83dccb3acd684151c4aa23edb50ec331ec594a2f9390e2399d554d6a891",
+    "size": 15966
+  },
+  {
+    "path": "bundles/observable/simulation/tt_um_leemperor_hardcaml_protemu.v",
+    "sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+    "size": 8885
+  },
+  {
+    "path": "bundles/observable/src/config.json",
+    "sha256": "eb0e3a955e8a1c77960a0ba920d2071ca47cdfd776fed08b552b433fac4d84a8",
+    "size": 1365
+  },
+  {
+    "path": "bundles/observable/src/tt_um_leemperor_hardcaml_protemu.v",
+    "sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+    "size": 8885
+  }
+]

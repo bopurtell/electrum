@@ -1,0 +1,15 @@
+{
+  "bundle_mli": "/home/wayne/.opam/5.2.0+ox/lib/hardcaml_asic/bundle.mli",
+  "sha256": "dcadee4fa32c0ab704dd3f395170a00c95002385b78ce5aa9190eb83f0dd273a",
+  "simulation_build_parameter": true,
+  "host_tools": {
+    "iverilog": "/usr/bin/iverilog",
+    "vvp": "/usr/bin/vvp",
+    "verilator": "/usr/bin/verilator",
+    "yosys": "/usr/bin/yosys",
+    "c++": "/usr/bin/c++",
+    "flock": "/usr/bin/flock"
+  },
+  "switch": "5.2.0+ox",
+  "source_revision": "b3a4cb6a420613465f635a616bedba967c4ab307"
+}

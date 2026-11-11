@@ -1,7 +1,9 @@
 IVERILOG ?= iverilog
 VVP ?= vvp
 BUILD_DIR ?= ../build/rtl-test
-SOURCES = ../src/p0_observable.v ../src/project.v tb.v
+# Staged projects carry tb.v; in the checkout use the chip-owned authored bench.
+TESTBENCH ?= $(firstword $(wildcard tb.v ../../chip_top/verif/observable/emitted/tb.v))
+SOURCES = ../src/p0_observable.v ../src/project.v $(TESTBENCH)
 NETLIST ?= gate_level_netlist.v
 
 .PHONY: rtl gate clean
@@ -19,7 +21,7 @@ gate:
 		-s tb -o $(BUILD_DIR)/p0_wrapper_gate \
 		$(PDK_ROOT)/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/verilog/sg13cmos5l_io.v \
 		$(PDK_ROOT)/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/verilog/sg13cmos5l_stdcell.v \
-		$(NETLIST) tb.v
+		$(NETLIST) $(TESTBENCH)
 	$(VVP) $(BUILD_DIR)/p0_wrapper_gate
 
 clean:

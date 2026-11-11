@@ -1,5 +1,14 @@
 # System verification
 
+**Current layout work, 2026-11-11:** [ownership-layout amendment](ownership_layout.md)
+moved existing verification with its DUT/interface owner and separated generic
+support/software tests. It preserves the implemented SP1–SP6 agent pilot and frozen
+HL4a oracle. The original VO sequence below is not a claim that the later pilot is
+unimplemented, and relocation does not authorize replacement of its scenarios.
+All475 registrations are preserved; ordinary, long/four-state and emitted-RTL
+regressions pass. [Repository layout](repository_layout.md) is current source-path
+authority; detailed older inventories below retain their recorded pre-move paths.
+
 Status: verification-overhaul direction agreed on 2026-09-25; VO0–VO7 below are
 planned, not implemented. Architectural migration AM0–AM6 must finish first; see
 [architecture_migration.md](architecture_migration.md). The current-state inventory

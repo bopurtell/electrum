@@ -1,0 +1,58 @@
+[
+  {
+    "path": "bin/asic_bundle.ml",
+    "exit": 1
+  },
+  {
+    "path": "chip_top/project/chip_project.ml",
+    "exit": 0
+  },
+  {
+    "path": "chip_top/rtl/observable_design.ml",
+    "exit": 1
+  },
+  {
+    "path": "chip_top/rtl/memory_design.ml",
+    "exit": 1
+  },
+  {
+    "path": "chip_top/rtl/package_top.ml",
+    "exit": 1
+  },
+  {
+    "path": "chip_top/rtl/program_memory.ml",
+    "exit": 0
+  },
+  {
+    "path": "lib/dune",
+    "format_equal": false
+  },
+  {
+    "path": "chip_top/project/dune",
+    "format_equal": false
+  },
+  {
+    "path": "bin/dune",
+    "format_equal": true
+  },
+  {
+    "path": "tinytapeout/test/dune",
+    "format_equal": false
+  },
+  {
+    "path": "tinytapeout/src/dune",
+    "format_equal": true
+  },
+  {
+    "path": "test/core/protocol_core/dune",
+    "format_equal": true
+  },
+  {
+    "path": "test/core/control_execution/dune",
+    "format_equal": true
+  },
+  {
+    "path": "test/integration/uart_slice/dune",
+    "format_equal": true
+  }
+]

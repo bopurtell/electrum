@@ -1,0 +1,4 @@
+PASS clock, source-list, and target configuration conflicts
+/tmp/protemu-adopted-dbwahapd/first 0c0cfb5c7bdfedc6bb51b9af1fe1dc0b855dd439d2839fb31bff4fffa2951b64
+/tmp/protemu-adopted-dbwahapd/second 0c0cfb5c7bdfedc6bb51b9af1fe1dc0b855dd439d2839fb31bff4fffa2951b64
+PASS repeatable bundle, manifest, metadata, and conflict checks

@@ -1,0 +1,3 @@
+mkdir -p ../build/rtl-test
+iverilog -g2012 -Wall -Wno-timescale -s tb -o ../build/rtl-test/p0_wrapper ../src/p0_observable.v ../src/project.v ../../chip_top/verif/observable/emitted/tb.v
+vvp ../build/rtl-test/p0_wrapper

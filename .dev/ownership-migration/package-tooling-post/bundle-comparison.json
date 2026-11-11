@@ -1,0 +1,233 @@
+{
+  "loader": {
+    "collateral_byte_equal": {
+      "constraints/top.sdc": true,
+      "info.yaml": true,
+      "src/config.json": true
+    },
+    "identity_after": "a4c863dad3e31f4dbf155117831581ec0cd2eebf5a74734e6aad8fa4860c818d",
+    "identity_before": "848f553ca3403d4830f3fdb2fc981f4d1b26b313119940f07e59cc2d30bab82b",
+    "input_paths_after": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "chip_top/project/chip_project.ml",
+      "chip_top/project/dune",
+      "chip_top/rtl/package_top.ml",
+      "chip_top/rtl/program_memory.ml",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "host_link_wire/dune",
+      "host_link_wire/wire.ml",
+      "ip/emulator_core/rtl/control_port.ml",
+      "ip/emulator_core/rtl/emulator_core.ml",
+      "ip/emulator_core/rtl/execution_unit.ml",
+      "ip/emulator_core/rtl/instruction_decoder.ml",
+      "ip/emulator_core/rtl/primitive_dispatch.ml",
+      "ip/host_link/rtl/command_dispatch.ml",
+      "ip/host_link/rtl/frame_rx.ml",
+      "ip/host_link/rtl/frame_tx.ml",
+      "ip/host_link/rtl/host_link.ml",
+      "ip/host_link/rtl/serial_phy.ml",
+      "ip/host_link/rtl/wire_crc.ml",
+      "ip/host_link/rtl/wire_layout.ml",
+      "ip/mechanisms/rtl/byte_fifo.ml",
+      "ip/mechanisms/rtl/input_events.ml",
+      "ip/mechanisms/rtl/pin_bank.ml",
+      "ip/mechanisms/rtl/shift_lane.ml",
+      "ip/mechanisms/rtl/staging/observed_transfer.ml",
+      "ip/mechanisms/rtl/timing.ml",
+      "ip/program_memory_controller/rtl/program_memory_controller.ml",
+      "isa/assembler.ml",
+      "isa/descriptor.ml",
+      "isa/dune",
+      "isa/encoding.ml",
+      "isa/enum.ml",
+      "isa/event_kind.ml",
+      "isa/instruction.ml",
+      "isa/invalid.ml",
+      "isa/kinds.ml",
+      "isa/pins.ml",
+      "isa/program.ml",
+      "lib/dune",
+      "rtl/protemu_top.ml",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "input_paths_before": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "host_link_wire/dune",
+      "host_link_wire/wire.ml",
+      "isa/assembler.ml",
+      "isa/descriptor.ml",
+      "isa/dune",
+      "isa/encoding.ml",
+      "isa/enum.ml",
+      "isa/event_kind.ml",
+      "isa/instruction.ml",
+      "isa/invalid.ml",
+      "isa/kinds.ml",
+      "isa/pins.ml",
+      "isa/program.ml",
+      "lib/dune",
+      "lib/emulator_core/control_port.ml",
+      "lib/emulator_core/emulator_core.ml",
+      "lib/emulator_core/execution_unit.ml",
+      "lib/emulator_core/instruction_decoder.ml",
+      "lib/emulator_core/primitive_dispatch.ml",
+      "lib/host_link/command_dispatch.ml",
+      "lib/host_link/frame_rx.ml",
+      "lib/host_link/frame_tx.ml",
+      "lib/host_link/host_link.ml",
+      "lib/host_link/serial_phy.ml",
+      "lib/host_link/wire_crc.ml",
+      "lib/host_link/wire_layout.ml",
+      "lib/memory/program_memory_controller.ml",
+      "lib/pluggable_primitives/byte_fifo.ml",
+      "lib/pluggable_primitives/input_events.ml",
+      "lib/pluggable_primitives/pin_bank.ml",
+      "lib/pluggable_primitives/shift_lane.ml",
+      "lib/pluggable_primitives/timing.ml",
+      "lib/staging/observed_transfer.ml",
+      "lib/system/protemu_top.ml",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "manifest_fields_equal": {
+      "project": true,
+      "requested_tools": true,
+      "resources": true,
+      "simulation_resources": true,
+      "simulation_sources": true,
+      "synthesis_sources": true,
+      "top_module": true
+    },
+    "rtl": {
+      "simulation": {
+        "after_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+        "before_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      },
+      "synthesis": {
+        "after_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+        "before_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      }
+    }
+  },
+  "memory": {
+    "collateral_byte_equal": {
+      "constraints/top.sdc": true,
+      "info.yaml": true,
+      "src/config.json": true
+    },
+    "identity_after": "7ccf6e65807096b429981dc75cf1c5255b008acf8a3e9888a2834cd4645d7cc9",
+    "identity_before": "0c0cfb5c7bdfedc6bb51b9af1fe1dc0b855dd439d2839fb31bff4fffa2951b64",
+    "input_paths_after": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "chip_top/project/chip_project.ml",
+      "chip_top/project/dune",
+      "chip_top/rtl/memory_design.ml",
+      "chip_top/rtl/program_memory.ml",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "ip/program_memory_controller/rtl/program_memory_controller.ml",
+      "lib/dune",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "input_paths_before": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "lib/dune",
+      "lib/memory/program_memory_controller.ml",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "manifest_fields_equal": {
+      "project": true,
+      "requested_tools": true,
+      "resources": true,
+      "simulation_resources": true,
+      "simulation_sources": true,
+      "synthesis_sources": true,
+      "top_module": true
+    },
+    "rtl": {
+      "simulation": {
+        "after_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+        "before_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      },
+      "synthesis": {
+        "after_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+        "before_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      }
+    }
+  },
+  "observable": {
+    "collateral_byte_equal": {
+      "constraints/top.sdc": true,
+      "info.yaml": true,
+      "src/config.json": true
+    },
+    "identity_after": "056b2a17c3cbcb17b414c9ccfd1dcc73f0aa4cc0d3823cc0757d7bcfd1bbd133",
+    "identity_before": "064f72f99b5a48efe636b84cd932850e9049a51c756134b63eb078cb04324d99",
+    "input_paths_after": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "chip_top/project/chip_project.ml",
+      "chip_top/project/dune",
+      "chip_top/rtl/bringup/p0_observable.ml",
+      "chip_top/rtl/observable_design.ml",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "lib/dune",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "input_paths_before": [
+      "bin/asic_bundle.ml",
+      "bin/dune",
+      "dune-project",
+      "hardcaml_protemu.opam",
+      "lib/dune",
+      "lib/legacy/p0_observable.ml",
+      "tinytapeout/asic-dependencies.lock",
+      "tinytapeout/toolchain.lock"
+    ],
+    "manifest_fields_equal": {
+      "project": true,
+      "requested_tools": true,
+      "resources": true,
+      "simulation_resources": true,
+      "simulation_sources": true,
+      "synthesis_sources": true,
+      "top_module": true
+    },
+    "rtl": {
+      "simulation": {
+        "after_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+        "before_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      },
+      "synthesis": {
+        "after_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+        "before_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+        "byte_equal": true,
+        "design_statistics_equal": true
+      }
+    }
+  }
+}

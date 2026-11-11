@@ -1,0 +1,19 @@
+--- test/host_link/frame_tx/frame_tx_testbench.ml
++++ ip/host_link/verif/frame_tx/frame_tx_testbench.ml
+@@ -586,7 +586,15 @@
+ let failure_of f =
+   match f () with
+   | (_ : unit) -> None
+-  | exception (Tx_failure _ as failure) -> Some [%sexp (failure : exn)]
++  | exception (Tx_failure _ as failure) ->
++    (* Keep the diagnostic identity stable across the ownership move. *)
++    (match [%sexp (failure : exn)] with
++     | Sexp.List (_ :: fields) ->
++       Some
++         (Sexp.List
++            (Sexp.Atom "test/host_link/frame_tx/frame_tx_testbench.ml.Tx_failure"
++             :: fields))
++     | sexp -> Some sexp)
+ ;;
+ 
+ (* Response frames the dispatcher builds, written from the P3.5 layouts: magic 5a, version

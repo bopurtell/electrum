@@ -1,0 +1,4 @@
+PASS clock, source-list, and target configuration conflicts
+/tmp/protemu-adopted-n31lmvf9/first 056b2a17c3cbcb17b414c9ccfd1dcc73f0aa4cc0d3823cc0757d7bcfd1bbd133
+/tmp/protemu-adopted-n31lmvf9/second 056b2a17c3cbcb17b414c9ccfd1dcc73f0aa4cc0d3823cc0757d7bcfd1bbd133
+PASS repeatable bundle, manifest, metadata, and conflict checks

@@ -1,5 +1,11 @@
 # Protocol emulator phase plan
 
+**Structural update, 2026-11-11:** [ownership migration](ownership_layout.md) and
+chip/package extraction are implemented and verified against an identified current
+baseline. [Repository layout](repository_layout.md) owns current paths. AM3,
+AM5 and broader AM/VO acceptance remain separately scoped; this work neither
+changes product milestones nor completes the ASIC PT.3 dependency/SRAM adoption.
+
 Status: working execution plan, updated 2026-09-21 for P3.5 completion,
 2026-09-20 for P3.2 completion,
 2026-09-19 for the P1.5 encoding decision, and 2026-09-18 for decoupled RTL
@@ -42,10 +48,12 @@ the corresponding decision has evidence.
 - No durations or calendar commitments are assigned in this draft. Sequence by
   dependencies and measured risk; use the architecture document for target context.
 
-Follow [formatting_guide.md](formatting_guide.md) for source changes. Existing
-locations are `lib/` for hardware, `bin/` for executables, `test/` for tests,
-`isa/` for the instruction specification and assembler, `f_model/` for the reference
-execution model, and `tinytapeout/` for ASIC integration. `f_model/` is a separate Dune
+Follow [formatting_guide.md](formatting_guide.md) for source changes. Current
+hardware lives under `ip/*/rtl`, `rtl/` and `chip_top/rtl`; `lib/` is its public
+build facade. Owner-local `verif/` and shared/system root `verif/` contain DUT
+verification; `test/` contains software/model/tool checks. `bin/` retains executable
+entry points, `isa/` the instruction specification/assembler, `f_model/` the reference
+model, and `tinytapeout/` target integration. `f_model/` is a separate Dune
 library, `protemu_f_model`, with no Hardcaml dependency, so a diagnostic model can never
 reach a synthesis source set and cannot share a mistake with the RTL; its tests live in
 `test/f_model/`. `isa/` is a third library, `hardcaml_protemu.isa`, below both of them:

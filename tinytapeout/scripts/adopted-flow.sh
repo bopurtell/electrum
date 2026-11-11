@@ -354,7 +354,7 @@ step_postcheck() {
     python3 "$runner" postcheck "$run_dir" \
         --support-tools "$tool_tt" --pdk-root "$tool_pdk" \
         --precheck-python "$tool_precheck_python" \
-        --testbench "$tt_dir/test/tb.v"
+        --testbench "$repo_root/chip_top/verif/observable/emitted/tb.v"
 }
 
 # collect and report read recorded artifacts with the system python3 only. They

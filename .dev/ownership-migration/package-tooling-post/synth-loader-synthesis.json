@@ -1,0 +1,65 @@
+{
+   "creator": "Yosys 0.33 (git sha1 2584903a060)",
+   "invocation": "stat -json ",
+   "modules": {
+      "\\tt_um_leemperor_hardcaml_protemu_loader": {
+         "num_wires":         27355,
+         "num_wire_bits":     71721,
+         "num_pub_wires":     7120,
+         "num_pub_wire_bits": 51486,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         26814,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7232,
+            "$_AND_": 1047,
+            "$_DFFE_PP_": 4240,
+            "$_DFF_PN1_": 2,
+            "$_DFF_P_": 13,
+            "$_MUX_": 2755,
+            "$_NAND_": 425,
+            "$_NOR_": 825,
+            "$_NOT_": 446,
+            "$_ORNOT_": 376,
+            "$_OR_": 6869,
+            "$_SDFFE_PP0N_": 11,
+            "$_SDFFE_PP0P_": 905,
+            "$_SDFFE_PP1P_": 6,
+            "$_SDFF_PP0_": 141,
+            "$_XNOR_": 408,
+            "$_XOR_": 1113
+         }
+      }
+   },
+      "design": {
+         "num_wires":         27355,
+         "num_wire_bits":     71721,
+         "num_pub_wires":     7120,
+         "num_pub_wire_bits": 51486,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         26814,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 7232,
+            "$_AND_": 1047,
+            "$_DFFE_PP_": 4240,
+            "$_DFF_PN1_": 2,
+            "$_DFF_P_": 13,
+            "$_MUX_": 2755,
+            "$_NAND_": 425,
+            "$_NOR_": 825,
+            "$_NOT_": 446,
+            "$_ORNOT_": 376,
+            "$_OR_": 6869,
+            "$_SDFFE_PP0N_": 11,
+            "$_SDFFE_PP0P_": 905,
+            "$_SDFFE_PP1P_": 6,
+            "$_SDFF_PP0_": 141,
+            "$_XNOR_": 408,
+            "$_XOR_": 1113
+         }
+      }
+}
+

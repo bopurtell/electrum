@@ -1,0 +1,15 @@
+{
+  "total": 475,
+  "test_libraries": 34,
+  "all_registration_bodies_byte_equal": true,
+  "frozen_files": 8,
+  "changed_support_files": [
+    "verif/common/dune",
+    "verif/common/replay.ml",
+    "ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml",
+    "ip/host_link/verif/frame_rx/frame_rx_testbench.ml",
+    "ip/host_link/verif/frame_tx/frame_tx_testbench.ml",
+    "ip/host_link/verif/serial_phy/serial_phy_testbench.ml",
+    "test/host_simulator/dune"
+  ]
+}

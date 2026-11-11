@@ -1,5 +1,15 @@
 # Architecture migration
 
+**Current implementation, 2026-11-11:** the [ownership-layout amendment](ownership_layout.md)
+delivers IP-local RTL/verification, shared/system verification and chip-owned
+package/project construction. The current clean baseline already contains the
+AM1/AM2 names described below; do not repeat those renames. This slice preserves
+the later serial-host pilot and existing verification obligations. AM3, AM5, wider
+VO work and PT.3 API/SRAM adoption remain separately scoped. Historical delivery
+and acceptance statements below retain their original meaning. Use
+[repository_layout.md](repository_layout.md) for current paths; the original
+planning-time layout and rename map below are historical specifications.
+
 Status: agreed direction, documented 2026-09-25. AM1/AM2 renames delivered unstaged
 2026-09-26 and awaiting owner review (see Implementation records); all AM work items below
 remain open until accepted. The repository owner selects and prompts
@@ -281,6 +291,13 @@ and reviewed hardware-output comparison. Record any transitional aliases and the
 
 Prerequisite: AM3.
 
+**Authorized ordering amendment, 2026-11-11:** owner-approved organizational work
+delivered the package/project extraction independently of AM3, preserving the
+existing protocol API. `protemu_chip_project` now owns tops, RAM binding and
+declaration; all six bundle RTL roles are byte-identical to the identified current
+baseline. See the implementation record below. This does not accept AM3 or mark
+the broader AM4 owner-acceptance checklist complete implicitly.
+
 - [ ] Create the separate `chip_top/` library and extract `Package_top`, `Program_memory`,
   bring-up tops, and reusable project construction from `bin/asic_bundle.ml` as appropriate.
 - [ ] Leave executable argument parsing and emission in `bin/`; tests must not need to
@@ -410,3 +427,36 @@ physical evidence. A yosys `equiv_simple`/`equiv_induct` run did not finish with
 
 Remaining: owner review of the loader RTL delta and AM1/AM2 acceptance; active docs outside
 this record still use the old names (AM6).
+
+### 2026-11-11 — Ownership amendment and package extraction delivered
+
+Source baseline: clean `b3a4cb6a420613465f635a616bedba967c4ab307`, already containing
+AM1/AM2 implementation and the later SP agent pilot. The separately captured new
+baseline does not reconstruct the original pre-AM1/AM2 dirty tree or close its
+historical formal-equivalence gap.
+
+Delivered:26 byte-preserved hardware relocations with a flat public-library facade;
+owner-local verification and agents; shared/root verification versus software tests;
+`protemu_chip_project` package/project extraction; thin bundle CLI; single-source
+emitted peers with compatibility target rules; source inventories, scripts and CI
+path/budget alignment. No interface grouping, protocol API rename, ASIC dependency
+upgrade or SRAM selection change occurred.
+
+All475 registrations and eight frozen archive files are retained. All17 generated
+RTL outputs and six bundle RTL roles are byte-identical; six same-tool bundle
+synthesis statistics, pin metadata, resources and constraints match. Bundle source
+identities change with the explicitly recorded path/formatting changes.
+
+Verification ran sequentially through `flock ../.protemu-build.lock`, switch
+`5.2.0+ox`, explicit `-j5`: install/lint, forced ordinary regression, emitted RTL
+including all three loader-peer tiers, required/long/four-state aliases, CLI golden
+checks, three-kind bundle checks and explicit observable/memory role simulations.
+Independent review found no correctness blocker. Seven introduced formatting
+issues were corrected and rechecked;23 baseline-only global-format failures and
+two supplemental behavioral-RAM lint failures remain explicitly recorded.
+
+Exact commands, path maps, output comparisons and receipts:
+[ownership_layout.md#execution-record](ownership_layout.md#execution-record).
+No index/history/configuration mutation, physical flow or sibling source edit.
+Implementation is delivered; owner acceptance and remaining AM3/AM5/AM6, VO and
+PT.3 decisions remain explicit separate work.

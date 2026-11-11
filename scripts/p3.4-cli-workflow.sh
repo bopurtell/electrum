@@ -12,5 +12,5 @@ cmp examples/p3.4-echo.pimg _build/p3.4-cli/p3.4-echo.pimg
   examples/p3.4-workflow.sim -trace-capacity 8
 ./scripts/with-switch.sh dune exec -j 5 protemu -- sim script \
   examples/p3.4-transfer-timeout.sim >_build/p3.4-cli/p3.4-transfer-timeout.output
-cmp test/integration/host_simulator/p3.4-transfer-timeout.expected \
+cmp test/host_simulator/p3.4-transfer-timeout.expected \
   _build/p3.4-cli/p3.4-transfer-timeout.output

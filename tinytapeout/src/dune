@@ -99,6 +99,13 @@
   (source_tree ../../isa)
   ../../lib/dune
   (source_tree ../../lib)
+  (source_tree ../../chip_top/project)
+  (source_tree ../../chip_top/rtl)
+  (source_tree ../../ip/mechanisms/rtl)
+  (source_tree ../../ip/program_memory_controller/rtl)
+  (source_tree ../../ip/emulator_core/rtl)
+  (source_tree ../../ip/host_link/rtl)
+  (source_tree ../../rtl)
   ../asic-dependencies.lock
   ../toolchain.lock)
  (action
@@ -126,7 +133,7 @@
  (target program_memory_backend.simulation.generated.v)
  (action
   (run
-   %{exe:../../test/integration/program_memory_backend/emit_program_memory_backend.exe}
+   %{exe:../../ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe}
    simulation
    %{target})))
 
@@ -134,6 +141,6 @@
  (target program_memory_backend.implementation.generated.v)
  (action
   (run
-   %{exe:../../test/integration/program_memory_backend/emit_program_memory_backend.exe}
+   %{exe:../../ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe}
    implementation
    %{target})))

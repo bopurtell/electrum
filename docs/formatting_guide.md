@@ -9,7 +9,8 @@ headers, port naming, the `I_Regs`/`I_Wires` paradigm, and when to use `Always` 
 New modules should follow these conventions, and existing modules should be brought in line
 when edited.
 
-The rules apply primarily to synthesizable modules under `lib/`. Testbench-local variables,
+The rules apply primarily to synthesizable modules under `ip/*/rtl`, `rtl/`, and
+`chip_top/rtl`; `lib/` is now a build facade. Testbench-local variables,
 software-only helpers, and direction-neutral value types follow the exceptions described
 below.
 
