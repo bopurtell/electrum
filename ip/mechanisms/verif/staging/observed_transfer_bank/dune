@@ -12,7 +12,8 @@
   core
   hardcaml
   hardcaml_event_driven_sim
-  hardcaml_protemu
+  protemu_mechanisms
+  protemu_mechanisms_staging
   protemu_observed_transfer_tests
   protemu_test_common)
  (preprocess

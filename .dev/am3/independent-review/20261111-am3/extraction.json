@@ -1,0 +1,21 @@
+{
+  "original_sha256": "23b46d8a57f5bd7ee7e36ce15221f7bbcf1d1c297f18b256bc2e8d6c515dcb9f",
+  "unchanged_functions": [
+    "Crc.update",
+    "Crc.compute",
+    "U16.to_bytes",
+    "U16.get",
+    "Request.payload_fields",
+    "Request.encode",
+    "Response.invalid_field",
+    "Response.decode_bits",
+    "Response.decode_enum",
+    "Response.decode_info",
+    "Response.decode_status",
+    "Response.decode",
+    "Response.decode_correlated"
+  ],
+  "definitions_types_derivers_and_errors_preserved": true,
+  "shim_implementation_free": true,
+  "installed_sources_match": true
+}

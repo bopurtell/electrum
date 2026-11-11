@@ -1,121 +1,109 @@
 # Environment and entry points
 
-Two commands, and they are the whole interface. One prepares the environment and
-is always safe to rerun; the other implements the design:
+Run these commands from the repository root:
 
 ```sh
-./bootstrap.sh          # install whatever is missing in every layer, then verify it
-./bootstrap.sh --check  # report the state of every layer and change nothing
-source env.sh           # every new shell
-./flow.sh               # the ASIC flow: emit, harden, postcheck, collect, report
+./scripts/bootstrap.sh          # install missing environment layers, then verify
+./scripts/bootstrap.sh --check  # report the state of every layer; change nothing
+source scripts/env.sh           # activate tools in each new shell
+./asic/flow.sh --help            # read the stages and overrides before implementation
 ```
 
-`./bootstrap.sh` prepares tools and stages no design. `./flow.sh` consumes what
-it left and never provisions. Nothing else is implied by either: a bare
-`./flow.sh` deliberately starts a physical run and takes hours, so read
-`./flow.sh --help` first and name the steps when you want only some of them.
+`scripts/bootstrap.sh` prepares tools and stages no design by default.
+`asic/flow.sh` consumes that environment and never provisions by default. A bare
+`./asic/flow.sh` deliberately starts the full physical sequence and can take hours;
+name the steps when you want only part of it. The flow's stages, overrides,
+artifacts and qualification status are in **[flow.md](flow.md)**.
 
-This document owns the environment — the layers, what provisions each one, and
-what to run when something is missing. The flow itself, its stages, overrides,
-artifacts and verification status, is **[flow.md](flow.md)**.
-
-Dune builds and checks the tooling; it never implements:
+For ordinary build and verification work, use the pinned switch and shared build
+lock. Run these sequentially with explicit `-j5`:
 
 ```sh
-dune runtest                     # Hardcaml tests + committed RTL is fresh
-dune build @rtl                  # wrapper sim, Verilator lint, generic Yosys
-dune exec protemu -- doctor      # read-only report on every layer and this shell
-dune exec protemu -- bootstrap   # the flow layer alone, once OCaml exists
-dune exec protemu -- flow        # alias for ./flow.sh, same runner and exit status
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @install @lint
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune runtest -j5
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @rtl
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 protemu -- doctor
 ```
+
+`@rtl` runs emitted-RTL simulation/lint and generic synthesis, not physical
+implementation. `dune exec -j5 protemu -- flow` is an alias for `asic/flow.sh`,
+including its full physical default. The public `protemu` name remains available
+through root `dune`'s binding to `software/cli/protemu.exe`; no CLI installation is
+needed. `dune exec -j5 protemu -- bootstrap` converges the flow layer once OCaml
+exists and only reports on the OCaml layer.
 
 The remaining `protemu` commands (`check`, `stage`, `legacy-harden`, `precheck`)
-drive the legacy staged project, which is a different input from the emitted
-bundle. They need `./bootstrap.sh --legacy-project`, which is the only way that
-project is staged now. See [flow.md](flow.md#the-legacy-path) for that path and
-for the aliases `flow`, `harden` and their flag handling.
+drive the legacy staged project, a different input from the adopted bundle.
+`./scripts/bootstrap.sh --legacy-project` explicitly stages/configures it; normal
+bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
 
 ## Layers
 
-The environment has layers with different owners and lifetimes. The bootstrap is a
-single command, but it is layered internally because each layer has a different
-lifetime, cost, and authority.
-
 | Layer | Contents | Lifetime | Managed by |
 | --- | --- | --- | --- |
-| 0. Host | git, python3-venv, docker/podman, iverilog, verilator, nix; group membership | machine | you, with `sudo`; bootstrap only detects and prints commands |
-| 1. OCaml | opam switch `5.2.0+ox` and this repository's opam packages | machine, shared by all Hardcaml checkouts | `scripts/ocaml-deps.sh`; adds missing packages, never upgrades or downgrades one another checkout depends on |
-| 2. Flow | `.venv`, `.venv-precheck`, `tinytapeout/pdk`, support-tools checkout, pinned LibreLane image, `tinytapeout/build/toolchain-env.sh` | per checkout or worktree | `tinytapeout/scripts/bootstrap-toolchain.sh`, pinned by `toolchain.lock` |
-| 3. Shell | opam env, `PDK_ROOT`, `.venv/bin` on `PATH` | one terminal | `source env.sh` |
-| 4. Build | `_build/`, emitted bundles, runs | derived from source | dune and `./flow.sh`, never the bootstrap |
+| 0. Host | git, Python/venv support, Docker-compatible runtime, HDL tools, Nix and group membership as needed | machine | you or your administrator; bootstrap detects prerequisites and prints guidance |
+| 1. OCaml | opam switch `5.2.0+ox` and this repository's dependencies | machine, shared with other Hardcaml checkouts | `scripts/ocaml-deps.sh`; installs missing packages without upgrading/downgrading shared packages |
+| 2. Flow | `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}` and the pinned LibreLane image | per checkout/worktree; an external support-tools checkout may be selected | `asic/tinytapeout/scripts/bootstrap-toolchain.sh`, pinned by `asic/tinytapeout/toolchain.lock` |
+| 3. Shell | opam environment, `PDK_ROOT`, support-tools location and `_flow_tools/venv/bin` on `PATH` | one terminal | `source scripts/env.sh` |
+| 4. Build/execution | `_build/`, `_flow_results/{adopted,flow-*,archives}` | derived from source and each execution | Dune and `asic/flow.sh` |
 
-A dependency that no opam repository carries is a sibling checkout in the workspace:
-`hardcaml_asic` is the one today. Layer 1 pins those to the checkout with
-`opam pin --kind=path`, so the switch builds against that working tree, uncommitted
-work included. The cost is that opam wants a rebuild after edits there, and that the
-pin names a directory which exists only on this machine.
+Layer 1 also resolves unpublished dependencies from sibling checkouts, currently
+`hardcaml_asic`. Its path pin can include uncommitted work in that checkout and
+requires rebuilding the installed package after dependency edits. Keep the
+recorded old ASIC API/revision; this layout migration is not an API upgrade.
 
-Layers 1 and 2 are both plain shell, called directly by `./bootstrap.sh`: dune cannot
-run before layer 1 exists, and making layer 2 wait for a compiled executable would mean
-building OCaml just to ask whether a Python environment and a PDK are in place.
-`./bootstrap.sh --check` therefore answers on a machine where layer 1 is still missing.
-Layer 3 cannot be a command at all, because a child process cannot change its parent
-shell. Scripts never depend on layer 3. They locate their own tools — `./flow.sh` runs
-dune through the pinned switch itself — so activation only affects commands you type
-yourself.
+Layers 1 and 2 are plain shell called directly by `scripts/bootstrap.sh`, so
+`--check` can report a missing OCaml environment without first compiling a CLI.
+Layer 3 must be sourced because a child process cannot change its parent's shell.
+The repository's scripts locate their own tools; flow builds use
+`scripts/with-switch.sh`. Activation is for commands you type by hand.
+
+`scripts/env.sh` reads `_flow_tools/toolchain-env.sh` and activates only
+`_flow_tools/venv`; precheck uses `_flow_tools/precheck-venv/bin/python` explicitly
+because its package pins conflict with the main environment. Re-sourcing removes
+the previously active environment from `PATH` instead of stacking environments.
 
 ## Scenarios
 
-| Situation | What is missing | Run |
-| --- | --- | --- |
-| New machine | Everything | Install the host packages that `./bootstrap.sh --check` names, then log out and back in for the docker/nix groups. Then `./bootstrap.sh`, which takes about 30 minutes for the switch plus about 2 GB of downloads. |
-| Fresh clone, machine already set up | Layer 2, possibly new opam packages | `./bootstrap.sh`. |
-| New worktree | Layer 2 again: it is per checkout (about 1.3 GB PDK and 600 MB of environments) | `./bootstrap.sh`, then `source env.sh` in that worktree. Sourcing switches `PATH` from the previous worktree rather than stacking. |
-| New terminal or reboot | Layer 3 only | `source env.sh`. If something still fails, `dune exec protemu -- doctor`. `./flow.sh` works without it. |
-| Reading an old run's results | Nothing; `collect` and `report` need only python3 and the run directory | `PROTEMU_RUN=/path/to/run ./flow.sh report`, on any machine that has the run, with no switch and no PDK. |
-| Pull or branch switch changed `toolchain.lock` or the opam file | Layer 1 or 2 out of date | `./bootstrap.sh`. `dune exec protemu -- bootstrap` converges layer 2 alone and only reports on layer 1. A changed PDK revision is fetched and checked out in place, and switching back to an older lockfile works offline. It stops only if the PDK checkout has local changes. |
-| OS upgrade, new python3 minor, or group membership lost | Layer 0 drift breaks layer 2 | `doctor` reports it. Recreating a venv means removing it yourself and rerunning; the bootstrap never deletes. |
-| Interrupted bootstrap | Partial layer 2 | Rerun. Anything it will not repair is named with the path to remove. |
-| Offline | Nothing may be fetched | `./bootstrap.sh --offline` validates and reuses what exists. |
-| Editor or LSP launched outside a shell | Layer 3 is invisible to it | Point the editor at switch `5.2.0+ox`. `env.sh` only affects terminals. |
+| Situation | Run / action |
+| --- | --- |
+| New machine | Install the host prerequisites named by `./scripts/bootstrap.sh --check`, including any required group membership; then run `./scripts/bootstrap.sh`. Switch creation and downloads can take substantial time/storage. |
+| Fresh clone or new worktree | Run `./scripts/bootstrap.sh`, then `source scripts/env.sh`. Flow environments are per checkout/worktree. |
+| New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 protemu -- doctor` for a report. `asic/flow.sh` does not require activation. |
+| Inspecting a recorded run | `PROTEMU_RUN=/path/to/run ./asic/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
+| Lockfile or opam dependencies changed | Rerun `./scripts/bootstrap.sh`. The CLI bootstrap command only reports on the OCaml layer. Managed clean PDK/support-tool checkouts are checked against the lock. |
+| Offline | `./scripts/bootstrap.sh --offline` validates/reuses existing state without fetching. |
+| Interrupted bootstrap | Rerun; inspect any partial state the script identifies rather than deleting it automatically. |
+| Python/OS/group-membership drift | Run `doctor`; inspect any environment that needs recreation. Bootstrap does not delete an existing environment for you. |
+| Editor/LSP outside an activated shell | Select switch `5.2.0+ox` in the editor; sourcing `scripts/env.sh` affects that terminal only. |
 
-## What owns what
+## Ownership and storage
 
-Provisioning, design inputs, and generated artifacts stay separate, and the
-boundary between them is what keeps a bootstrap from quietly becoming a build:
+- Authored ASIC inputs live in `asic/rtl/` and `asic/project/`; the bundle CLI is
+  `asic/cli/asic_bundle.ml`. Target locks/helpers are in `asic/tinytapeout/`.
+- Provisioned tools/runtime live under ignored `_flow_tools/`; design execution
+  output lives under ignored `_flow_results/`. Legacy staging uses
+  `_flow_results/legacy/p0-staged`.
+- The adopted bundle derives RTL source sets, timing constraints, TT metadata and
+  configuration from the typed declaration. Hand-maintained
+  `asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` are legacy
+  design inputs only.
+- Preserved physical evidence is under [`archive/legacy/`](../archive/legacy/);
+  [`archive/INDEX.md`](../archive/INDEX.md) records the byte-preserved moves.
+  `.dev/` contains local migration/installation bookkeeping, not provisioned flow
+  runtime. Existing legacy ignored state is not implicitly moved or reprovisioned.
 
-| Category | Examples | Owner |
-| --- | --- | --- |
-| Host prerequisites | git, python3, a container runtime, basic shell utilities | you or your OS administrator; the bootstrap only detects and prints |
-| Project-local toolchain | `.venv`, `.venv-precheck`, support-tools checkout, IHP PDK | the bootstrap, in the root `.venv` and ignored paths under `tinytapeout/` |
-| Tracked design inputs | Hardcaml source, the typed declaration, `toolchain.lock`, integration scripts | this repository |
-| Generated bundle | RTL, source sets, constraints, TT metadata/configuration, immutable manifest | `hardcaml_asic`, emitted from the declaration; see [flow.md](flow.md) |
+The bootstrap does not install host packages, use `sudo`, edit shell startup files,
+build/emit/harden a design, run precheck, select a different target, or delete runs.
+`--legacy-project` is the explicit exception for staging/configuration. Tool-version
+and target changes require reviewed lock/declaration changes; `6x4` remains the
+selected allocation. Submission/export and CI publication remain explicit work.
 
-The legacy path's hand-maintained `tinytapeout/info.yaml` and `src/config.json`
-are tracked design inputs of that path only; the adopted path derives both.
+## Qualification boundary
 
-## Boundaries
-
-The bootstrap does not:
-
-- install host packages, use `sudo`, or edit shell startup files
-- build the design, emit a bundle, or run hardening or precheck (layer 4)
-- stage the legacy P0 project, unless `--legacy-project` asks for it
-- move to newer tools. Changing a version is a reviewed edit to `toolchain.lock` or the opam file.
-- delete environments, PDKs, or runs
-
-These stay outside it as well, because each is a decision rather than a step:
-
-- selecting a different tile allocation, PDK, template, or clock target. `8x4`
-  in particular is not accepted before an explicit competition update and a
-  reviewed `toolchain.lock` change; `6x4` is authoritative until then.
-- choosing or editing RTL, wrapper pins, timing assumptions, or flow overrides.
-  The declaration owns configuration on the adopted path, and a conflicting
-  override is an error rather than a precedence rule.
-- deleting physical runs or submission artifacts, uploading them, enabling CI,
-  or submitting the design.
-
-Per-worktree duplication of layer 2 is the known cost of this layout. A shared cache
-keyed by lockfile revision is deferred until usage justifies it: no reusable
-provisioning package or new cache layout is required by the current milestone, and
-the long-term home for one is a decision to make from actual use.
+The 2026-11-11 layout migration checked script/root discovery, activation and
+stub-only flow orchestration, plus nonphysical build/bundle preservation. It did
+not provision tools or rerun physical implementation. The last recorded full
+physical qualification is the historical September 2026 observable-top evidence
+linked from [flow.md](flow.md#verified-behavior-and-known-limits); it is not a new
+qualification of the current production top or relocated runtime layout.

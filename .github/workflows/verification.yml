@@ -33,6 +33,14 @@ jobs:
         working-directory: scaf
         run: scripts/ocaml-deps.sh --install
 
+      - name: Check relocated flow entry points without provisioning or hardening
+        working-directory: scaf
+        run: |
+          for script in scripts/*.sh asic/flow.sh asic/tinytapeout/scripts/*.sh; do
+            bash -n "$script"
+          done
+          ./asic/tinytapeout/scripts/check-flow.sh
+
       - name: Run every required verification tier
         working-directory: scaf
         run: ./scripts/with-switch.sh dune build @verification -j5

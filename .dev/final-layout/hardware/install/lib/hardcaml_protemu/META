@@ -1,0 +1,1965 @@
+description = ""
+requires =
+"hardcaml_protemu.asic_bringup
+ 
+ hardcaml_protemu.controller
+ 
+ hardcaml_protemu.core
+ 
+ hardcaml_protemu.core_legacy
+ 
+ hardcaml_protemu.host_link
+ 
+ hardcaml_protemu.mechanisms
+ 
+ hardcaml_protemu.mechanisms_staging
+ 
+ hardcaml_protemu.system"
+archive(byte) = "hardcaml_protemu.cma"
+archive(native) = "hardcaml_protemu.cmxa"
+plugin(byte) = "hardcaml_protemu.cma"
+plugin(native) = "hardcaml_protemu.cmxs"
+package "asic_bringup" (
+  directory = "asic_bringup"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_asic_bringup.cma"
+  archive(native) = "protemu_asic_bringup.cmxa"
+  plugin(byte) = "protemu_asic_bringup.cma"
+  plugin(native) = "protemu_asic_bringup.cmxs"
+  version = "7269746-dirty"
+)
+package "controller" (
+  directory = "controller"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_controller.cma"
+  archive(native) = "protemu_controller.cmxa"
+  plugin(byte) = "protemu_controller.cma"
+  plugin(native) = "protemu_controller.cmxs"
+  version = "7269746-dirty"
+)
+package "core" (
+  directory = "core"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.controller
+   
+   
+   
+   hardcaml_protemu.isa
+   
+   
+   
+   hardcaml_protemu.mechanisms
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_core.cma"
+  archive(native) = "protemu_core.cmxa"
+  plugin(byte) = "protemu_core.cma"
+  plugin(native) = "protemu_core.cmxs"
+  version = "7269746-dirty"
+)
+package "core_legacy" (
+  directory = "core_legacy"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.controller
+   
+   
+   
+   hardcaml_protemu.core
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_core_legacy.cma"
+  archive(native) = "protemu_core_legacy.cmxa"
+  plugin(byte) = "protemu_core_legacy.cma"
+  plugin(native) = "protemu_core_legacy.cmxs"
+  version = "7269746-dirty"
+)
+package "host" (
+  directory = "host"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml_protemu.isa
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_host.cma"
+  archive(native) = "protemu_host.cmxa"
+  plugin(byte) = "protemu_host.cma"
+  plugin(native) = "protemu_host.cmxs"
+  version = "7269746-dirty"
+)
+package "host_link" (
+  directory = "host_link"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.controller
+   
+   
+   
+   hardcaml_protemu.core
+   
+   
+   
+   hardcaml_protemu.host_link_protocol
+   
+   
+   
+   hardcaml_protemu.isa
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_host_link.cma"
+  archive(native) = "protemu_host_link.cmxa"
+  plugin(byte) = "protemu_host_link.cma"
+  plugin(native) = "protemu_host_link.cmxs"
+  version = "7269746-dirty"
+)
+package "host_link_protocol" (
+  directory = "host_link_protocol"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "host_link_protocol.cma"
+  archive(native) = "host_link_protocol.cmxa"
+  plugin(byte) = "host_link_protocol.cma"
+  plugin(native) = "host_link_protocol.cmxs"
+  version = "7269746-dirty"
+)
+package "host_link_wire" (
+  directory = "host_link_wire"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml_protemu.host_link_protocol
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_host_link_wire.cma"
+  archive(native) = "protemu_host_link_wire.cmxa"
+  plugin(byte) = "protemu_host_link_wire.cma"
+  plugin(native) = "protemu_host_link_wire.cmxs"
+  version = "7269746-dirty"
+)
+package "isa" (
+  directory = "isa"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_isa.cma"
+  archive(native) = "protemu_isa.cmxa"
+  plugin(byte) = "protemu_isa.cma"
+  plugin(native) = "protemu_isa.cmxs"
+  version = "7269746-dirty"
+)
+package "mechanisms" (
+  directory = "mechanisms"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_mechanisms.cma"
+  archive(native) = "protemu_mechanisms.cmxa"
+  plugin(byte) = "protemu_mechanisms.cma"
+  plugin(native) = "protemu_mechanisms.cmxs"
+  version = "7269746-dirty"
+)
+package "mechanisms_staging" (
+  directory = "mechanisms_staging"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.mechanisms
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_mechanisms_staging.cma"
+  archive(native) = "protemu_mechanisms_staging.cmxa"
+  plugin(byte) = "protemu_mechanisms_staging.cma"
+  plugin(native) = "protemu_mechanisms_staging.cmxs"
+  version = "7269746-dirty"
+)
+package "simulator" (
+  directory = "simulator"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.controller
+   
+   
+   
+   hardcaml_protemu.core
+   
+   
+   
+   hardcaml_protemu.host
+   
+   
+   
+   hardcaml_protemu.isa
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_simulator.cma"
+  archive(native) = "protemu_simulator.cmxa"
+  plugin(byte) = "protemu_simulator.cma"
+  plugin(native) = "protemu_simulator.cmxs"
+  version = "7269746-dirty"
+)
+package "system" (
+  directory = "system"
+  description = ""
+  requires =
+  "base
+   
+   
+   
+   base_quickcheck
+   
+   
+   
+   base_quickcheck.ppx_quickcheck.runtime
+   
+   
+   
+   basement
+   
+   
+   
+   bin_prot
+   
+   
+   
+   core
+   
+   
+   
+   fieldslib
+   
+   
+   
+   hardcaml
+   
+   
+   
+   hardcaml.ppx_hardcaml_runtime0
+   
+   
+   
+   hardcaml_protemu.controller
+   
+   
+   
+   hardcaml_protemu.core
+   
+   
+   
+   hardcaml_protemu.host_link
+   
+   
+   
+   hardcaml_protemu.isa
+   
+   
+   
+   ppx_assert.runtime-lib
+   
+   
+   
+   ppx_bench.config
+   
+   
+   
+   ppx_bench.runtime-lib
+   
+   
+   
+   ppx_compare.runtime-lib
+   
+   
+   
+   ppx_enumerate.runtime-lib
+   
+   
+   
+   ppx_expect.config
+   
+   
+   
+   ppx_expect.runtime
+   
+   
+   
+   ppx_hardcaml.runtime
+   
+   
+   
+   ppx_hash.runtime-lib
+   
+   
+   
+   ppx_here.runtime-lib
+   
+   
+   
+   ppx_inline_test.config
+   
+   
+   
+   ppx_inline_test.runtime-lib
+   
+   
+   
+   ppx_log.syntax
+   
+   
+   
+   ppx_log.types
+   
+   
+   
+   ppx_module_timer.runtime
+   
+   
+   
+   ppx_portable.runtime
+   
+   
+   
+   ppx_sexp_conv.runtime-lib
+   
+   
+   
+   ppx_stable_witness.runtime
+   
+   
+   
+   ppx_string.runtime
+   
+   
+   
+   ppx_string_conv.runtime
+   
+   
+   
+   ppx_typed_fields.typed_fields_lib
+   
+   
+   
+   ppx_typed_fields.typed_variants_lib
+   
+   
+   
+   sexplib
+   
+   
+   
+   sexplib0
+   
+   
+   
+   typerep
+   
+   
+   
+   variantslib"
+  archive(byte) = "protemu_system.cma"
+  archive(native) = "protemu_system.cmxa"
+  plugin(byte) = "protemu_system.cma"
+  plugin(native) = "protemu_system.cmxs"
+  version = "7269746-dirty"
+)
+version = "7269746-dirty"

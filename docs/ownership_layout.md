@@ -1,5 +1,11 @@
 # Ownership-oriented layout migration
 
+**Historical slice:** the subsequent [final layout migration](final_layout_migration.md)
+replaced the transitional root build facade, removed the installed flat hardware
+API, renamed `chip_top/` to `asic/`, and colocated software/model tests. Use
+[repository_layout.md](repository_layout.md) for current paths. The maps and
+preservation results below describe the earlier completed slice.
+
 2026-11-11. **Implemented and verified; owner review pending.** This is the bounded ownership/path
 amendment to [architecture_migration.md](architecture_migration.md), not a new
 hardware milestone or a replacement for the verification-overhaul queue.

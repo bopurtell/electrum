@@ -1,0 +1,7 @@
+[
+  "ip/host_link/verif/archived/hl4a/hardware_loader_testbench.ml",
+  "ip/host_link/verif/archived/hl4a/dune",
+  "test/host_link_protocol_compatibility/compatibility_tests.ml",
+  "test/host_link_protocol_compatibility/dune",
+  "host_link_wire/dune"
+]

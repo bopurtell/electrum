@@ -6,7 +6,7 @@
 #
 # The switch is shared with every other Hardcaml checkout on the machine, so this
 # script's own default is to check and print commands; changes happen only with
-# --install, and only ever add. ./bootstrap.sh passes --install unless it was given
+# --install, and only ever add. ./scripts/bootstrap.sh passes --install unless it was given
 # --check, so the converging and the reporting mode both have one obvious spelling.
 #
 # `opam install . --deps-only` is deliberately not used, not even as a dry run:
@@ -195,7 +195,7 @@ fi
 if [[ ${#missing[@]} -gt 0 ]]; then
     if [[ $install -eq 0 ]]; then
         die "$EX_PREREQ" "missing opam packages: ${missing[*]}" \
-            "Rerun with --install (./bootstrap.sh does that by default), or run:" \
+            "Rerun with --install (./scripts/bootstrap.sh does that by default), or run:" \
             "  opam install --switch=$SWITCH ${missing[*]}"
     fi
 

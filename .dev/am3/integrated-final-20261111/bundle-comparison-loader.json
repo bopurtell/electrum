@@ -1,0 +1,452 @@
+{
+  "inventory": {
+    "added": [
+      "host_link_protocol/codec.ml",
+      "host_link_protocol/definitions.ml",
+      "host_link_protocol/dune",
+      "host_link_protocol/host_link_protocol.ml",
+      "host_link_protocol/host_link_protocol.mli"
+    ],
+    "after_count": 47,
+    "before_count": 44,
+    "changed": [
+      {
+        "after": {
+          "copy": "inputs/bin/asic_bundle.ml",
+          "git_status": "",
+          "path": "bin/asic_bundle.ml",
+          "sha256": "730153080e1d7af7b7eacad8db486efb5c71525f34ea31fa3fa91ffb17ad00a0"
+        },
+        "before": {
+          "copy": "inputs/bin/asic_bundle.ml",
+          "git_status": " M bin/asic_bundle.ml",
+          "path": "bin/asic_bundle.ml",
+          "sha256": "730153080e1d7af7b7eacad8db486efb5c71525f34ea31fa3fa91ffb17ad00a0"
+        },
+        "path": "bin/asic_bundle.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/bin/dune",
+          "git_status": "",
+          "path": "bin/dune",
+          "sha256": "b01f1325af61252ddf2ed7028b3985867401780a42988f6751bd0976ae18e73a"
+        },
+        "before": {
+          "copy": "inputs/bin/dune",
+          "git_status": " M bin/dune",
+          "path": "bin/dune",
+          "sha256": "b01f1325af61252ddf2ed7028b3985867401780a42988f6751bd0976ae18e73a"
+        },
+        "path": "bin/dune"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/project/chip_project.ml",
+          "git_status": " M chip_top/project/chip_project.ml",
+          "path": "chip_top/project/chip_project.ml",
+          "sha256": "089d42ddb8e8cb588275378e173cea5a8036f4552c287cab30c6fe114234ffd9"
+        },
+        "before": {
+          "copy": "inputs/chip_top/project/chip_project.ml",
+          "git_status": "?? chip_top/project/chip_project.ml",
+          "path": "chip_top/project/chip_project.ml",
+          "sha256": "ce7a1b73ceb019e98c46c1eef56813af43f2a137837fd12d23f35e22088f9ded"
+        },
+        "path": "chip_top/project/chip_project.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/project/dune",
+          "git_status": "",
+          "path": "chip_top/project/dune",
+          "sha256": "3be26b3d32babb07226e3db8eb1c7610e8de63e211e55e65f8853b97bdc1f92e"
+        },
+        "before": {
+          "copy": "inputs/chip_top/project/dune",
+          "git_status": "?? chip_top/project/dune",
+          "path": "chip_top/project/dune",
+          "sha256": "3be26b3d32babb07226e3db8eb1c7610e8de63e211e55e65f8853b97bdc1f92e"
+        },
+        "path": "chip_top/project/dune"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/rtl/package_top.ml",
+          "git_status": "",
+          "path": "chip_top/rtl/package_top.ml",
+          "sha256": "9728a48923eb1a30fc1a99f52436749c4cac1d4d2f9b3e160ae783137531d1e0"
+        },
+        "before": {
+          "copy": "inputs/chip_top/rtl/package_top.ml",
+          "git_status": "?? chip_top/rtl/package_top.ml",
+          "path": "chip_top/rtl/package_top.ml",
+          "sha256": "9728a48923eb1a30fc1a99f52436749c4cac1d4d2f9b3e160ae783137531d1e0"
+        },
+        "path": "chip_top/rtl/package_top.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/rtl/program_memory.ml",
+          "git_status": "",
+          "path": "chip_top/rtl/program_memory.ml",
+          "sha256": "8ded9a57dc3415104bf003486aa89566ce17752d0f93ea357384c67d62f64120"
+        },
+        "before": {
+          "copy": "inputs/chip_top/rtl/program_memory.ml",
+          "git_status": "?? chip_top/rtl/program_memory.ml",
+          "path": "chip_top/rtl/program_memory.ml",
+          "sha256": "8ded9a57dc3415104bf003486aa89566ce17752d0f93ea357384c67d62f64120"
+        },
+        "path": "chip_top/rtl/program_memory.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/emulator_core/rtl/control_port.ml",
+          "git_status": "",
+          "path": "ip/emulator_core/rtl/control_port.ml",
+          "sha256": "fc3e9511ed1f5d5f553b54b70e7198f027e4e684cdae364b6b9d366aa5be6872"
+        },
+        "before": {
+          "copy": "inputs/ip/emulator_core/rtl/control_port.ml",
+          "git_status": "?? ip/emulator_core/rtl/control_port.ml",
+          "path": "ip/emulator_core/rtl/control_port.ml",
+          "sha256": "fc3e9511ed1f5d5f553b54b70e7198f027e4e684cdae364b6b9d366aa5be6872"
+        },
+        "path": "ip/emulator_core/rtl/control_port.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/emulator_core/rtl/emulator_core.ml",
+          "git_status": "",
+          "path": "ip/emulator_core/rtl/emulator_core.ml",
+          "sha256": "99517da9194bd67ce885e9c1dfb1dcd9ad4623140ba73df85f7d2239264e0245"
+        },
+        "before": {
+          "copy": "inputs/ip/emulator_core/rtl/emulator_core.ml",
+          "git_status": "?? ip/emulator_core/rtl/emulator_core.ml",
+          "path": "ip/emulator_core/rtl/emulator_core.ml",
+          "sha256": "99517da9194bd67ce885e9c1dfb1dcd9ad4623140ba73df85f7d2239264e0245"
+        },
+        "path": "ip/emulator_core/rtl/emulator_core.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/emulator_core/rtl/execution_unit.ml",
+          "git_status": "",
+          "path": "ip/emulator_core/rtl/execution_unit.ml",
+          "sha256": "88c435fa87e6a5fb4c14485b5de671929bc8a279212c8b750b48a29e67c33993"
+        },
+        "before": {
+          "copy": "inputs/ip/emulator_core/rtl/execution_unit.ml",
+          "git_status": "?? ip/emulator_core/rtl/execution_unit.ml",
+          "path": "ip/emulator_core/rtl/execution_unit.ml",
+          "sha256": "88c435fa87e6a5fb4c14485b5de671929bc8a279212c8b750b48a29e67c33993"
+        },
+        "path": "ip/emulator_core/rtl/execution_unit.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/emulator_core/rtl/instruction_decoder.ml",
+          "git_status": "",
+          "path": "ip/emulator_core/rtl/instruction_decoder.ml",
+          "sha256": "cd857fdd0730fc7eeaddad72bcbdc132fb55f15ec307cfedf64496f57a71ebe1"
+        },
+        "before": {
+          "copy": "inputs/ip/emulator_core/rtl/instruction_decoder.ml",
+          "git_status": "?? ip/emulator_core/rtl/instruction_decoder.ml",
+          "path": "ip/emulator_core/rtl/instruction_decoder.ml",
+          "sha256": "cd857fdd0730fc7eeaddad72bcbdc132fb55f15ec307cfedf64496f57a71ebe1"
+        },
+        "path": "ip/emulator_core/rtl/instruction_decoder.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/emulator_core/rtl/primitive_dispatch.ml",
+          "git_status": "",
+          "path": "ip/emulator_core/rtl/primitive_dispatch.ml",
+          "sha256": "a22640caa2cfa4a7a1e372ed53a23772aadf99cbba314d4d0f533542ec2004d5"
+        },
+        "before": {
+          "copy": "inputs/ip/emulator_core/rtl/primitive_dispatch.ml",
+          "git_status": "?? ip/emulator_core/rtl/primitive_dispatch.ml",
+          "path": "ip/emulator_core/rtl/primitive_dispatch.ml",
+          "sha256": "a22640caa2cfa4a7a1e372ed53a23772aadf99cbba314d4d0f533542ec2004d5"
+        },
+        "path": "ip/emulator_core/rtl/primitive_dispatch.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/command_dispatch.ml",
+          "git_status": " M ip/host_link/rtl/command_dispatch.ml",
+          "path": "ip/host_link/rtl/command_dispatch.ml",
+          "sha256": "3039b83e2e919ca07493f6c97cd8bf84d31b9a8be29d282bdf1280962175f8bc"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/command_dispatch.ml",
+          "git_status": "?? ip/host_link/rtl/command_dispatch.ml",
+          "path": "ip/host_link/rtl/command_dispatch.ml",
+          "sha256": "718284d85b94e6b366fdb20044bdbd0639140d5ee0a6015ad8587874c5bf93e6"
+        },
+        "path": "ip/host_link/rtl/command_dispatch.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/frame_rx.ml",
+          "git_status": " M ip/host_link/rtl/frame_rx.ml",
+          "path": "ip/host_link/rtl/frame_rx.ml",
+          "sha256": "cfbe41d566d8c78a0721f3ecf2f0c809c7b03b8aceb07e4b803adbbaf3f3950e"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/frame_rx.ml",
+          "git_status": "?? ip/host_link/rtl/frame_rx.ml",
+          "path": "ip/host_link/rtl/frame_rx.ml",
+          "sha256": "08b8f81767b934793f7be6d7188301d0f85cb8e8b9fc400a82b6b5ceb65fff06"
+        },
+        "path": "ip/host_link/rtl/frame_rx.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/frame_tx.ml",
+          "git_status": " M ip/host_link/rtl/frame_tx.ml",
+          "path": "ip/host_link/rtl/frame_tx.ml",
+          "sha256": "20762c63217bffb64cb08d5a3a96cd3d6314617678c0ad91cad017037fa17b85"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/frame_tx.ml",
+          "git_status": "?? ip/host_link/rtl/frame_tx.ml",
+          "path": "ip/host_link/rtl/frame_tx.ml",
+          "sha256": "e981c3cb08d14bc376a46d2842124c7de3b880aef015c43d981baf95eb077fd2"
+        },
+        "path": "ip/host_link/rtl/frame_tx.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/host_link.ml",
+          "git_status": "",
+          "path": "ip/host_link/rtl/host_link.ml",
+          "sha256": "9118371f55c401cfd54dea409509f1e9d56d2946d2b60e768426f24d7651819a"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/host_link.ml",
+          "git_status": "?? ip/host_link/rtl/host_link.ml",
+          "path": "ip/host_link/rtl/host_link.ml",
+          "sha256": "9118371f55c401cfd54dea409509f1e9d56d2946d2b60e768426f24d7651819a"
+        },
+        "path": "ip/host_link/rtl/host_link.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/serial_phy.ml",
+          "git_status": "",
+          "path": "ip/host_link/rtl/serial_phy.ml",
+          "sha256": "a2cc83e102d7da3c900d8b089a455433f784dd59e0a3572880fa6ed4361788a7"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/serial_phy.ml",
+          "git_status": "?? ip/host_link/rtl/serial_phy.ml",
+          "path": "ip/host_link/rtl/serial_phy.ml",
+          "sha256": "a2cc83e102d7da3c900d8b089a455433f784dd59e0a3572880fa6ed4361788a7"
+        },
+        "path": "ip/host_link/rtl/serial_phy.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/wire_crc.ml",
+          "git_status": " M ip/host_link/rtl/wire_crc.ml",
+          "path": "ip/host_link/rtl/wire_crc.ml",
+          "sha256": "793bf35d71fae76b5270a979ca1ca14e63e79e73c1b1c21400d555cdd8733e22"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/wire_crc.ml",
+          "git_status": "?? ip/host_link/rtl/wire_crc.ml",
+          "path": "ip/host_link/rtl/wire_crc.ml",
+          "sha256": "40a15744ea3c7c878306c960cd707e4cc4ee2f95dd7a6fbdf5cc7365406a8bdf"
+        },
+        "path": "ip/host_link/rtl/wire_crc.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/host_link/rtl/wire_layout.ml",
+          "git_status": " M ip/host_link/rtl/wire_layout.ml",
+          "path": "ip/host_link/rtl/wire_layout.ml",
+          "sha256": "9306be1f937bc58cefc1a9bebd3d2e5dce39199996487a02d7e772977cebb297"
+        },
+        "before": {
+          "copy": "inputs/ip/host_link/rtl/wire_layout.ml",
+          "git_status": "?? ip/host_link/rtl/wire_layout.ml",
+          "path": "ip/host_link/rtl/wire_layout.ml",
+          "sha256": "adaaefeef062b5469eb0c3480bddf37fb5e14ce911630e7b91caa1150b6e4ac7"
+        },
+        "path": "ip/host_link/rtl/wire_layout.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/byte_fifo.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/byte_fifo.ml",
+          "sha256": "78ec48549dbde1626498d54be76bebacea0c7202ebb9ebc86ccebd78777b444b"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/byte_fifo.ml",
+          "git_status": "?? ip/mechanisms/rtl/byte_fifo.ml",
+          "path": "ip/mechanisms/rtl/byte_fifo.ml",
+          "sha256": "78ec48549dbde1626498d54be76bebacea0c7202ebb9ebc86ccebd78777b444b"
+        },
+        "path": "ip/mechanisms/rtl/byte_fifo.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/input_events.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/input_events.ml",
+          "sha256": "1a9ca08d6cb57c13559d16772666da410e60cb0ac14181e00d7b7db067db9357"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/input_events.ml",
+          "git_status": "?? ip/mechanisms/rtl/input_events.ml",
+          "path": "ip/mechanisms/rtl/input_events.ml",
+          "sha256": "1a9ca08d6cb57c13559d16772666da410e60cb0ac14181e00d7b7db067db9357"
+        },
+        "path": "ip/mechanisms/rtl/input_events.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/pin_bank.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/pin_bank.ml",
+          "sha256": "c7d64792d20bfad41fae16db7dc58ba851ca0b83d84a8c9be4a9333cfe5d5c87"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/pin_bank.ml",
+          "git_status": "?? ip/mechanisms/rtl/pin_bank.ml",
+          "path": "ip/mechanisms/rtl/pin_bank.ml",
+          "sha256": "c7d64792d20bfad41fae16db7dc58ba851ca0b83d84a8c9be4a9333cfe5d5c87"
+        },
+        "path": "ip/mechanisms/rtl/pin_bank.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/shift_lane.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/shift_lane.ml",
+          "sha256": "2d280698ae28fbd44959d4bdf61e2592ce425fe2c5e645076117adc98ba805ab"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/shift_lane.ml",
+          "git_status": "?? ip/mechanisms/rtl/shift_lane.ml",
+          "path": "ip/mechanisms/rtl/shift_lane.ml",
+          "sha256": "2d280698ae28fbd44959d4bdf61e2592ce425fe2c5e645076117adc98ba805ab"
+        },
+        "path": "ip/mechanisms/rtl/shift_lane.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/staging/observed_transfer.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/staging/observed_transfer.ml",
+          "sha256": "1ba17cdd8e3ab20140cff225784bd6af37db655b36f921ebbd5dc21ad890201e"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/staging/observed_transfer.ml",
+          "git_status": "?? ip/mechanisms/rtl/staging/observed_transfer.ml",
+          "path": "ip/mechanisms/rtl/staging/observed_transfer.ml",
+          "sha256": "1ba17cdd8e3ab20140cff225784bd6af37db655b36f921ebbd5dc21ad890201e"
+        },
+        "path": "ip/mechanisms/rtl/staging/observed_transfer.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/mechanisms/rtl/timing.ml",
+          "git_status": "",
+          "path": "ip/mechanisms/rtl/timing.ml",
+          "sha256": "c54d13d17f9d5b874407002061b99bff1181de0c9fedadad02338eb4a5f1d651"
+        },
+        "before": {
+          "copy": "inputs/ip/mechanisms/rtl/timing.ml",
+          "git_status": "?? ip/mechanisms/rtl/timing.ml",
+          "path": "ip/mechanisms/rtl/timing.ml",
+          "sha256": "c54d13d17f9d5b874407002061b99bff1181de0c9fedadad02338eb4a5f1d651"
+        },
+        "path": "ip/mechanisms/rtl/timing.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "git_status": "",
+          "path": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1"
+        },
+        "before": {
+          "copy": "inputs/ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "git_status": "?? ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "path": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1"
+        },
+        "path": "ip/program_memory_controller/rtl/program_memory_controller.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/lib/dune",
+          "git_status": " M lib/dune",
+          "path": "lib/dune",
+          "sha256": "8f319f0faa415c9a2d623f9e4af5b9d6090591ce28866c26a882d9392182e3c2"
+        },
+        "before": {
+          "copy": "inputs/lib/dune",
+          "git_status": " M lib/dune",
+          "path": "lib/dune",
+          "sha256": "2a8ac2528b381f6b1b3dc4973137069f98ebed3cc0d39b126a03938316a0548a"
+        },
+        "path": "lib/dune"
+      },
+      {
+        "after": {
+          "copy": "inputs/rtl/protemu_top.ml",
+          "git_status": "",
+          "path": "rtl/protemu_top.ml",
+          "sha256": "a03edd04c893d4428007ceaa725abaca1a2c7225402a4b0cdb19850430125280"
+        },
+        "before": {
+          "copy": "inputs/rtl/protemu_top.ml",
+          "git_status": "?? rtl/protemu_top.ml",
+          "path": "rtl/protemu_top.ml",
+          "sha256": "a03edd04c893d4428007ceaa725abaca1a2c7225402a4b0cdb19850430125280"
+        },
+        "path": "rtl/protemu_top.ml"
+      }
+    ],
+    "identity_after": "75eb70c72e01f0371c90b955b811ae8bced8248d7b16a977ee32adbea8aed9df",
+    "identity_before": "6aa524a6212878dc73b19bf788ca7b6b2d75a35fe238084bd7fb826a0836612b",
+    "removed": [
+      "host_link_wire/dune",
+      "host_link_wire/wire.ml"
+    ]
+  },
+  "manifest_fields_equal": {
+    "project": true,
+    "requested_tools": true,
+    "resources": true,
+    "simulation_resources": true,
+    "simulation_sources": true,
+    "synthesis_sources": true,
+    "top_module": true
+  },
+  "pins_constraints_config_equal": {
+    "constraints/top.sdc": true,
+    "info.yaml": true,
+    "src/config.json": true
+  },
+  "rtl": {
+    "simulation": {
+      "baseline_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+      "byte_equal": true,
+      "current_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d"
+    },
+    "synthesis": {
+      "baseline_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+      "byte_equal": true,
+      "current_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c"
+    }
+  }
+}

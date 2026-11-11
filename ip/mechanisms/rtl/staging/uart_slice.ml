@@ -30,6 +30,9 @@
 open! Core
 open! Hardcaml
 open! Signal
+module Pin_bank = Protemu_mechanisms.Pin_bank
+module Shift_lane = Protemu_mechanisms.Shift_lane
+module Timing = Protemu_mechanisms.Timing
 
 module I = struct
   type 'a t =

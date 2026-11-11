@@ -41,7 +41,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 module Evsim = Hardcaml_event_driven_sim.Four_state_simulator
 module Logic = Hardcaml_event_driven_sim.Four_state_logic
 module Circuit = Evsim.With_interface (Input_events.I) (Input_events.O)

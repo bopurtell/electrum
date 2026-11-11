@@ -11,7 +11,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_controller
 open! Protemu_f_model
 module Sim = Cyclesim.With_interface (Program_memory_controller.I) (Program_memory_controller.O)
 

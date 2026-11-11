@@ -14,11 +14,11 @@
   frame_tx_read_tests
   frame_tx_lifecycle_tests
   frame_tx_diagnostics_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core hardcaml hardcaml_protemu host_link_protocol)
+ (libraries core hardcaml protemu_host_link host_link_protocol)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

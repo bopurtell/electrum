@@ -1,0 +1,14 @@
+(executable
+ (name generate_core)
+ (libraries
+  core
+  hardcaml
+  jane_rope
+  protemu_controller
+  protemu_core
+  protemu_core_legacy
+  protemu_system)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

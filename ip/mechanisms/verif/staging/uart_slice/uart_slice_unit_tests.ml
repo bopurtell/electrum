@@ -12,7 +12,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms_staging
 open! Uart_slice_testbench
 
 let%test_unit "P2.7 the pin bank carries the frame an independent receiver decodes" =

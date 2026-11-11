@@ -1,0 +1,11 @@
+; Selected-ISA programs only: no model, RTL, simulator or host dependency.
+
+(library
+ (name protemu_firmware_examples)
+ (libraries core protemu_isa)
+ (flags
+  (:standard -open Protemu_isa))
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

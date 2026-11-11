@@ -1,0 +1,11 @@
+; Pure vocabulary/layouts and a separate software byte codec. The explicit root
+; facade prevents an extra Host_link_protocol.Host_link_protocol namespace.
+
+(library
+ (name host_link_protocol)
+ (public_name hardcaml_protemu.host_link_protocol)
+ (libraries core)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

@@ -1,5 +1,5 @@
-(* Run with: dune exec test/primitives/input_events/input_events_four_state_bench.exe --
-   TRIALS *)
+(* Run with: dune exec
+   ip/mechanisms/verif/blocks/input_events/input_events_four_state_bench.exe -- TRIALS *)
 
 (* The cost of the four-state property, beside the two-state timed runner on the same
    block and an equivalent scenario, so the ratio is a statement about the logic value
@@ -59,7 +59,7 @@ let () =
   measure "two-state-startup" (fun () ->
     ignore
       (Two_state.Circuit.with_processes
-         (Hardcaml_protemu.Input_events.create (Scope.create ~flatten_design:true ()))
+         (Protemu_mechanisms.Input_events.create (Scope.create ~flatten_design:true ()))
          (fun _ _ -> [])
        : Two_state.Circuit.testbench));
   measure "four-state-startup" (fun () ->

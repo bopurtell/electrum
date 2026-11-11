@@ -6,7 +6,7 @@
   observed_transfer_timing_testbench
   observed_transfer_timing_tests
   observed_transfer_unit_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
@@ -14,7 +14,8 @@
   core
   hardcaml
   hardcaml_event_driven_sim
-  hardcaml_protemu
+  protemu_mechanisms
+  protemu_mechanisms_staging
   protemu_f_model
   protemu_isa
   protemu_test_common)

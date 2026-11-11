@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 open! Input_events_testbench
 
 let%test_unit "P2.2 synchronizer, set-wins acknowledge, and overflow" =

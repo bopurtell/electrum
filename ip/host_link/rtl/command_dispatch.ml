@@ -30,6 +30,9 @@
 open! Core
 open! Hardcaml
 open! Signal
+module Control_port = Protemu_core.Control_port
+module Execution_unit = Protemu_core.Execution_unit
+module Program_memory_controller = Protemu_controller.Program_memory_controller
 module Wire = Host_link_protocol
 
 (* Response sizing derived from the wire limits, and the descriptor INFO reports. *)

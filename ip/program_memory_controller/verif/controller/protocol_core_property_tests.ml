@@ -184,10 +184,11 @@ let%expect_test "bounded load/access/fetch schedules agree with the independent 
 let%expect_test "generated core scenarios record an executable rerun" =
   print_endline
     (Replay.rerun_command
-       ~source_file:"test/core/protocol_core/protocol_core_property_tests.ml"
+       ~source_file:
+         "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml"
        ~settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=240 PROTEMU_SIZE=32 dune runtest test/core/protocol_core --force
+    PROTEMU_SEED=20260920 PROTEMU_TRIALS=240 PROTEMU_SIZE=32 dune runtest ip/program_memory_controller/verif/controller --force
     |}]
 ;;

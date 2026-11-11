@@ -16,6 +16,7 @@
 open! Core
 open! Hardcaml
 open! Signal
+module Program_memory_controller = Protemu_controller.Program_memory_controller
 
 module I = struct
   type 'a t =

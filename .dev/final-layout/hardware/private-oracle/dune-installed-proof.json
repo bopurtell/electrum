@@ -1,0 +1,7 @@
+{
+  "canonical_installed_consumers": 8,
+  "canonical_consumer_root": "/home/wayne/devel/jane/hardcaml_protemu/.dev/final-layout/hardware/private-oracle/installed-check-final/dune-canonical",
+  "root_library_consumer": "/home/wayne/devel/jane/hardcaml_protemu/.dev/final-layout/hardware/private-oracle/installed-check-final/dune-reject-flat",
+  "root_library_rejected": true,
+  "namespace_container_without_main_library_valid": true
+}

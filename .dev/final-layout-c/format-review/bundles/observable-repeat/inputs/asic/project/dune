@@ -1,0 +1,7 @@
+(library
+ (name protemu_chip_project)
+ (libraries core hardcaml hardcaml_asic protemu_asic_rtl)
+ (preprocess
+  (pps ppx_hardcaml ppx_jane))
+ (lint
+  (pps ppx_js_style)))

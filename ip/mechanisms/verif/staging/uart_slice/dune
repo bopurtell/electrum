@@ -1,5 +1,5 @@
 ; P2.7's first working slice.  Its directed monitor/model/RTL evidence stays local; the
-; generated property reuses test/common's settings and source-identity record without
+; generated property reuses verif/common's settings and source-identity record without
 ; forcing these purpose-built frame loops through Env.
 
 (library
@@ -10,14 +10,14 @@
   uart_slice_testbench
   uart_slice_unit_tests
   uart_slice_property_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_mechanisms_staging
   protemu_f_model
   protemu_test_common
   base_quickcheck
@@ -40,7 +40,7 @@
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_mechanisms_staging
   protemu_f_model
   protemu_uart_slice_tests)
  (preprocess

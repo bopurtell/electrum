@@ -1,5 +1,11 @@
 # Protocol emulator phase plan
 
+**Final layout update, 2026-11-11:** [current repository layout](repository_layout.md)
+uses singular `asic/`, wrapped IP libraries, owner-local software/model tests and
+`archive/legacy/`. The installed flat hardware API is removed; only the frozen
+oracle has private compatibility support. [Final evidence](final_layout_migration.md)
+records unchanged hardware outputs,481 registrations and42 archived files.
+
 **Structural update, 2026-11-11:** [ownership migration](ownership_layout.md) and
 chip/package extraction are implemented and verified against an identified current
 baseline. [Repository layout](repository_layout.md) owns current paths. AM3's pure
@@ -50,14 +56,15 @@ the corresponding decision has evidence.
   dependencies and measured risk; use the architecture document for target context.
 
 Follow [formatting_guide.md](formatting_guide.md) for source changes. Current
-hardware lives under `ip/*/rtl`, `rtl/` and `chip_top/rtl`; `lib/` is its public
-build facade. Owner-local `verif/` and shared/system root `verif/` contain DUT
-verification; `test/` contains software/model/tool checks. `bin/` retains executable
-entry points, `isa/` the instruction specification/assembler, `f_model/` the reference
-model, and `tinytapeout/` target integration. `f_model/` is a separate Dune
+hardware lives under `ip/*/rtl` and `asic/rtl`, including the reusable system as
+`ip/protemu_system`. Owner-local `verif/` and shared/system root `verif/` contain DUT
+verification; software/model/tool checks live in owner-local `test/` directories.
+`software/cli/` and `asic/cli/` retain command entry points, `spec/isa/` the instruction
+specification/assembler, `verif/reference/model/` the independent model, and
+`asic/tinytapeout/` target integration. The model is a separate Dune
 library, `protemu_f_model`, with no Hardcaml dependency, so a diagnostic model can never
 reach a synthesis source set and cannot share a mistake with the RTL; its tests live in
-`test/f_model/`. `isa/` is a third library, `hardcaml_protemu.isa`, below both of them:
+`verif/reference/model/test/`. `spec/isa/` is a third library, `hardcaml_protemu.isa`, below both of them:
 P1.5 put the encoding there because `lib/` is installed and `f_model/` is not, so the
 assembler and the RTL decoder could not otherwise share one description of the
 instruction word. New host and firmware locations should be chosen when their first real

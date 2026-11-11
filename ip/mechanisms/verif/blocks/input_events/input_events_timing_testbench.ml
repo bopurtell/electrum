@@ -8,7 +8,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 module Evsim = Hardcaml_event_driven_sim.Two_state_simulator
 module Circuit = Evsim.With_interface (Input_events.I) (Input_events.O)
 module Simulator = Evsim.Simulator

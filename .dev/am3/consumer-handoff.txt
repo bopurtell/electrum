@@ -1,0 +1,97 @@
+AM3 active-consumer slice receipt, 2026-11-11
+Baseline: 0bb9abc742b3eefbcaa83c39189b08d4f99cea8a.
+Agent1's initial baseline.txt records a clean worktree before its library edits.
+This slice observed only host_link_wire/{dune,wire.ml}, host_link_protocol/ and
+.dev/am3/ changes on entry. Agent3 concurrently owns the pure test migration.
+
+EXACT OWNED CONSUMER MAP (all module Wire aliases now Host_link_protocol)
+Hardware definitions/constants only, no Codec helper use:
+  ip/host_link/rtl/{wire_crc,wire_layout,frame_rx,frame_tx,command_dispatch}.ml
+Verification/software:
+  ip/host_link/verif/serial_host/{item,driver,monitor}.ml
+  ip/host_link/verif/frame_rx/frame_rx_testbench.ml
+  ip/host_link/verif/frame_tx/frame_tx_testbench.ml
+  ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml
+  ip/host_link/verif/endpoint/{fixture,scoreboard,endpoint_scenario,
+    endpoint_transaction_tests,endpoint_framing_tests,endpoint_cancellation_tests,
+    endpoint_diagnostics_tests,endpoint_serial_monitor_tests}.ml
+Software calls/errors use Wire.Codec.Request.{encode,Encode_error},
+Wire.Codec.Response.{decode,decode_correlated,Decode_error},
+Wire.Codec.Crc.compute, Wire.Codec.U16.get. Other protocol types, constructors,
+records, layouts, correlation and CRC constants retain root paths.
+Item's existing helper API and record shapes retain canonical type identity;
+driver/monitor cycle logic and all scenario bodies are unchanged modulo paths.
+
+DEPENDENCIES / SOURCE CLOSURE
+lib/dune: core hardcaml protemu_isa host_link_protocol.
+Active verification Dune libraries replace protemu_host_link_wire with
+host_link_protocol in serial_host, endpoint (both stanzas), frame_rx, frame_tx,
+command_dispatch. Existing root hardware facade/copy_files and ASIC API retained.
+Installed dune-package confirms hardcaml_protemu requires the canonical public
+library and not the shim. Canonical library requires Core/PPX runtime only.
+chip_top/project/chip_project.ml loader inventory now includes all five:
+  host_link_protocol/dune
+  host_link_protocol/definitions.ml
+  host_link_protocol/codec.ml
+  host_link_protocol/host_link_protocol.ml
+  host_link_protocol/host_link_protocol.mli
+Removed host_link_wire/{dune,wire.ml} from loader inputs: active closure no longer
+reaches it. tinytapeout/src/dune loader_wrapper rule replaces shim dependencies
+with canonical dune + source_tree; bundle checker expects all five canonical
+inputs and rejects shim inputs. No other packaging projection required changes:
+chip_top/project/dune still projects the same package modules, and bin/dune uses
+protemu_chip_project. Built sandbox loader bundle has 47 source inputs, all
+byte-identical to current authored files, including canonical root/interface and
+the migrated lib/dune projection.
+
+BASELINE / GOLDEN EVIDENCE
+python3 .dev/am3/consumer-audit.py [--summary] is read-only and reproducible.
+Full output emits individual source/expectation hashes and exact consumer lists.
+It checks original ownership snapshot hashes and original expectation bytes
+against AM3 git baseline, then checks current active expectations, frozen bytes,
+and all consumer changes against only the permitted path substitutions/formatting.
+Original ownership snapshot: 50 host-link files.
+  Sorted JSON source-hash-map SHA256:
+  127d80296e251b7a884cdf55e184fe3c3add509ab38e8147b54db604ed383c7d
+AM3 baseline selected tests/testbenches/frozen sources: 34 files.
+  Sorted JSON source-hash-map SHA256:
+  aebbde98b5ef31a66a17bdee68ed5c5918b5b390978c236d90c1db3d6a5b008c
+  Sorted JSON exact inline-expectation-hash-map SHA256:
+  a72e346e4ebccab5f09e04a108a7d58df8bd1b54bd71aa983bf3b50c28e8c680
+All seven frozen HL4a files, including Dune, remain byte-identical to baseline.
+Untouched active verification ML files also remain byte-identical to baseline.
+No scenario, seed, expected vector, timing or expectation promotion changes.
+
+CHECKS
+Every Dune invocation serialized with:
+  flock /home/wayne/devel/jane/.protemu-build.lock opam exec --switch=5.2.0+ox --
+and -j5, from hardcaml_protemu root.
+PASS dune runtest ip/host_link/verif --force -j5
+  Includes endpoint, focused blocks, serial PHY and frozen HL4a regression.
+PASS dune build @install @lint
+  @ip/host_link/verif/serial_host/fmt @ip/host_link/verif/endpoint/fmt
+  @ip/host_link/verif/frame_tx/fmt @ip/host_link/verif/command_dispatch/fmt
+  @lib/fmt @chip_top/project/fmt @tinytapeout/src/fmt -j5
+PASS dune build lib/hardcaml_protemu.cmxa bin/asic_bundle.exe -j5
+PASS python3 tinytapeout/scripts/check-adopted-bundle.py --metadata-only --kind loader
+  Also serialized under the same flock/opam prefix; checks repeated bundles,
+  manifest/source bytes, metadata and clock/source/target conflicts. No EDA.
+PASS dune build tinytapeout/src/loader_wrapper.simulation.generated.v
+  tinytapeout/src/loader_wrapper.synthesis.generated.v -j5
+PASS python3 .dev/am3/consumer-audit.py --summary
+PASS git diff --check; git diff --cached --exit-code;
+  git diff --exit-code 0bb9abc -- ip/host_link/verif/archived/hl4a
+Initial broader formatting check found wraps in migrated files, now fixed with
+apply_patch, plus one pre-existing wrap in untouched
+ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml:18-19. That pre-existing
+file is unchanged and remains the frame_rx subtree fmt failure; build/lint/tests
+pass. No expectations promoted.
+
+REMAINING COMPATIBILITY EDGES / OTHER OWNERS
+Frozen HL4a imports/dependency intentionally remain Protemu_host_link_wire.Wire /
+protemu_host_link_wire, with byte-identical source/Dune. Canonical shared type
+identity lets frozen tests consume the migrated serial-host Item API unchanged.
+Agent3's pure compatibility suite at test/host_link_protocol_compatibility also
+imports the shim to verify compatibility; test/host_link_protocol is canonical.
+This slice did not edit either pure suite, the new library/shim, or docs.
+No git index/history/config mutation, EDA tools or P&R performed.

@@ -5,7 +5,7 @@
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_mechanisms
   protemu_isa
   protemu_f_model
   protemu_test_common
@@ -21,14 +21,14 @@
  (name protemu_pin_bank_tests)
  (wrapped false)
  (modules pin_bank_expect_tests pin_bank_unit_quickcheck_tests pin_bank_unit_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_mechanisms
   protemu_f_model
   protemu_pin_bank_testbench
   protemu_test_common)

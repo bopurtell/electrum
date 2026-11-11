@@ -7,7 +7,8 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
+open! Protemu_mechanisms_staging
 open! Observed_transfer_timing_testbench
 module Evsim = Hardcaml_event_driven_sim.Two_state_simulator
 

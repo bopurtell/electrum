@@ -1,5 +1,11 @@
 # Serial-host agent pilot
 
+**Final layout note:** active agents/fixtures now depend on canonical owner libraries.
+The frozen `ip/host_link/verif/archived/hl4a/` corpus still runs byte-identically via
+private support in sibling `archived/support/`; that adapter is not installed as a
+public flat API. Protocol definitions/Codec live at `ip/host_link/protocol/`.
+Current path/API guide: [repository_layout.md](repository_layout.md).
+
 **Layout update, 2026-11-11:** the [ownership migration](ownership_layout.md) moved
 serial/endpoint/block/archive code intact to `ip/host_link/verif/` and the
 control-port agent to `ip/emulator_core/verif/control_port/`. Pilot roles, library

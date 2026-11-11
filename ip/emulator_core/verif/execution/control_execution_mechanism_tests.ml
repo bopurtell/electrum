@@ -5,7 +5,8 @@
    integration evidence: it checks retained requests, decisions, completion, and faults. *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_core
+open! Protemu_core_legacy
 open! Protemu_isa
 open! Control_execution_testbench
 

@@ -92,6 +92,7 @@
 open! Core
 open! Hardcaml
 open! Signal
+module Program_memory_controller = Protemu_controller.Program_memory_controller
 
 (* The shared request subset. A field is a valid bit or an operand of the request named by
    its prefix. Addresses and lengths keep [Program_memory_controller]'s request width, one bit wider

@@ -1,0 +1,267 @@
+{
+  "sources": [
+    {
+      "source": "ip/mechanisms/rtl/byte_fifo.ml",
+      "destination": "ip/mechanisms/rtl/byte_fifo.ml",
+      "sha256": "78ec48549dbde1626498d54be76bebacea0c7202ebb9ebc86ccebd78777b444b",
+      "old_namespace": "Hardcaml_protemu.Byte_fifo",
+      "namespace": "Protemu_mechanisms.Byte_fifo",
+      "after_sha256": "78ec48549dbde1626498d54be76bebacea0c7202ebb9ebc86ccebd78777b444b",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/input_events.ml",
+      "destination": "ip/mechanisms/rtl/input_events.ml",
+      "sha256": "1a9ca08d6cb57c13559d16772666da410e60cb0ac14181e00d7b7db067db9357",
+      "old_namespace": "Hardcaml_protemu.Input_events",
+      "namespace": "Protemu_mechanisms.Input_events",
+      "after_sha256": "1a9ca08d6cb57c13559d16772666da410e60cb0ac14181e00d7b7db067db9357",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/pin_bank.ml",
+      "destination": "ip/mechanisms/rtl/pin_bank.ml",
+      "sha256": "c7d64792d20bfad41fae16db7dc58ba851ca0b83d84a8c9be4a9333cfe5d5c87",
+      "old_namespace": "Hardcaml_protemu.Pin_bank",
+      "namespace": "Protemu_mechanisms.Pin_bank",
+      "after_sha256": "c7d64792d20bfad41fae16db7dc58ba851ca0b83d84a8c9be4a9333cfe5d5c87",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/shift_lane.ml",
+      "destination": "ip/mechanisms/rtl/shift_lane.ml",
+      "sha256": "2d280698ae28fbd44959d4bdf61e2592ce425fe2c5e645076117adc98ba805ab",
+      "old_namespace": "Hardcaml_protemu.Shift_lane",
+      "namespace": "Protemu_mechanisms.Shift_lane",
+      "after_sha256": "2d280698ae28fbd44959d4bdf61e2592ce425fe2c5e645076117adc98ba805ab",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/timing.ml",
+      "destination": "ip/mechanisms/rtl/timing.ml",
+      "sha256": "c54d13d17f9d5b874407002061b99bff1181de0c9fedadad02338eb4a5f1d651",
+      "old_namespace": "Hardcaml_protemu.Timing",
+      "namespace": "Protemu_mechanisms.Timing",
+      "after_sha256": "c54d13d17f9d5b874407002061b99bff1181de0c9fedadad02338eb4a5f1d651",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/staging/observed_transfer.ml",
+      "destination": "ip/mechanisms/rtl/staging/observed_transfer.ml",
+      "sha256": "1ba17cdd8e3ab20140cff225784bd6af37db655b36f921ebbd5dc21ad890201e",
+      "old_namespace": "Hardcaml_protemu.Observed_transfer",
+      "namespace": "Protemu_mechanisms_staging.Observed_transfer",
+      "after_sha256": "5b93467bb1876e30226b59b56683e60eb20db60d7e94dde619fa7b046cc92421",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/staging/observed_transfer_bank.ml",
+      "destination": "ip/mechanisms/rtl/staging/observed_transfer_bank.ml",
+      "sha256": "5986c6a32b5563df9a90384e429e6cab4addbd24d2e21f04f9b6f14ae403b957",
+      "old_namespace": "Hardcaml_protemu.Observed_transfer_bank",
+      "namespace": "Protemu_mechanisms_staging.Observed_transfer_bank",
+      "after_sha256": "e48fdf66438f4fb219b9b8a7321c2abe63c20cb9c009872a79a601fab92cd185",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/staging/primitive_demo.ml",
+      "destination": "ip/mechanisms/rtl/staging/primitive_demo.ml",
+      "sha256": "01221564d5b11d0c4e3566b72d78e3ca0c6d89314d869637df1c5abc7021e10f",
+      "old_namespace": "Hardcaml_protemu.Primitive_demo",
+      "namespace": "Protemu_mechanisms_staging.Primitive_demo",
+      "after_sha256": "be1e097a8b040e9e7ca9938f5f5dc0ddbb7728997974ac481e579c0bbf103aca",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/staging/uart_slice.ml",
+      "destination": "ip/mechanisms/rtl/staging/uart_slice.ml",
+      "sha256": "dadeed748f7e456e2a4a3e59796b37a764a4d844e1fc7e517359c031c1b1692b",
+      "old_namespace": "Hardcaml_protemu.Uart_slice",
+      "namespace": "Protemu_mechanisms_staging.Uart_slice",
+      "after_sha256": "c4d5354f218ab5748192f04f48c053973cffd0466ac7bfc80517a6d55e227159",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/mechanisms/rtl/staging/uart_tx.ml",
+      "destination": "ip/mechanisms/rtl/staging/uart_tx.ml",
+      "sha256": "48227520685a43ec26e346e88da5cb37ec732d511ab646db6809ee49a0c04426",
+      "old_namespace": "Hardcaml_protemu.Uart_tx",
+      "namespace": "Protemu_mechanisms_staging.Uart_tx",
+      "after_sha256": "a0aea4a8dc0246660757203e8d753d9fa83d41e9adca1aa1f9ef0df08068d41d",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+      "destination": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+      "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1",
+      "old_namespace": "Hardcaml_protemu.Program_memory_controller",
+      "namespace": "Protemu_controller.Program_memory_controller",
+      "after_sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/control_port.ml",
+      "destination": "ip/emulator_core/rtl/control_port.ml",
+      "sha256": "fc3e9511ed1f5d5f553b54b70e7198f027e4e684cdae364b6b9d366aa5be6872",
+      "old_namespace": "Hardcaml_protemu.Control_port",
+      "namespace": "Protemu_core.Control_port",
+      "after_sha256": "2faa3e84616dd5cc35c7923356ee52abe66c4813099a8175a72c532855fce977",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/emulator_core.ml",
+      "destination": "ip/emulator_core/rtl/emulator_core.ml",
+      "sha256": "99517da9194bd67ce885e9c1dfb1dcd9ad4623140ba73df85f7d2239264e0245",
+      "old_namespace": "Hardcaml_protemu.Emulator_core",
+      "namespace": "Protemu_core.Emulator_core",
+      "after_sha256": "b8401ea27b76d6688b1e2e8b721d44ddb41adfbff1d49abfd7e6d9c2e48454c1",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/execution_unit.ml",
+      "destination": "ip/emulator_core/rtl/execution_unit.ml",
+      "sha256": "88c435fa87e6a5fb4c14485b5de671929bc8a279212c8b750b48a29e67c33993",
+      "old_namespace": "Hardcaml_protemu.Execution_unit",
+      "namespace": "Protemu_core.Execution_unit",
+      "after_sha256": "8d7259ead580f74de3b02746cf566d116a5aade9efd7a5b7cf74f4d610857e74",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/instruction_decoder.ml",
+      "destination": "ip/emulator_core/rtl/instruction_decoder.ml",
+      "sha256": "cd857fdd0730fc7eeaddad72bcbdc132fb55f15ec307cfedf64496f57a71ebe1",
+      "old_namespace": "Hardcaml_protemu.Instruction_decoder",
+      "namespace": "Protemu_core.Instruction_decoder",
+      "after_sha256": "cd857fdd0730fc7eeaddad72bcbdc132fb55f15ec307cfedf64496f57a71ebe1",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/primitive_dispatch.ml",
+      "destination": "ip/emulator_core/rtl/primitive_dispatch.ml",
+      "sha256": "a22640caa2cfa4a7a1e372ed53a23772aadf99cbba314d4d0f533542ec2004d5",
+      "old_namespace": "Hardcaml_protemu.Primitive_dispatch",
+      "namespace": "Protemu_core.Primitive_dispatch",
+      "after_sha256": "5371688fe61e1dede95779a123e5a085844809d0906256d2c767f541b3ae9ba7",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/emulator_core/rtl/legacy/executable_core.ml",
+      "destination": "ip/emulator_core/rtl/legacy/executable_core.ml",
+      "sha256": "3c1a27766df6760c729ddf64cc4f3fc86e8164d8b845136547b5a97d45c417b8",
+      "old_namespace": "Hardcaml_protemu.Executable_core",
+      "namespace": "Protemu_core_legacy.Executable_core",
+      "after_sha256": "58a1064f7d551221342281ab3aefd39aebdac58bff4385acab3eae36471d1c00",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/command_dispatch.ml",
+      "destination": "ip/host_link/rtl/command_dispatch.ml",
+      "sha256": "3039b83e2e919ca07493f6c97cd8bf84d31b9a8be29d282bdf1280962175f8bc",
+      "old_namespace": "Hardcaml_protemu.Command_dispatch",
+      "namespace": "Protemu_host_link.Command_dispatch",
+      "after_sha256": "1e9c71c44b7b33ba03de3d3292f64393e8aaea31d797c9c44aaef1220768589d",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/frame_rx.ml",
+      "destination": "ip/host_link/rtl/frame_rx.ml",
+      "sha256": "cfbe41d566d8c78a0721f3ecf2f0c809c7b03b8aceb07e4b803adbbaf3f3950e",
+      "old_namespace": "Hardcaml_protemu.Frame_rx",
+      "namespace": "Protemu_host_link.Frame_rx",
+      "after_sha256": "cfbe41d566d8c78a0721f3ecf2f0c809c7b03b8aceb07e4b803adbbaf3f3950e",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/frame_tx.ml",
+      "destination": "ip/host_link/rtl/frame_tx.ml",
+      "sha256": "20762c63217bffb64cb08d5a3a96cd3d6314617678c0ad91cad017037fa17b85",
+      "old_namespace": "Hardcaml_protemu.Frame_tx",
+      "namespace": "Protemu_host_link.Frame_tx",
+      "after_sha256": "20762c63217bffb64cb08d5a3a96cd3d6314617678c0ad91cad017037fa17b85",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/host_link.ml",
+      "destination": "ip/host_link/rtl/host_link.ml",
+      "sha256": "9118371f55c401cfd54dea409509f1e9d56d2946d2b60e768426f24d7651819a",
+      "old_namespace": "Hardcaml_protemu.Host_link",
+      "namespace": "Protemu_host_link.Host_link",
+      "after_sha256": "1ce1ea869f7ffda7471276182816b54bdd92f3d76ae153cd33e8f641f7bf9edd",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/serial_phy.ml",
+      "destination": "ip/host_link/rtl/serial_phy.ml",
+      "sha256": "a2cc83e102d7da3c900d8b089a455433f784dd59e0a3572880fa6ed4361788a7",
+      "old_namespace": "Hardcaml_protemu.Serial_phy",
+      "namespace": "Protemu_host_link.Serial_phy",
+      "after_sha256": "a2cc83e102d7da3c900d8b089a455433f784dd59e0a3572880fa6ed4361788a7",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/wire_crc.ml",
+      "destination": "ip/host_link/rtl/wire_crc.ml",
+      "sha256": "793bf35d71fae76b5270a979ca1ca14e63e79e73c1b1c21400d555cdd8733e22",
+      "old_namespace": "Hardcaml_protemu.Wire_crc",
+      "namespace": "Protemu_host_link.Wire_crc",
+      "after_sha256": "793bf35d71fae76b5270a979ca1ca14e63e79e73c1b1c21400d555cdd8733e22",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "ip/host_link/rtl/wire_layout.ml",
+      "destination": "ip/host_link/rtl/wire_layout.ml",
+      "sha256": "9306be1f937bc58cefc1a9bebd3d2e5dce39199996487a02d7e772977cebb297",
+      "old_namespace": "Hardcaml_protemu.Wire_layout",
+      "namespace": "Protemu_host_link.Wire_layout",
+      "after_sha256": "9306be1f937bc58cefc1a9bebd3d2e5dce39199996487a02d7e772977cebb297",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "rtl/protemu_top.ml",
+      "destination": "ip/protemu_system/rtl/protemu_top.ml",
+      "sha256": "a03edd04c893d4428007ceaa725abaca1a2c7225402a4b0cdb19850430125280",
+      "old_namespace": "Hardcaml_protemu.Protemu_top",
+      "namespace": "Protemu_system.Protemu_top",
+      "after_sha256": "62cbcc4daece97f83f3d5e8049afe293d24b31eb2254ac27c6d9ab0e37bb32e7",
+      "unchanged_except_owner_aliases": true
+    },
+    {
+      "source": "chip_top/rtl/bringup/p0_observable.ml",
+      "destination": "asic/rtl/bringup/p0_observable.ml",
+      "sha256": "96423492cc3ec25f8f6e49f052611adc20666505ea437bb9c9d5092691ce42dd",
+      "old_namespace": "Hardcaml_protemu.P0_observable",
+      "namespace": "Protemu_asic_bringup.P0_observable",
+      "after_sha256": "96423492cc3ec25f8f6e49f052611adc20666505ea437bb9c9d5092691ce42dd",
+      "unchanged_except_owner_aliases": true
+    }
+  ],
+  "exports": {
+    "Byte_fifo": "Protemu_mechanisms.Byte_fifo",
+    "Input_events": "Protemu_mechanisms.Input_events",
+    "Pin_bank": "Protemu_mechanisms.Pin_bank",
+    "Shift_lane": "Protemu_mechanisms.Shift_lane",
+    "Timing": "Protemu_mechanisms.Timing",
+    "Observed_transfer": "Protemu_mechanisms_staging.Observed_transfer",
+    "Observed_transfer_bank": "Protemu_mechanisms_staging.Observed_transfer_bank",
+    "Primitive_demo": "Protemu_mechanisms_staging.Primitive_demo",
+    "Uart_slice": "Protemu_mechanisms_staging.Uart_slice",
+    "Uart_tx": "Protemu_mechanisms_staging.Uart_tx",
+    "Program_memory_controller": "Protemu_controller.Program_memory_controller",
+    "Control_port": "Protemu_core.Control_port",
+    "Emulator_core": "Protemu_core.Emulator_core",
+    "Execution_unit": "Protemu_core.Execution_unit",
+    "Instruction_decoder": "Protemu_core.Instruction_decoder",
+    "Primitive_dispatch": "Protemu_core.Primitive_dispatch",
+    "Executable_core": "Protemu_core_legacy.Executable_core",
+    "Command_dispatch": "Protemu_host_link.Command_dispatch",
+    "Frame_rx": "Protemu_host_link.Frame_rx",
+    "Frame_tx": "Protemu_host_link.Frame_tx",
+    "Host_link": "Protemu_host_link.Host_link",
+    "Serial_phy": "Protemu_host_link.Serial_phy",
+    "Wire_crc": "Protemu_host_link.Wire_crc",
+    "Wire_layout": "Protemu_host_link.Wire_layout",
+    "Protemu_top": "Protemu_system.Protemu_top",
+    "P0_observable": "Protemu_asic_bringup.P0_observable"
+  },
+  "exports_exactly_match_old_26": true
+}

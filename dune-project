@@ -21,7 +21,7 @@
    (>= 5.1))
   (dune
    (>= 3.17))
-  ; The installed library surface (lib/ and isa/). Everything below is test or repo
+   ; Installed owner libraries and their alias-only compatibility surface.
   ; tooling and must not be forced on a consumer. isa/ needs core alone: it holds the
   ; instruction specification and no circuit.
   core
@@ -36,7 +36,7 @@
   (ppx_expect :with-test)
   (base_quickcheck :with-test)
   (alcotest :with-test)
-  ; Repo tooling: bin/generate.exe. Never installed, but needed for a root
+   ; Repo tooling: asic/verif/observable/emit/generate.exe. Never installed, but needed for a root
   ; `dune build`, so they ride with-test rather than being dropped.
   (core_unix :with-test)
   (jane_rope :with-test)

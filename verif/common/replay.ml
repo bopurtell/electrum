@@ -292,25 +292,8 @@ let create ~test ~source_file ~settings ~trial ~config =
 ;;
 
 let to_lines ?(redact_source = false) t =
-  (* Redacted fixtures retain their baseline path spelling; live reports and artifacts
-     keep the actual owner path and executable rerun command. *)
-  let source_file, rerun =
-    if redact_source
-    then (
-      let source_file =
-        List.fold
-          [ "ip/mechanisms/verif/blocks/input_events/", "test/primitives/input_events/"
-          ; "test/verification_support/", "test/common/"
-          ]
-          ~init:t.source_file
-          ~f:(fun path (owner, baseline) ->
-            match String.chop_prefix path ~prefix:owner with
-            | None -> path
-            | Some suffix -> baseline ^ suffix)
-      in
-      source_file, rerun_command ~source_file ~settings:t.settings)
-    else t.source_file, t.rerun
-  in
+  (* Redact source identity only; paths and rerun commands always name live owners. *)
+  let source_file, rerun = t.source_file, t.rerun in
   let trial =
     match t.trial with
     | None -> "none"

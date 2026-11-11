@@ -5,7 +5,7 @@
    through the real P3.1a load/verify/RUN path. *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_core
 open! Protemu_isa
 open! Control_execution_testbench
 

@@ -31,7 +31,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_host_link
 module Sim = Cyclesim.With_interface (Serial_phy.I) (Serial_phy.O)
 
 (* The PHY's public outputs, by name. *)

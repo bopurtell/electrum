@@ -14,7 +14,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_host_link
 open! Command_dispatch_testbench
 
 type cancel =

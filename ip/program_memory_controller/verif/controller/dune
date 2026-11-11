@@ -5,14 +5,14 @@
   protocol_core_testbench
   protocol_core_unit_tests
   protocol_core_property_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_controller
   protemu_f_model
   protemu_test_common
   base_quickcheck

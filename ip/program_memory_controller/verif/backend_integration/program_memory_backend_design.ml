@@ -6,7 +6,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Hardcaml_protemu
+open! Protemu_controller
 
 module Design = struct
   module I = Program_memory_controller.I

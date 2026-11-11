@@ -1,7 +1,7 @@
 ; Control_port agent library for Emulator_core's control port (serial_host_pilot.md, SP3).
 ;
 ; Items, configuration, responder, passive monitor and agent for the core side of the
-; Control_port contract in lib/emulator_core/control_port.ml. There are no inline_tests,
+; Control_port contract in ip/emulator_core/rtl/control_port.ml. There are no inline_tests,
 ; so loader, dispatcher, endpoint and system suites can depend on it without linking
 ; another suite's tests; the suites that use it exercise it. Everything works on int port
 ; records; each suite converts its simulator ports at its adapter.
@@ -9,7 +9,7 @@
 (library
  (name protemu_control_port_agent)
  (modules item config responder monitor agent)
- (libraries core hardcaml_protemu)
+ (libraries core protemu_controller protemu_core)
  (preprocess
   (pps ppx_jane))
  (lint

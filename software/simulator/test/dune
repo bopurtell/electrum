@@ -1,0 +1,10 @@
+(library
+ (name protemu_host_simulator_tests)
+ (wrapped false)
+ (modules host_simulator_tests)
+ (inline_tests)
+ (libraries core protemu_host protemu_simulator protemu_isa protemu_core)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

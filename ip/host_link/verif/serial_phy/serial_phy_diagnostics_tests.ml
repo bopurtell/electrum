@@ -11,7 +11,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_host_link
 open! Serial_phy_testbench
 
 let require_failure t what f =

@@ -4,7 +4,6 @@
 (* Directed loaded-program checks for P3.2's execution composition. *)
 
 open! Core
-open! Hardcaml_protemu
 open! Protemu_isa
 open! Control_execution_testbench
 

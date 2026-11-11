@@ -1,0 +1,158 @@
+{
+  "inventory": {
+    "added": [],
+    "after_count": 12,
+    "before_count": 12,
+    "changed": [
+      {
+        "after": {
+          "copy": "inputs/bin/asic_bundle.ml",
+          "git_status": "",
+          "path": "bin/asic_bundle.ml",
+          "sha256": "730153080e1d7af7b7eacad8db486efb5c71525f34ea31fa3fa91ffb17ad00a0"
+        },
+        "before": {
+          "copy": "inputs/bin/asic_bundle.ml",
+          "git_status": " M bin/asic_bundle.ml",
+          "path": "bin/asic_bundle.ml",
+          "sha256": "730153080e1d7af7b7eacad8db486efb5c71525f34ea31fa3fa91ffb17ad00a0"
+        },
+        "path": "bin/asic_bundle.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/bin/dune",
+          "git_status": "",
+          "path": "bin/dune",
+          "sha256": "b01f1325af61252ddf2ed7028b3985867401780a42988f6751bd0976ae18e73a"
+        },
+        "before": {
+          "copy": "inputs/bin/dune",
+          "git_status": " M bin/dune",
+          "path": "bin/dune",
+          "sha256": "b01f1325af61252ddf2ed7028b3985867401780a42988f6751bd0976ae18e73a"
+        },
+        "path": "bin/dune"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/project/chip_project.ml",
+          "git_status": " M chip_top/project/chip_project.ml",
+          "path": "chip_top/project/chip_project.ml",
+          "sha256": "089d42ddb8e8cb588275378e173cea5a8036f4552c287cab30c6fe114234ffd9"
+        },
+        "before": {
+          "copy": "inputs/chip_top/project/chip_project.ml",
+          "git_status": "?? chip_top/project/chip_project.ml",
+          "path": "chip_top/project/chip_project.ml",
+          "sha256": "ce7a1b73ceb019e98c46c1eef56813af43f2a137837fd12d23f35e22088f9ded"
+        },
+        "path": "chip_top/project/chip_project.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/project/dune",
+          "git_status": "",
+          "path": "chip_top/project/dune",
+          "sha256": "3be26b3d32babb07226e3db8eb1c7610e8de63e211e55e65f8853b97bdc1f92e"
+        },
+        "before": {
+          "copy": "inputs/chip_top/project/dune",
+          "git_status": "?? chip_top/project/dune",
+          "path": "chip_top/project/dune",
+          "sha256": "3be26b3d32babb07226e3db8eb1c7610e8de63e211e55e65f8853b97bdc1f92e"
+        },
+        "path": "chip_top/project/dune"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/rtl/memory_design.ml",
+          "git_status": "",
+          "path": "chip_top/rtl/memory_design.ml",
+          "sha256": "dd8dce6e723f2cca362a6000fa63aebb1e51dd78534f90d6e9ccca5e81f64ff5"
+        },
+        "before": {
+          "copy": "inputs/chip_top/rtl/memory_design.ml",
+          "git_status": "?? chip_top/rtl/memory_design.ml",
+          "path": "chip_top/rtl/memory_design.ml",
+          "sha256": "dd8dce6e723f2cca362a6000fa63aebb1e51dd78534f90d6e9ccca5e81f64ff5"
+        },
+        "path": "chip_top/rtl/memory_design.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/chip_top/rtl/program_memory.ml",
+          "git_status": "",
+          "path": "chip_top/rtl/program_memory.ml",
+          "sha256": "8ded9a57dc3415104bf003486aa89566ce17752d0f93ea357384c67d62f64120"
+        },
+        "before": {
+          "copy": "inputs/chip_top/rtl/program_memory.ml",
+          "git_status": "?? chip_top/rtl/program_memory.ml",
+          "path": "chip_top/rtl/program_memory.ml",
+          "sha256": "8ded9a57dc3415104bf003486aa89566ce17752d0f93ea357384c67d62f64120"
+        },
+        "path": "chip_top/rtl/program_memory.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "git_status": "",
+          "path": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1"
+        },
+        "before": {
+          "copy": "inputs/ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "git_status": "?? ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "path": "ip/program_memory_controller/rtl/program_memory_controller.ml",
+          "sha256": "a0d1a3696a35506796d4c1fc46003db3a1e90c2a0a0955c80f650ad82cb6f5d1"
+        },
+        "path": "ip/program_memory_controller/rtl/program_memory_controller.ml"
+      },
+      {
+        "after": {
+          "copy": "inputs/lib/dune",
+          "git_status": " M lib/dune",
+          "path": "lib/dune",
+          "sha256": "8f319f0faa415c9a2d623f9e4af5b9d6090591ce28866c26a882d9392182e3c2"
+        },
+        "before": {
+          "copy": "inputs/lib/dune",
+          "git_status": " M lib/dune",
+          "path": "lib/dune",
+          "sha256": "2a8ac2528b381f6b1b3dc4973137069f98ebed3cc0d39b126a03938316a0548a"
+        },
+        "path": "lib/dune"
+      }
+    ],
+    "identity_after": "dab71ac1d9093c94354600c94e5244fce65dc252727c96ff49ec8ae72615802a",
+    "identity_before": "c5447c5b949e36e2bd62a496e7785e21e0c90d6252d3620208fcd6e29d796047",
+    "removed": []
+  },
+  "manifest_fields_equal": {
+    "project": true,
+    "requested_tools": true,
+    "resources": true,
+    "simulation_resources": true,
+    "simulation_sources": true,
+    "synthesis_sources": true,
+    "top_module": true
+  },
+  "pins_constraints_config_equal": {
+    "constraints/top.sdc": true,
+    "info.yaml": true,
+    "src/config.json": true
+  },
+  "rtl": {
+    "simulation": {
+      "baseline_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+      "byte_equal": true,
+      "current_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762"
+    },
+    "synthesis": {
+      "baseline_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+      "byte_equal": true,
+      "current_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95"
+    }
+  }
+}

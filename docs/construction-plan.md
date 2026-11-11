@@ -1,5 +1,11 @@
 # Protocol emulator construction plan
 
+**Current source layout:** [repository_layout.md](repository_layout.md) and
+[final migration record](final_layout_migration.md) own current paths: wrapped IP
+libraries, singular `asic/`, owner-local software/verification tests and historical
+`archive/legacy/`. Earlier path spellings below do not restore retired root source
+buckets or the public flat hardware API. Product contracts are unchanged.
+
 Status: architecture and integration plan, updated 2026-09-21 for P3.5's independent
 hardware loader, 2026-09-20 for P3.1a's bounded program load/access/fetch contract,
 P3.2's minimal control execution, and P3.4's host and simulator-session contract, and 2026-09-17

@@ -449,7 +449,7 @@ let%test_unit "bounded generated bank-boundary schedules meet the peer contract"
         Replay.create
           ~test:"observed-transfer-bank-timing"
           ~source_file:
-            "test/integration/observed_transfer_bank/observed_transfer_bank_timing_tests.ml"
+            "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml"
           ~settings
           ~trial:(Some trial)
           ~config:

@@ -12,8 +12,8 @@
    Where the independence lies. The bank's state - value, output enable, and which owner
    holds which pins - comes from [Protemu_f_model.Pin_bank], which has no Hardcaml
    dependency and was written from construction-plan.md section 3 rather than from
-   [Hardcaml_protemu.Pin_bank]. What that module does not own is the interface around it:
-   the port offers up to three requests per edge and accepts at most one, refusal is a
+   [Protemu_mechanisms.Pin_bank]. What that module does not own is the interface around
+   it: the port offers up to three requests per edge and accepts at most one, refusal is a
    one-edge [rejected] pulse, and an ownership refusal also sets a sticky [conflict] bit.
    Those are properties of this block's port contract, so [F_model] below states them
    once, from the contract. It calls nothing in [lib/].
@@ -27,7 +27,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 module Kinds = Protemu_isa.Kinds
 module Pins = Protemu_isa.Pins
 module Reference = Protemu_f_model.Pin_bank

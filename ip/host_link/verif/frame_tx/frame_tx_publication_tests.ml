@@ -10,7 +10,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_host_link
 open! Frame_tx_testbench
 
 let%test_unit "each legal response length is captured at the publication edge and read \

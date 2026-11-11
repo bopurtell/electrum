@@ -4,7 +4,8 @@
 (* Directed and bounded generated checks for the real P3.3 loaded-program path. *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_mechanisms
+open! Protemu_core
 open! Protemu_isa
 open! Core_engine_testbench
 open Instruction

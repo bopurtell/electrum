@@ -19,15 +19,19 @@ CLAUDE.md
 
 # build system
 _opam/
-# env.sh is tracked: it is the per-shell activation, not local state
+# scripts/env.sh is tracked: per-shell activation, not local state
 *.vcd
 
 # verification harness failure reports (docs/verification.md section 8)
 protemu-artifacts/
 
-# ASIC flow python environments (created by tinytapeout/scripts/bootstrap-toolchain.sh)
+# Legacy runtime locations are held in place, never implicitly migrated.
 /.venv/
 /.venv-precheck/
+
+# ASIC execution outputs and provisioned tools/runtime
+/_flow_results/
+/_flow_tools/
 
 # release staging (build products; regenerated per release)
 MANIFEST.txt

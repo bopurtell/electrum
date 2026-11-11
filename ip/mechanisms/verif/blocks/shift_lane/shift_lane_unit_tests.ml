@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 open! Shift_lane_testbench
 
 let%test_unit "P2.5 internal lane preloads, clocks, samples, and completes" =

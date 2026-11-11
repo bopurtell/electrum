@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms_staging
 open! Primitive_demo_testbench
 
 let%test_unit "P2.3 an active transfer advances while the core timer waits" =

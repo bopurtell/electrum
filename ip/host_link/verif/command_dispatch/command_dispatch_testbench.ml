@@ -5,12 +5,12 @@
 
    The dispatcher is driven only through its public ports: [Frame_rx]'s handoff (the
    one-cycle [frame_end_i] with its validation result, echo flag, and retained fields) and
-   the Control_port agent (test/core/control_port/), whose test-only responder, [t.stub],
-   drives the [Control_port] decision and status records. Every observation is a public
-   output: the offered [Control_port.Request], [busy_o], and the published response frame.
-   The agent's passive monitor records the offers that crossed the port. Expected offers,
-   operands, responses, and cycles are written by hand in the tests from the P3.5 record,
-   control_port.ml, and docs/host_link_hl4b3_record.md; none is computed from the
+   the Control_port agent (ip/emulator_core/verif/control_port/), whose responder,
+   [t.stub], drives the [Control_port] decision and status records. Every observation is a
+   public output: the offered [Control_port.Request], [busy_o], and the published response
+   frame. The agent's passive monitor records the offers that crossed the port. Expected
+   offers, operands, responses, and cycles are written by hand in the tests from the P3.5
+   record, control_port.ml, and docs/host_link_hl4b3_record.md; none is computed from the
    dispatcher. [Wire.Codec.Request.encode] builds legal handoffs and
    [Wire.Codec.Response.decode] reads published frames with the software CRC, which shares
    nothing with the hardware CRC.
@@ -48,7 +48,8 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_core
+open! Protemu_host_link
 module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Command_dispatch.I) (Command_dispatch.O)
 module Control_port_agent = Protemu_control_port_agent
@@ -198,12 +199,12 @@ module Handoff = struct
 end
 
 (* The dispatch suite's name for the Control_port agent's responder
-   (test/core/control_port/), kept as a shim so the tests' spelling ([t.stub.accept],
-   [t.stub.memory.(i)], [t.stub.read_match], [t.stub.rejected], [Core_stub.Offer.t],
-   [Core_stub.inject_readback_response], ...) is unchanged. The responder's header lists
-   its contract-faithful behavior and its robustness probes, each labelled where a test
-   uses it. This suite uses the [Independent] injection policy: an injected pulse never
-   makes a READBACK outstanding, so it cannot cause a refusal.
+   (ip/emulator_core/verif/control_port/), kept as a shim so the spelling
+   ([t.stub.accept], [t.stub.memory.(i)], [t.stub.read_match], [t.stub.rejected],
+   [Core_stub.Offer.t], [Core_stub.inject_readback_response], ...) is unchanged. The
+   responder's header lists its contract-faithful behavior and its robustness probes, each
+   labelled where a test uses it. This suite uses the [Independent] injection policy: an
+   injected pulse never makes a READBACK outstanding, so it cannot cause a refusal.
 *)
 module Core_stub = struct
   module Completion = Control_port_agent.Item.Completion

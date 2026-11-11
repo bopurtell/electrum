@@ -1,0 +1,13 @@
+{
+  "shell_syntax": 17,
+  "python_syntax": 4,
+  "make_paths_resolve": true,
+  "flow_validation_before_output_creation": true,
+  "flow_caller_relative_overrides_normalized": true,
+  "staging_guard_and_lock_preserved": true,
+  "bootstrap_check_mutation_gate_present": true,
+  "tool_and_output_defaults_separated": true,
+  "installed_hardware_facade_matches_authored": true,
+  "activation_or_provisioning_executed": false,
+  "flow_or_eda_executed": false
+}

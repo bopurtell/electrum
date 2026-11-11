@@ -3,7 +3,6 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Hardcaml_protemu
 open! Protemu_f_model
 open! Protocol_core_testbench
 

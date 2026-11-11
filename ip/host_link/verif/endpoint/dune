@@ -15,7 +15,9 @@
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_mechanisms
+  protemu_core
+  protemu_host_link
   host_link_protocol
   protemu_serial_host_agent
   protemu_control_port_agent)
@@ -37,13 +39,15 @@
   endpoint_diagnostics_tests
   endpoint_serial_monitor_tests
   endpoint_lifecycle_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
  (libraries
   core
-  hardcaml_protemu
+  protemu_mechanisms
+  protemu_core
+  protemu_host_link
   host_link_protocol
   protemu_serial_host_agent
   protemu_control_port_agent

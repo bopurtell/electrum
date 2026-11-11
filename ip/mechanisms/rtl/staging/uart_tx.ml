@@ -16,6 +16,7 @@
 open! Core
 open! Hardcaml
 open! Signal
+module Shift_lane = Protemu_mechanisms.Shift_lane
 
 (* UART request and pin selection, sampled in the [clock_i] domain. *)
 module I = struct

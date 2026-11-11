@@ -1,0 +1,9 @@
+(library
+ (name protemu_host)
+ (public_name hardcaml_protemu.host)
+ (modules host_api)
+ (libraries core protemu_isa)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

@@ -170,14 +170,14 @@ let%expect_test "a pad leak into the event path fails the isolation check" =
 
     reproduction:
       test:             input_events_four_state_pad_leak
-      test file:        test/primitives/input_events/input_events_four_state_tests.ml
+      test file:        ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml
       seed:             20260919
       trials:           4
       max size:         8
       failing trial:    0
       configuration:    ((max_edges 32)(max_transitions 96)(defect Leak_pad_into_events))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest test/primitives/input_events --force
+      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
       time unit:        tick
       clock:            period=10, first rising=5
       coincidence:      stimulus settles before the clock transition
@@ -246,14 +246,14 @@ let%expect_test "an observer that reads X as zero fails the contamination check"
 
     reproduction:
       test:             input_events_four_state_coerced_observer
-      test file:        test/primitives/input_events/input_events_four_state_tests.ml
+      test file:        ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml
       seed:             20260919
       trials:           4
       max size:         8
       failing trial:    0
       configuration:    ((max_edges 32)(max_transitions 96)(defect Coerce_unknown_to_zero))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest test/primitives/input_events --force
+      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
       time unit:        tick
       clock:            period=10, first rising=5
       coincidence:      stimulus settles before the clock transition

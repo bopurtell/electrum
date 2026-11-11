@@ -1,0 +1,12 @@
+(executable
+ (name generate_p2)
+ (libraries
+  core
+  hardcaml
+  jane_rope
+  protemu_mechanisms
+  protemu_mechanisms_staging)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

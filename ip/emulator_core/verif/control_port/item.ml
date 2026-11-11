@@ -4,15 +4,15 @@
 (* Items for the Control_port agent: the transactions that cross [Emulator_core]'s control
    port, decoded from its [int] request, decision, and status records.
 
-   [Control_port] in lib/emulator_core/control_port.ml owns the records and the temporal
-   contract; items refer to them and never redefine them. Nothing here touches a
+   [Control_port] in ip/emulator_core/rtl/control_port.ml owns the records and the
+   temporal contract; items refer to them and never redefine them. Nothing here touches a
    simulator: each suite converts its ports to [int] records at its adapter. [Responder]
    answers [Request] offers; [Monitor] rebuilds [Observed] items from the port records.
    See docs/serial_host_pilot.md.
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_core
 
 (* A decoded [Control_port.Request] offer. READ carries no expected word: that operand is
    meaningful only with [readback_verify].

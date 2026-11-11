@@ -1,0 +1,4 @@
+PASS clock, source-list, and target configuration conflicts
+/tmp/protemu-adopted-kqx19933/first dab71ac1d9093c94354600c94e5244fce65dc252727c96ff49ec8ae72615802a
+/tmp/protemu-adopted-kqx19933/second dab71ac1d9093c94354600c94e5244fce65dc252727c96ff49ec8ae72615802a
+PASS repeatable bundle, manifest, metadata, and conflict checks

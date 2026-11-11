@@ -7,7 +7,6 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
 module Serial_host = Protemu_serial_host_agent
 module Driver = Serial_host.Driver
 module Control_port_agent = Protemu_control_port_agent

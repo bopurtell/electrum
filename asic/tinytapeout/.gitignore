@@ -1,0 +1,10 @@
+# Legacy ignored paths remain protected; new tools/runtime use /_flow_tools/.
+/pdk/
+/tt/
+
+# Generated physical-design runs and export packages
+/build/
+/runs/
+/artifacts/
+/tt_submission/
+/gds_render.*

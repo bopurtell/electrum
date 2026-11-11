@@ -1,0 +1,916 @@
+{
+  "baseline_format_failures": 23,
+  "bundle_roles_byte_equal": 6,
+  "commands": [
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@install",
+        "@lint",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "install-lint",
+      "seconds": 0.3,
+      "started_utc": "2026-11-11T05:40:29.821961+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "runtest",
+        "--force",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "ordinary-forced",
+      "seconds": 37.931,
+      "started_utc": "2026-11-11T05:40:30.122666+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@rtl",
+        "--force",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "rtl-forced-retry",
+      "seconds": 507.642,
+      "started_utc": "2026-11-11T05:42:49.798359+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate.exe",
+        "--",
+        "-output",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/p0_observable.v",
+        "-module-name",
+        "p0_observable"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-observable",
+      "seconds": 0.186,
+      "started_utc": "2026-11-11T05:51:23.504822+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "access",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/access.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-core-access",
+      "seconds": 0.197,
+      "started_utc": "2026-11-11T05:51:23.690882+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "executable",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/executable.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-core-executable",
+      "seconds": 0.215,
+      "started_utc": "2026-11-11T05:51:23.888070+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "integrated",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/integrated.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-core-integrated",
+      "seconds": 0.215,
+      "started_utc": "2026-11-11T05:51:24.103799+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_core.exe",
+        "--",
+        "loader",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/loader.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-core-loader",
+      "seconds": 0.276,
+      "started_utc": "2026-11-11T05:51:24.318690+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "pin_bank",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/pin_bank.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-pin_bank",
+      "seconds": 0.197,
+      "started_utc": "2026-11-11T05:51:24.594912+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "input_events",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/input_events.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-input_events",
+      "seconds": 0.185,
+      "started_utc": "2026-11-11T05:51:24.792325+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "timing",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/timing.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-timing",
+      "seconds": 0.178,
+      "started_utc": "2026-11-11T05:51:24.977599+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "byte_fifo_8",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/byte_fifo_8.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-byte_fifo_8",
+      "seconds": 0.186,
+      "started_utc": "2026-11-11T05:51:25.156217+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "shift_lane",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/shift_lane.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-shift_lane",
+      "seconds": 0.183,
+      "started_utc": "2026-11-11T05:51:25.343076+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "observed_transfer",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/observed_transfer.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-observed_transfer",
+      "seconds": 0.187,
+      "started_utc": "2026-11-11T05:51:25.526129+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "observed_transfer_bank",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/observed_transfer_bank.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-observed_transfer_bank",
+      "seconds": 0.186,
+      "started_utc": "2026-11-11T05:51:25.713116+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "primitive_demo",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/primitive_demo.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-primitive_demo",
+      "seconds": 0.187,
+      "started_utc": "2026-11-11T05:51:25.899614+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "uart_tx",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/uart_tx.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-uart_tx",
+      "seconds": 0.187,
+      "started_utc": "2026-11-11T05:51:26.087115+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/generate_p2.exe",
+        "--",
+        "uart_slice",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/uart_slice.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-p2-uart_slice",
+      "seconds": 0.194,
+      "started_utc": "2026-11-11T05:51:26.275007+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe",
+        "--",
+        "simulation",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/program_memory_backend.simulation.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-backend-simulation",
+      "seconds": 0.172,
+      "started_utc": "2026-11-11T05:51:26.469328+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "ip/program_memory_controller/verif/backend_integration/emit_program_memory_backend.exe",
+        "--",
+        "implementation",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/generated/program_memory_backend.implementation.v"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "generate-backend-implementation",
+      "seconds": 0.186,
+      "started_utc": "2026-11-11T05:51:26.641308+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "observable",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/observable",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "bundle-observable",
+      "seconds": 0.248,
+      "started_utc": "2026-11-11T05:51:26.874726+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "observable",
+        "--metadata-only"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "check-bundle-observable",
+      "seconds": 0.156,
+      "started_utc": "2026-11-11T05:51:27.123339+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "memory",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/memory",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "bundle-memory",
+      "seconds": 0.24,
+      "started_utc": "2026-11-11T05:51:27.324536+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "memory",
+        "--metadata-only"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "check-bundle-memory",
+      "seconds": 0.181,
+      "started_utc": "2026-11-11T05:51:27.564628+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "exec",
+        "-j5",
+        "bin/asic_bundle.exe",
+        "--",
+        "loader",
+        "/home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/loader",
+        "/home/wayne/devel/jane/hardcaml_protemu"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "bundle-loader",
+      "seconds": 0.428,
+      "started_utc": "2026-11-11T05:51:27.789957+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "python3",
+        "-B",
+        "tinytapeout/scripts/check-adopted-bundle.py",
+        "--kind",
+        "loader",
+        "--metadata-only"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "check-bundle-loader",
+      "seconds": 0.747,
+      "started_utc": "2026-11-11T05:51:28.217838+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/observable/simulation/tt_um_leemperor_hardcaml_protemu.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu; synth -top tt_um_leemperor_hardcaml_protemu; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-observable-simulation.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-observable-simulation",
+      "seconds": 0.131,
+      "started_utc": "2026-11-11T05:51:35.859601+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/observable/src/tt_um_leemperor_hardcaml_protemu.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu; synth -top tt_um_leemperor_hardcaml_protemu; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-observable-synthesis.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-observable-synthesis",
+      "seconds": 0.133,
+      "started_utc": "2026-11-11T05:51:36.023879+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu_memory; synth -top tt_um_leemperor_hardcaml_protemu_memory; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-memory-simulation.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-memory-simulation",
+      "seconds": 1.959,
+      "started_utc": "2026-11-11T05:51:36.191642+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/memory/src/tt_um_leemperor_hardcaml_protemu_memory.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu_memory; synth -top tt_um_leemperor_hardcaml_protemu_memory; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-memory-synthesis.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-memory-synthesis",
+      "seconds": 3.927,
+      "started_utc": "2026-11-11T05:51:38.184488+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/loader/simulation/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top tt_um_leemperor_hardcaml_protemu_loader; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-loader-simulation.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-loader-simulation",
+      "seconds": 17.542,
+      "started_utc": "2026-11-11T05:51:42.144921+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "yosys",
+        "-p",
+        "read_verilog /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/bundles/loader/src/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top tt_um_leemperor_hardcaml_protemu_loader; tee -o /home/wayne/devel/jane/hardcaml_protemu/.dev/am3/integrated-final-20261111/synth-loader-synthesis.json stat -json"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "synth-loader-synthesis",
+      "seconds": 20.472,
+      "started_utc": "2026-11-11T05:51:59.740436+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@host_link_protocol/fmt",
+        "@host_link_wire/fmt",
+        "@test/host_link_protocol/fmt",
+        "@test/host_link_protocol_compatibility/fmt",
+        "@ip/host_link/verif/serial_host/fmt",
+        "@ip/host_link/verif/endpoint/fmt",
+        "@ip/host_link/verif/frame_tx/fmt",
+        "@ip/host_link/verif/command_dispatch/fmt",
+        "@lib/fmt",
+        "@chip_top/project/fmt",
+        "@tinytapeout/src/fmt",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "scoped-format",
+      "seconds": 0.116,
+      "started_utc": "2026-11-11T05:52:53.412227+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@fmt",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 1,
+      "name": "global-format",
+      "seconds": 0.416,
+      "started_utc": "2026-11-11T05:52:53.528208+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".dev/am3/consumer-audit.py",
+        "--summary"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 1,
+      "name": "consumer-preservation-audit",
+      "seconds": 0.464,
+      "started_utc": "2026-11-11T05:54:39.303642+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".dev/am3/integrated-final-20261111/consumer-audit-adapter.py",
+        "--summary"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "consumer-preservation-audit-fresh-bundle",
+      "seconds": 0.411,
+      "started_utc": "2026-11-11T05:55:08.189898+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "env",
+        "OCAMLPATH=/home/wayne/devel/jane/hardcaml_protemu/_build/install/default/lib",
+        "dune",
+        "exec",
+        "--root",
+        "/tmp/opencode/protemu-am3-installed-consumer",
+        "./consumer.exe",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "installed-shim-consumer",
+      "seconds": 0.084,
+      "started_utc": "2026-11-11T05:55:08.601423+00:00"
+    },
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "env",
+        "OCAMLPATH=/home/wayne/devel/jane/hardcaml_protemu/_build/install/default/lib",
+        "ocamlfind",
+        "query",
+        "-recursive",
+        "-format",
+        "%p",
+        "hardcaml_protemu.host_link_protocol"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "installed-canonical-findlib-closure",
+      "seconds": 0.028,
+      "started_utc": "2026-11-11T05:55:08.685448+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "diff-check",
+      "seconds": 0.01,
+      "started_utc": "2026-11-11T05:55:08.713630+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--exit-code"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 0,
+      "name": "index-diff-check",
+      "seconds": 0.002,
+      "started_utc": "2026-11-11T05:55:08.723545+00:00"
+    }
+  ],
+  "completed_commands": 40,
+  "dependency_mutation": false,
+  "failed_completed_commands": [
+    {
+      "argv": [
+        "flock",
+        "/home/wayne/devel/jane/.protemu-build.lock",
+        "opam",
+        "exec",
+        "--switch=5.2.0+ox",
+        "--",
+        "dune",
+        "build",
+        "@fmt",
+        "-j5"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 1,
+      "name": "global-format",
+      "seconds": 0.416,
+      "started_utc": "2026-11-11T05:52:53.528208+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".dev/am3/consumer-audit.py",
+        "--summary"
+      ],
+      "cwd": "/home/wayne/devel/jane/hardcaml_protemu",
+      "exit": 1,
+      "name": "consumer-preservation-audit",
+      "seconds": 0.464,
+      "started_utc": "2026-11-11T05:54:39.303642+00:00"
+    }
+  ],
+  "generated_byte_equal": 17,
+  "git_mutation": false,
+  "helper_failed_attempts": [
+    "baseline-attempt-1-failure.txt",
+    "format-classification-attempt-1.txt",
+    "final-helper-attempts.txt"
+  ],
+  "independent_loader_tiers": 3,
+  "interrupted_command": "rtl-forced: harness timeout, partial log retained; completed forced retry PASS",
+  "introduced_format_failures": 0,
+  "original_pure_tests": 26,
+  "physical_flow": false,
+  "pure_tests": 32,
+  "registrations": 481,
+  "source_mutation": false,
+  "status": "PASS with unchanged baseline formatting backlog",
+  "synthesis": {
+    "loader-simulation": {
+      "all_module_statistics_equal": true,
+      "cells": 22536,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    "loader-synthesis": {
+      "all_module_statistics_equal": true,
+      "cells": 26814,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    "memory-simulation": {
+      "all_module_statistics_equal": true,
+      "cells": 9211,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    "memory-synthesis": {
+      "all_module_statistics_equal": true,
+      "cells": 13550,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    "observable-simulation": {
+      "all_module_statistics_equal": true,
+      "cells": 62,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    "observable-synthesis": {
+      "all_module_statistics_equal": true,
+      "cells": 62,
+      "design_statistics_equal": true,
+      "tool": "Yosys 0.33 (git sha1 2584903a060)"
+    }
+  }
+}

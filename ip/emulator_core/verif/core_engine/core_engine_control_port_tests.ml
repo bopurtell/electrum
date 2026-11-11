@@ -7,15 +7,16 @@
    These cover obligations that no earlier suite checks at this boundary: idle decisions,
    refusal under reset and disable, cross-group arbitration, READBACK response timing and
    cancellation, and STOP acceptance versus halting. Program-request decisions are also
-   compared every edge against the independent model in [test/core/protocol_core]. ABORT
-   cleanup is checked in [core_engine_tests.ml] and through [Simulator_backend] in
-   [test/integration/host_simulator]. Every expectation here is written out by hand from
-   the contract; none is computed from the core's acceptance expressions.
+   compared every edge against the independent model in
+   [ip/program_memory_controller/verif/controller]. ABORT cleanup is checked in
+   [core_engine_tests.ml] and through [Simulator_backend] in [software/simulator/test].
+   Every expectation here is written out by hand from the contract; none is computed from
+   the core's acceptance expressions.
 *)
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_core
 open! Protemu_isa
 open! Core_engine_testbench
 

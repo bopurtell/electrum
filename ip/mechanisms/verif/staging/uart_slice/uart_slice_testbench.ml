@@ -18,7 +18,7 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms_staging
 module F_model = Protemu_f_model
 module Sim = Cyclesim.With_interface (Uart_slice.I) (Uart_slice.O)
 

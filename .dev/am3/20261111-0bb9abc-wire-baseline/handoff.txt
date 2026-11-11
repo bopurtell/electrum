@@ -1,0 +1,149 @@
+AM3 protocol/Codec implementation handoff, 2026-11-11
+Implementation delivered, unstaged; coordinator owns integration and AM doc record.
+Baseline/source copies/hashes/API inventory: baseline.txt, wire.ml, dune beside this file.
+
+SOURCE FILES
+New host_link_protocol/dune: internal host_link_protocol;
+  public hardcaml_protemu.host_link_protocol; wrapped, explicit root; core only.
+New host_link_protocol/definitions.ml: sole definitions/types/layouts owner.
+New host_link_protocol/codec.ml: sole software byte-conversion/error owner.
+New host_link_protocol/host_link_protocol.ml: include Definitions; module Codec = Codec.
+New host_link_protocol/host_link_protocol.mli: deliberate root boundary retaining
+  Definitions module aliases/type equalities; no giant duplicated declarations.
+Changed host_link_wire/wire.ml: thin include/reexport compatibility facade.
+Changed host_link_wire/dune: retained protemu_host_link_wire and public
+  hardcaml_protemu.host_link_wire; libraries core host_link_protocol.
+Both library stanzas retain ppx_jane and ppx_js_style, matching the old library.
+The installed Findlib closure includes Core/PPX runtime dependencies only;
+no Hardcaml, ASIC, emulator, simulator, agent or verification-framework dependency.
+
+EXACT API MAP
+Let W = Protemu_host_link_wire.Wire; P = Host_link_protocol.
+Every old path W.X remains available. Its implementation is canonical, never copied.
+
+All below retain their suffix under P (definitions.ml, exposed by root facade):
+Version.{major,minor,byte}
+Crc.{width,polynomial,initial,reflected,final_xor,length}
+U16.max
+Command.{t,constructors,to_int,of_int,request_payload_length}
+Result_code.{t,constructors,to_int,of_int}
+Capability.{t,constructors,bit,mask}
+Fault_kind.{t,constructors,to_int,of_int}
+Phase.{t,constructors,to_int,of_int}
+Info.{t,Offset.*,length,memory_layout_m16}
+Status.{t,Flag.*,Offset.*,length,has}
+Correlation.t
+Request.{t,constructors,magic,Offset.*,header_length,max_payload_length,
+  min_length,max_length,Payload_offset.*,command,correlation}
+Response.{t,response,Payload.*,magic,Offset.*,header_length,max_payload_length,
+  min_length,max_length,correlation,shape type and constructors,shape,shape_length}
+All derived sexp_of/compare/equal/all functions stay with their owning types.
+Response's sexp_of_response/compare_response/equal_response remain on P.Response.
+
+Every software function and error module moves to the following exact new path
+(codec.ml, exposed as P.Codec; old suffix retained by facade):
+W.Crc.update -> P.Codec.Crc.update
+W.Crc.compute -> P.Codec.Crc.compute
+W.U16.to_bytes -> P.Codec.U16.to_bytes
+W.U16.get -> P.Codec.U16.get
+W.Request.Encode_error -> P.Codec.Request.Encode_error (constructors and derivers)
+W.Request.payload_fields -> P.Codec.Request.payload_fields
+W.Request.encode -> P.Codec.Request.encode
+W.Response.Decode_error -> P.Codec.Response.Decode_error (constructors and derivers)
+W.Response.invalid_field -> P.Codec.Response.invalid_field
+W.Response.decode_bits -> P.Codec.Response.decode_bits
+W.Response.decode_enum -> P.Codec.Response.decode_enum
+W.Response.decode_info -> P.Codec.Response.decode_info
+W.Response.decode_status -> P.Codec.Response.decode_status
+W.Response.decode -> P.Codec.Response.decode
+W.Response.decode_correlated -> P.Codec.Response.decode_correlated
+
+Codec.Request/Response use shared Definitions types, not duplicate types. The root
+Request has constructors, command/correlation and layout, but no encode/error API.
+The root Response has record/payload types and legal response shapes, but no
+decode/error API. Root Crc has parameters only and U16 has max only.
+Codec.Request/Response expose software functions/errors, not duplicated protocol
+constructor namespaces. Use P.Request.Info with P.Codec.Request.encode.
+Software helpers that were accidentally public remain available under Codec and
+the shim, preserving external compatibility even for low-level helper callers.
+Response.shape/shape_length stay on the root because legal command/result/payload
+relationships are protocol vocabulary, not byte parsing.
+
+P and W request/response/payload/correlation types, error constructors and derivers
+retain identity. Facade removal requires consumer migration and explicit owner
+retirement of the frozen archive; source comments document its temporary status.
+
+CHECKS (all PASS unless otherwise noted)
+All Dune invocations ran sequentially through:
+  flock /home/wayne/devel/jane/.protemu-build.lock opam exec --switch=5.2.0+ox --
+Commands from Protemu root after that prefix:
+  dune build host_link_protocol/host_link_protocol.cmxa host_link_wire/protemu_host_link_wire.cmxa @host_link_protocol/lint @host_link_wire/lint -j5
+  dune build @host_link_protocol/fmt @host_link_wire/fmt -j5
+    Initial formatting check FAILED on new/edited files; applied its reported
+    whitespace/comment wraps only with apply_patch. Final check below passes.
+  dune build @install @host_link_protocol/lint @host_link_wire/lint @host_link_protocol/fmt @host_link_wire/fmt -j5
+  dune runtest test/host_link_wire --force -j5
+    Original 26 pure wire tests, unchanged, compatibility import unchanged.
+  dune runtest ip/host_link/verif --force -j5
+    Entire host-link subtree, including active endpoint, focused block suites,
+    and frozen HL4a archive; expectations unchanged, no promotion.
+From /tmp/opencode/protemu-am3-installed-consumer after the same lock/opam prefix:
+  env OCAMLPATH=/home/wayne/devel/jane/hardcaml_protemu/_build/install/default/lib dune exec ./consumer.exe -j5
+    PASS: AM3 installed canonical/shim constructors, errors, vectors and type identity.
+    Uses @install's Findlib layout as an external Dune project; no source include,
+    workspace dependency, switch installation or mutation of installed packages.
+    Tests cross-package constructor/record/error assignments and pattern equality,
+    fixed encoder vector, CRC check value, u16 conversion, validation precedence,
+    response parsing, correlation mismatch and previously public helper types.
+Installed Findlib dependency inspection (no Dune invocation):
+  opam exec --switch=5.2.0+ox -- env OCAMLPATH=/home/wayne/devel/jane/hardcaml_protemu/_build/install/default/lib ocamlfind query -recursive -format '%p' hardcaml_protemu.host_link_protocol hardcaml_protemu.host_link_wire
+Read-only source audit:
+  python3 .dev/am3/20261111-0bb9abc-wire-baseline/audit.py
+    Exact baseline hashes; unchanged definitions/types/layouts/constants after
+    software extraction; unchanged software function bodies/error declarations
+    after whitespace/comments and necessary Definitions qualifiers are normalized.
+  git diff --check
+  git diff --exit-code -- . ':!host_link_wire/dune' ':!host_link_wire/wire.ml'
+  git diff --cached --exit-code
+    PASS: other tracked source/test/docs/frozen files unchanged; index empty.
+
+COORDINATOR / CONSUMER AGENT FOLLOW-UP (not edited by this slice)
+1. Migrate live module aliases from Protemu_host_link_wire.Wire to
+   Host_link_protocol; use Codec paths in the map above for software operations.
+   Direct hardware constants consumers:
+   ip/host_link/rtl/{wire_crc,wire_layout,frame_rx,frame_tx,command_dispatch}.ml
+   Hardware Wire_crc stays a hardware helper; no software CRC implementation reuse.
+   Live software/verification users:
+   test/host_link_wire/wire_tests.ml
+   ip/host_link/verif/serial_host/{item,driver,monitor}.ml
+   ip/host_link/verif/frame_tx/frame_tx_testbench.ml
+   ip/host_link/verif/command_dispatch/command_dispatch_testbench.ml
+   ip/host_link/verif/endpoint/{fixture,scoreboard,endpoint_scenario,
+     endpoint_transaction_tests,endpoint_framing_tests,endpoint_cancellation_tests,
+     endpoint_diagnostics_tests,endpoint_serial_monitor_tests}.ml
+   Some use only types/constants; migrate software call sites according to the map.
+   Keep agent roles, scheduler ownership, independent expected vectors and scenarios.
+   Frozen ip/host_link/verif/archived/hl4a stays on old import/dependency unchanged.
+2. Corresponding live Dune dependencies (protemu_host_link_wire -> host_link_protocol):
+   lib/dune; test/host_link_wire/dune;
+   ip/host_link/verif/{serial_host,endpoint,frame_rx,frame_tx,command_dispatch}/dune.
+   Frozen archive dependency stays protemu_host_link_wire.
+   Installed external consumers use hardcaml_protemu.host_link_protocol.
+3. Source inventories: chip_top/project/chip_project.ml input_paths loader list
+   currently names host_link_wire/{dune,wire.ml}; add the complete new canonical
+   set: host_link_protocol/{dune,definitions.ml,codec.ml,host_link_protocol.ml,
+   host_link_protocol.mli}. Retain old shim inputs while compatibility is reachable;
+   once only archive uses it, coordinator can classify removal from hardware bundle.
+   tinytapeout/src/dune loader_wrapper rule must add canonical dune and source_tree
+   dependencies; retaining shim dependency during transition is appropriate.
+   tinytapeout/scripts/check-adopted-bundle.py must assert canonical source inventory
+   as well as whichever compatibility inputs remain reachable.
+4. Coordinator owns docs/architecture_migration.md implementation record and AM3
+   rename/dependency map plus active-doc changes. This receipt supplies exact evidence.
+5. EDA/generated RTL/bundle-output comparisons were NOT RUN by this slice, under
+   explicit user scope. Prior ownership evidence is baseline context only. Review
+   new output/inventory identities after consumer/source-list integration separately.
+   This implementation does not itself accept AM3/AM6 or upgrade ASIC/API/SRAM.
+
+No consumers, test scenarios, frozen files, source inventories or docs were edited.
+No hardware behavior added. No EDA, git index/history/config mutation or sibling edit.

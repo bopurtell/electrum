@@ -21,7 +21,9 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_mechanisms
+open! Protemu_core
+open! Protemu_host_link
 open! Endpoint_scenario
 module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent

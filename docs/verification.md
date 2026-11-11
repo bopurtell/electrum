@@ -1,5 +1,14 @@
 # System verification
 
+**Current path/API update, 2026-11-11:** see [repository_layout.md](repository_layout.md)
+for the final owner-local layout. There is no root `test/` or installed flat hardware
+API. Protocol tests are in `ip/host_link/protocol/test/`, reference checks in
+`verif/reference/model/test/`, and host/simulator/CLI checks with their software owners.
+The frozen HL4a code is unchanged and uses a private non-installed adapter; active
+consumers use canonical IP libraries. Six diagnostic path-only updates and unchanged
+functional goldens are recorded in [final_layout_migration.md](final_layout_migration.md).
+The historical inventories below retain earlier paths rather than rewriting evidence.
+
 **Current layout work, 2026-11-11:** [ownership-layout amendment](ownership_layout.md)
 moved existing verification with its DUT/interface owner and separated generic
 support/software tests. It preserves the implemented SP1–SP6 agent pilot and frozen

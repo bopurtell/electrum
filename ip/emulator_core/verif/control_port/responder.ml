@@ -38,7 +38,8 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_controller
+open! Protemu_core
 module Completion = Item.Completion
 module Request = Item.Request
 module Response = Item.Response

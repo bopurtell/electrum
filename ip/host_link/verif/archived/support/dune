@@ -1,0 +1,13 @@
+; Private source adapter for the unchanged HL4a oracle only. Never installed.
+
+(library
+ (name hardcaml_protemu)
+ (libraries
+  protemu_mechanisms
+  protemu_mechanisms_staging
+  protemu_controller
+  protemu_core
+  protemu_core_legacy
+  protemu_host_link
+  protemu_system
+  protemu_asic_bringup))

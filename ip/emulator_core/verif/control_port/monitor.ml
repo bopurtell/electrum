@@ -22,7 +22,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_core
 module Observed = Item.Observed
 
 (* One cycle's port records, pre-edge. *)

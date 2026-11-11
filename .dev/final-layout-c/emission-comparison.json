@@ -1,0 +1,412 @@
+{
+  "bundles": {
+    "loader": {
+      "collateral": {
+        "constraints/top.sdc": {
+          "after_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "before_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "byte_equal": true
+        },
+        "info.yaml": {
+          "after_sha256": "5bbf18ff174bf01095b92db42e7499438b1dac95c837400f162895c748b934a2",
+          "before_sha256": "5bbf18ff174bf01095b92db42e7499438b1dac95c837400f162895c748b934a2",
+          "byte_equal": true
+        },
+        "src/config.json": {
+          "after_sha256": "83580832849fb1f3b60dbf03a1d25ef2bb062ddd4888f2094693f0bea16f51ff",
+          "before_sha256": "83580832849fb1f3b60dbf03a1d25ef2bb062ddd4888f2094693f0bea16f51ff",
+          "byte_equal": true
+        }
+      },
+      "new_identity": "9c9441417723ae4e5c8d13fb3f2bcd413bcef3d66b655bf0c2a68fff048a1951",
+      "old_identity": "75eb70c72e01f0371c90b955b811ae8bced8248d7b16a977ee32adbea8aed9df",
+      "repeatable": true,
+      "rtl": {
+        "simulation": {
+          "after_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+          "before_sha256": "68f5736808b3165304c0fb8655aacd897159f36356f9ff762b3df87871b1547d",
+          "byte_equal": true
+        },
+        "synthesis": {
+          "after_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+          "before_sha256": "776502975f8ee1dff9bf0d053fe32971f4b299468f918aa4daa54cab0036353c",
+          "byte_equal": true
+        }
+      },
+      "source_paths": [
+        "asic/cli/asic_bundle.ml",
+        "asic/cli/dune",
+        "asic/project/chip_project.ml",
+        "asic/project/dune",
+        "asic/rtl/bringup/dune",
+        "asic/rtl/bringup/p0_observable.ml",
+        "asic/rtl/dune",
+        "asic/rtl/memory_design.ml",
+        "asic/rtl/observable_design.ml",
+        "asic/rtl/package_top.ml",
+        "asic/rtl/program_memory.ml",
+        "asic/tinytapeout/asic-dependencies.lock",
+        "asic/tinytapeout/toolchain.lock",
+        "dune-project",
+        "hardcaml_protemu.opam",
+        "ip/emulator_core/rtl/control_port.ml",
+        "ip/emulator_core/rtl/dune",
+        "ip/emulator_core/rtl/emulator_core.ml",
+        "ip/emulator_core/rtl/execution_unit.ml",
+        "ip/emulator_core/rtl/instruction_decoder.ml",
+        "ip/emulator_core/rtl/primitive_dispatch.ml",
+        "ip/host_link/protocol/codec.ml",
+        "ip/host_link/protocol/definitions.ml",
+        "ip/host_link/protocol/dune",
+        "ip/host_link/protocol/host_link_protocol.ml",
+        "ip/host_link/protocol/host_link_protocol.mli",
+        "ip/host_link/rtl/command_dispatch.ml",
+        "ip/host_link/rtl/dune",
+        "ip/host_link/rtl/frame_rx.ml",
+        "ip/host_link/rtl/frame_tx.ml",
+        "ip/host_link/rtl/host_link.ml",
+        "ip/host_link/rtl/serial_phy.ml",
+        "ip/host_link/rtl/wire_crc.ml",
+        "ip/host_link/rtl/wire_layout.ml",
+        "ip/mechanisms/rtl/byte_fifo.ml",
+        "ip/mechanisms/rtl/dune",
+        "ip/mechanisms/rtl/input_events.ml",
+        "ip/mechanisms/rtl/pin_bank.ml",
+        "ip/mechanisms/rtl/shift_lane.ml",
+        "ip/mechanisms/rtl/timing.ml",
+        "ip/program_memory_controller/rtl/dune",
+        "ip/program_memory_controller/rtl/program_memory_controller.ml",
+        "ip/protemu_system/rtl/dune",
+        "ip/protemu_system/rtl/protemu_top.ml",
+        "spec/isa/assembler.ml",
+        "spec/isa/descriptor.ml",
+        "spec/isa/dune",
+        "spec/isa/encoding.ml",
+        "spec/isa/enum.ml",
+        "spec/isa/event_kind.ml",
+        "spec/isa/instruction.ml",
+        "spec/isa/invalid.ml",
+        "spec/isa/kinds.ml",
+        "spec/isa/pins.ml",
+        "spec/isa/program.ml"
+      ],
+      "unchanged_manifest_fields": {
+        "adapter": true,
+        "flow_configuration": true,
+        "generated_settings": true,
+        "operation": true,
+        "project": true,
+        "requested_tools": true,
+        "resolved_settings": true,
+        "resources": true,
+        "schema_version": true,
+        "simulation_resources": true,
+        "simulation_sources": true,
+        "synthesis_sources": true,
+        "target": true,
+        "top_module": true
+      }
+    },
+    "memory": {
+      "collateral": {
+        "constraints/top.sdc": {
+          "after_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "before_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "byte_equal": true
+        },
+        "info.yaml": {
+          "after_sha256": "4a30cb3af1065c0c6160b3447170ea35ccb2851f89ff6699796b5c4643957eed",
+          "before_sha256": "4a30cb3af1065c0c6160b3447170ea35ccb2851f89ff6699796b5c4643957eed",
+          "byte_equal": true
+        },
+        "src/config.json": {
+          "after_sha256": "ebe245d16d650ab7368e41d5cac29238fd72bcd2ba17858f4269879c0328ae83",
+          "before_sha256": "ebe245d16d650ab7368e41d5cac29238fd72bcd2ba17858f4269879c0328ae83",
+          "byte_equal": true
+        }
+      },
+      "new_identity": "fa14482458b5c423abcff4da424aaaa255cfd0cd1cb661e6c2722ab2921a4b6a",
+      "old_identity": "dab71ac1d9093c94354600c94e5244fce65dc252727c96ff49ec8ae72615802a",
+      "repeatable": true,
+      "rtl": {
+        "simulation": {
+          "after_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+          "before_sha256": "8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762",
+          "byte_equal": true
+        },
+        "synthesis": {
+          "after_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+          "before_sha256": "a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95",
+          "byte_equal": true
+        }
+      },
+      "source_paths": [
+        "asic/cli/asic_bundle.ml",
+        "asic/cli/dune",
+        "asic/project/chip_project.ml",
+        "asic/project/dune",
+        "asic/rtl/bringup/dune",
+        "asic/rtl/bringup/p0_observable.ml",
+        "asic/rtl/dune",
+        "asic/rtl/memory_design.ml",
+        "asic/rtl/observable_design.ml",
+        "asic/rtl/package_top.ml",
+        "asic/rtl/program_memory.ml",
+        "asic/tinytapeout/asic-dependencies.lock",
+        "asic/tinytapeout/toolchain.lock",
+        "dune-project",
+        "hardcaml_protemu.opam",
+        "ip/emulator_core/rtl/control_port.ml",
+        "ip/emulator_core/rtl/dune",
+        "ip/emulator_core/rtl/emulator_core.ml",
+        "ip/emulator_core/rtl/execution_unit.ml",
+        "ip/emulator_core/rtl/instruction_decoder.ml",
+        "ip/emulator_core/rtl/primitive_dispatch.ml",
+        "ip/host_link/protocol/codec.ml",
+        "ip/host_link/protocol/definitions.ml",
+        "ip/host_link/protocol/dune",
+        "ip/host_link/protocol/host_link_protocol.ml",
+        "ip/host_link/protocol/host_link_protocol.mli",
+        "ip/host_link/rtl/command_dispatch.ml",
+        "ip/host_link/rtl/dune",
+        "ip/host_link/rtl/frame_rx.ml",
+        "ip/host_link/rtl/frame_tx.ml",
+        "ip/host_link/rtl/host_link.ml",
+        "ip/host_link/rtl/serial_phy.ml",
+        "ip/host_link/rtl/wire_crc.ml",
+        "ip/host_link/rtl/wire_layout.ml",
+        "ip/mechanisms/rtl/byte_fifo.ml",
+        "ip/mechanisms/rtl/dune",
+        "ip/mechanisms/rtl/input_events.ml",
+        "ip/mechanisms/rtl/pin_bank.ml",
+        "ip/mechanisms/rtl/shift_lane.ml",
+        "ip/mechanisms/rtl/timing.ml",
+        "ip/program_memory_controller/rtl/dune",
+        "ip/program_memory_controller/rtl/program_memory_controller.ml",
+        "ip/protemu_system/rtl/dune",
+        "ip/protemu_system/rtl/protemu_top.ml",
+        "spec/isa/assembler.ml",
+        "spec/isa/descriptor.ml",
+        "spec/isa/dune",
+        "spec/isa/encoding.ml",
+        "spec/isa/enum.ml",
+        "spec/isa/event_kind.ml",
+        "spec/isa/instruction.ml",
+        "spec/isa/invalid.ml",
+        "spec/isa/kinds.ml",
+        "spec/isa/pins.ml",
+        "spec/isa/program.ml"
+      ],
+      "unchanged_manifest_fields": {
+        "adapter": true,
+        "flow_configuration": true,
+        "generated_settings": true,
+        "operation": true,
+        "project": true,
+        "requested_tools": true,
+        "resolved_settings": true,
+        "resources": true,
+        "schema_version": true,
+        "simulation_resources": true,
+        "simulation_sources": true,
+        "synthesis_sources": true,
+        "target": true,
+        "top_module": true
+      }
+    },
+    "observable": {
+      "collateral": {
+        "constraints/top.sdc": {
+          "after_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "before_sha256": "1852977c067a66e5b75f153c1bb6e13a9ccb1926082aad08ee489082fde3b5f1",
+          "byte_equal": true
+        },
+        "info.yaml": {
+          "after_sha256": "3a4beef1d4bf5934fc1b0fbac4a596e91cb9b3c9b907a7b7419995c91d63c12a",
+          "before_sha256": "3a4beef1d4bf5934fc1b0fbac4a596e91cb9b3c9b907a7b7419995c91d63c12a",
+          "byte_equal": true
+        },
+        "src/config.json": {
+          "after_sha256": "eb0e3a955e8a1c77960a0ba920d2071ca47cdfd776fed08b552b433fac4d84a8",
+          "before_sha256": "eb0e3a955e8a1c77960a0ba920d2071ca47cdfd776fed08b552b433fac4d84a8",
+          "byte_equal": true
+        }
+      },
+      "new_identity": "0e0efe48f49259148d953582f2bf2f24495b26d544a88dbcd1afd96aee1da932",
+      "old_identity": "af0cefc64c2b07bfd72656e241e4005841bb5607aa61a4112de20f7ab3a6db5e",
+      "repeatable": true,
+      "rtl": {
+        "simulation": {
+          "after_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+          "before_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+          "byte_equal": true
+        },
+        "synthesis": {
+          "after_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+          "before_sha256": "c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1",
+          "byte_equal": true
+        }
+      },
+      "source_paths": [
+        "asic/cli/asic_bundle.ml",
+        "asic/cli/dune",
+        "asic/project/chip_project.ml",
+        "asic/project/dune",
+        "asic/rtl/bringup/dune",
+        "asic/rtl/bringup/p0_observable.ml",
+        "asic/rtl/dune",
+        "asic/rtl/memory_design.ml",
+        "asic/rtl/observable_design.ml",
+        "asic/rtl/package_top.ml",
+        "asic/rtl/program_memory.ml",
+        "asic/tinytapeout/asic-dependencies.lock",
+        "asic/tinytapeout/toolchain.lock",
+        "dune-project",
+        "hardcaml_protemu.opam",
+        "ip/emulator_core/rtl/control_port.ml",
+        "ip/emulator_core/rtl/dune",
+        "ip/emulator_core/rtl/emulator_core.ml",
+        "ip/emulator_core/rtl/execution_unit.ml",
+        "ip/emulator_core/rtl/instruction_decoder.ml",
+        "ip/emulator_core/rtl/primitive_dispatch.ml",
+        "ip/host_link/protocol/codec.ml",
+        "ip/host_link/protocol/definitions.ml",
+        "ip/host_link/protocol/dune",
+        "ip/host_link/protocol/host_link_protocol.ml",
+        "ip/host_link/protocol/host_link_protocol.mli",
+        "ip/host_link/rtl/command_dispatch.ml",
+        "ip/host_link/rtl/dune",
+        "ip/host_link/rtl/frame_rx.ml",
+        "ip/host_link/rtl/frame_tx.ml",
+        "ip/host_link/rtl/host_link.ml",
+        "ip/host_link/rtl/serial_phy.ml",
+        "ip/host_link/rtl/wire_crc.ml",
+        "ip/host_link/rtl/wire_layout.ml",
+        "ip/mechanisms/rtl/byte_fifo.ml",
+        "ip/mechanisms/rtl/dune",
+        "ip/mechanisms/rtl/input_events.ml",
+        "ip/mechanisms/rtl/pin_bank.ml",
+        "ip/mechanisms/rtl/shift_lane.ml",
+        "ip/mechanisms/rtl/timing.ml",
+        "ip/program_memory_controller/rtl/dune",
+        "ip/program_memory_controller/rtl/program_memory_controller.ml",
+        "ip/protemu_system/rtl/dune",
+        "ip/protemu_system/rtl/protemu_top.ml",
+        "spec/isa/assembler.ml",
+        "spec/isa/descriptor.ml",
+        "spec/isa/dune",
+        "spec/isa/encoding.ml",
+        "spec/isa/enum.ml",
+        "spec/isa/event_kind.ml",
+        "spec/isa/instruction.ml",
+        "spec/isa/invalid.ml",
+        "spec/isa/kinds.ml",
+        "spec/isa/pins.ml",
+        "spec/isa/program.ml"
+      ],
+      "unchanged_manifest_fields": {
+        "adapter": true,
+        "flow_configuration": true,
+        "generated_settings": true,
+        "operation": true,
+        "project": true,
+        "requested_tools": true,
+        "resolved_settings": true,
+        "resources": true,
+        "schema_version": true,
+        "simulation_resources": true,
+        "simulation_sources": true,
+        "synthesis_sources": true,
+        "target": true,
+        "top_module": true
+      }
+    }
+  },
+  "generated": {
+    "access.v": {
+      "after_sha256": "66c91d2f44524fa9c38c8a1b38528f5789c32465cd52782ca05ac6075171b8a8",
+      "before_sha256": "66c91d2f44524fa9c38c8a1b38528f5789c32465cd52782ca05ac6075171b8a8",
+      "byte_equal": true
+    },
+    "byte_fifo_8.v": {
+      "after_sha256": "5d8062004e3919e2ddc140f7af2785d0f9a09e3ee495bd83620029c58693eeaf",
+      "before_sha256": "5d8062004e3919e2ddc140f7af2785d0f9a09e3ee495bd83620029c58693eeaf",
+      "byte_equal": true
+    },
+    "executable.v": {
+      "after_sha256": "7473662697c0b1636f77bad7ac35b547b38c10919fc4d6e2c87e0100d8be9116",
+      "before_sha256": "7473662697c0b1636f77bad7ac35b547b38c10919fc4d6e2c87e0100d8be9116",
+      "byte_equal": true
+    },
+    "input_events.v": {
+      "after_sha256": "626be0dc9fdab61b9fedffe59e527d6f2e37b4c2474d79d8bd69aaa18f817e92",
+      "before_sha256": "626be0dc9fdab61b9fedffe59e527d6f2e37b4c2474d79d8bd69aaa18f817e92",
+      "byte_equal": true
+    },
+    "integrated.v": {
+      "after_sha256": "3af601b6b7ce88a58bacba1c58a9e69435098d846d9eb687670046b9786eadec",
+      "before_sha256": "3af601b6b7ce88a58bacba1c58a9e69435098d846d9eb687670046b9786eadec",
+      "byte_equal": true
+    },
+    "loader.v": {
+      "after_sha256": "3f675f120118df88fded0e30b5cdb383339bf0f5ef199e42a183d4f018d3b7cb",
+      "before_sha256": "3f675f120118df88fded0e30b5cdb383339bf0f5ef199e42a183d4f018d3b7cb",
+      "byte_equal": true
+    },
+    "observed_transfer.v": {
+      "after_sha256": "f65f7442539548cb3d55cbaf3d47358c2bc7d5c09ca5862037c06965c636e800",
+      "before_sha256": "f65f7442539548cb3d55cbaf3d47358c2bc7d5c09ca5862037c06965c636e800",
+      "byte_equal": true
+    },
+    "observed_transfer_bank.v": {
+      "after_sha256": "5f9ebeae9e51bec5399e439bfcf8ce7e060595f3a2afbb0c3f0277e4ad973e50",
+      "before_sha256": "5f9ebeae9e51bec5399e439bfcf8ce7e060595f3a2afbb0c3f0277e4ad973e50",
+      "byte_equal": true
+    },
+    "p0_observable.v": {
+      "after_sha256": "c9f5e31aa3845c32810245b0ed568af67dcf253cf86ffc76ba66a704b59b7042",
+      "before_sha256": "c9f5e31aa3845c32810245b0ed568af67dcf253cf86ffc76ba66a704b59b7042",
+      "byte_equal": true
+    },
+    "pin_bank.v": {
+      "after_sha256": "0090a95846b9ef01fd508c59f9dd998d35d8fabaef2f0aec7d7d7454475a43c8",
+      "before_sha256": "0090a95846b9ef01fd508c59f9dd998d35d8fabaef2f0aec7d7d7454475a43c8",
+      "byte_equal": true
+    },
+    "primitive_demo.v": {
+      "after_sha256": "49d138686f7688cd0b2fd19144b567bc43243a3c448221352a7437f9d31c70a8",
+      "before_sha256": "49d138686f7688cd0b2fd19144b567bc43243a3c448221352a7437f9d31c70a8",
+      "byte_equal": true
+    },
+    "program_memory_backend.implementation.v": {
+      "after_sha256": "5eda47c26425740ae085cb09858268e6716d10896aa5b1f7e1b0830cfa7f53bb",
+      "before_sha256": "5eda47c26425740ae085cb09858268e6716d10896aa5b1f7e1b0830cfa7f53bb",
+      "byte_equal": true
+    },
+    "program_memory_backend.simulation.v": {
+      "after_sha256": "a3a23f38a8799ebbdb33b709722cc76cac8c67874de0a163c3ccaa0811e2673a",
+      "before_sha256": "a3a23f38a8799ebbdb33b709722cc76cac8c67874de0a163c3ccaa0811e2673a",
+      "byte_equal": true
+    },
+    "shift_lane.v": {
+      "after_sha256": "d837339ab1f762592a2211032c9d4ae0fff20c0d30f7834d18a4e5515581ef04",
+      "before_sha256": "d837339ab1f762592a2211032c9d4ae0fff20c0d30f7834d18a4e5515581ef04",
+      "byte_equal": true
+    },
+    "timing.v": {
+      "after_sha256": "fc0dbed78ff5ecf3f32f5e6e3ae7aa1e332dc154b1e7b69847616b643f74584c",
+      "before_sha256": "fc0dbed78ff5ecf3f32f5e6e3ae7aa1e332dc154b1e7b69847616b643f74584c",
+      "byte_equal": true
+    },
+    "uart_slice.v": {
+      "after_sha256": "e7d3886907003a8376961e695f227b5f3398fefc7cfc9d033721a39c27016cb0",
+      "before_sha256": "e7d3886907003a8376961e695f227b5f3398fefc7cfc9d033721a39c27016cb0",
+      "byte_equal": true
+    },
+    "uart_tx.v": {
+      "after_sha256": "ce4454c0b15fe20e6b22eb290f0b029b11625e0e4c8188d0a109450affd9dd72",
+      "before_sha256": "ce4454c0b15fe20e6b22eb290f0b029b11625e0e4c8188d0a109450affd9dd72",
+      "byte_equal": true
+    }
+  }
+}

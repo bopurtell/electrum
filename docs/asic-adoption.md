@@ -1,112 +1,132 @@
 # P0.6/P0.7 ASIC bundle adoption
 
-`bin/asic_bundle.ml` declares selectable `observable`, `memory`, and `loader`
-Tiny Tapeout designs. The observable design preserves the existing
-`tinytapeout/src/project.v` pin map, two-edge reset release, and immediate pad
-release on reset or disable. The Verilog wrapper and hand-maintained
-`tinytapeout/info.yaml` and `src/config.json` remain the legacy P0 path; use an
-emitted bundle for the adopted path.
+[`asic/project/chip_project.ml`](../asic/project/chip_project.ml) declares the
+selectable `observable`, `memory` and `loader` Tiny Tapeout designs and their
+explicit source inventory. [`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml)
+is the stable emission CLI. ASIC-dependent constructors/resource bindings live
+in [`asic/rtl/`](../asic/rtl/), compiled as `protemu_asic_rtl`; the preserved
+`protemu_chip_project` library depends on it and canonical owner libraries.
+
+The observable design retains the pin map of
+`asic/tinytapeout/src/project.v`, two-edge reset release and immediate pad release
+on reset/disable. That committed wrapper, hand-maintained
+`asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` remain inputs
+of the legacy P0 path. The adopted path consumes generated bundle equivalents.
 
 ## Dependency and emission
 
-`tinytapeout/asic-dependencies.lock` records the full `hardcaml_asic` source
-revision used for the package and the matching collateral revisions. Install
-that revision into the selected opam switch as described in
-[`hardcaml_asic`'s consumer guide](../../hardcaml_asic/docs/consumer-installation.md),
-or build that source revision to an isolated prefix and set `OCAMLPATH` to its
-`lib` directory. This repository's `tinytapeout/toolchain.lock` provisions the
-flow tools; the bundle manifest records the library's requested revisions, and
-adopted preflight refuses a mismatch. The package
-currently comes from an unreleased Git revision, so update the lock deliberately
-when upgrading it. The example commands below assume `hardcaml_asic` is already
-installed or visible through `OCAMLPATH`.
+[`asic/tinytapeout/asic-dependencies.lock`](../asic/tinytapeout/asic-dependencies.lock)
+records ASIC revision `a257424c3ae31fd6ee10cea052cc7577f15d2677` and matching
+collateral revisions. Keep the existing `Bundle.render ~simulation_build` API;
+the layout change does not upgrade the dependency or adopt SRAM.
+
+Use the recorded library revision installed in switch `5.2.0+ox`, or an isolated
+prefix visible through `OCAMLPATH`, as described in the
+[`hardcaml_asic` consumer guide](../../hardcaml_asic/docs/guides/consumer-installation.md).
+`scripts/bootstrap.sh` prepares the environment;
+`asic/tinytapeout/toolchain.lock` records flow-tool provisioning. The emitted
+manifest captures requested revisions, and adopted preflight checks the matching
+consumer locks. Review lock changes explicitly when upgrading.
+
+From the repository root, run these sequentially under the shared build lock:
 
 ```sh
-./scripts/with-switch.sh dune build bin/asic_bundle.exe -j 5
-./scripts/with-switch.sh dune exec -j 5 bin/asic_bundle.exe -- \
-  /tmp/protemu-adopted-bundle "$PWD"
-./scripts/with-switch.sh dune exec -j 5 bin/asic_bundle.exe -- \
-  memory /tmp/protemu-memory-bundle "$PWD"
-./scripts/with-switch.sh dune exec -j 5 bin/asic_bundle.exe -- \
-  loader /tmp/protemu-loader-bundle "$PWD"
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
+  observable "$PWD/_flow_results/observable-bundle" "$PWD"
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
+  memory "$PWD/_flow_results/memory-bundle" "$PWD"
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
+  loader "$PWD/_flow_results/loader-bundle" "$PWD"
 ```
 
-The output directory must be new or empty. The emitter lists its own OCaml,
-Dune, package, and dependency inputs explicitly and passes this repository as
-`Bundle.render`'s source root. The manifest copies and hashes those files. It
-also records the source Git revision, generated files, separate simulation and
-synthesis RTL paths, target references, flow settings, and the dependency lock.
-Use `src/<top>.v` for synthesis and `simulation/<top>.v` for simulation; never
-compile both together. The generated `info.yaml`, `src/config.json`, and
-`constraints/top.sdc` are the adopted flow inputs.
+Each output directory must be new or empty. The current inventory captures
+**55 canonical inputs per package**: ASIC CLI/project/RTL, owner-library build
+files/source, shared ISA/protocol, package metadata and dependency locks. It
+contains no software compatibility hardware facade or reference model.
+`Bundle.render` receives the repository source root, and the manifest copies and
+hashes these files along with recording source revision, generated files, target,
+flow settings and separate synthesis/simulation source sets. Source-path/hash
+changes legitimately change bundle identity without changing emitted hardware.
 
-The typed project declaration fixes TT `6x4` / CMOS5L, a 48 MHz primary clock,
-the current pin meanings, minimum/maximum I/O delays, and a default flop
-resource policy. Raw LibreLane overrides carry their template revision as a
-reason. Clock, RTL source list, and target-derived settings remain protected by
-the library. `tinytapeout/toolchain.lock` is the consumer-owned tool provisioning
-record for both paths. The hand-maintained `info.yaml` and `src/config.json`
-are legacy inputs only; the adopted bundle gets its configuration from the
-declaration.
+Use `src/<top>.v` for synthesis and `simulation/<top>.v` for simulation, never both
+together. The generated `info.yaml`, `src/config.json` and `constraints/top.sdc`
+are the adopted flow inputs. Project names, emitted module names and package ABI
+are preserved independently of source-directory spelling.
 
-The I/O delays are provisional P0 harness assumptions: 0 ns minimum models an
-input change at the clock edge for hold analysis, 1 ns maximum models input
-arrival, and 2 ns maximum models output loading at the receiving side. Review
-them against the actual board and host timing before physical closure.
+The declaration fixes TT `6x4` / CMOS5L, the 48 MHz primary clock, current pins,
+minimum/maximum I/O delays and default Flops policy. Protected clock, source-list
+and target settings reject conflicting raw overrides. The provisional P0 I/O
+assumptions are 0 ns minimum input delay, 1 ns maximum input arrival and 2 ns
+maximum output loading delay. Review board/host timing before claiming physical
+closure; the layout migration did not requalify those assumptions.
 
 ## Checks
 
+Metadata/declaration-only checking from the repository root:
+
 ```sh
-./scripts/with-switch.sh dune build bin/asic_bundle.exe -j 5
-python3 tinytapeout/scripts/check-adopted-bundle.py
-python3 tinytapeout/scripts/check-adopted-bundle.py --kind memory
-python3 tinytapeout/scripts/check-adopted-bundle.py --kind loader
+flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
+python3 asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
+python3 asic/tinytapeout/scripts/check-adopted-bundle.py --kind memory --metadata-only
+python3 asic/tinytapeout/scripts/check-adopted-bundle.py --kind loader --metadata-only
 ```
 
-The check emits twice, compares manifest identity and bytes, checks source
-copies and hashes, generated metadata/configuration/SDC, rejects conflicting
-`CLOCK_PERIOD`, `VERILOG_FILES`, and `DIE_AREA` overrides, and runs the existing
-the applicable observable or memory wrapper trace on both emitted RTL source
-sets; loader mode uses its dedicated physical serial peer. It also runs Verilator
-lint and generic Yosys synthesis inside the pinned LibreLane Docker image.
-The full check needs an accessible Docker daemon and that image. The consumer
-can populate the image cache independently with
-`docker pull ghcr.io/librelane/librelane:3.1.0.dev3`; the check itself never
-pulls. It does not require the `hardcaml_asic` source checkout or host installs
-of the HDL binaries. `--metadata-only` runs the
-bundle and declaration checks without Docker. Memory mode additionally checks
-the exact RAM identity, 256x16 shape, explicit flop selection,
-behavioral/implementation source roles, and absence of initialization in
-implementation RTL. Its mapped-synthesis evidence is the
-[P0.7 record](../tinytapeout/reports/2026-09-20-p0.7-memory-synthesis.md).
-Loader mode retains that exact RAM resource contract and adds repeatable source/pin
-metadata checks plus the independent serial peer against the actual wrapper's
-behavioral source role. Its framing, timing, malformed-load, and recovery evidence
-is the [P3.5 record](p3.5-hardware-loader.md). The P0.7 mapped report predates the
-loader, integrated execution core, and mechanisms and is historical rather than a
-current production-top area result. No P3.5 physical flow was run.
-The production wrapper trace is intentionally narrower than the complete consumer
-acceptance contract. The [P3.1b verification record](p3.1b-verification.md) supplements it
-with the shared P3.1a directed/generated suite on both elaborated backend circuits and a
-verification-only full-interface HDL top for both emitted source roles; it does not alter
-the production bundle or its physical-flow inputs.
+These checks emit twice, compare identities/manifest bytes, verify source copies
+and hashes, metadata/configuration/SDC and conflict rejection for
+`CLOCK_PERIOD`, `VERILOG_FILES` and `DIE_AREA`.
+
+Omit `--metadata-only` to additionally run applicable wrapper/serial-peer traces,
+Verilator lint and generic Yosys synthesis in the pinned LibreLane Docker image.
+The full check requires an accessible Docker daemon and cached image
+`ghcr.io/librelane/librelane:3.1.0.dev3`; it never pulls the image itself. It needs
+neither runtime access to an ASIC source checkout nor host HDL executables. This
+is emitted-RTL checking, **not P&R or physical qualification**.
+
+Memory mode also verifies the exact RAM identity, 256x16 shape, explicit Flops
+selection, behavioral/implementation roles and absence of initialization in
+implementation RTL. Loader mode retains that contract and tests the independent
+serial peer against the package RTL roles. The production wrapper check is
+narrower than the full consumer contract; see
+[P3.1b verification](p3.1b-verification.md) and the protocol/timing/recovery
+authority in [P3.5](p3.5-hardware-loader.md).
+
+The [P0.7 mapped-synthesis record](../archive/legacy/tinytapeout/reports/2026-09-20-p0.7-memory-synthesis.md)
+predates the loader, integrated core and mechanisms. It is historical evidence,
+not current production-top area or routed timing. No P3.5 physical qualification
+is implied by the package/RTL checks.
 
 ## Running the flow
 
-The emitted bundle is consumed by [`./flow.sh`](../flow.sh), the canonical and
-only entry point for the implementation flow. Its stages, environment overrides,
-resuming rules, failure behavior, archiving, and verification status are in
-**[flow.md](flow.md)**, which is the source of truth for all of it.
+[`./asic/flow.sh`](../asic/flow.sh) consumes the adopted bundle. Setup is
+`./scripts/bootstrap.sh` and per-shell `source scripts/env.sh`. Tool/runtime state
+is `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}`; execution outputs
+default to `_flow_results/{adopted,flow-*,archives}`. Stages, overrides, resuming,
+failure behavior and archiving are specified in **[flow.md](flow.md)**.
 
-The first adopted physical run is archived at
-[`flow_results/20260918-230920-05f65042`](../flow_results/20260918-230920-05f65042/README.md).
-The qualifying clean-staging reproduction is
-[`flow_results/20260920-081325-ccecd9ed`](../flow_results/20260920-081325-ccecd9ed/README.md):
-committed source, isolated locked library prefix, complete preserved input
-bundle, full hardening, TT precheck, and observable gate-level simulation all
-pass. Its experiment record is
-[`2026-09-20-p0.5c-clean-staging-physical.md`](../tinytapeout/reports/2026-09-20-p0.5c-clean-staging-physical.md).
+`adopted-flow.sh` does not automatically invoke the adoption checker. Bundle
+contract checks and physical execution evidence are separate obligations.
 
-Note that `adopted-flow.sh` does not invoke `check-adopted-bundle.py`. A physical
-run is physical evidence only; the adoption invariants above are checked
-separately.
+## Historical physical evidence and current qualification
+
+The first adopted physical run is preserved at
+[P0.5b](../archive/legacy/flow_results/20260918-230920-05f65042/README.md).
+The qualifying clean-staging observable reproduction is
+[P0.5c](../archive/legacy/flow_results/20260920-081325-ccecd9ed/README.md): its
+recorded committed source, isolated locked-library prefix, complete preserved
+input bundle, full hardening, TT precheck and observable gate simulation passed.
+See its [dated experiment record](../archive/legacy/tinytapeout/reports/2026-09-20-p0.5c-clean-staging-physical.md).
+
+These September 2026 results are the last recorded full physical qualification.
+The 2026-11-11 layout work preserved all historical archive bytes and metadata;
+the [external relocation index](../archive/INDEX.md) maps their old paths/hashes.
+Historical `bin/asic_bundle.ml` now maps to `asic/cli/asic_bundle.ml` plus the
+extracted `asic/project/` declaration; old `tinytapeout/` maps to
+`asic/tinytapeout/`. Commands inside dated records intentionally remain unchanged.
+
+The layout migration validated orchestration with **17 stub checks** and checked
+nonphysical build/RTL/bundle preservation, including six unchanged emitted bundle
+roles and current canonical source hashes. It did not provision the relocated
+tool environment or rerun P&R/precheck/physical signoff. Those historical
+observable results therefore do not establish physical closure of today's loader
+production top or requalify the relocated runtime defaults.

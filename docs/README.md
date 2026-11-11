@@ -2,6 +2,7 @@
 
 | Document | What it covers |
 | --- | --- |
+| [final_layout_migration.md](final_layout_migration.md) | Delivered final layout: singular ASIC owner, enforced IP libraries, removed public flat API, colocated software/model tests, firmware and historical archive |
 | [repository_layout.md](repository_layout.md) | Current RTL/verif/software-test ownership, library boundaries and compatibility paths |
 | [ownership_layout.md](ownership_layout.md) | Delivered ownership migration, identified baseline, exact preservation results and remaining AM/VO/PT.3 scope |
 | [protemu.pdf](protemu.pdf) | Architecture planning brief: problem framing for the protocol emulator ASIC, proposed cores and primitives, protocol mapping (UART, SPI, I²C, USB, Ethernet), and open architecture questions. Start here for the "why". |
@@ -67,8 +68,8 @@ the protocol authority; these structural migrations do not mark P3.6 complete.
   authoritative `Single_port_ram` behavior and backend verification obligations.
 - [Workbench architecture](../../hardcaml_workbench/docs/hardcaml_workbench_architecture.md):
   independent projects, optional versioned driver integration, jobs, and artifacts.
-- [Tiny Tapeout integration guide](../tinytapeout/README.md) and
-  [experiment record format](../tinytapeout/reports/README.md): current scripts,
+- [Tiny Tapeout integration guide](../asic/tinytapeout/README.md) and
+  [historical experiment record format](../archive/legacy/tinytapeout/reports/README.md): current scripts,
   migration to ASIC-generated inputs, and build/execution evidence.
 
 These sibling links refer to the current workspace checkout names; standalone

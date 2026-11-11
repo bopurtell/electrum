@@ -157,10 +157,10 @@ let%expect_test "bounded assembled programs agree with the independent core" =
 let%expect_test "generated P3.2 programs record an executable rerun" =
   print_endline
     (Replay.rerun_command
-       ~source_file:"test/core/control_execution/control_execution_property_tests.ml"
+       ~source_file:"ip/emulator_core/verif/execution/control_execution_property_tests.ml"
        ~settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=24 dune runtest test/core/control_execution --force
+    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=24 dune runtest ip/emulator_core/verif/execution --force
     |}]
 ;;

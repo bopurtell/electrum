@@ -1,6 +1,0 @@
-; Preserve the executable rerun recorded in the unchanged diagnostic fixture.
-
-(alias
- (name runtest)
- (deps
-  (alias ../../../ip/program_memory_controller/verif/controller/runtest)))

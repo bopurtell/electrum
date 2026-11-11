@@ -7,7 +7,6 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
 open! Protemu_isa
 open! Protemu_f_model
 open! Control_execution_testbench

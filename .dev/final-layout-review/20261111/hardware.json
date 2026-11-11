@@ -1,0 +1,33 @@
+{
+  "sources": 26,
+  "source_bodies_preserved": true,
+  "unique_authored_owner": true,
+  "alias_exports": {
+    "Byte_fifo": "Protemu_mechanisms.Byte_fifo",
+    "Input_events": "Protemu_mechanisms.Input_events",
+    "Pin_bank": "Protemu_mechanisms.Pin_bank",
+    "Shift_lane": "Protemu_mechanisms.Shift_lane",
+    "Timing": "Protemu_mechanisms.Timing",
+    "Observed_transfer": "Protemu_mechanisms_staging.Observed_transfer",
+    "Observed_transfer_bank": "Protemu_mechanisms_staging.Observed_transfer_bank",
+    "Primitive_demo": "Protemu_mechanisms_staging.Primitive_demo",
+    "Uart_slice": "Protemu_mechanisms_staging.Uart_slice",
+    "Uart_tx": "Protemu_mechanisms_staging.Uart_tx",
+    "Program_memory_controller": "Protemu_controller.Program_memory_controller",
+    "Control_port": "Protemu_core.Control_port",
+    "Emulator_core": "Protemu_core.Emulator_core",
+    "Execution_unit": "Protemu_core.Execution_unit",
+    "Instruction_decoder": "Protemu_core.Instruction_decoder",
+    "Primitive_dispatch": "Protemu_core.Primitive_dispatch",
+    "Executable_core": "Protemu_core_legacy.Executable_core",
+    "Command_dispatch": "Protemu_host_link.Command_dispatch",
+    "Frame_rx": "Protemu_host_link.Frame_rx",
+    "Frame_tx": "Protemu_host_link.Frame_tx",
+    "Host_link": "Protemu_host_link.Host_link",
+    "Serial_phy": "Protemu_host_link.Serial_phy",
+    "Wire_crc": "Protemu_host_link.Wire_crc",
+    "Wire_layout": "Protemu_host_link.Wire_layout",
+    "Protemu_top": "Protemu_system.Protemu_top",
+    "P0_observable": "Protemu_asic_bringup.P0_observable"
+  }
+}

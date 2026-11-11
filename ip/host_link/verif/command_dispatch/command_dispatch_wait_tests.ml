@@ -10,7 +10,8 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_core
+open! Protemu_host_link
 open! Command_dispatch_testbench
 
 let read ~tag address = Handoff.request ~tag (Read_word { address })

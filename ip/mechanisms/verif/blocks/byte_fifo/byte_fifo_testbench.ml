@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 module Sim = Cyclesim.With_interface (Byte_fifo.I) (Byte_fifo.O)
 module F_model = Protemu_f_model
 module Kinds = Protemu_isa.Kinds

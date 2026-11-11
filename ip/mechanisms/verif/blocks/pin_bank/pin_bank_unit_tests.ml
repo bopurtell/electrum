@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
 open! Pin_bank_testbench
 
 let%test_unit "P2.1 masked commits, claims, conflict, and release" =

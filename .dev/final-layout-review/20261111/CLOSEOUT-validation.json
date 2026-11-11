@@ -1,0 +1,50 @@
+{
+  "public_flat_api_absent": true,
+  "private_adapter_only_frozen_consumers": true,
+  "private_adapter_aliases": 26,
+  "installed_libraries": [
+    "hardcaml_protemu.asic_bringup",
+    "hardcaml_protemu.controller",
+    "hardcaml_protemu.core",
+    "hardcaml_protemu.core_legacy",
+    "hardcaml_protemu.host",
+    "hardcaml_protemu.host_link",
+    "hardcaml_protemu.host_link_protocol",
+    "hardcaml_protemu.host_link_wire",
+    "hardcaml_protemu.isa",
+    "hardcaml_protemu.mechanisms",
+    "hardcaml_protemu.mechanisms_staging",
+    "hardcaml_protemu.simulator",
+    "hardcaml_protemu.system"
+  ],
+  "canonical_installed_consumers": 8,
+  "installed_dune_consumers": 8,
+  "negative_module_and_dune_logs_valid": true,
+  "installed_flat_artifacts": [],
+  "frozen_unchanged": 8,
+  "rtl_unchanged": 26,
+  "registrations": 481,
+  "formatting_findings_closed": 18,
+  "fresh_bundle_roles_identical": 6,
+  "canonical_inputs_per_bundle": 55,
+  "current_bundle_identities": {
+    "observable": "1782b66c7121a157abf145ccfe8d3848af7e466ae5a49889fea40f21fd8898a0",
+    "memory": "aa5fc077159b64c391f3d49238be3979d3948c384a6249e89fb052c65f7c693b",
+    "loader": "9f6b707a6d184b75261330ea88b08ce0b63d834303b895028fdeb8d605a8ee58"
+  },
+  "archives_unchanged": 42,
+  "remaining_flat_references": [
+    "ip/host_link/verif/archived/support/hardcaml_protemu.ml",
+    "ip/host_link/verif/archived/support/dune",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+    "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_testbench.ml",
+    "ip/host_link/verif/archived/hl4a/dune"
+  ],
+  "index_sha256": "b17f790e60bd3032f0f9e3edb93e1a0e8a755cbb37f8fe96da5d9dda1dc3ae48",
+  "index_unchanged": true,
+  "builds_compilation_or_eda_run": false
+}

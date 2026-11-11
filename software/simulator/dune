@@ -1,0 +1,17 @@
+(library
+ (name protemu_simulator)
+ (public_name hardcaml_protemu.simulator)
+ (modules simulator_backend)
+ (libraries
+  core
+  hardcaml
+  protemu_core
+  protemu_controller
+  protemu_host
+  protemu_isa)
+ (preprocess
+  (pps ppx_hardcaml ppx_jane))
+ (lint
+  (pps ppx_js_style))
+ (flags
+  (:standard -w -27-57-33-34-35-40-63-47-26)))

@@ -11,7 +11,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_host_link
 open! Command_dispatch_testbench
 
 (* The P3.5 INFO descriptor, written from the record's table. *)

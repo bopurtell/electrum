@@ -16,14 +16,15 @@
   command_dispatch_wait_tests
   command_dispatch_lifecycle_tests
   command_dispatch_diagnostics_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_core
+  protemu_host_link
   host_link_protocol
   protemu_control_port_agent)
  (preprocess

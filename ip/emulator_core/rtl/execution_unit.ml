@@ -13,6 +13,7 @@ open! Core
 open! Hardcaml
 open! Signal
 open! Protemu_isa
+module Program_memory_controller = Protemu_controller.Program_memory_controller
 
 module Config = struct
   let pc_bits = 17

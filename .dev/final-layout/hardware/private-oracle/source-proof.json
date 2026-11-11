@@ -1,0 +1,17 @@
+{
+  "frozen_files_unchanged": 8,
+  "rtl_files_unchanged": 26,
+  "remaining_flat_references": [
+    "ip/host_link/verif/archived/hl4a/dune",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_testbench.ml",
+    "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml",
+    "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml",
+    "ip/host_link/verif/archived/support/dune",
+    "ip/host_link/verif/archived/support/hardcaml_protemu.ml"
+  ],
+  "public_hardware_compatibility_tree_removed": true,
+  "old_installed_identity_receipts": "historical only; superseded by installed-proof.json"
+}

@@ -6,7 +6,8 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_controller
+open! Protemu_core
 open! Protemu_isa
 module Sim = Cyclesim.With_interface (Emulator_core.I) (Emulator_core.O)
 

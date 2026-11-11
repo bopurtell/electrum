@@ -1,0 +1,6 @@
+The shell call running baseline && regression hit its 120-second harness timeout.
+install-lint passed (0.300s); ordinary-forced passed (37.931s), both in ledger.
+rtl-forced started approximately 2026-11-11T05:41:08Z and was interrupted about
+82 seconds later. Its partial log is preserved as logs/rtl-forced.log. No exit
+status was captured, so this attempt is NOT a pass. Process inspection confirmed
+no surviving Dune/Yosys/iverilog child before retrying under a longer timeout.

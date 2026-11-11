@@ -1,0 +1,247 @@
+{
+  "retired_roots_absent": {
+    "lib": true,
+    "bin": true,
+    "test": true,
+    "host": true,
+    "f_model": true,
+    "rtl": true,
+    "chip_top": true,
+    "isa": true,
+    "host_link_protocol": true,
+    "host_link_wire": true,
+    "tinytapeout": true,
+    "examples": true,
+    "flow_results": true
+  },
+  "active_dune_files": 61,
+  "active_source_files": 194,
+  "include_subdirs_unqualified": [],
+  "copied_ocaml_rules": [],
+  "copy_rules": [
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../verif/observable/emitted/tb.v"
+    },
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../verif/memory/emitted/p0_memory_tb.v"
+    },
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../../ip/mechanisms/verif/staging/emitted/*.v"
+    },
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../../ip/emulator_core/verif/emitted/*.v"
+    },
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../../ip/program_memory_controller/verif/backend_integration/emitted/*.v"
+    },
+    {
+      "path": "asic/tinytapeout/test/dune",
+      "source": "../../../verif/system/emitted/p3_loader_tb.v"
+    }
+  ],
+  "intentional_unwrapped_libraries": [
+    {
+      "path": "asic/verif/observable/core/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/staging/uart_slice/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/staging/uart_tx/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/staging/primitive_demo/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/staging/observed_transfer/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/staging/observed_transfer_bank/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/blocks/input_events/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/blocks/shift_lane/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/blocks/timing/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/mechanisms/verif/blocks/pin_bank/dune",
+      "stanzas": 2
+    },
+    {
+      "path": "ip/mechanisms/verif/blocks/byte_fifo/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/program_memory_controller/verif/backend_integration/dune",
+      "stanzas": 2
+    },
+    {
+      "path": "ip/program_memory_controller/verif/controller/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/frame_rx/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/endpoint/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/command_dispatch/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/frame_tx/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/serial_phy/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/verif/archived/hl4a/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/host_link/protocol/test/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/emulator_core/verif/execution/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "ip/emulator_core/verif/core_engine/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "software/host/test/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "software/simulator/test/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "verif/common/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "verif/backends/conformance/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "verif/backends/conformance/test/dune",
+      "stanzas": 1
+    },
+    {
+      "path": "verif/common/test/dune",
+      "stanzas": 1
+    }
+  ],
+  "unwrapped_stanzas": 30,
+  "unwrapped_dune_files": 28,
+  "total_registrations": 481,
+  "registrations": {
+    "asic/verif/observable/core/wrapper_unit_tests.ml": 2,
+    "ip/mechanisms/verif/staging/uart_slice/uart_slice_unit_tests.ml": 13,
+    "ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml": 2,
+    "ip/mechanisms/verif/staging/uart_tx/uart_tx_unit_tests.ml": 2,
+    "ip/mechanisms/verif/staging/primitive_demo/primitive_demo_unit_tests.ml": 1,
+    "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_unit_tests.ml": 7,
+    "ip/mechanisms/verif/staging/observed_transfer/observed_transfer_timing_tests.ml": 15,
+    "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_unit_tests.ml": 4,
+    "ip/mechanisms/verif/staging/observed_transfer_bank/observed_transfer_bank_timing_tests.ml": 9,
+    "ip/mechanisms/verif/blocks/input_events/input_events_unit_tests.ml": 2,
+    "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml": 7,
+    "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml": 5,
+    "ip/mechanisms/verif/blocks/shift_lane/shift_lane_unit_tests.ml": 4,
+    "ip/mechanisms/verif/blocks/timing/timing_unit_tests.ml": 3,
+    "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_quickcheck_tests.ml": 1,
+    "ip/mechanisms/verif/blocks/pin_bank/pin_bank_unit_tests.ml": 4,
+    "ip/mechanisms/verif/blocks/pin_bank/pin_bank_expect_tests.ml": 1,
+    "ip/mechanisms/verif/blocks/byte_fifo/byte_fifo_unit_tests.ml": 4,
+    "ip/program_memory_controller/verif/backend_integration/program_memory_backend_tests.ml": 4,
+    "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml": 2,
+    "ip/program_memory_controller/verif/controller/protocol_core_unit_tests.ml": 1,
+    "ip/host_link/verif/frame_rx/frame_rx_validation_tests.ml": 9,
+    "ip/host_link/verif/frame_rx/frame_rx_receive_tests.ml": 4,
+    "ip/host_link/verif/frame_rx/frame_rx_diagnostics_tests.ml": 4,
+    "ip/host_link/verif/frame_rx/frame_rx_lifecycle_tests.ml": 9,
+    "ip/host_link/verif/endpoint/endpoint_diagnostics_tests.ml": 5,
+    "ip/host_link/verif/endpoint/endpoint_cancellation_tests.ml": 10,
+    "ip/host_link/verif/endpoint/endpoint_lifecycle_tests.ml": 1,
+    "ip/host_link/verif/endpoint/endpoint_serial_monitor_tests.ml": 8,
+    "ip/host_link/verif/endpoint/endpoint_framing_tests.ml": 7,
+    "ip/host_link/verif/endpoint/endpoint_transaction_tests.ml": 10,
+    "ip/host_link/verif/command_dispatch/command_dispatch_wait_tests.ml": 11,
+    "ip/host_link/verif/command_dispatch/command_dispatch_diagnostics_tests.ml": 5,
+    "ip/host_link/verif/command_dispatch/command_dispatch_command_tests.ml": 7,
+    "ip/host_link/verif/command_dispatch/command_dispatch_response_tests.ml": 9,
+    "ip/host_link/verif/command_dispatch/command_dispatch_lifecycle_tests.ml": 7,
+    "ip/host_link/verif/frame_tx/frame_tx_read_tests.ml": 12,
+    "ip/host_link/verif/frame_tx/frame_tx_publication_tests.ml": 6,
+    "ip/host_link/verif/frame_tx/frame_tx_lifecycle_tests.ml": 6,
+    "ip/host_link/verif/frame_tx/frame_tx_diagnostics_tests.ml": 5,
+    "ip/host_link/verif/serial_phy/serial_phy_tests.ml": 8,
+    "ip/host_link/verif/serial_phy/serial_phy_diagnostics_tests.ml": 3,
+    "ip/host_link/verif/archived/hl4a/hardware_loader_transaction_tests.ml": 10,
+    "ip/host_link/verif/archived/hl4a/hardware_loader_diagnostics_tests.ml": 5,
+    "ip/host_link/verif/archived/hl4a/serial_host_monitor_tests.ml": 8,
+    "ip/host_link/verif/archived/hl4a/hardware_loader_framing_tests.ml": 7,
+    "ip/host_link/verif/archived/hl4a/hardware_loader_cancellation_tests.ml": 10,
+    "ip/host_link/protocol/test/wire_tests.ml": 26,
+    "ip/host_link/protocol/test/boundary_tests.ml": 5,
+    "ip/emulator_core/verif/execution/control_execution_mechanism_tests.ml": 7,
+    "ip/emulator_core/verif/execution/control_execution_property_tests.ml": 2,
+    "ip/emulator_core/verif/execution/control_execution_fault_tests.ml": 9,
+    "ip/emulator_core/verif/execution/instruction_decoder_tests.ml": 2,
+    "ip/emulator_core/verif/execution/control_execution_unit_tests.ml": 1,
+    "ip/emulator_core/verif/execution/control_execution_model_tests.ml": 4,
+    "ip/emulator_core/verif/core_engine/core_engine_timing_tests.ml": 1,
+    "ip/emulator_core/verif/core_engine/core_engine_tests.ml": 16,
+    "ip/emulator_core/verif/core_engine/core_engine_control_port_tests.ml": 5,
+    "software/compatibility/host_link_wire/test/compatibility_tests.ml": 1,
+    "software/host/test/host_api_tests.ml": 5,
+    "software/simulator/test/host_simulator_tests.ml": 16,
+    "verif/reference/model/test/test_isa.ml": 21,
+    "verif/reference/model/test/test_encoding.ml": 20,
+    "verif/reference/model/test/test_cycle.ml": 22,
+    "verif/reference/model/test/test_firmware.ml": 11,
+    "verif/reference/model/test/test_mechanisms.ml": 22,
+    "verif/backends/conformance/test/backend_conformance_expect_tests.ml": 2,
+    "verif/common/test/replay_expect_tests.ml": 3,
+    "verif/common/test/checker_expect_tests.ml": 1
+  },
+  "bundle_source_counts": {
+    "observable": 55,
+    "memory": 55,
+    "loader": 55
+  },
+  "bundle_copied_inputs_match_current_sources": {
+    "observable": true,
+    "memory": true,
+    "loader": true
+  },
+  "preserved_am3_files": 105,
+  "loader_peer_passes": 3
+}

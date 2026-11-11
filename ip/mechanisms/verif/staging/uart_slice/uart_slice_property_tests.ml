@@ -259,10 +259,10 @@ let%expect_test "bounded frames and interruptions preserve the slice contracts" 
 let%expect_test "the generated property prints its executable reproduction command" =
   print_endline
     (Replay.rerun_command
-       ~source_file:"test/integration/uart_slice/uart_slice_property_tests.ml"
+       ~source_file:"ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml"
        ~settings:regression_settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=16 dune runtest test/integration/uart_slice --force
+    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=16 dune runtest ip/mechanisms/verif/staging/uart_slice --force
     |}]
 ;;

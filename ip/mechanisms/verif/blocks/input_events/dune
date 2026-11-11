@@ -8,7 +8,7 @@
   input_events_timing_testbench
   input_events_timing_tests
   input_events_unit_tests)
- ; Keep the ppx_expect source-tree workaround described in test/common/dune.
+ ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
@@ -17,7 +17,7 @@
   core
   hardcaml
   hardcaml_event_driven_sim
-  hardcaml_protemu
+  protemu_mechanisms
   protemu_f_model
   protemu_test_common
   splittable_random)
@@ -39,7 +39,7 @@
   core_unix
   hardcaml
   hardcaml_event_driven_sim
-  hardcaml_protemu
+  protemu_mechanisms
   protemu_input_events_tests)
  (preprocess
   (pps ppx_hardcaml ppx_jane))

@@ -12,7 +12,8 @@
 
 open! Core
 open! Hardcaml
-open! Hardcaml_protemu
+open! Protemu_mechanisms
+open! Protemu_mechanisms_staging
 module Evsim = Hardcaml_event_driven_sim.Two_state_simulator
 module Circuit = Evsim.With_interface (Observed_transfer.I) (Observed_transfer.O)
 module Simulator = Evsim.Simulator

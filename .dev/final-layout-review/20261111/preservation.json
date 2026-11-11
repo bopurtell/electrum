@@ -1,0 +1,15 @@
+{
+  "registrations": 481,
+  "frozen": 8,
+  "path_only_expectation_changes": [
+    "ip/emulator_core/verif/execution/control_execution_property_tests.ml",
+    "ip/mechanisms/verif/blocks/input_events/input_events_four_state_tests.ml",
+    "ip/mechanisms/verif/blocks/input_events/input_events_timing_tests.ml",
+    "ip/mechanisms/verif/staging/uart_slice/uart_slice_property_tests.ml",
+    "ip/program_memory_controller/verif/controller/protocol_core_property_tests.ml",
+    "verif/common/test/replay_expect_tests.ml"
+  ],
+  "cli_examples": 6,
+  "cli_goldens": 7,
+  "firmware_example_bytes_preserved": true
+}

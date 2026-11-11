@@ -13,7 +13,7 @@
 *)
 
 open! Core
-open! Hardcaml_protemu
+open! Protemu_host_link
 open! Frame_rx_testbench
 
 let info tag = encode ~tag Info

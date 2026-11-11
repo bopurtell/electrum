@@ -15,7 +15,9 @@
  (libraries
   core
   hardcaml
-  hardcaml_protemu
+  protemu_controller
+  protemu_core
+  protemu_core_legacy
   protemu_isa
   protemu_f_model
   protemu_test_common
