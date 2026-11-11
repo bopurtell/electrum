@@ -1,29 +1,32 @@
-# Architecture migration
+# Architecture and migration plan
 
-**Current implementation, 2026-11-11:** the [ownership-layout amendment](ownership_layout.md)
-delivers IP-local RTL/verification, shared/system verification and chip-owned
-package/project construction. The current clean baseline already contains the
-AM1/AM2 names described below; do not repeat those renames. This slice preserves
-the later serial-host pilot and existing verification obligations. AM3, AM5, wider
-VO work and PT.3 API/SRAM adoption remain separately scoped. Historical delivery
-and acceptance statements below retain their original meaning. Use
-[repository_layout.md](repository_layout.md) for current paths; the original
-planning-time layout and rename map below are historical specifications.
+**Current status, 2026-11-11:** this document describes the implemented IP/system/
+chip ownership model and the remaining AM work. [Repository layout](repository_layout.md)
+is the detailed path guide; [ownership migration](ownership_layout.md) records the
+preservation baseline. Dated implementation records retain historical names/results.
 
-Status: agreed direction, documented 2026-09-25. AM1/AM2 renames delivered unstaged
-2026-09-26 and awaiting owner review (see Implementation records); all AM work items below
-remain open until accepted. The repository owner selects and prompts
-implementation agents; this document is their handoff, not evidence that source names,
-interfaces, or layouts have changed.
+| Item | Implementation status | Remaining boundary |
+| --- | --- | --- |
+| AM0 | Identified post-rename ownership and AM3 baselines captured | Original pre-AM1/AM2 evidence gaps remain; do not claim retrospective equivalence |
+| AM1 | Core/controller names implemented and preserved | Original owner acceptance remains separately recorded |
+| AM2 | Host_link / Protemu_top ownership implemented and preserved | Original owner acceptance remains separately recorded |
+| AM3 | **Protocol/Codec separation implemented and independently reviewed** | Owner review; temporary old-source API facade retained |
+| AM4 | **Chip/package/project extraction implemented and independently reviewed** | Owner review; no SRAM/backend upgrade implied |
+| AM5 | **Pending** grouped interfaces and responsibility review | Preserve flattened ports and temporal contracts |
+| AM6 | **Pending** architecture acceptance / verification handoff | Reconcile owner acceptance and remaining AM5 scope |
+
+The earlier checklist below retains owner-acceptance gates; an unchecked gate does
+not mean an implemented item must be written again. Implementation evidence is in
+the dated records. VO work and PT.3 dependency/SRAM adoption are separate queues.
 
 ## Authority and order of work
 
-This document owns the architectural naming and responsibility migration. Complete
-AM0–AM6 before starting the verification-infrastructure changes in
-[verification.md](verification.md#verification-overhaul-sequence). Existing tests remain
-the preservation baseline throughout the architectural work. Mechanical updates to test
-imports and paths are part of a rename; replacing drivers, assertions, or scenarios is
-part of the later verification overhaul.
+This document owns architectural naming, responsibility and interface migration.
+Broader verification-infrastructure changes remain sequenced through AM6 and
+[verification.md](verification.md#verification-overhaul-sequence), with the later
+explicitly authorized [serial-host pilot](serial_host_pilot.md) preserved as an
+exception already implemented. Existing tests remain the preservation baseline.
+Mechanical path/API updates do not authorize replacing drivers, assertions or scenarios.
 
 - [construction-plan.md](construction-plan.md) and the P3 records own hardware behavior.
 - [verification.md](verification.md) owns enduring verification architecture and the VO
@@ -62,41 +65,40 @@ Future agent prompts must repeat this requirement alongside the no-commits and s
    feature such as loading firmware.
 2. Decompose by responsibility, state ownership, and useful interface contracts. Thin
    composition files are appropriate; a module is not split merely to increase file count.
-3. Retain flat OCaml module names and the current `lib/` unqualified namespace for this
-   migration. Broader library/namespace enforcement is deferred. The separate package
-   integration library is needed to keep `hardcaml_asic` out of the reusable hardware library.
+3. Source ownership follows `ip/<owner>/{rtl,verif}`, reusable system `rtl/`, and
+   `chip_top/{rtl,project,verif}`. Retain the flat public `Hardcaml_protemu` module
+   namespace during this migration; it is a library/API boundary, not a source
+   directory owner. Broader namespace enforcement is deferred. The separate chip
+   library keeps `hardcaml_asic` out of reusable hardware.
 4. Keep program storage separate from its access controller and from the system using it.
 5. Keep protocol definitions and software byte conversion separate from the hardware
    endpoint and physical transaction scheduling.
 6. Preserve behavior, cycle contracts, resource selection, and the existing package ABI.
    This migration adds no capture memory, payload cache, transport, or memory arbitration feature.
 
-## Current implementation and naming map
+## Current source ownership
 
-These source paths exist at planning time. Target paths are planned, not current links.
+These are implemented owner paths, not proposed renames. Historical generator
+selectors and emitted module names remain compatible even when their spelling
+differs from the current OCaml owner.
 
-| Current owner | Target owner/path | Responsibility |
+| Owner | Current source | Responsibility |
 | --- | --- | --- |
-| `lib/host_link/hardware_loader.ml`, `Hardware_loader` | `lib/host_link/host_link.ml`, `Host_link` | Complete serial host-control endpoint |
-| `lib/host_link/loader_core.ml`, `Loader_core` | `lib/system/protemu_top.ml`, `Protemu_top` | Endpoint connected to the emulator core; external program-memory port |
-| `lib/memory_control/protocol_core.ml`, `Protocol_core` | `lib/memory/program_memory_controller.ml`, `Program_memory_controller` | Load/readback/verify, image validity, and fetch/access arbitration |
-| `lib/emulator_core/control_execution.ml`, `Control_execution` | `lib/emulator_core/execution_unit.ml`, `Execution_unit` | Instruction execution, architectural state, run/stop/abort/step |
-| `lib/emulator_core/core_mechanisms.ml`, `Core_mechanisms` | `lib/emulator_core/primitive_dispatch.ml`, `Primitive_dispatch` | Execution-command dispatch to mechanisms and their composition |
-| `lib/emulator_core/integrated_core.ml`, `Integrated_core` | `lib/emulator_core/emulator_core.ml`, `Emulator_core` | Program-memory controller + execution + mechanisms |
-| Production `Loader_design` inside `bin/asic_bundle.ml` | `chip_top/package_top.ml`, `Package_top` | Target-specific system/resource/pin/reset composition |
-| `Single_port_ram.create` at production top | `chip_top/program_memory.ml`, `Program_memory` | Chip-owned configuration/binding of the program storage resource |
-| `host_link_wire/`, `Protemu_host_link_wire.Wire` | `host_link_protocol/`, `Host_link_protocol`, with `Host_link_protocol.Codec` | Pure protocol vocabulary/layouts and software encoding/decoding |
+| `Host_link` | `ip/host_link/rtl/host_link.ml` | Complete serial control endpoint; composes PHY/RX/dispatch/TX |
+| `Protemu_top` | `rtl/protemu_top.ml` | Endpoint/core system composition; external program-memory port |
+| `Program_memory_controller` | `ip/program_memory_controller/rtl/program_memory_controller.ml` | Load/readback/verify, image validity, fetch/access arbitration |
+| `Execution_unit` | `ip/emulator_core/rtl/execution_unit.ml` | Execution, architectural state, run/stop/abort/step |
+| `Primitive_dispatch` | `ip/emulator_core/rtl/primitive_dispatch.ml` | Execution-command dispatch and mechanism composition |
+| `Emulator_core` | `ip/emulator_core/rtl/emulator_core.ml` | Controller + execution + mechanisms |
+| Mechanisms | `ip/mechanisms/rtl/` and `staging/` | Existing leaf blocks and experimental compositions |
+| `Package_top` | `chip_top/rtl/package_top.ml` | Target-specific system/resource/pin/reset composition |
+| `Program_memory` | `chip_top/rtl/program_memory.ml` | Chip-owned storage binding, currently explicit Flops |
+| `Chip_project` | `chip_top/project/chip_project.ml` | Pinout, project declaration and source inventories |
+| `Host_link_protocol` / `Codec` | `host_link_protocol/` | Pure protocol vocabulary/layouts versus software byte conversion |
 
-The protocol API spelling above is the intended consumer-facing grouping. AM3 must record
-the concrete Dune library/root-module arrangement; avoid accidentally introducing
-`Host_link_protocol.Host_link_protocol`. Internal/public Dune names and packaging must be
-enumerated in the rename map before editing dependencies.
-
-`Loader_core` is currently a 92-line wiring module, not an implementation of all its
-children. `Hardware_loader` is already stateless composition of `Serial_phy`, `Frame_rx`,
-`Command_dispatch`, and `Frame_tx`. Preserve those extracted boundaries. The needed change
-is clear ownership and naming, followed by justified extraction of remaining mixed roles,
-not repeating HL4 or inventing additional pipeline stages.
+`Protemu_top` and `Host_link` are compositions, not monolithic implementations of
+their children. Preserve their extracted boundaries; do not repeat HL4 or invent
+pipeline stages merely to produce more files.
 
 ## Target hierarchy and ownership
 
@@ -138,7 +140,7 @@ choices do not leak into `Host_link` or `Emulator_core`.
 
 ### Memory: controller, storage, and implementation
 
-- `lib/memory/` owns target-independent memory-facing logic and contracts. Its first
+- `ip/program_memory_controller/rtl/` owns target-independent access logic and contracts. Its
   implementation is `Program_memory_controller`; a directory rename does not add storage.
 - `Program_memory_controller` owns legal access, image metadata, and instruction/readback
   validity. It does not implement a vendor SRAM or select a physical backend.
@@ -163,7 +165,26 @@ pins, poll ready, retry commands, or commit responses.
 Keep the library free of Hardcaml and emulator implementation dependencies. Preserve fixed
 vectors, validation precedence, range checks, and the distinction between malformed bytes
 and a well-formed refusal. Software CRC computation can be a pure helper; the hardware
-`Wire_crc` remains a hardware helper, not the software reference implementation.
+  `Wire_crc` under `ip/host_link/rtl/` remains a hardware helper, not the software
+  reference implementation.
+
+Implemented canonical API: internal Dune library `host_link_protocol`, public
+package `hardcaml_protemu.host_link_protocol`, root `Host_link_protocol`.
+Definitions/types/layouts and CRC parameters are root APIs; software CRC/u16
+conversion and request/response byte operations/errors are under `Codec`.
+
+```ocaml
+module Protocol = Host_link_protocol
+let request = Protocol.Request.Read_word { address = 0 }
+let encoded = Protocol.Codec.Request.encode ~tag:1 request
+```
+
+`host_link_wire/` is a thin temporary source-compatibility facade, public package
+`hardcaml_protemu.host_link_wire`, root path `Protemu_host_link_wire.Wire`. It
+reexports canonical types and helpers; it contains no independent protocol/codec
+implementation. New consumers use the canonical API. Retaining the facade protects
+the frozen regression and external source users, not binary compatibility: compiled
+clients should rebuild. Removal requires an explicit consumer/archive decision.
 
 ### Responsibility-based submodules
 
@@ -190,30 +211,40 @@ not a requirement to emit SystemVerilog interfaces or modports. AM5 must invento
 flat names, widths, order, and directions and preserve external names with explicit naming
 attributes/adaptation. No ready/ack handshake, queue, or latency is added just for grouping.
 
-## Planned source layout and dependency ownership
+## Implemented source layout and dependency ownership
 
 ```text
-host_link_protocol/              pure protocol definitions + Codec
-lib/                            one wrapped Hardcaml library, flat module namespace
-  host_link/                    endpoint, PHY, RX, dispatch, TX, hardware wire helpers
-  emulator_core/                execution, decoder, primitive dispatch, core, Control_port
-  memory/                       program-memory controller and target-independent interfaces
-  system/                       Protemu_top composition
-  pluggable_primitives/          existing leaf mechanisms
-  staging/                      existing experimental compositions
-  legacy/                       historical compositions still exercised by existing checks
-chip_top/                       separate package/resource integration library
-  package_top.ml
-  program_memory.ml
-  ...                           observable/memory bring-up tops, project declaration
+host_link_protocol/             pure definitions + Codec, explicit public root API
+ip/
+  mechanisms/{rtl,verif}/        leaf mechanisms and staging compositions
+  program_memory_controller/
+    rtl/                        access controller, not storage implementation
+    verif/                      controller contracts and RAM-consumer integration
+  emulator_core/{rtl,verif}/     execution/dispatch/core and control-port agent
+  host_link/{rtl,verif}/         endpoint/children, serial agent, endpoint environment
+rtl/                            Protemu_top reusable system composition
+chip_top/
+  rtl/                          package tops, resource binding and bring-up designs
+  project/                      ASIC project declaration and source inventory
+  verif/                        chip/package verification
+verif/{common,system,regression}/ shared support, whole-system peers, sweep entry points
+test/                           software/model/codec and verification-tool tests
+isa/                            shared instruction specification/assembler
+f_model/                        independent reference execution/model firmware
+host/                           host software and simulator implementation
 bin/                            CLI/emission entry points consuming those libraries
 ```
 
-The package library may depend on `hardcaml_asic`, `hardcaml_protemu`, and target adapters.
-`lib/` must not acquire an ASIC-library dependency. Move reusable top/project construction
-out of command-line initialization so an OCaml integration fixture can elaborate the same
-production composition. Preserve the observable/memory bring-up modes and give each
-extracted top a distinct module name in the package library.
+`protemu_chip_project` may depend on `hardcaml_asic`, `hardcaml_protemu` and target
+adapters. Reusable hardware must not acquire an ASIC-library dependency. Package
+construction is already outside command-line initialization, so fixtures can use
+the same production composition without importing CLI side effects.
+
+Two implementation-compatibility directories remain outside this ownership tree:
+`lib/` contains only the Dune assembly facade preserving the public flat hardware
+library, and `host_link_wire/` contains the old source-API facade. Neither is an
+independent source owner or a template for new hardware organization. Removing or
+relocating build assembly can be done separately without changing IP ownership.
 
 Review architectural dependencies despite the flat namespace: system depends on endpoint
 and emulator; endpoint depends on the control contract and shared configuration, not the
@@ -224,8 +255,9 @@ Broader Dune-enforced subsystem libraries and qualified namespaces are deferred.
 
 ## Implementation sequence
 
-Each item is a separate handoff/review unit; the owner may subdivide it further. All boxes
-are initially unchecked. Do not mark an item complete on documentation or intended work.
+Each item is a separate handoff/review unit. The status table distinguishes delivered
+implementation from pending work; boxes below are owner-acceptance obligations.
+Do not repeat implemented renames/extractions merely because acceptance is unchecked.
 
 ### AM0 — Baseline and change inventory
 
@@ -256,9 +288,9 @@ missing evidence into a pass or mark AM0 complete by itself.
 
 Prerequisite: AM0.
 
-- [ ] Rename `Protocol_core`, `Control_execution`, `Core_mechanisms`, and `Integrated_core`
-  as listed above; move controller source into `lib/memory/`.
-- [ ] Update all live consumers, tests, generators, metadata inputs, and active references.
+- [ ] Accept the implemented `Program_memory_controller`, `Execution_unit`,
+  `Primitive_dispatch` and `Emulator_core` names and their current IP ownership.
+- [ ] Accept the updated live consumers, tests, generators, metadata inputs and references.
   Preserve Config values and control-port ownership; do not redesign memory or execution.
 
 Exit: unchanged functional expectations and reviewed generated-output comparison. Old names
@@ -268,9 +300,9 @@ remain only in explicitly historical material or recorded compatibility surfaces
 
 Prerequisite: AM1.
 
-- [ ] Rename `Hardware_loader` to `Host_link`; keep its four children and shared helpers.
-- [ ] Move/rename `Loader_core` to `lib/system/protemu_top.ml`, `Protemu_top`.
-- [ ] Document logical interfaces, unused tie-offs, and the external memory boundary.
+- [ ] Accept `Host_link` under its IP owner, retaining its four children/helpers.
+- [ ] Accept `Protemu_top` under reusable system `rtl/`.
+- [ ] Accept the documented logical interfaces, tie-offs and external-memory boundary.
 
 Exit: the top remains thin composition; endpoint behavior and every existing exact-cycle
 assertion remain unchanged. This stage does not move scenario ownership or rebuild agents.
@@ -279,10 +311,12 @@ assertion remain unchanged. This stage does not move scenario ownership or rebui
 
 Prerequisite: AM2.
 
-- [ ] Inventory and implement the `Host_link_protocol` root API and `Codec` grouping;
-  separate definitions/layouts from software byte conversion by responsibility.
-- [ ] Update hardware constants, host code, codec tests, Dune declarations, and bundle
-  input manifests together. Keep independent expected vectors and HDL peer independent.
+**Implemented and independently reviewed, 2026-11-11.** See the AM3 execution record.
+
+- [ ] Accept `Host_link_protocol` root definitions/types and `Codec` byte operations,
+  including the documented internal/public package names and compatibility facade.
+- [ ] Accept canonical active consumers, codec tests, Dune dependencies and source
+  inventories, with independent vectors and HDL peer preserved.
 
 Exit: pure library dependency boundary, unchanged encoding/decoding behavior and wire bytes,
 and reviewed hardware-output comparison. Record any transitional aliases and their removal.
@@ -298,14 +332,14 @@ declaration; all six bundle RTL roles are byte-identical to the identified curre
 baseline. See the implementation record below. This does not accept AM3 or mark
 the broader AM4 owner-acceptance checklist complete implicitly.
 
-- [ ] Create the separate `chip_top/` library and extract `Package_top`, `Program_memory`,
-  bring-up tops, and reusable project construction from `bin/asic_bundle.ml` as appropriate.
-- [ ] Leave executable argument parsing and emission in `bin/`; tests must not need to
+- [ ] Accept `protemu_chip_project` with `Package_top`, `Program_memory`, bring-up tops
+  and reusable project construction under the chip owner.
+- [ ] Accept the thin argument-parsing/emission entry point in `bin/`; tests must not need to
   import a CLI module with top-level side effects to elaborate a production top.
 - [ ] Preserve resource policy (currently Flops), source roles, target constraints, package
   pin ABI, reset/output gating, and all existing flow modes.
 
-Exit: the same package can be constructed by the emitter and an OCaml fixture; `lib/` stays
+Exit: the same package can be constructed by the emitter and an OCaml fixture; reusable hardware stays
 ASIC-independent. Manifest path/identity changes are explained; hardware changes are not
 accepted merely because bundle metadata changed.
 
@@ -460,3 +494,59 @@ Exact commands, path maps, output comparisons and receipts:
 No index/history/configuration mutation, physical flow or sibling source edit.
 Implementation is delivered; owner acceptance and remaining AM3/AM5/AM6, VO and
 PT.3 decisions remain explicit separate work.
+
+### 2026-11-11 — AM3 protocol/Codec separation delivered
+
+Starting source: clean `0bb9abc`, after the ownership migration. Exact pre-edit
+wire source, API map and hashes are retained under
+`.dev/am3/20261111-0bb9abc-wire-baseline/`. The canonical library uses `core` only
+and has no hardware, ISA, ASIC, simulator or agent dependency.
+
+Delivered API:
+
+| Responsibility | Canonical path |
+| --- | --- |
+| Version, command/result/capability/fault/phase values | `Host_link_protocol` root modules |
+| Request/response/INFO/STATUS types, layouts and correlation | Root protocol modules |
+| CRC parameters and integer bound | `Crc` and `U16.max` at the root |
+| Software CRC and integer byte conversion | `Codec.Crc`, `Codec.U16` |
+| Request encoding and encode errors | `Codec.Request` |
+| Response decoding/correlation validation and decode errors | `Codec.Response` |
+
+Thirteen byte-helper bodies and both error declarations retain their original
+semantics and validation precedence. Low-level helpers retain their preconditions;
+they are not replacements for complete frame validation. All active consumers use
+the canonical API. The implementation-free old facade is used only by frozen HL4a
+and the explicit compatibility test; external source users may also use it during
+transition. No archived test/peer source was modified.
+
+Tests: original26 fixed-vector/negative tests preserved, five canonical boundary
+tests and one compatibility test added (32 pure tests;481 total registrations).
+A hash-verified original implementation in a temporary verification fixture passed
+2,242,474 differential comparisons;30 compile-negative probes verify software
+operations/errors are absent from canonical definitions. Installed canonical-only
+and canonical/shim consumers compile with shared type identity.
+
+Integrated verification: `@install @lint`, forced ordinary `runtest`, and forced
+`@rtl` pass, including all three independent loader-peer tiers. All17 generated
+RTL files, six bundle roles and six same-tool synthesis statistics match baseline.
+Pins, constraints/configuration and resource selections are unchanged. The loader
+inventory has47 current source inputs, including the five canonical library files
+and no shim sources. New bundle identities reflect reviewed source changes.
+
+Every Dune invocation used switch `5.2.0+ox`, sequential `-j5` and
+`/home/wayne/devel/jane/.protemu-build.lock`. An earlier caller timeout during RTL
+checking is retained; the completed forced run took507.642 seconds. Scoped format
+checks pass; the same23 baseline global-format failures remain, with no new failures.
+No physical P&R, dependency upgrade, Git index/history/configuration mutation or
+expectation promotion occurred. All2,492 fingerprinted installed dependency files
+remained unchanged during final verification.
+
+Evidence:
+- `.dev/am3/20261111-0bb9abc-wire-baseline/{handoff,verification-handoff}.txt`
+- `.dev/am3/consumer-handoff.txt` and reproducible `consumer-audit.py`
+- `.dev/am3/integrated-final-20261111/receipt.txt` and command/output inventories
+- `.dev/am3/independent-review/20261111-am3/RECEIPT.md` — no blockers found
+
+Next implementation: AM5's separately specified interface maps and responsibility
+review. AM6/VO owner acceptance and PT.3 API/dependency/SRAM adoption remain open.

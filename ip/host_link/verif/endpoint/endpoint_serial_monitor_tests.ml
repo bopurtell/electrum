@@ -25,7 +25,7 @@
 open! Core
 open! Hardcaml_protemu
 open! Endpoint_scenario
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item

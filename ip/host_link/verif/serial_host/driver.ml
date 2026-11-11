@@ -17,7 +17,7 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Timing = Config.Timing
 open Item
 
@@ -277,7 +277,7 @@ let read_response t ?expected ?(pause : Pause.t option) ~decide () =
     read_one ~final:false
   done;
   let header = bytes_of_bits (Queue.to_list bits) in
-  let declared = Wire.U16.get header ~pos:Wire.Response.Offset.payload_length in
+  let declared = Wire.Codec.U16.get header ~pos:Wire.Response.Offset.payload_length in
   let total =
     Int.min
       (Wire.Response.header_length + declared + Wire.Crc.length)
@@ -289,8 +289,8 @@ let read_response t ?expected ?(pause : Pause.t option) ~decide () =
   let bytes = bytes_of_bits (Queue.to_list bits) in
   let decoded =
     match expected with
-    | Some expected -> Wire.Response.decode_correlated ~expected bytes
-    | None -> Wire.Response.decode bytes
+    | Some expected -> Wire.Codec.Response.decode_correlated ~expected bytes
+    | None -> Wire.Codec.Response.decode bytes
   in
   let outcome = decide decoded in
   t.env.log (Response_read { bytes; outcome });

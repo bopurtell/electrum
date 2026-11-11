@@ -1,0 +1,12 @@
+; Pure canonical definitions/codec tests: no hardware or compatibility dependency.
+
+(library
+ (name protemu_host_link_protocol_tests)
+ (wrapped false)
+ (modules wire_tests boundary_tests)
+ (inline_tests)
+ (libraries core host_link_protocol)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

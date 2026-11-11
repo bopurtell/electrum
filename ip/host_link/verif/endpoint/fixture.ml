@@ -53,7 +53,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_protemu
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Host_link.I) (Host_link.O)
 module Serial_host = Protemu_serial_host_agent
 module Control_port_agent = Protemu_control_port_agent

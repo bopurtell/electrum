@@ -12,12 +12,13 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
+module Codec = Wire.Codec
 module Command = Wire.Command
 module Result_code = Wire.Result_code
 module Request = Wire.Request
 module Response = Wire.Response
-module Decode_error = Wire.Response.Decode_error
+module Decode_error = Codec.Response.Decode_error
 
 (* "a5 10 00" -> the three bytes. *)
 let bytes hex =
@@ -38,11 +39,11 @@ type decoded = (Response.t, Decode_error.t) Result.t [@@deriving sexp_of, compar
 let response ~tag ~command ~result payload = { Response.tag; command; result; payload }
 
 let decodes frame expected =
-  [%test_result: decoded] (Response.decode (bytes frame)) ~expect:(Ok expected)
+  [%test_result: decoded] (Codec.Response.decode (bytes frame)) ~expect:(Ok expected)
 ;;
 
 let rejects frame error =
-  [%test_result: decoded] (Response.decode (bytes frame)) ~expect:(Error error)
+  [%test_result: decoded] (Codec.Response.decode (bytes frame)) ~expect:(Error error)
 ;;
 
 (* Constants *)
@@ -68,10 +69,11 @@ let%test_unit "CRC-8/ATM parameters and check values" =
   [%test_result: int] Wire.Crc.initial ~expect:0x00;
   [%test_result: int] Wire.Crc.final_xor ~expect:0x00;
   [%test_result: bool] Wire.Crc.reflected ~expect:false;
-  [%test_result: int] (Wire.Crc.compute "123456789") ~expect:0xf4;
+  [%test_result: int] (Codec.Crc.compute "123456789") ~expect:0xf4;
   List.iter
     [ "", 0x00; "01", 0x07; "80", 0x89; "ff", 0xf3 ]
-    ~f:(fun (data, expect) -> [%test_result: int] (Wire.Crc.compute (bytes data)) ~expect)
+    ~f:(fun (data, expect) ->
+      [%test_result: int] (Codec.Crc.compute (bytes data)) ~expect)
 ;;
 
 (* Each code table is checked in both directions: every listed value encodes to its byte,
@@ -244,8 +246,8 @@ let request_vectors : (int * Request.t * string) list =
 
 let%test_unit "every command encodes to its fixed vector" =
   List.iter request_vectors ~f:(fun (tag, request, expect) ->
-    [%test_result: (string, Request.Encode_error.t) Result.t]
-      (Request.encode ~tag request |> Result.map ~f:hex)
+    [%test_result: (string, Codec.Request.Encode_error.t) Result.t]
+      (Codec.Request.encode ~tag request |> Result.map ~f:hex)
       ~expect:(Ok expect));
   List.iter Command.all ~f:(fun command ->
     assert (
@@ -255,8 +257,8 @@ let%test_unit "every command encodes to its fixed vector" =
 
 let%test_unit "encoder rejects out-of-range fields instead of narrowing them" =
   let rejects ~tag request ~field ~value ~max =
-    [%test_result: (string, Request.Encode_error.t) Result.t]
-      (Request.encode ~tag request)
+    [%test_result: (string, Codec.Request.Encode_error.t) Result.t]
+      (Codec.Request.encode ~tag request)
       ~expect:(Error (Out_of_range { field; value; max }))
   in
   rejects ~tag:(-1) Info ~field:"tag" ~value:(-1) ~max:0xff;
@@ -513,7 +515,9 @@ let%test_unit "reserved bits and undefined INFO/STATUS values" =
 
 let%test_unit "correlated decode accepts only the request's tag and command" =
   let decode_correlated ~tag request frame =
-    Response.decode_correlated ~expected:(Request.correlation ~tag request) (bytes frame)
+    Codec.Response.decode_correlated
+      ~expected:(Request.correlation ~tag request)
+      (bytes frame)
   in
   let run_complete = response ~tag:0x20 ~command:0x20 ~result:Complete Empty in
   [%test_result: decoded]
@@ -557,7 +561,7 @@ let%test_unit "correlated decode accepts only the request's tag and command" =
 
 let%test_unit "an echoed unsupported command correlates by its raw byte" =
   [%test_result: decoded]
-    (Response.decode_correlated
+    (Codec.Response.decode_correlated
        ~expected:{ tag = 0x33; command = 0x7e }
        (bytes "5a 10 33 7e 14 00 00 54"))
     ~expect:(Ok (response ~tag:0x33 ~command:0x7e ~result:Bad_command Empty))
@@ -569,6 +573,6 @@ let%test_unit "an echoed unsupported command correlates by its raw byte" =
 *)
 let%test_unit "encoded frames have a zero CRC residue" =
   List.iter request_vectors ~f:(fun (tag, request, _) ->
-    let frame = Request.encode ~tag request |> Result.ok |> Option.value_exn in
-    [%test_result: int] (Wire.Crc.compute frame) ~expect:0)
+    let frame = Codec.Request.encode ~tag request |> Result.ok |> Option.value_exn in
+    [%test_result: int] (Codec.Crc.compute frame) ~expect:0)
 ;;

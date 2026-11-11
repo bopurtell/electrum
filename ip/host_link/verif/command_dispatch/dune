@@ -24,7 +24,7 @@
   core
   hardcaml
   hardcaml_protemu
-  protemu_host_link_wire
+  host_link_protocol
   protemu_control_port_agent)
  (preprocess
   (pps ppx_hardcaml ppx_jane))

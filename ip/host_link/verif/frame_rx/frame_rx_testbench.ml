@@ -9,7 +9,7 @@
    PHY's synchronizers are not part of this boundary. Every observation is a public
    output. Expected results, fields, and cycles are written by hand in the tests from the
    P3.5 record and docs/host_link_hl4b2_record.md; none is computed from the receiver.
-   [Wire.Request.encode] and [Wire.Crc.compute] build stimulus only.
+   [Wire.Codec.Request.encode] and [Wire.Codec.Crc.compute] build stimulus only.
 
    Scheduling contract:
 
@@ -40,7 +40,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_protemu
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Frame_rx.I) (Frame_rx.O)
 
 (* The inputs applied for one cycle. *)
@@ -367,12 +367,12 @@ let request ?(lead = 4) ?(trail = 8) ?period ?(extra_bits = []) t bytes =
 
 (* A legal request's bytes; the encoder refuses nothing the tests pass it. *)
 let encode ~tag request =
-  Wire.Request.encode ~tag request |> Result.ok |> Option.value_exn
+  Wire.Codec.Request.encode ~tag request |> Result.ok |> Option.value_exn
 ;;
 
 (* Test-local frames the codec cannot build. *)
 module Raw = struct
-  let crc body = String.of_char (Char.of_int_exn (Wire.Crc.compute body))
+  let crc body = String.of_char (Char.of_int_exn (Wire.Codec.Crc.compute body))
   let bytes list = String.of_char_list (List.map list ~f:Char.of_int_exn)
 
   (* Header and payload with the declared length defaulting to the payload's. *)

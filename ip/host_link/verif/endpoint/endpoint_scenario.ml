@@ -20,7 +20,7 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
@@ -133,7 +133,8 @@ let receive
       "response decodes and correlates; it was replayed"
       ~expected:[%sexp (expected : Wire.Correlation.t)]
       ~actual:
-        [%sexp (error : Wire.Response.Decode_error.t), (Item.hex read.bytes : string)]
+        [%sexp
+          (error : Wire.Codec.Response.Decode_error.t), (Item.hex read.bytes : string)]
   | Ok response ->
     Fixture.expect_ready_cleared t ~deselected:read.deselected;
     { Exchange.started

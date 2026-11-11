@@ -2,8 +2,9 @@
 
 **Structural update, 2026-11-11:** [ownership migration](ownership_layout.md) and
 chip/package extraction are implemented and verified against an identified current
-baseline. [Repository layout](repository_layout.md) owns current paths. AM3,
-AM5 and broader AM/VO acceptance remain separately scoped; this work neither
+baseline. [Repository layout](repository_layout.md) owns current paths. AM3's pure
+protocol/Codec split is now implemented and independently reviewed. AM5 and broader
+AM/VO acceptance remain separately scoped; this work neither
 changes product milestones nor completes the ASIC PT.3 dependency/SRAM adoption.
 
 Status: working execution plan, updated 2026-09-21 for P3.5 completion,

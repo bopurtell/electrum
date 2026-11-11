@@ -32,7 +32,7 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 
 (* Response-store sizing derived from the wire limits. *)
 module Config = struct

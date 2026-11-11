@@ -9,6 +9,14 @@ All475 registrations are preserved; ordinary, long/four-state and emitted-RTL
 regressions pass. [Repository layout](repository_layout.md) is current source-path
 authority; detailed older inventories below retain their recorded pre-move paths.
 
+**Subsequent AM3, 2026-11-11:** pure codec tests now live in
+`test/host_link_protocol/`. All26 original checks/expected bytes remain, with five
+boundary controls and one old-facade compatibility check added (481 registrations
+repository-wide). Canonical APIs separate `Host_link_protocol` definitions from
+`Codec` byte operations; agents retain their temporal responsibilities. The frozen
+archive and independent HDL peer remain unchanged. See the AM3 execution record
+in [architecture_migration.md](architecture_migration.md).
+
 Status: verification-overhaul direction agreed on 2026-09-25; VO0–VO7 below are
 planned, not implemented. Architectural migration AM0–AM6 must finish first; see
 [architecture_migration.md](architecture_migration.md). The current-state inventory

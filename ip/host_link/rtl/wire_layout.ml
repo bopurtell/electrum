@@ -12,7 +12,7 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 
 (* Byte fields, as (offset, width), in the order [owner] uses them. They must tile the
    layout exactly: each field starts where the previous one ended, and the last ends at

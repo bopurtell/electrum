@@ -17,7 +17,7 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 
 (* Plain OCaml; raises at circuit construction and creates no logic. *)
 let check_parameters () =

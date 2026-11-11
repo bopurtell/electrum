@@ -16,7 +16,7 @@
   core
   hardcaml
   hardcaml_protemu
-  protemu_host_link_wire
+  host_link_protocol
   protemu_serial_host_agent
   protemu_control_port_agent)
  (preprocess
@@ -44,7 +44,7 @@
  (libraries
   core
   hardcaml_protemu
-  protemu_host_link_wire
+  host_link_protocol
   protemu_serial_host_agent
   protemu_control_port_agent
   protemu_host_link_endpoint)

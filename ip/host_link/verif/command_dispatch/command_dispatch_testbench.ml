@@ -11,9 +11,9 @@
    The agent's passive monitor records the offers that crossed the port. Expected offers,
    operands, responses, and cycles are written by hand in the tests from the P3.5 record,
    control_port.ml, and docs/host_link_hl4b3_record.md; none is computed from the
-   dispatcher. [Wire.Request.encode] builds legal handoffs and [Wire.Response.decode]
-   reads published frames with the software CRC, which shares nothing with the hardware
-   CRC.
+   dispatcher. [Wire.Codec.Request.encode] builds legal handoffs and
+   [Wire.Codec.Response.decode] reads published frames with the software CRC, which shares
+   nothing with the hardware CRC.
 
    Scheduling contract:
 
@@ -49,7 +49,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_protemu
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Command_dispatch.I) (Command_dispatch.O)
 module Control_port_agent = Protemu_control_port_agent
 
@@ -155,7 +155,7 @@ module Handoff = struct
   ;;
 
   let encode ~tag request =
-    Wire.Request.encode ~tag request |> Result.ok |> Option.value_exn
+    Wire.Codec.Request.encode ~tag request |> Result.ok |> Option.value_exn
   ;;
 
   let request ~tag request = of_frame (encode ~tag request)
@@ -588,7 +588,7 @@ module Published = struct
     | Response of Wire.Response.t
     | Undecodable of
         { bytes : string
-        ; error : Wire.Response.Decode_error.t
+        ; error : Wire.Codec.Response.Decode_error.t
         }
     | Nonzero_padding of { frame : string }
   [@@deriving sexp_of, equal]
@@ -598,7 +598,7 @@ module Published = struct
     if not (String.for_all padding ~f:(Char.equal '\x00'))
     then Nonzero_padding { frame = hex s.frame }
     else (
-      match Wire.Response.decode (Sample.published s) with
+      match Wire.Codec.Response.decode (Sample.published s) with
       | Ok response -> Response response
       | Error error -> Undecodable { bytes = hex (Sample.published s); error })
   ;;

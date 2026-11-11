@@ -25,7 +25,7 @@
 open! Core
 open! Hardcaml_protemu
 open! Endpoint_scenario
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
@@ -52,7 +52,9 @@ let intruder_correlation = { Wire.Correlation.tag = intruder_tag; command = 0x13
 
 (* The response is neither for the intruder nor decodable as its answer. *)
 let expect_not_intruder t (exchange : Exchange.t) =
-  match Wire.Response.decode_correlated ~expected:intruder_correlation exchange.bytes with
+  match
+    Wire.Codec.Response.decode_correlated ~expected:intruder_correlation exchange.bytes
+  with
   | Error (Correlation_mismatch _) -> ()
   | result ->
     Fixture.fail
@@ -60,7 +62,8 @@ let expect_not_intruder t (exchange : Exchange.t) =
       ~phase:Host_sample
       "the response does not correlate with the early selection's frame"
       ~expected:[%sexp "Correlation_mismatch"]
-      ~actual:[%sexp (result : (Wire.Response.t, Wire.Response.Decode_error.t) Result.t)]
+      ~actual:
+        [%sexp (result : (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t)]
 ;;
 
 (* Sends [request] and deselects without the gap, holds [early] cycles, then selects and
@@ -273,7 +276,9 @@ let%test_unit "consecutive distinct tags and commands each correlate with their 
            Option.iter readback ~f:(fun (data, matches) ->
              Scoreboard.readback board ~offered ~data ~matches));
          Option.iter previous ~f:(fun correlation ->
-           match Wire.Response.decode_correlated ~expected:correlation exchange.bytes with
+           match
+             Wire.Codec.Response.decode_correlated ~expected:correlation exchange.bytes
+           with
            | Error (Correlation_mismatch _) -> ()
            | result ->
              Fixture.fail
@@ -282,7 +287,8 @@ let%test_unit "consecutive distinct tags and commands each correlate with their 
                "an answer does not correlate with the previous request"
                ~actual:
                  [%sexp
-                   (result : (Wire.Response.t, Wire.Response.Decode_error.t) Result.t)]);
+                   (result
+                    : (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t)]);
          Some (Wire.Request.correlation ~tag request))
        : Wire.Correlation.t option))
 ;;

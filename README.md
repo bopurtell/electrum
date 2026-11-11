@@ -16,7 +16,7 @@ verification; `hardcaml_asic` supplies resource/backend tooling.
 | `chip_top/` | Package tops, program-RAM binding, project declarations and chip verification |
 | `verif/` | Shared observation/replay facilities, whole-system serial peer and regression sweeps |
 | `test/` | Model/software/codec/host tests and verification-tool qualification |
-| `isa/`, `host_link_wire/` | Pure shared specifications and software encoding/decoding |
+| `isa/`, `host_link_protocol/` | Pure shared specifications; host-link byte operations live under `Codec` |
 | `f_model/` | Independent reference model and model-side firmware/studies |
 | `host/`, `bin/` | Host software and repository CLI/generator entry points |
 | `tinytapeout/` | Target integration, compatibility build targets and physical-flow tooling |
@@ -60,8 +60,10 @@ regression shortcut.
 
 The ownership layout and chip/package extraction are implemented and verified.
 The existing serial-host/control-port agents, monitors, scheduler and frozen HL4a
-oracle are preserved. AM3 protocol/Codec separation, AM5 grouped interfaces and
-wider verification-overhaul acceptance remain separately tracked. Exact SRAM
+oracle are preserved. AM3 protocol/Codec separation is also implemented and verified;
+new consumers use `Host_link_protocol` and `Host_link_protocol.Codec`. The old
+`host_link_wire/` library is a temporary source-compatibility facade. AM5 grouped
+interfaces and wider architecture/verification acceptance remain open. Exact SRAM
 adoption and the newer ASIC API migration belong to PT.3, not this layout change.
 
 Historical evidence under `flow_results/` and dated target reports retains its

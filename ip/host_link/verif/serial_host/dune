@@ -9,7 +9,7 @@
 (library
  (name protemu_serial_host_agent)
  (modules item config driver monitor agent)
- (libraries core protemu_host_link_wire)
+ (libraries core host_link_protocol)
  (preprocess
   (pps ppx_jane))
  (lint

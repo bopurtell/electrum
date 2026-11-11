@@ -4,6 +4,11 @@
 amendment to [architecture_migration.md](architecture_migration.md), not a new
 hardware milestone or a replacement for the verification-overhaul queue.
 
+Subsequent AM3 work is now delivered: [current architecture/status](architecture_migration.md)
+records canonical `host_link_protocol/`, explicit `Codec`, migrated active consumers,
+and a thin compatibility facade at `host_link_wire/`. Statements below about retaining
+the wire API describe the earlier ownership-only slice, not an unimplemented AM3.
+
 ## Scope and preservation
 
 Move existing RTL and verification to their owners, extract package/project

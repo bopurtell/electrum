@@ -1,6 +1,8 @@
 # Repository ownership and verification layout
 
 Current layout after the 2026-11-11 [ownership migration](ownership_layout.md).
+The subsequent [AM3 protocol/Codec separation](architecture_migration.md#am3--protocol-library-and-codec-separation)
+is implemented; canonical protocol source is `host_link_protocol/`.
 
 ## Ownership rules
 
@@ -49,7 +51,7 @@ verif/
 test/
   f_model/                       pure reference-model/program/encoding checks
   host/                          host API contracts
-  host_link_wire/                pure codec/fixed-vector checks
+  host_link_protocol/            pure codec/fixed-vector and compatibility checks
   host_simulator/                simulator/host CLI integration and golden output
   verification_support/         shared checker/replay qualification
   backend_conformance/          simulator-adapter scheduling qualification
@@ -67,9 +69,12 @@ no duplicate implementation or suite library; current source has one owner.
 - `protemu_chip_project` separately owns the ASIC-dependent package compositions,
   `Program_memory` binding and `Chip_project` declaration. `bin/asic_bundle.ml`
   handles the CLI and emission; it is no longer the owner of all package hardware.
-- `isa/`, `host_link_wire/` and `f_model/` retain their independent libraries and
-  APIs. The model remains independent of Hardcaml. Protocol/Codec separation and
-  finer library decomposition are not implied by this directory migration.
+- `isa/` and `f_model/` retain their independent libraries/APIs; the model remains
+  independent of Hardcaml. `host_link_protocol/` is a pure Core library whose root
+  exposes protocol definitions and whose `Codec` owns software byte conversion.
+  `host_link_wire/` is now only a temporary old-source-API facade, not another owner.
+  AM3 changed those API paths with exact wire/RTL preservation; finer subsystem
+  hardware-library decomposition remains separate.
 - Serial-host and control-port agents remain test-free reusable libraries.
   Their item types, independent observation, active/passive roles and environment-
   owned time are unchanged. See [the pilot decisions](serial_host_pilot.md#decisions).

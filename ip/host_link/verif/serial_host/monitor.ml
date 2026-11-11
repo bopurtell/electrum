@@ -32,7 +32,7 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Observed = Item.Observed
 
 (* One cycle's pins: host-driven LSEL_N, LCLK, LDI and DUT-driven LDO, LRDY, pre-edge. *)
@@ -79,7 +79,7 @@ let response_bits bytes =
   if String.length bytes < Wire.Response.header_length
   then None
   else (
-    let declared = Wire.U16.get bytes ~pos:Wire.Response.Offset.payload_length in
+    let declared = Wire.Codec.U16.get bytes ~pos:Wire.Response.Offset.payload_length in
     Some
       (8
        * Int.min
@@ -106,7 +106,7 @@ let close t (selection : Selection.t) ~deselected ~clock_high =
         ; deselected
         ; bytes
         ; extra_bits
-        ; decoded = Wire.Response.decode bytes
+        ; decoded = Wire.Codec.Response.decode bytes
         ; ending
         })
     else (

@@ -23,7 +23,7 @@
 open! Core
 open! Hardcaml_protemu
 open! Endpoint_scenario
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
@@ -353,8 +353,9 @@ let%test_unit "a zeroed echo can match INFO with tag 0 but is still an error" =
       t
       ~phase:Host_sample
       "a zeroed echo for tag 0x33 is a correlation mismatch and is replayed"
-      [%sexp_of: Outcome.t * (Wire.Response.t, Wire.Response.Decode_error.t) Result.t]
-      [%equal: Outcome.t * (Wire.Response.t, Wire.Response.Decode_error.t) Result.t]
+      [%sexp_of:
+        Outcome.t * (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t]
+      [%equal: Outcome.t * (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t]
       ~expected:
         ( Replay
         , Error

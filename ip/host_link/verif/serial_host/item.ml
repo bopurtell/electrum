@@ -4,14 +4,14 @@
 (* Items for the serial-host agent: the transactions that cross the Host_link serial
    boundary, and the pure helpers that build and read their bytes.
 
-   Product protocol types stay in [Protemu_host_link_wire.Wire]; items refer to them and
-   never redefine them. Nothing here touches a simulator. [Driver] clocks these items
-   through the pins; [Monitor] rebuilds the [Observed] items from them. See
+   Product protocol types stay in [Host_link_protocol]; items refer to them and never
+   redefine them. Nothing here touches a simulator. [Driver] clocks these items through
+   the pins; [Monitor] rebuilds the [Observed] items from them. See
    docs/serial_host_pilot.md.
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 
 (* Bytes as space-separated hex, for transcripts and failure reports. *)
 let hex bytes =
@@ -71,7 +71,7 @@ module Read = struct
     { selected : int
     ; deselected : int
     ; bytes : string
-    ; decoded : (Wire.Response.t, Wire.Response.Decode_error.t) Result.t
+    ; decoded : (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t
     ; outcome : Outcome.t
     }
 end
@@ -91,18 +91,18 @@ end
 
 (* A legal request frame from the codec; an encode error is a bug in the test. *)
 let encode ~tag request =
-  match Wire.Request.encode ~tag request with
+  match Wire.Codec.Request.encode ~tag request with
   | Ok frame -> frame
   | Error error ->
-    raise_s [%message "bad test request" (error : Wire.Request.Encode_error.t)]
+    raise_s [%message "bad test request" (error : Wire.Codec.Request.Encode_error.t)]
 ;;
 
-(* Malformed request frames, built byte by byte. [Wire.Request.encode] builds only legal
-   frames, so intentional corruption lives here, never in the codec. [crc] uses the
+(* Malformed request frames, built byte by byte. [Wire.Codec.Request.encode] builds only
+   legal frames, so intentional corruption lives here, never in the codec. [crc] uses the
    software CRC over the bytes given.
 *)
 module Raw = struct
-  let crc body = String.of_char (Char.of_int_exn (Wire.Crc.compute body))
+  let crc body = String.of_char (Char.of_int_exn (Wire.Codec.Crc.compute body))
 
   let body ?(magic = 0xa5) ?(version = 0x10) ?payload_length ~tag ~command payload =
     let payload_length = Option.value payload_length ~default:(List.length payload) in
@@ -158,7 +158,7 @@ module Observed = struct
     [@@deriving sexp_of, compare, equal]
   end
 
-  (* A response read as clocked out of LDO, with [Wire.Response.decode] of its whole
+  (* A response read as clocked out of LDO, with [Wire.Codec.Response.decode] of its whole
      bytes. Nothing is correlated with a request here.
   *)
   module Response = struct
@@ -167,7 +167,7 @@ module Observed = struct
       ; deselected : int
       ; bytes : string
       ; extra_bits : bool list
-      ; decoded : (Wire.Response.t, Wire.Response.Decode_error.t) Result.t
+      ; decoded : (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t
       ; ending : Ending.t
       }
     [@@deriving sexp_of, compare, equal]

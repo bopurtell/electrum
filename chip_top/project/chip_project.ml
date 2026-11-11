@@ -174,8 +174,11 @@ let input_paths kind =
   | "loader" ->
     [ "chip_top/rtl/package_top.ml"
     ; "chip_top/rtl/program_memory.ml"
-    ; "host_link_wire/dune"
-    ; "host_link_wire/wire.ml"
+    ; "host_link_protocol/dune"
+    ; "host_link_protocol/definitions.ml"
+    ; "host_link_protocol/codec.ml"
+    ; "host_link_protocol/host_link_protocol.ml"
+    ; "host_link_protocol/host_link_protocol.mli"
     ; "isa/dune"
     ; "isa/assembler.ml"
     ; "isa/descriptor.ml"

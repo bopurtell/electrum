@@ -1,0 +1,9 @@
+(library
+ (name protemu_host_link_protocol_compatibility_tests)
+ (modules compatibility_tests)
+ (inline_tests)
+ (libraries core host_link_protocol protemu_host_link_wire)
+ (preprocess
+  (pps ppx_jane))
+ (lint
+  (pps ppx_js_style)))

@@ -10,8 +10,8 @@
    is a public output: [serial_data_o], [serial_ready_o], and [pending_o]. Expected bits
    and cycles are written by hand in the tests from the P3.5 record and
    docs/host_link_hl4b4_record.md: a frame is its bytes in wire order, each most
-   significant bit first. None is computed from the transmitter. [Wire.Crc.compute] builds
-   stimulus only.
+   significant bit first. None is computed from the transmitter. [Wire.Codec.Crc.compute]
+   builds stimulus only.
 
    Scheduling contract:
 
@@ -46,7 +46,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_protemu
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Frame_tx.I) (Frame_tx.O)
 
 (* P3.5: one retained 21-byte response register; INFO is the largest response. *)
@@ -607,7 +607,7 @@ module Frames = struct
     let body =
       bytes ([ 0x5a; 0x10; tag; command; result; List.length payload; 0x00 ] @ payload)
     in
-    body ^ String.of_char (Char.of_int_exn (Wire.Crc.compute body))
+    body ^ String.of_char (Char.of_int_exn (Wire.Codec.Crc.compute body))
   ;;
 
   (* 8 bytes: STOP accepted, pending. *)

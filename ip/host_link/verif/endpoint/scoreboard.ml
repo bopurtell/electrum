@@ -20,7 +20,7 @@
 *)
 
 open! Core
-module Wire = Protemu_host_link_wire.Wire
+module Wire = Host_link_protocol
 module Serial_host = Protemu_serial_host_agent
 module Control_port_agent = Protemu_control_port_agent
 module Observed = Serial_host.Item.Observed
@@ -51,7 +51,8 @@ let request t ?(extra_bits = []) ~selected ~deselected bytes =
    carries.
 *)
 let uncorrelated = function
-  | Error (Wire.Response.Decode_error.Correlation_mismatch { response; _ }) -> Ok response
+  | Error (Wire.Codec.Response.Decode_error.Correlation_mismatch { response; _ }) ->
+    Ok response
   | decoded -> decoded
 ;;
 
@@ -80,8 +81,8 @@ let read t ~selected (read : Read.t) =
    bits of [packed]. [selected] is the cycle LSEL_N fell, which the scenario records
    before the read; [deselected] is the cycle the driver raised it. The whole bytes and
    the bits of the partial byte are split as the monitor holds them, and [decoded] is
-   [Wire.Response.decode] of the whole bytes. A [packed] of the wrong length for [bits] is
-   a bug in the test.
+   [Wire.Codec.Response.decode] of the whole bytes. A [packed] of the wrong length for
+   [bits] is a bug in the test.
 *)
 let abandoned t ~selected ~deselected ~bits packed =
   let whole = bits / 8 in
@@ -106,7 +107,7 @@ let abandoned t ~selected ~deselected ~bits packed =
        ; deselected
        ; bytes
        ; extra_bits
-       ; decoded = Wire.Response.decode bytes
+       ; decoded = Wire.Codec.Response.decode bytes
        ; ending = Abandoned
        })
 ;;
@@ -145,7 +146,7 @@ let sexp_of_serial_item : Observed.t -> Sexp.t = function
         (deselected : int)
         ~bytes:(Serial_host.Item.hex bytes : string)
         (extra_bits : bool list)
-        (decoded : (Wire.Response.t, Wire.Response.Decode_error.t) Result.t)
+        (decoded : (Wire.Response.t, Wire.Codec.Response.Decode_error.t) Result.t)
         (ending : Observed.Ending.t)]
 ;;
 

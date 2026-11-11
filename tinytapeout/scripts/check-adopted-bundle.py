@@ -88,7 +88,14 @@ def check_bundle(root, bundle, kind):
             assert 'ui[0]: "Loader select, active low"' in info
             assert 'uo[1]: "Loader response ready"' in info
             assert {"rtl/protemu_top.ml", "ip/emulator_core/rtl/emulator_core.ml"} <= source_paths
-            assert {"host_link_wire/dune", "host_link_wire/wire.ml"} <= source_paths
+            assert {
+                "host_link_protocol/dune",
+                "host_link_protocol/definitions.ml",
+                "host_link_protocol/codec.ml",
+                "host_link_protocol/host_link_protocol.ml",
+                "host_link_protocol/host_link_protocol.mli",
+            } <= source_paths
+            assert not any(path.startswith("host_link_wire/") for path in source_paths)
             assert "ip/emulator_core/rtl/control_port.ml" in source_paths
             assert "ip/host_link/rtl/serial_phy.ml" in source_paths
             assert "ip/host_link/rtl/frame_rx.ml" in source_paths
