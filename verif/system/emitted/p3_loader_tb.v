@@ -1,8 +1,26 @@
 `timescale 1ns/1ps
 
+/* PT3b runner contract (legacy callers need no new options):
+   -DPT3B selects the focused system scenarios below instead of the legacy serial
+   timing/robustness sweep. -DLOADER_WRAPPER selects the real production package.
+   -DPT3B_EXACT additionally observes dut.hc_resource_7_program's public macro pins;
+   use only with LOADER_WRAPPER and the Exact implementation source + unmodified
+   vendor macro/core models, compiled with -DFUNCTIONAL. No blackbox stub.
+   +PT3B_EXPECT_MISMATCH changes one expected READ word. Only the resulting checked
+   mismatch prints PT3B EXPECTED_MISMATCH, then $fatal exits nonzero.
+   Without LOADER_WRAPPER, three full-system contract-RAM runs use zero, ones and
+   X for initial/unwritten/write output. Disabled output still holds. Checked
+   response transcripts and sampled architectural pins must agree across runs.
+   This oracle does not perturb or characterize the vendor model's X semantics.
+   Successful completion: PT3B PASS loader observations=<decimal>.
+*/
 module p3_loader_tb;
   reg clock_i = 0;
+`ifdef PT3B
+  reg reset_i = 0;
+`else
   reg reset_i = 1;
+`endif
   reg enable_i = 1;
   reg serial_select_n_i = 1;
   reg serial_clock_i = 0;
@@ -35,6 +53,33 @@ module p3_loader_tb;
   integer excluded_failures;
   reg [15:0] fixture [0:31];
 
+`ifdef PT3B
+  integer pt3b_observations = 0;
+  integer pt3b_refusals = 0;
+  integer pt3b_reads = 0;
+  integer pt3b_writes = 0;
+  integer pt3b_cancellations = 0;
+  integer pt3b_round;
+  integer pt3b_index;
+  reg pt3b_negative_armed = 0;
+  reg [31:0] pt3b_digest = 32'h811c9dc5;
+  reg [31:0] pt3b_baseline;
+  reg [15:0] pt3b_arch_baseline [0:16383];
+  integer pt3b_arch_cursor = 0;
+  integer pt3b_arch_length = 0;
+  reg [15:0] pt3b_unspecified;
+`ifdef PT3B_EXACT
+  reg [15:0] pt3b_macro_before;
+  reg pt3b_macro_disabled;
+`endif
+
+  /* A bounded failure instead of a deadlocked wait/fork being reported as success. */
+  initial begin
+    #1000000000;
+    $fatal(1, "PT3B watchdog expired");
+  end
+`endif
+
 `ifdef LOADER_WRAPPER
   wire [7:0] wrapper_ui_in = {5'b00000, serial_data_i, serial_clock_i, serial_select_n_i};
   wire [7:0] wrapper_uo_out;
@@ -42,10 +87,17 @@ module p3_loader_tb;
   wire [7:0] wrapper_uio_oe;
   assign serial_data_o = wrapper_uo_out[0];
   assign serial_ready_o = wrapper_uo_out[1];
+`ifdef PT3B_EXACT
+  assign prog_mem_enable_o = dut.hc_resource_7_program.A_MEN;
+  assign prog_mem_write_enable_o = dut.hc_resource_7_program.A_WEN;
+  assign prog_mem_address_o = dut.hc_resource_7_program.A_ADDR;
+  assign prog_mem_write_data_o = dut.hc_resource_7_program.A_DIN;
+`else
   assign prog_mem_enable_o = 0;
   assign prog_mem_write_enable_o = 0;
   assign prog_mem_address_o = 0;
   assign prog_mem_write_data_o = 0;
+`endif
   assign pins_o = wrapper_uio_out;
   assign pin_oe_o = wrapper_uio_oe;
   tt_um_leemperor_hardcaml_protemu_loader dut (
@@ -82,6 +134,38 @@ module p3_loader_tb;
 
   always #5 clock_i = ~clock_i;
 
+`ifdef PT3B
+  always @(posedge clock_i) begin
+    if (prog_mem_enable_o !== 1'b0 && prog_mem_enable_o !== 1'b1)
+      $fatal(1, "PT3B unknown RAM enable");
+    if (prog_mem_enable_o === 1'b1) begin
+      if ((^prog_mem_address_o) === 1'bx)
+        $fatal(1, "PT3B unknown enabled RAM address");
+      if (prog_mem_write_enable_o === 1'b1) begin
+        if ((^prog_mem_write_data_o) === 1'bx)
+          $fatal(1, "PT3B unknown RAM write data");
+        pt3b_writes = pt3b_writes + 1;
+      end else if (prog_mem_write_enable_o === 1'b0)
+        pt3b_reads = pt3b_reads + 1;
+      else $fatal(1, "PT3B unknown RAM operation");
+`ifdef PT3B_EXACT
+      if (dut.hc_resource_7_program.A_REN !== !prog_mem_write_enable_o ||
+          dut.hc_resource_7_program.A_BM !== 16'hffff ||
+          dut.hc_resource_7_program.A_DLY !== 1'b1 ||
+          dut.hc_resource_7_program.A_BIST_EN !== 1'b0)
+        $fatal(1, "PT3B macro port binding violation");
+`endif
+    end
+`ifdef PT3B_EXACT
+    pt3b_macro_before = dut.hc_resource_7_program.A_DOUT;
+    pt3b_macro_disabled = (prog_mem_enable_o === 1'b0);
+    #1;
+    if (pt3b_macro_disabled && dut.hc_resource_7_program.A_DOUT !== pt3b_macro_before)
+      $fatal(1, "PT3B disabled macro output did not hold");
+`endif
+  end
+`endif
+
   always @(posedge clock_i) begin
     if (!pin_driven_previous && pin_oe_o[1])
       pin_drive_events <= pin_drive_events + 1;
@@ -94,6 +178,9 @@ module p3_loader_tb;
       if (prog_mem_write_enable_o) begin
         memory[prog_mem_address_o] <= prog_mem_write_data_o;
         write_count <= write_count + 1;
+`ifdef PT3B
+        prog_mem_read_data_i <= pt3b_unspecified;
+`endif
       end else begin
         prog_mem_read_data_i <= memory[prog_mem_address_o];
       end
@@ -226,11 +313,11 @@ module p3_loader_tb;
     integer budget;
     begin
       budget = 0;
-      while (!serial_ready_o && budget < 200) begin
+      while (serial_ready_o !== 1'b1 && budget < 200) begin
         @(posedge clock_i);
         budget = budget + 1;
       end
-      if (!serial_ready_o) $fatal(1, "loader response timeout");
+      if (serial_ready_o !== 1'b1) $fatal(1, "loader response timeout or unknown ready");
     end
   endtask
 
@@ -279,20 +366,42 @@ module p3_loader_tb;
     input integer reject_after_validation
   );
     reg [7:0] crc;
+`ifdef PT3B
+    reg [7:0] received_byte;
+`endif
     integer index;
     integer payload_length;
     integer total;
     begin
       wait_ready();
       serial_select_n_i = 0;
+`ifdef PT3B
+      /* Host Icarus needs scalar copy-out here. Preserve the original direct
+         memory-word copy-out in the legacy Verilator timing fixture below. */
+      for (index = 0; index < 7; index = index + 1) begin
+        read_byte(received_byte);
+        response[index] = received_byte;
+      end
+`else
       for (index = 0; index < 7; index = index + 1) read_byte(response[index]);
+`endif
       if (^response[5] === 1'bx || ^response[6] === 1'bx)
-        $fatal(1, "unknown response payload length");
+        $fatal(1, "unknown response payload length header=%02x/%02x/%02x/%02x/%02x/%02x/%02x",
+               response[0], response[1], response[2], response[3], response[4], response[5], response[6]);
       payload_length = response[5] | (response[6] << 8);
       if (payload_length > 13) $fatal(1, "oversized response payload length %0d", payload_length);
       total = 8 + payload_length;
+`ifdef PT3B
+      for (index = 7; index < total - 1; index = index + 1) begin
+        read_byte(received_byte);
+        response[index] = received_byte;
+      end
+      read_final_byte(received_byte);
+      response[total - 1] = received_byte;
+`else
       for (index = 7; index < total - 1; index = index + 1) read_byte(response[index]);
       read_final_byte(response[total - 1]);
+`endif
       if (response[0] !== 8'h5a || response[1] !== 8'h10)
         $fatal(1, "bad response header %02x %02x", response[0], response[1]);
       if (response[2] !== expected_tag || response[3] !== expected_command)
@@ -306,8 +415,18 @@ module p3_loader_tb;
         crc = crc8_byte(crc, response[index]);
       if (response[total - 1] !== crc)
         $fatal(1, "response CRC got=%02x expected=%02x", response[total - 1], crc);
-      if (check_word && {response[8], response[7]} !== expected_word)
+      if (check_word && {response[8], response[7]} !== expected_word) begin
+`ifdef PT3B
+        if (pt3b_negative_armed)
+          $display("PT3B EXPECTED_MISMATCH");
+`endif
         $fatal(1, "response word got=%04x expected=%04x", {response[8], response[7]}, expected_word);
+      end
+`ifdef PT3B
+      /* Only a complete, correlated, CRC-checked response enters this oracle. */
+      for (index = 0; index < total; index = index + 1)
+        pt3b_arch_word({8'b0, response[index]});
+`endif
       if (reject_after_validation) begin
         /* Model a peer-side CRC rejection after the full frame is available. Deselecting
            before the final falling edge preserves the retained response for replay. */
@@ -318,7 +437,7 @@ module p3_loader_tb;
         #(host_low);
         serial_clock_i = 0;
         #(host_low);
-        if (!serial_ready_o) $fatal(1, "rejected response was consumed");
+        if (serial_ready_o !== 1'b1) $fatal(1, "rejected response was consumed or unknown ready");
       end else begin
         /* Validation succeeded while LCLK was high. Its final falling edge followed by
            deselection is the explicit response commit. */
@@ -328,7 +447,7 @@ module p3_loader_tb;
         serial_select_n_i = 1;
         #(host_low);
         repeat (6) @(posedge clock_i);
-        if (serial_ready_o) $fatal(1, "committed response did not drain");
+        if (serial_ready_o !== 1'b0) $fatal(1, "committed response did not drain");
       end
     end
   endtask
@@ -390,7 +509,12 @@ module p3_loader_tb;
       if ({response[14], response[13]} !== expected_verified)
         $fatal(1, "STATUS verified got=%04x expected=%04x",
                {response[14], response[13]}, expected_verified);
-      if (response[17] !== expected_fault || response[18] !== expected_phase)
+      if (response[17] !== expected_fault ||
+`ifdef PT3B
+          (expected_phase != 8'hff && response[18] !== expected_phase))
+`else
+          response[18] !== expected_phase)
+`endif
         $fatal(1, "STATUS fault/phase got=%02x/%02x expected=%02x/%02x",
                response[17], response[18], expected_fault, expected_phase);
     end
@@ -439,11 +563,11 @@ module p3_loader_tb;
       build_request(tag, 8'h00, 0, 0, 0);
       send_request_bytes(7);
       budget = 0;
-      while (!serial_ready_o && budget < 200) begin
+      while (serial_ready_o !== 1'b1 && budget < 200) begin
         @(posedge clock_i);
         budget = budget + 1;
       end
-      if (!serial_ready_o) disable probe;
+      if (serial_ready_o !== 1'b1) disable probe;
       serial_select_n_i = 0;
       for (index = 0; index < 20; index = index + 1) read_byte(response[index]);
       read_final_byte(response[20]);
@@ -472,6 +596,403 @@ module p3_loader_tb;
     end
   endtask
 
+`ifdef PT3B
+  /* Exact item-by-item comparison is the oracle; the digest is only a compact
+     diagnostic. Raw RAM data with no response ownership never enters it. */
+  task automatic pt3b_arch_word(input [15:0] value);
+    begin
+      if ((^value) === 1'bx) $fatal(1, "PT3B unknown valid architectural observation");
+      pt3b_digest = (pt3b_digest ^ {16'b0, value}) * 32'h01000193;
+`ifndef LOADER_WRAPPER
+      if (pt3b_arch_cursor >= 16384) $fatal(1, "PT3B architectural transcript overflow");
+      if (pt3b_round == 0) pt3b_arch_baseline[pt3b_arch_cursor] = value;
+      else if (pt3b_arch_cursor >= pt3b_arch_length ||
+               pt3b_arch_baseline[pt3b_arch_cursor] !== value)
+        $fatal(1, "PT3B architectural transcript mismatch poison=%0d item=%0d expected=%04x actual=%04x",
+               pt3b_round, pt3b_arch_cursor, pt3b_arch_baseline[pt3b_arch_cursor], value);
+      pt3b_arch_cursor = pt3b_arch_cursor + 1;
+`endif
+    end
+  endtask
+
+  task automatic pt3b_observe(input [8*64-1:0] name);
+    begin
+      if ((^pins_o) === 1'bx || (^pin_oe_o) === 1'bx)
+        $fatal(1, "PT3B unknown architectural pins at %0s", name);
+      pt3b_arch_word({pin_oe_o, pins_o});
+      pt3b_observations = pt3b_observations + 1;
+      $display("PT3B OBS %0s", name);
+    end
+  endtask
+
+  task automatic pt3b_reset;
+    begin
+      @(negedge clock_i);
+      reset_i = 1;
+      enable_i = 1;
+      serial_select_n_i = 1;
+      serial_clock_i = 0;
+      serial_data_i = 0;
+      pin_async_i = 0;
+`ifdef LOADER_WRAPPER
+      #1;
+      if (serial_ready_o !== 0 || serial_data_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B package reset failed immediate pad release");
+`endif
+      repeat (4) @(negedge clock_i);
+      reset_i = 0;
+      repeat (6) @(negedge clock_i);
+    end
+  endtask
+
+  task automatic pt3b_transfer_image;
+    begin
+      fixture[0] = 16'hb820;
+      fixture[1] = 16'hb8a0;
+      fixture[2] = 16'hb90b;
+      fixture[3] = 16'hb981;
+      fixture[4] = 16'hba09;
+      fixture[5] = 16'hba89;
+      fixture[6] = 16'hbb00;
+      fixture[7] = 16'hbbbf;
+      fixture[8] = 16'hbc00;
+      fixture[9] = 16'hc000;
+      fixture[10] = 16'h0000;
+      load_fixture(8'h60, 11);
+    end
+  endtask
+
+  task automatic pt3b_refuse(
+    input [7:0] tag, input [7:0] command,
+    input integer length, input [39:0] payload
+  );
+    integer writes_before;
+    begin
+      writes_before = pt3b_writes;
+      transaction(tag, command, length, payload, 8'h20, 0, 0, 0);
+      if (pt3b_writes !== writes_before)
+        $fatal(1, "PT3B refused host command %02x wrote storage", command);
+      pt3b_refusals = pt3b_refusals + 1;
+    end
+  endtask
+
+  /* Only called where the actual RAM request boundary is observable: external
+     contract RAM, or Exact's public macro pins. No generated signal-number probes.
+     Cancel after the read edge, before the next core edge consumes its result.
+     The witness is the actual memory access count, not fetch-valid: internally
+     reset/disable cancel pending ownership; they need not invent a fetch offer.
+     Check quiet system-visible outputs once per settled clock cycle through
+     cancellation/recovery, then check architectural status/PC and fresh reads.
+     This does not assert absence of unobserved internal pulses. */
+  task automatic pt3b_cancel_quiet;
+    begin
+      if (serial_ready_o !== 0 || serial_data_o !== 0 || pins_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B stale system-visible ready/pin effect during cancellation recovery");
+    end
+  endtask
+
+  task automatic pt3b_cancel_pending(input integer fetch, input integer use_reset);
+    integer reads_before;
+    integer budget;
+    begin
+      if (fetch) pt3b_transfer_image();
+      else load_one(8'hc0, 16'h1234);
+      reads_before = pt3b_reads;
+      build_request(8'hd0, fetch ? 8'h20 : 8'h12, fetch ? 0 : 2, 0, 0);
+      fork
+        begin
+          send_request_without_release_wait(fetch ? 7 : 9);
+        end
+        begin
+          budget = 0;
+          while (pt3b_reads == reads_before && budget < 10000) begin
+            @(negedge clock_i);
+            budget = budget + 1;
+          end
+          if (pt3b_reads != reads_before + 1)
+            $fatal(1, "PT3B failed to reach one pending read fetch=%0d", fetch);
+          if (use_reset) reset_i = 1;
+          else enable_i = 0;
+`ifdef LOADER_WRAPPER
+          #1;
+          if (serial_ready_o !== 0 || serial_data_o !== 0 || pin_oe_o !== 0)
+            $fatal(1, "PT3B cancellation failed immediate output release");
+`endif
+          repeat (4) begin
+            @(posedge clock_i);
+            #1;
+            pt3b_cancel_quiet();
+          end
+          @(negedge clock_i);
+          reset_i = 0;
+          enable_i = 1;
+        end
+      join
+      repeat (12) begin
+        @(posedge clock_i);
+        #1;
+        pt3b_cancel_quiet();
+      end
+      if (pt3b_reads != reads_before + 1)
+        $fatal(1, "PT3B cancelled fetch continued reading");
+      if (use_reset) begin
+        check_status(8'hd1, 16'h0007, 16'h0fff, 0, 0, 0, 0, 0);
+        if ({response[16], response[15]} !== 0)
+          $fatal(1, "PT3B reset left stale architectural PC");
+        transaction(8'hd2, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      end else begin
+        check_status(8'hd1, 16'h000f, 16'h0fff,
+                     fetch ? 11 : 1, fetch ? 11 : 1, fetch ? 11 : 1, 0, 0);
+        if (fetch && {response[16], response[15]} !== 0)
+          $fatal(1, "PT3B cancelled first fetch advanced architectural PC");
+        transaction(8'hd2, 8'h12, 2, 0, 8'h00, 2,
+                    fetch ? 16'hb820 : 16'h1234, 1);
+      end
+      pt3b_cancellations = pt3b_cancellations + 1;
+      $display("PT3B PHASE pending-cancel fetch=%0d reset=%0d read_edges=1",
+               fetch, use_reset);
+      pt3b_observe(fetch ? (use_reset ? "pending-fetch-reset" : "pending-fetch-disable")
+                         : (use_reset ? "pending-read-reset" : "pending-read-disable"));
+    end
+  endtask
+
+  task automatic pt3b_scenarios;
+    integer old_writes;
+    integer old_reads;
+    begin
+      check_status(8'h01, 16'h0007, 16'h0fff, 0, 0, 0, 0, 0);
+      transaction(8'h02, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      pt3b_observe("initial-image-invalid");
+
+      load_words_start(8'h10, 2);
+      write_word(8'h11, 0, 16'h1234);
+      transaction(8'h12, 8'h11, 4, 40'hffff0000, 8'h23, 0, 0, 0);
+      transaction(8'h13, 8'h14, 0, 0, 8'h23, 0, 0, 0);
+      transaction(8'h14, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      check_status(8'h15, 16'h0017, 16'h0fff, 2, 1, 0, 0, 0);
+      pt3b_observe("incomplete-duplicate-unverified-refused");
+      write_word(8'h16, 1, 16'h5678);
+      transaction(8'h1b, 8'h14, 0, 0, 8'h23, 0, 0, 0);
+      transaction(8'h1c, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      transaction(8'h17, 8'h13, 4, 40'hffff0000, 8'h24, 2, 16'h1234, 1);
+      check_status(8'h18, 16'h0037, 16'h0fff, 2, 2, 0, 0, 0);
+      transaction(8'h19, 8'h14, 0, 0, 8'h23, 0, 0, 0);
+      transaction(8'h1a, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      pt3b_observe("mismatch-never-authorizes-run");
+
+      /* P3.2's extension/compare/branch image, with an invalid instruction in
+         the skipped slot. A wrong extension/branch now faults observably. */
+      fixture[0] = 16'h0880;
+      fixture[1] = 16'h1234;
+      fixture[2] = 16'h3080;
+      fixture[3] = 16'h1234;
+      fixture[4] = 16'h6001;
+      fixture[5] = 16'hf800;
+      fixture[6] = 16'h0902;
+      fixture[7] = 16'h71ff;
+      fixture[8] = 16'h0000;
+      load_fixture(8'h20, 9);
+      transaction(8'h32, 8'h10, 2, 0, 8'h23, 0, 0, 0);
+      transaction(8'h33, 8'h10, 2, 257, 8'h23, 0, 0, 0);
+      check_status(8'h34, 16'h000f, 16'h0fff, 9, 9, 9, 0, 0);
+      pt3b_negative_armed = $test$plusargs("PT3B_EXPECT_MISMATCH");
+      transaction(8'h35, 8'h12, 2, 1, 8'h00, 2,
+                  pt3b_negative_armed ? 16'h1235 : 16'h1234, 1);
+      pt3b_negative_armed = 0;
+      pt3b_observe("serial-load-verify-readback");
+      transaction(8'h36, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      repeat (40) @(negedge clock_i);
+      check_status(8'h37, 16'h008f, 16'h0fff, 9, 9, 9, 0, 0);
+      if ({response[16], response[15]} !== 16'h0008)
+        $fatal(1, "PT3B extension/branch halt PC mismatch");
+      pt3b_observe("extension-fetch-and-branch-execution");
+
+      load_words_start(8'h40, 1);
+      check_status(8'h41, 16'h0097, 16'h0fff, 1, 0, 0, 0, 0);
+      transaction(8'h42, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      write_word(8'h43, 0, 16'h0801);
+      verify_word(8'h44, 0, 16'h0801);
+      transaction(8'h45, 8'h14, 0, 0, 8'h00, 0, 0, 0);
+      transaction(8'h46, 8'h12, 2, 1, 8'h23, 0, 0, 0);
+      transaction(8'h47, 8'h12, 2, 256, 8'h23, 0, 0, 0);
+      transaction(8'h48, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      repeat (30) @(negedge clock_i);
+      check_status(8'h49, 16'h030f, 16'h0fff, 1, 1, 1, 3, 6);
+      transaction(8'h4a, 8'h22, 0, 0, 8'h00, 0, 0, 0);
+      pt3b_observe("replacement-invalidates-and-old-tail-faults");
+
+      load_one(8'h50, 16'h5fff);
+      transaction(8'h54, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      old_writes = pt3b_writes;
+      old_reads = pt3b_reads;
+      pt3b_refuse(8'h55, 8'h10, 2, 1);
+      pt3b_refuse(8'h56, 8'h11, 4, 40'hdead0000);
+      pt3b_refuse(8'h57, 8'h12, 2, 0);
+      pt3b_refuse(8'h58, 8'h13, 4, 40'h5fff0000);
+      pt3b_refuse(8'h59, 8'h14, 0, 0);
+      pt3b_refuse(8'h5a, 8'h20, 0, 0);
+      check_status(8'h5b, 16'h004d, 16'h0fff, 1, 1, 1, 0, 8'hff);
+      if (response[18] !== 1 && response[18] !== 2)
+        $fatal(1, "PT3B live loop left fetch/base-wait phase");
+      if (pt3b_writes !== old_writes)
+        $fatal(1, "PT3B live requests changed storage");
+`ifndef LOADER_WRAPPER
+      if (pt3b_reads <= old_reads) $fatal(1, "PT3B live requests stopped fetch");
+`elsif PT3B_EXACT
+      if (pt3b_reads <= old_reads) $fatal(1, "PT3B live requests stopped macro fetch");
+`endif
+      transaction(8'h5c, 8'h22, 0, 0, 8'h00, 0, 0, 0);
+      transaction(8'h5d, 8'h12, 2, 0, 8'h00, 2, 16'h5fff, 1);
+      pt3b_observe("all-six-live-host-classes-refused-fetch-survives");
+
+      fixture[0] = 16'hd400;
+      fixture[1] = 16'h0000;
+      load_fixture(8'h70, 2);
+      transaction(8'h76, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      check_status(8'h77, 16'h0049, 16'h0fff, 2, 2, 2, 0, 5);
+      if ({response[16], response[15]} !== 0) $fatal(1, "PT3B stalled PC advanced");
+      old_reads = pt3b_reads;
+      repeat (50) @(negedge clock_i);
+      check_status(8'h78, 16'h0049, 16'h0fff, 2, 2, 2, 0, 5);
+      if ({response[16], response[15]} !== 0 || pt3b_reads !== old_reads)
+        $fatal(1, "PT3B blocked instruction progressed or refetched");
+      pt3b_observe("blocking-stall-stable-across-status-polls");
+      transaction(8'h79, 8'h22, 0, 0, 8'h00, 0, 0, 0);
+      check_status(8'h7a, 16'h000f, 16'h0c47, 2, 2, 2, 0, 0);
+      if (pin_oe_o !== 0) $fatal(1, "PT3B stalled ABORT left pin effects");
+      pt3b_observe("stalled-abort-recovers");
+
+      pt3b_transfer_image();
+      transaction(8'h80, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      if (pin_oe_o[1] !== 1'b1) $fatal(1, "PT3B active transfer not reached");
+      @(negedge clock_i);
+      enable_i = 0;
+`ifdef LOADER_WRAPPER
+      #1;
+      if (serial_ready_o !== 0 || serial_data_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B active disable did not release outputs");
+`endif
+      repeat (4) @(negedge clock_i);
+      if (serial_ready_o !== 0 || serial_data_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B active disable did not clear synchronous core outputs");
+      enable_i = 1;
+      repeat (6) @(negedge clock_i);
+      if (serial_ready_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B active disable left stale work");
+      check_status(8'h81, 16'h008f, 16'h0fff, 11, 11, 11, 0, 0);
+      pt3b_observe("active-disable-releases-and-preserves-image");
+      transaction(8'h82, 8'h12, 2, 0, 8'h00, 2, 16'hb820, 1);
+      transaction(8'h83, 8'h20, 0, 0, 8'h00, 0, 0, 0);
+      if (pin_oe_o[1] !== 1'b1) $fatal(1, "PT3B preserved image did not rerun");
+      pt3b_observe("disabled-image-readback-and-rerun");
+      pt3b_reset();
+      if (serial_ready_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B active reset left stale work");
+      check_status(8'h84, 16'h0007, 16'h0fff, 0, 0, 0, 0, 0);
+      transaction(8'h85, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      pt3b_observe("active-reset-invalidates-image");
+
+      /* Disabling an accepted partial load cancels the session, not just a
+         partially framed serial command. Retained RAM/metadata cannot RUN. */
+      load_words_start(8'h86, 2);
+      write_word(8'h87, 0, 16'hcafe);
+      check_status(8'h88, 16'h0017, 16'h0fff, 2, 1, 0, 0, 0);
+      @(negedge clock_i);
+      enable_i = 0;
+      repeat (4) @(negedge clock_i);
+      if (serial_ready_o !== 0 || serial_data_o !== 0 || pin_oe_o !== 0)
+        $fatal(1, "PT3B partial-load disable left visible work");
+      enable_i = 1;
+      repeat (6) @(negedge clock_i);
+      check_status(8'h89, 16'h0007, 16'h0fff, 2, 1, 0, 0, 0);
+      transaction(8'h8a, 8'h14, 0, 0, 8'h23, 0, 0, 0);
+      transaction(8'h8b, 8'h20, 0, 0, 8'h22, 0, 0, 0);
+      pt3b_observe("accepted-partial-load-disable-cancels-session");
+
+      build_request(8'h90, 8'h10, 2, 1, 0);
+      serial_select_n_i = 0;
+      send_byte(request[0]);
+      @(negedge clock_i);
+      enable_i = 0;
+      repeat (4) @(negedge clock_i);
+      serial_select_n_i = 1;
+      enable_i = 1;
+      repeat (6) @(negedge clock_i);
+      if (serial_ready_o !== 0) $fatal(1, "PT3B partial request survived disable");
+      check_status(8'h91, 16'h0007, 16'h0fff, 2, 1, 0, 0, 0);
+      pt3b_observe("partial-frame-disable-cancels");
+
+`ifndef LOADER_WRAPPER
+      pt3b_cancel_pending(0, 0);
+      pt3b_cancel_pending(0, 1);
+      pt3b_cancel_pending(1, 0);
+      pt3b_cancel_pending(1, 1);
+`elsif PT3B_EXACT
+      pt3b_cancel_pending(0, 0);
+      pt3b_cancel_pending(0, 1);
+      pt3b_cancel_pending(1, 0);
+      pt3b_cancel_pending(1, 1);
+`endif
+    end
+  endtask
+
+  initial begin
+    $display("PT3B PHASE loader-start");
+    /* Give the package reset synchronizer a real assertion transition before
+       the first sampling edge; a declaration initializer is not a reset pulse. */
+    #1;
+    reset_i = 1;
+`ifndef LOADER_WRAPPER
+    for (pt3b_round = 0; pt3b_round < 3; pt3b_round = pt3b_round + 1) begin
+      /* Assign even round zero procedurally: no reliance on an always @*
+         sensitivity event from an initialized selector. X is a legal raw
+         unspecified value, not a valid architectural response. */
+      case (pt3b_round)
+        0: pt3b_unspecified = 16'h0000;
+        1: pt3b_unspecified = 16'hffff;
+        2: pt3b_unspecified = 16'hxxxx;
+        default: $fatal(1, "PT3B invalid poison round");
+      endcase
+      if ((pt3b_round == 0 && pt3b_unspecified !== 16'h0000) ||
+          (pt3b_round == 1 && pt3b_unspecified !== 16'hffff) ||
+          (pt3b_round == 2 && pt3b_unspecified !== 16'hxxxx))
+        $fatal(1, "PT3B poison representation not selected");
+      $display("PT3B PHASE poison-selected mode=%0d value=%04x", pt3b_round, pt3b_unspecified);
+      for (pt3b_index = 0; pt3b_index < 256; pt3b_index = pt3b_index + 1)
+        memory[pt3b_index] = pt3b_unspecified;
+      prog_mem_read_data_i = pt3b_unspecified;
+      pt3b_reset();
+      pt3b_digest = 32'h811c9dc5;
+      pt3b_arch_cursor = 0;
+      pt3b_scenarios();
+      if (pt3b_round == 0) begin
+        pt3b_baseline = pt3b_digest;
+        pt3b_arch_length = pt3b_arch_cursor;
+      end else if (pt3b_digest !== pt3b_baseline || pt3b_arch_cursor != pt3b_arch_length)
+        $fatal(1, "PT3B unspecified-output architectural mismatch round=%0d", pt3b_round);
+      $display("PT3B ORACLE poison=%0d architectural_digest=%08x", pt3b_round, pt3b_digest);
+    end
+    if (pt3b_observations != 54 || pt3b_refusals != 18 || pt3b_cancellations != 12)
+      $fatal(1, "PT3B missing contract-RAM observations");
+`else
+    pt3b_reset();
+    pt3b_scenarios();
+`ifdef PT3B_EXACT
+    if (pt3b_observations != 18 || pt3b_cancellations != 4 ||
+        pt3b_reads == 0 || pt3b_writes == 0)
+      $fatal(1, "PT3B missing Exact macro observations");
+`else
+    if (pt3b_observations != 14 || pt3b_cancellations != 0)
+      $fatal(1, "PT3B missing package observations");
+`endif
+    if (pt3b_refusals != 6) $fatal(1, "PT3B missing execution-time refusals");
+`endif
+    $display("PT3B COUNTERS refusals=%0d cancellations=%0d reads=%0d writes=%0d",
+             pt3b_refusals, pt3b_cancellations, pt3b_reads, pt3b_writes);
+    $display("PT3B PASS loader observations=%0d", pt3b_observations);
+    $finish;
+  end
+`else
   initial begin
     repeat (4) @(posedge clock_i);
     reset_i = 0;
@@ -537,7 +1058,7 @@ module p3_loader_tb;
     #(host_low);
     serial_select_n_i = 1;
     #(host_low);
-    if (!serial_ready_o) $fatal(1, "interrupted response was discarded");
+    if (serial_ready_o !== 1'b1) $fatal(1, "interrupted response was discarded");
     receive_response(8'h20, 8'h01, 8'h00, 12, 0, 0);
 
     /* Corrupt and interrupted requests have no write side effect. */
@@ -662,6 +1183,9 @@ module p3_loader_tb;
     load_one(8'h50, 16'h5fff);
     transaction(8'h54, 8'h20, 0, 0, 8'h00, 0, 0, 0);
     repeat (20) @(posedge clock_i);
+    /* This is the existing Verilator-calibrated cycle sample, not a generic
+       phase-insensitive execution check. Preserve its exact expected phase.
+       The PT3B host-Icarus scenarios have their own stimulus/observations. */
     check_status(8'h55, 16'h004d, 16'h01ff, 1, 1, 1, 0, 2);
     transaction(8'h56, 8'h12, 2, 40'h0, 8'h20, 0, 0, 0);
     transaction(8'h57, 8'h22, 0, 0, 8'h00, 0, 0, 0);
@@ -734,12 +1258,12 @@ module p3_loader_tb;
     send_byte(request[0]);
     enable_i = 0;
     repeat (4) @(posedge clock_i);
-    if (serial_ready_o || serial_data_o || pin_oe_o !== 0)
+    if (serial_ready_o !== 1'b0 || serial_data_o !== 1'b0 || pin_oe_o !== 0)
       $fatal(1, "disable did not release loader/protocol outputs");
     serial_select_n_i = 1;
     enable_i = 1;
     repeat (6) @(posedge clock_i);
-    if (serial_ready_o) $fatal(1, "disable release produced a stale response");
+    if (serial_ready_o !== 1'b0) $fatal(1, "disable release produced a stale response");
     transaction(8'hb1, 8'h00, 0, 0, 8'h00, 13, 0, 0);
 
     /* Reset also cancels a partial command and returns with no executable image. */
@@ -794,4 +1318,5 @@ module p3_loader_tb;
              excluded_failures);
     $finish;
   end
+`endif
 endmodule

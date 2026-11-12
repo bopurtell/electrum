@@ -1,0 +1,19 @@
+; Explicit host functional simulation only; never part of runtest/rtl/physical flows.
+(rule
+ (alias pt3b)
+ (deps
+  (universe)
+  (sandbox none)
+  check_functional.py
+  test_check_functional.py
+  ../bundle/check_bundle.py
+  ../memory/emitted/p0_memory_tb.v
+  ../../../verif/system/emitted/p3_loader_tb.v
+  ../../tinytapeout/asic-dependencies.lock)
+ (action
+  (progn
+   (run python3 -B %{dep:test_check_functional.py})
+   (run python3 -B %{dep:check_functional.py}
+    --cli %{exe:../../cli/asic_bundle.exe}
+    --core-emitter %{exe:../../../verif/system/emit/generate_core.exe}
+    --source-root %{workspace_root}))))

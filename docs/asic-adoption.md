@@ -1,6 +1,7 @@
 # ASIC bundle adoption — PT.3a
 
-PT.3a public-API and explicit Flops/Exact adoption is verified. See
+PT.3a public-API and explicit Flops/Exact adoption is verified, and
+[PT.3b real-system vendor-functional regression](pt3b-verification.md) passes. See
 [PT.3a evidence and remaining gates](pt3a-adoption.md). Earlier P0 physical evidence
 below remains historical; it does not qualify the new macro-backed system.
 

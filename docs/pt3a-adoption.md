@@ -87,9 +87,16 @@ largest reported child peak RSS was about 2.36 GiB. No timeouts or killed comman
 During final consumer verification kernel-log access was denied, so absence of new
 hardware faults could not independently be established. No physical EDA was run.
 
-## Next: PT.3b, then PT.3c
+## Follow-up status
 
-PT.3b must exercise the real loader/core/program-store path using the applicable
+**PT.3b is now complete in emitted-RTL functional scope.** The
+[vendor-functional system verification record](pt3b-verification.md) covers actual
+macro execution, load/readback/fetch, cancellation, image lifecycle and legal
+unspecified-output variation. The remaining next step is PT.3c.
+
+The original PT.3b requirements were:
+
+PT.3b exercises the real loader/core/program-store path using the applicable
 macro functional models: loading/readback/fetch, stalls, reset/disable, image
 validity, execution-time host-access rejection and unspecified-output independence.
 Metadata references do not establish that the vendor model was executed.

@@ -1,7 +1,17 @@
 `timescale 1ns/1ps
 `default_nettype none
 
+/* PT3B preserves the existing data/validity oracle and adds completion counters.
+   +PT3B_EXPECT_MISMATCH changes only one expected known readback byte; this is
+   oracle smoke sensitivity, not DUT fault injection. A detected mismatch prints
+   PT3B EXPECTED_MISMATCH and exits nonzero before the positive completion marker.
+   Runner: iverilog -g2012 -s tb -DPT3B <one package RTL role> <this file>.
+   Exact additionally requires FUNCTIONAL and the two unmodified vendor models. */
 module tb;
+`ifdef PT3B
+    integer pt3b_observations = 0;
+    reg pt3b_negative_armed = 0;
+`endif
     reg        clk = 1'b0;
     reg        rst_n = 1'b1;
     reg        ena = 1'b1;
@@ -56,9 +66,15 @@ module tb;
         input [7:0] expected;
         begin
             if (actual !== expected) begin
+`ifdef PT3B
+                if (pt3b_negative_armed) $display("PT3B EXPECTED_MISMATCH");
+`endif
                 $display("FAIL %0s: got %02x expected %02x", label, actual, expected);
                 $fatal(1);
             end
+`ifdef PT3B
+            pt3b_observations = pt3b_observations + 1;
+`endif
         end
     endtask
 
@@ -101,17 +117,26 @@ module tb;
         verify_word(8'd2, 16'hf00f);
         request(4, 8'd0);
         tick;
-        if (!uo_out[5]) begin
+        if (uo_out[5] !== 1'b1) begin
             $display("FAIL completed image is not valid");
             $fatal(1);
         end
+`ifdef PT3B
+        pt3b_observations = pt3b_observations + 1;
+`endif
 
         // Ordinary readback has exactly one-cycle validity and survives a disabled RAM
         // cycle because the primitive's registered read output holds while disabled.
         request(5, 8'd1);
         check8("read request has no response", uio_oe, 8'h00);
         tick;
+`ifdef PT3B
+        pt3b_negative_armed = $test$plusargs("PT3B_EXPECT_MISMATCH");
+        check8("readback high byte", uo_out, pt3b_negative_armed ? 8'ha4 : 8'ha5);
+        pt3b_negative_armed = 0;
+`else
         check8("readback high byte", uo_out, 8'ha5);
+`endif
         check8("readback low byte", uio_out, 8'h5a);
         check8("readback enables", uio_oe, 8'hff);
         tick;
@@ -121,10 +146,13 @@ module tb;
         // consumer rejects it before the RAM and never emits response validity.
         request(5, 8'd4);
         check8("out-of-image read has no response", uio_oe, 8'h00);
-        if (!uo_out[1]) begin
+        if (uo_out[1] !== 1'b1) begin
             $display("FAIL out-of-image read was not rejected");
             $fatal(1);
         end
+`ifdef PT3B
+        pt3b_observations = pt3b_observations + 1;
+`endif
         tick;
         check8("rejected read remains without response", uio_oe, 8'h00);
 
@@ -145,6 +173,11 @@ module tb;
         check8("readback after disable high byte", uo_out, 8'h12);
         check8("readback after disable low byte", uio_out, 8'hed);
 
+`ifdef PT3B
+        // 24 byte-level checks plus image-valid and bounds-rejection checks.
+        if (pt3b_observations != 26) $fatal(1, "PT3B missing memory observations");
+        $display("PT3B PASS memory observations=%0d", pt3b_observations);
+`endif
         $display("PASS p0.7 whole-word load/readback, validity, bounds, and gating");
         $finish;
     end

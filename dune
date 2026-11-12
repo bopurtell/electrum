@@ -29,6 +29,12 @@
   (alias asic/verif/program_memory/runtest)
   (alias asic/verif/bundle/pt3a)))
 
+; Opt-in emitted RTL replay with actual installed vendor functional models.
+(alias
+ (name pt3b)
+ (deps
+  (alias asic/verif/functional/pt3b)))
+
 (rule
  (alias verification-long)
  (action
