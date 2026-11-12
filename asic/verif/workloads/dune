@@ -1,0 +1,12 @@
+; Verification-only producers. No aliases launch builds or simulations.
+(executable
+ (name emit_event_response)
+ (modules emit_event_response)
+ (libraries core hardcaml hardcaml_asic jane_rope yojson protemu_core protemu_controller protemu_asic_rtl)
+ (preprocess (pps ppx_hardcaml ppx_jane)))
+
+(executable
+ (name reference_event_response)
+ (modules reference_event_response)
+ (libraries core yojson protemu_isa protemu_f_model)
+ (preprocess (pps ppx_jane)))

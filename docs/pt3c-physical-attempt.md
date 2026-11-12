@@ -1,5 +1,10 @@
 # PT.3c — first implemented loader candidate, 2026-11-12
 
+**Later follow-up:** [normal adoption closeout](adoption-release.md) records the
+successful separate Magic control/recheck, one opt-in timing-repair candidate
+(slow slack −3.0998 ns), and installed Workbench timing reinspection. The original
+run described below remains failed with its original findings and hashes.
+
 ## Status: functional replay passes; physical acceptance remains open
 
 One fresh actual-loader Exact Hardening run produced routed artifacts. The provider

@@ -1,0 +1,26 @@
+(rule
+ (alias runtest)
+ (deps test_env.py env.sh)
+ (action (run python3 -B %{dep:test_env.py})))
+
+(rule
+ (alias runtest)
+ (deps test_install_tools.py install-tools.py ../tools-source.lock.json)
+ (action (run python3 -B %{dep:test_install_tools.py})))
+
+(rule
+ (alias runtest)
+ (deps test_workbench.py workbench.py workbench_toolchain.py)
+ (action (run python3 -B %{dep:test_workbench.py})))
+
+(rule
+ (alias project-cli)
+ (deps check-project-cli.py)
+ (action (run python3 -B %{dep:check-project-cli.py}
+    %{exe:../asic/cli/project.exe} %{workspace_root})))
+
+(rule
+ (alias timing-profile)
+ (deps check-timing-profile.py)
+ (action (run python3 -B %{dep:check-timing-profile.py}
+   --project %{exe:../asic/cli/project.exe} --source-root %{workspace_root})))

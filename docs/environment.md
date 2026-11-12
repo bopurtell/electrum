@@ -1,9 +1,56 @@
 # Environment and entry points
 
+The current accepted normal workflow and exact installed evidence are in
+[ASIC/Workbench adoption closeout](adoption-release.md). Use `scripts/workbench.sh`
+for normal Workbench operation and `scripts/project.sh` for public named-flow
+commands. The legacy `asic/flow.sh` workflow below is a separate interface.
+
+## Normal captured compiler/library selection
+
+The normal installer uses [`tools-source.lock.json`](../tools-source.lock.json).
+Its default is the recorded ASIC commit `3335f47`; Workbench is captured from its
+working tree. To install explicitly qualified, uncommitted ASIC fixes, use this
+command **after the build/install allocation is granted**:
+
+```sh
+python3 -B scripts/install-tools.py \
+  --asic-source ../hardcaml_asic --asic-source-mode working-tree \
+  --workbench-source ../hardcaml_workbench
+# --development is an alias for --asic-source-mode working-tree.
+source scripts/env.sh
+```
+
+This builds/checks independent captured sources and installs a new local prefix;
+it does not mutate the shared opam switch. Previous generations and failed
+captures remain in `.dev/tools/generations/`. The selected machine installation is
+`.dev/tools/current.json`; its referenced `receipt.json`, checked installed-file
+inventory, and `sources.asic` record identify the accepted compiler/library input.
+For working-tree mode, `revision`/`base_revision` name checkout HEAD provenance,
+**not** a clean revision stamp. `dirty`, full `status`, `files`, and `tree_sha256`
+record the actual captured bytes. A receipt does not implement the CLI's separate
+source-artifact stamping contract.
+
+`asic/tinytapeout/asic-dependencies.lock` still records historical PT3a provenance
+(`b0b3384…`). That file and old private-provider receipts are preserved; neither
+silently selects the normal compiler/library. `tools-source.lock.json` records
+the normal compatibility base separately from an explicit development snapshot.
+
+Failed `env.sh` activation returns 2, removes its old generation paths/exports,
+and blocks ordinary project tool commands in that shell until activation succeeds.
+Workbench `status` reports `configure_required` if its published prefix differs
+from the current selected installation. Explicit simulation refresh checks the
+previous generation against its own sealed catalog/schema and file hashes, then
+requires the new catalog's real cases to qualify before publication.
+
+The older flow-layer/legacy entry points described below have independent
+historical locks and qualification boundaries. Shared-switch dependency changes
+require explicit `--install-deps`; `bootstrap.sh --tools-only` is the pinned local
+tools installation entry point.
+
 Run these commands from the repository root:
 
 ```sh
-./scripts/bootstrap.sh          # install missing environment layers, then verify
+./scripts/bootstrap.sh          # check OCaml dependencies and prepare flow collateral
 ./scripts/bootstrap.sh --check  # report the state of every layer; change nothing
 source scripts/env.sh           # activate tools in each new shell
 ./asic/flow.sh --help            # read the stages and overrides before implementation
@@ -15,14 +62,16 @@ source scripts/env.sh           # activate tools in each new shell
 name the steps when you want only part of it. The flow's stages, overrides,
 artifacts and qualification status are in **[flow.md](flow.md)**.
 
-For ordinary build and verification work, use the pinned switch and shared build
-lock. Run these sequentially with explicit `-j5`:
+For ordinary build and verification, activate the selected local prefix and use the
+shared build lock. Run sequentially; outer test concurrency is deliberately lower
+because individual tests can create child processes:
 
 ```sh
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @install @lint
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune runtest -j5
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @rtl
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 protemu -- doctor
+source scripts/env.sh
+flock ../.protemu-build.lock dune build -j10 @all
+flock ../.protemu-build.lock dune runtest -j2
+# Explicit additional HDL verification:
+flock ../.protemu-build.lock dune build -j2 @rtl
 ```
 
 `@rtl` runs emitted-RTL simulation/lint and generic synthesis, not physical
@@ -47,10 +96,9 @@ bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
 | 3. Shell | opam environment, `PDK_ROOT`, support-tools location and `_flow_tools/venv/bin` on `PATH` | one terminal | `source scripts/env.sh` |
 | 4. Build/execution | `_build/`, `_flow_results/{adopted,flow-*,archives}` | derived from source and each execution | Dune and `asic/flow.sh` |
 
-Layer 1 also resolves unpublished dependencies from sibling checkouts, currently
-`hardcaml_asic`. Its path pin can include uncommitted work in that checkout and
-requires rebuilding the installed package after dependency edits. Keep the
-recorded old ASIC API/revision; this layout migration is not an API upgrade.
+The legacy explicit `--install-deps` path can resolve unpublished dependencies
+through shared-switch path pins. Normal local ASIC/Workbench selection instead
+uses the captured receipt described above; it needs no shared ASIC path pin.
 
 Layers 1 and 2 are plain shell called directly by `scripts/bootstrap.sh`, so
 `--check` can report a missing OCaml environment without first compiling a CLI.
@@ -94,12 +142,18 @@ the previously active environment from `PATH` instead of stacking environments.
   runtime. Existing legacy ignored state is not implicitly moved or reprovisioned.
 
 The bootstrap does not install host packages, use `sudo`, edit shell startup files,
-build/emit/harden a design, run precheck, select a different target, or delete runs.
+emit/harden a design, run precheck, select a different target, or delete runs.
+Its explicit `--tools-only` path builds/tests/installs captured tool sources locally.
 `--legacy-project` is the explicit exception for staging/configuration. Tool-version
 and target changes require reviewed lock/declaration changes; `6x4` remains the
 selected allocation. Submission/export and CI publication remain explicit work.
 
 ## Qualification boundary
+
+The current normal installation is accepted in [the bounded adoption scope](adoption-release.md).
+That record includes installed simulation/UI acceptance, current Protemu physical
+attempts and typed negative timing reinspection. The following layout record is
+historical and does not describe the latest qualification:
 
 The 2026-11-11 layout migration checked script/root discovery, activation and
 stub-only flow orchestration, plus nonphysical build/bundle preservation. It did

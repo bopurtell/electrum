@@ -29,16 +29,15 @@ architecture plans.
 
 ## Build and verify
 
-Use the existing compatible switch and installed ASIC API. This source currently
-uses `Bundle.render ~simulation_build`; selecting the example's newer ASIC install
-is a separate dependency/API migration, not a prerequisite for these commands.
-
-Run commands sequentially, with the shared build lock and explicit `-j5`:
+Activate the checked local ASIC/Workbench installation in each shell. The project
+uses the current public ASIC API; the shared opam installation may still expose an
+older one. See [normal setup and acceptance](docs/adoption-release.md) for installing
+or refreshing the local tools without changing the shared switch.
 
 ```sh
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @install @lint
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune runtest -j5
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 @rtl
+source scripts/env.sh
+flock ../.protemu-build.lock dune build -j10 @all
+flock ../.protemu-build.lock dune runtest -j2
 ```
 
 `@rtl` runs emitted-RTL simulation/lint and generic synthesis using Icarus,
@@ -49,13 +48,31 @@ combines ordinary regression and emitted-RTL checks; `@verification-long` and
 Focused hardware verification is colocated, for example:
 
 ```sh
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune runtest -j5 ip/host_link/verif
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune runtest -j5 ip/emulator_core/verif
+flock ../.protemu-build.lock dune runtest -j2 ip/host_link/verif
+flock ../.protemu-build.lock dune runtest -j2 ip/emulator_core/verif
 ```
 
 All sessions share a maximum20-job budget. The default `asic/flow.sh` can launch a real
 physical flow; see [flow.md](docs/flow.md) before using it. It is not a generic
 regression shortcut.
+
+## Workbench and ASIC adoption
+
+```sh
+bash scripts/workbench.sh status
+bash scripts/workbench.sh daemon
+# In a second terminal:
+bash scripts/workbench.sh client
+```
+
+The normal project exposes named `flops` and `stock_sram` flows, source/resource
+preparation, four serial-system cases and three event-response cases in Testing,
+and actual waveform artifacts. The opt-in `stock_sram/timing_repair` profile changes
+only post-global-route timing repair. It does not change hardware or the cycle
+contract. **Protemu still misses 48 MHz slow-corner setup**; Workbench accurately
+inspects that negative result. Tooling acceptance is separate from design acceptance.
+
+[Current commands, nine-part status and retained evidence](docs/adoption-release.md).
 
 ## Current migration status
 
@@ -71,7 +88,8 @@ protocol API remains only in `software/compatibility/host_link_wire/`. A private
 non-installed hardware adapter preserves frozen HL4a; new designs cannot depend on
 it through the installed package. AM5 grouped
 interfaces and wider architecture/verification acceptance remain open. Exact SRAM
-adoption and the newer ASIC API migration belong to PT.3, not this layout change.
+and current ASIC/Workbench adoption are now verified in bounded consumer scope;
+Protemu physical timing closure and final configuration selection remain open.
 
 Historical evidence under `archive/legacy/` retains its original bytes/identities;
 [archive/INDEX.md](archive/INDEX.md) maps former paths. New execution results use

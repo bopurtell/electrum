@@ -1,0 +1,17 @@
+(rule
+ (alias runtest)
+ (deps test_refresh.py test_provider.py prepare.py pt3b_provider.py fs2_wire.py
+   ../../asic/verif/functional/check_functional.py)
+ (action (run python3 -B %{dep:test_refresh.py})))
+
+(rule
+ (alias runtest)
+ (deps test_event_adapter.py test_provider.py event_adapter.py pt3b_provider.py fs2_wire.py
+   ../../asic/verif/functional/check_functional.py)
+ (action (run python3 -B %{dep:test_event_adapter.py})))
+
+(rule
+ (alias runtest)
+ (deps test_provider.py pt3b_provider.py fs2_wire.py
+   ../../asic/verif/functional/check_functional.py)
+ (action (run python3 -B %{dep:test_provider.py})))

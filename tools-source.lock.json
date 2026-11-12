@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "scope": "normal-project-local-tools",
+  "asic": {
+    "repository": "https://github.com/LeEmperor/hardcaml_asic.git",
+    "default_source_mode": "committed",
+    "pinned_revision": "3335f47cf8ac0ae065aa161705e57305389ef396",
+    "compatibility_base_revision": "3335f47cf8ac0ae065aa161705e57305389ef396",
+    "development_selection": "explicit working-tree capture; receipt tree_sha256 and files identify compiled inputs"
+  },
+  "workbench": {
+    "source_mode": "working-tree",
+    "identity": "receipt records actual checkout HEAD, dirty status, complete captured file inventory and tree_sha256"
+  },
+  "historical_provenance": {
+    "pt3a_lock": "asic/tinytapeout/asic-dependencies.lock",
+    "role": "historical PT3a provider/evidence provenance; not the normal compiler/library selector"
+  }
+}

@@ -1,5 +1,9 @@
 # PT.3a — public ASIC adoption and explicit program-memory variants
 
+The [normal adoption workflow](adoption-release.md) now replaces the historical
+PT.3a-only wrapper for everyday use. This record and its private-prefix identities
+remain the original bounded acceptance evidence.
+
 ## Accepted bounded scope
 
 Implemented against Protemu base `c680ed3` and deliberately selected ASIC revision

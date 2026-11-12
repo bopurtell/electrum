@@ -112,6 +112,9 @@ let input_paths kind =
   ; "hardcaml_protemu.opam"
   ; "asic/cli/dune"
   ; "asic/cli/asic_bundle.ml"
+  ; "asic/cli/project.ml"
+  ; "asic/project/flow_catalog.ml"
+  ; "asic/project/fixed_loader_variant.ml"
   ; "asic/project/dune"
   ; "asic/project/chip_project.ml"
   ; "asic/rtl/dune"
@@ -259,7 +262,7 @@ let project
       , loader_pinout )
     | _ -> failwith "kind must be observable, memory, or loader"
   in
-  Project.create
+  let create () = Project.create
     ~source_inputs:(input_paths kind)
     ~name
     ~metadata:{ title; author = "Bohdan Purtell"; description }
@@ -287,6 +290,13 @@ let project
               }))
          ())
     ~pinout
-    ~policy
-    ()
+     ~policy
+     ()
+  in
+  if String.equal kind "loader" then (
+    let%bind variant = Fixed_loader_variant.create () in
+    Project.of_variant ~variant ~create:(fun selected ->
+      let%bind () = Fixed_loader_variant.validate selected in
+      create ()))
+  else create ()
 ;;

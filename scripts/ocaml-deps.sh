@@ -133,6 +133,18 @@ find_missing() {
     done
 }
 
+# The selected local release supplies ASIC without a shared opam pin/install.
+if [[ -f "$repo_root/.dev/tools/current.json" ]]; then
+    python3 "$repo_root/scripts/install-tools.py" --activation >/dev/null || \
+        die "$EX_PREREQ" "local tools selection failed validation"
+    local_wanted=()
+    for pkg in "${wanted[@]}"; do
+        [[ $pkg == hardcaml_asic ]] || local_wanted+=("$pkg")
+    done
+    wanted=("${local_wanted[@]}")
+    info "hardcaml_asic supplied by the verified local tools prefix"
+fi
+
 find_missing
 
 # A missing package that no opam repository carries cannot be installed by name, and

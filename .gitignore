@@ -39,6 +39,9 @@ protemu-artifacts/
 /.dev/pt3c-loader-metadata-*/
 
 # release staging (build products; regenerated per release)
+/.dev/tools/
+/.dev/workbench/
+/.workbench/
 MANIFEST.txt
 SHA256SUMS
 release-group/*

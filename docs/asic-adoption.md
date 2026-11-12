@@ -1,5 +1,9 @@
 # ASIC bundle adoption — PT.3a
 
+For the current normal installation, named project flows, Workbench Testing and
+resource/timing inspection, use [the adoption release guide](adoption-release.md).
+The commands below retain the original PT.3a fixture/private-prefix workflow.
+
 PT.3a public-API and explicit Flops/Exact adoption is verified, and
 [PT.3b real-system vendor-functional regression](pt3b-verification.md) passes. See
 [PT.3a evidence and remaining gates](pt3a-adoption.md). Earlier P0 physical evidence

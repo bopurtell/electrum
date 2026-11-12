@@ -1,7 +1,14 @@
 (executable
  (name asic_bundle)
+ (modules asic_bundle)
  (libraries core hardcaml_asic protemu_chip_project)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint
   (pps ppx_js_style)))
+
+(executable
+ (name project)
+ (modules project)
+ (libraries core hardcaml_asic hardcaml_asic.execution protemu_chip_project yojson unix)
+ (preprocess (pps ppx_jane)))
