@@ -18,7 +18,11 @@ class Receipt(unittest.TestCase):
     def test_pinned_default_and_explicit_development_modes_are_distinct(self):
         args = tools.parse_args([])
         self.assertEqual(args.asic_source_mode, 'committed')
-        self.assertEqual(args.asic_revision, '3335f47cf8ac0ae065aa161705e57305389ef396')
+        self.assertEqual(args.asic_revision, tools.source_policy()['asic']['pinned_revision'])
+        policy = tools.source_policy()
+        policy['asic']['pinned_revision'] = 'a' * 40
+        with patch.object(tools, 'source_policy', return_value=policy):
+            self.assertEqual(tools.parse_args([]).asic_revision, 'a' * 40)
         for option in (['--development'], ['--asic-source-mode', 'working-tree']):
             args = tools.parse_args(option)
             self.assertEqual(args.asic_source_mode, 'working-tree')

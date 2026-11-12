@@ -34,6 +34,12 @@ uses the current public ASIC API; the shared opam installation may still expose 
 older one. See [normal setup and acceptance](docs/adoption-release.md) for installing
 or refreshing the local tools without changing the shared switch.
 
+Normal fresh installs select ASIC commit `4b6bb60` from
+[`tools-source.lock.json`](tools-source.lock.json), including the committed
+timing-reader and physical-runtime fixes. Workbench is captured from its working
+tree. Explicit ASIC development capture remains available via `--development`;
+changing the pin does not refresh an existing local installation or its receipts.
+
 ```sh
 source scripts/env.sh
 flock ../.protemu-build.lock dune build -j10 @all

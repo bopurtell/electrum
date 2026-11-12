@@ -4,7 +4,7 @@
   "asic": {
     "repository": "https://github.com/LeEmperor/hardcaml_asic.git",
     "default_source_mode": "committed",
-    "pinned_revision": "3335f47cf8ac0ae065aa161705e57305389ef396",
+    "pinned_revision": "4b6bb60562c0133db9e3ccc6b183736e5658a3f0",
     "compatibility_base_revision": "3335f47cf8ac0ae065aa161705e57305389ef396",
     "development_selection": "explicit working-tree capture; receipt tree_sha256 and files identify compiled inputs"
   },

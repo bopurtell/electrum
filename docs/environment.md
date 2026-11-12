@@ -8,17 +8,22 @@ commands. The legacy `asic/flow.sh` workflow below is a separate interface.
 ## Normal captured compiler/library selection
 
 The normal installer uses [`tools-source.lock.json`](../tools-source.lock.json).
-Its default is the recorded ASIC commit `3335f47`; Workbench is captured from its
-working tree. To install explicitly qualified, uncommitted ASIC fixes, use this
-command **after the build/install allocation is granted**:
+Its default is ASIC commit `4b6bb60562c0133db9e3ccc6b183736e5658a3f0`,
+which includes the committed timing-reader and physical-runtime fixes; Workbench
+is captured from its working tree. For a normal installation, use this command
+**after the build/install allocation is granted**:
 
 ```sh
 python3 -B scripts/install-tools.py \
-  --asic-source ../hardcaml_asic --asic-source-mode working-tree \
+  --asic-source ../hardcaml_asic \
   --workbench-source ../hardcaml_workbench
-# --development is an alias for --asic-source-mode working-tree.
 source scripts/env.sh
 ```
+
+For subsequent uncommitted ASIC development, explicitly add `--asic-source-mode
+working-tree` (or its alias `--development`). Normal `bootstrap.sh --tools-only`
+also selects the committed pin above. The compatibility base remains `3335f47`;
+it is not the default source selector.
 
 This builds/checks independent captured sources and installs a new local prefix;
 it does not mutate the shared opam switch. Previous generations and failed

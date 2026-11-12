@@ -48,12 +48,13 @@ source and choices; recompute previews after edits.
 
 Required base compiler/dependencies remain in switch `5.2.0+ox`. The local installer
 checks/builds independent source captures and installs a new private prefix without
-changing shared opam packages. Current fixes are uncommitted working-tree changes,
-so use explicit development capture to include them:
+changing shared opam packages. ASIC's timing-reader and physical-runtime fixes are
+committed in `4b6bb60562c0133db9e3ccc6b183736e5658a3f0`, now the normal lockfile
+pin. Workbench remains an explicit working-tree capture:
 
 ```sh
 python3 -B scripts/install-tools.py \
-  --asic-source ../hardcaml_asic --asic-source-mode working-tree \
+  --asic-source ../hardcaml_asic \
   --workbench-source ../hardcaml_workbench
 source scripts/env.sh
 bash scripts/workbench.sh configure --toolchain-root /absolute/verified/toolchain
@@ -68,11 +69,14 @@ or silently reprovisioned. Status distinguishes metadata readiness from actual
 physical preflight/execution. Physical runs use the supported tool6/Docker CPU6/STA1
 profile; builds and simulations are not run concurrently with that EDA allocation.
 
-`bootstrap.sh --tools-only` uses the committed compatibility base from
-`tools-source.lock.json` (currently `3335f47`), **not these uncommitted reader fixes**.
-Use the explicit working-tree command above until a suitable release revision is
-recorded. Base HEADs alone do not reproduce dirty source captures: receipts retain
-the full bytes, hashes and dirty attribution. No P6 compiled-source stamp is claimed.
+`bootstrap.sh --tools-only` uses the same committed `pinned_revision` from
+`tools-source.lock.json` (`4b6bb60`); `compatibility_base_revision` remains `3335f47`
+as the compatibility baseline, not the source selector. For subsequent uncommitted
+ASIC development, explicitly add `--asic-source-mode working-tree` (or
+`--development`). Base HEADs alone do not reproduce dirty source captures: receipts
+retain the full bytes, hashes and dirty attribution. No P6 compiled-source stamp is claimed.
+Updating the default pin does not refresh the installed generation or requalify it;
+the accepted snapshot and source hashes below still identify the original captures.
 The historical `asic/tinytapeout/asic-dependencies.lock` and PT.3a private prefix
 remain historical evidence, not the selector for the normal installed compiler.
 
@@ -238,6 +242,8 @@ timing-inspection paths. All owned daemons/clients/children stopped; no EDA rema
 
 This does not qualify every future backlog item, multi-macro profile, full signoff,
 P6 compiled-source stamping, platform portability or unsupported linked exceptions.
-The sources remain uncommitted; publication/release revision selection is the
-owner's explicit action. No Git staging, commits, pushes or authorship changes were
-performed during this work.
+The owner subsequently committed/pushed ASIC as `4b6bb60` and Protemu as `edbcee9`;
+Workbench still has uncommitted tooling changes. The normal ASIC selector now uses
+that committed revision; the retained acceptance evidence above remains tied to
+its original working-tree captures. No Git staging, commits, pushes or authorship
+changes were performed by the agent during the closeout or this selector update.
