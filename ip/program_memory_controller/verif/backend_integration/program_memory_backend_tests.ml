@@ -9,39 +9,36 @@ open! Protocol_core_testbench
 let build = Program_memory_backend_design.build
 
 let check_resource build ~mode =
-  let resource = List.hd_exn (Build.resources build) in
-  let actual = Sexp.to_string_hum ([%sexp_of: Resource_record.t] resource) in
-  List.iter
-    [ "program"
-    ; "single_port_ram"
-    ; "(width 16)"
-    ; "(depth 256)"
-    ; "(read_latency 1)"
-    ; "(requirement Flops)"
-    ; "(implementation Flops)"
-    ; "(reason Explicit_flops)"
-    ]
-    ~f:(fun expected ->
-      if not (String.is_substring actual ~substring:expected)
-      then
-        raise_s
-          [%message "resource record missing field" (expected : string) (actual : string)]);
-  let elaboration, source =
+  let resources = Elaborated_project.resources build in
+  assert (List.length resources = 1);
+  let resource = List.hd_exn resources in
+  assert (String.equal (Resource.Id.to_string resource.id) "program");
+  assert (String.equal resource.request.kind "single_port_ram");
+  assert (
+    Sexp.equal
+      resource.request.contract
+      (Sexp.of_string
+         "((width 16) (depth 256) (read_latency 1) (port 1rw) (disabled_output hold) \
+          (write_output unspecified))"));
+  assert (Resource_policy.Requirement.equal resource.requirement Flops);
+  assert (Resource_policy.Applied.equal resource.policy Default);
+  assert (Resource.Selection.Implementation.equal resource.selection.implementation Flops);
+  assert (Resource.Selection.Reason.equal resource.selection.reason Explicit_flops);
+  let elaboration, sources =
     match mode with
-    | Elaboration_mode.Simulation -> "Behavioral_model", "Generated_behavioral_model"
-    | Implementation -> "Selected_implementation", "Generated_synthesis_rtl"
+    | Elaboration.Mode.Simulation ->
+      Resource.Record.Elaborated_as.Behavioral_model,
+      [ Resource.Record.Source.Generated_behavioral_model ]
+    | Implementation -> Selected_implementation, [ Generated_synthesis_rtl ]
   in
-  List.iter [ elaboration; source ] ~f:(fun expected ->
-    if not (String.is_substring actual ~substring:expected)
-    then
-      raise_s
-        [%message "resource record has wrong mode" (expected : string) (actual : string)])
+  assert (Resource.Record.Elaborated_as.equal resource.elaborated_as elaboration);
+  assert ([%equal: Resource.Record.Source.t list] resource.sources sources)
 ;;
 
 let run mode =
   let build = build mode in
   check_resource build ~mode;
-  let t = create ~circuit:(Build.circuit build) () in
+  let t = create ~circuit:(Elaborated_project.circuit build) () in
   let words = [ 0x00ff; 0xa55a; 0xffff ] in
   complete_load t words;
   step t (input ~readback:(1, false, 0) ());
@@ -78,7 +75,7 @@ let run mode =
 let run_acceptance mode =
   let build = build mode in
   check_resource build ~mode;
-  let circuit = Build.circuit build in
+  let circuit = Elaborated_project.circuit build in
   let create poison = create ~poison ~circuit () in
   Protocol_core_unit_tests.run_all create;
   match Protocol_core_property_tests.quickcheck ~circuit ~here:[%here] () with
@@ -87,17 +84,17 @@ let run_acceptance mode =
 ;;
 
 let%test_unit "behavioral RAM elaboration serves the protemu consumer" =
-  run Elaboration_mode.Simulation
+  run Elaboration.Mode.Simulation
 ;;
 
 let%test_unit "explicit flop RAM elaboration serves the protemu consumer" =
-  run Elaboration_mode.Implementation
+  run Elaboration.Mode.Implementation
 ;;
 
 let%test_unit "behavioral RAM reruns P3.1a directed and generated acceptance" =
-  run_acceptance Elaboration_mode.Simulation
+  run_acceptance Elaboration.Mode.Simulation
 ;;
 
 let%test_unit "explicit flop RAM reruns P3.1a directed and generated acceptance" =
-  run_acceptance Elaboration_mode.Implementation
+  run_acceptance Elaboration.Mode.Implementation
 ;;

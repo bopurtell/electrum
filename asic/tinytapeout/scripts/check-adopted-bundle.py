@@ -4,6 +4,7 @@
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import subprocess
 import tempfile
@@ -26,8 +27,20 @@ def lock_values(path):
     )
 
 
-def check_bundle(root, bundle, kind):
+def tree(root):
+    return {str(path.relative_to(root)): path.read_bytes()
+            for path in root.rglob("*") if path.is_file()}
+
+
+def check_bundle(root, bundle, kind, selection="flops"):
     manifest = json.loads((bundle / "manifest.json").read_text())
+    payload = {key: value for key, value in manifest.items() if key != "identity"}
+    assert hashlib.sha256(json.dumps(
+        payload, separators=(",", ":"), ensure_ascii=False
+    ).encode()).hexdigest() == manifest["identity"]
+    files = tree(bundle)
+    assert {item["path"] for item in manifest["files"]} == set(files) - {"manifest.json"}
+    assert len(manifest["files"]) == len(files) - 1
     config = json.loads((bundle / "src/config.json").read_text())
     lock = lock_values(root / "asic/tinytapeout/asic-dependencies.lock")
     assert manifest["source_revision"] == subprocess.check_output(
@@ -36,12 +49,14 @@ def check_bundle(root, bundle, kind):
     suffix = {"observable": "", "memory": "_memory", "loader": "_loader"}[kind]
     assert manifest["top_module"] == "tt_um_leemperor_hardcaml_protemu" + suffix
     assert manifest["project"] == "protemu_" + kind
-    assert manifest["requested_tools"] == {
+    assert manifest["operation"] == ("Synthesis" if selection == "exact" else "Hardening")
+    expected_tools = {
         "support_tools_revision": lock["support_tools_revision"],
         "pdk_revision": lock["pdk_revision"],
         "librelane": lock["librelane_version"],
         "python": lock["python"],
     }
+    assert {key: manifest["requested_tools"][key] for key in expected_tools} == expected_tools
     assert manifest["synthesis_sources"] == [
         "src/tt_um_leemperor_hardcaml_protemu" + suffix + ".v"
     ]
@@ -118,7 +133,7 @@ def check_bundle(root, bundle, kind):
             "id": "program",
             "request": request,
             "requirement": "Flops",
-            "policy": "Default",
+            "policy": "(Rule (Instance program))",
             "selection": "((implementation Flops) (reason Explicit_flops))",
             "elaborated_as": "Selected_implementation",
             "source_roles": ["Generated_synthesis_rtl"],
@@ -126,16 +141,69 @@ def check_bundle(root, bundle, kind):
         simulation_expected = dict(expected)
         simulation_expected["elaborated_as"] = "Behavioral_model"
         simulation_expected["source_roles"] = ["Generated_behavioral_model"]
-        assert manifest["resources"] == [expected]
-        assert manifest["simulation_resources"] == [simulation_expected]
+        if selection == "exact":
+            macro = "RM_IHPSG13_1P_256x16_c2_bm_bist"
+            for record in (expected, simulation_expected):
+                record["requirement"] = "Exact"
+                record["selection"] = (
+                    f"((implementation (Macro {macro}))\n"
+                    " (reason (Exact_mapping (technology ihp-sg13cmos5l))))"
+                )
+            # Typed role/reference equality is checked by resource_contract_tests.
+            expected["source_roles"] = manifest["resources"][0]["source_roles"]
+            assert len(expected["source_roles"]) == 11
+            assert len(set(expected["source_roles"])) == 11
+            contract = manifest["macro_contract"]
+            assert contract["schema_version"] == 1
+            assert contract["execution"] == "synthesis_only"
+            assert "physical_plan" not in contract
+            assert not any(path.startswith("physical/") for path in files)
+            assert len(contract["macros"]) == 1
+            actual = contract["macros"][0]
+            assert (actual["resource"], actual["module"], actual["instance"]) == (
+                "program", macro, "hc_resource_7_program"
+            )
+            assert len(contract["blackbox_sources"]) == 1
+            assert config["EXTRA_VERILOG_MODELS"] == [
+                "dir::../" + path for path in contract["blackbox_sources"]]
+            assert all(path in files for path in contract["blackbox_sources"])
+            assert not set(contract["blackbox_sources"]) & set(manifest["simulation_sources"])
+            assert contract["fast_temperature_difference"] == "standard_cells_m40C_macro_m55C"
+            assert contract["implementation_simulation"] == {
+                "defines": ["FUNCTIONAL"],
+                "models": [
+                    f"pdk_dir::libs.ref/sg13cmos5l_sram/verilog/{macro}.v",
+                    "pdk_dir::libs.ref/sg13cmos5l_sram/verilog/RM_IHPSG13_1P_core_behavioral_bm_bist.v",
+                ],
+            }
+        else:
+            assert "macro_contract" not in manifest
+        # Formatting is not the resource contract; compare normalized S-expressions.
+        def normalized(record):
+            return {key: " ".join(value.split()) if isinstance(value, str) else value
+                    for key, value in record.items()}
+        assert list(map(normalized, manifest["resources"])) == [normalized(expected)]
+        assert list(map(normalized, manifest["simulation_resources"])) == [normalized(simulation_expected)]
         synthesis_rtl = (bundle / manifest["synthesis_sources"][0]).read_text()
         simulation_rtl = (bundle / manifest["simulation_sources"][0]).read_text()
         assert "initial begin" not in synthesis_rtl
         assert "initial begin" in simulation_rtl
+        assert synthesis_rtl != simulation_rtl
+        if selection == "exact":
+            import re
+            assert len(re.findall(r"\b" + macro + r"\s+hc_resource_7_program\s*\(", synthesis_rtl)) == 1
+            assert macro not in simulation_rtl
+        else:
+            assert "RM_IHPSG13_1P_256x16_c2_bm_bist" not in synthesis_rtl
     for item in manifest["source_inputs"]:
         source = root / item["path"]
         copied = bundle / "inputs" / item["path"]
         assert copied.read_bytes() == source.read_bytes()
+        assert hashlib.sha256(copied.read_bytes()).hexdigest() == item["sha256"]
+        assert item["git_status"] == subprocess.check_output(
+            ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", item["path"]],
+            cwd=root, text=True,
+        ).rstrip("\n")
     for item in manifest["files"]:
         path = bundle / item["path"]
         assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
@@ -145,22 +213,29 @@ def check_bundle(root, bundle, kind):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--metadata-only", action="store_true")
+    parser.add_argument("--selection", choices=("flops", "exact"), default="flops")
+    parser.add_argument("--emitter", type=pathlib.Path)
     parser.add_argument(
         "--kind", choices=("observable", "memory", "loader"), default="observable"
     )
     args = parser.parse_args()
+    if args.selection == "exact" and not args.metadata_only:
+        parser.error("Exact source/resource checks require --metadata-only; vendor-model replay is PT.3b")
     root = pathlib.Path(__file__).resolve().parents[3]
-    emitter = root / "_build/default/asic/cli/asic_bundle.exe"
-    run(str(emitter), "--check-conflicts", args.kind, cwd=root)
+    build_dir = pathlib.Path(os.environ.get("DUNE_BUILD_DIR", str(root / "_build")))
+    emitter = (args.emitter or build_dir / "default/asic/cli/asic_bundle.exe").resolve()
+    selection_args = ["--selection", args.selection]
+    run(str(emitter), *selection_args, "--check-conflicts", args.kind, cwd=root)
     with tempfile.TemporaryDirectory(prefix="protemu-adopted-") as scratch:
         scratch = pathlib.Path(scratch)
         first, second = scratch / "first", scratch / "second"
-        run(str(emitter), args.kind, str(first), str(root), cwd=root)
-        run(str(emitter), args.kind, str(second), str(root), cwd=root)
-        assert check_bundle(root, first, args.kind) == check_bundle(root, second, args.kind)
+        run(str(emitter), *selection_args, args.kind, str(first), str(root), cwd=root)
+        run(str(emitter), *selection_args, args.kind, str(second), str(root), cwd=root)
+        assert check_bundle(root, first, args.kind, args.selection) == check_bundle(root, second, args.kind, args.selection)
         assert (first / "manifest.json").read_bytes() == (
             second / "manifest.json"
         ).read_bytes()
+        assert tree(first) == tree(second)
         print("PASS repeatable bundle, manifest, metadata, and conflict checks")
         if args.metadata_only:
             return

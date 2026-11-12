@@ -1,4 +1,8 @@
-# P0.6/P0.7 ASIC bundle adoption
+# ASIC bundle adoption — PT.3a
+
+PT.3a public-API and explicit Flops/Exact adoption is verified. See
+[PT.3a evidence and remaining gates](pt3a-adoption.md). Earlier P0 physical evidence
+below remains historical; it does not qualify the new macro-backed system.
 
 [`asic/project/chip_project.ml`](../asic/project/chip_project.ml) declares the
 selectable `observable`, `memory` and `loader` Tiny Tapeout designs and their
@@ -16,14 +20,18 @@ of the legacy P0 path. The adopted path consumes generated bundle equivalents.
 ## Dependency and emission
 
 [`asic/tinytapeout/asic-dependencies.lock`](../asic/tinytapeout/asic-dependencies.lock)
-records ASIC revision `a257424c3ae31fd6ee10cea052cc7577f15d2677` and matching
-collateral revisions. Keep the existing `Bundle.render ~simulation_build` API;
-the layout change does not upgrade the dependency or adopt SRAM.
+records ASIC revision `b0b3384acbe22c8a30264cbdf0c19008c58bf3c5` and matching
+collateral revisions. Emission uses `Project.emit_bundle`, with source inputs
+attached through `Project.create`. Memory and loader support explicit `program`
+instance policies for Flops and Exact SRAM, without fallback.
 
-Use the recorded library revision installed in switch `5.2.0+ox`, or an isolated
-prefix visible through `OCAMLPATH`, as described in the
+Use the recorded library revision in an isolated prefix, as described in the
 [`hardcaml_asic` consumer guide](../../hardcaml_asic/docs/guides/consumer-installation.md).
-`scripts/bootstrap.sh` prepares the environment;
+The ordinary shared switch was observed to contain an older ASIC API; the verified
+local installation is selected explicitly with `scripts/with-private-asic.sh`.
+Its generated prefix and receipt live under `.dev/pt3a-provider/`. This wrapper
+verifies installed hashes and does not perform installation. `scripts/bootstrap.sh`
+prepares the general environment;
 `asic/tinytapeout/toolchain.lock` records flow-tool provisioning. The emitted
 manifest captures requested revisions, and adopted preflight checks the matching
 consumer locks. Review lock changes explicitly when upgrading.
@@ -31,20 +39,20 @@ consumer locks. Review lock changes explicitly when upgrading.
 From the repository root, run these sequentially under the shared build lock:
 
 ```sh
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune build -j1 asic/cli/asic_bundle.exe
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
   observable "$PWD/_flow_results/observable-bundle" "$PWD"
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
-  memory "$PWD/_flow_results/memory-bundle" "$PWD"
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune exec -j5 asic/cli/asic_bundle.exe -- \
-  loader "$PWD/_flow_results/loader-bundle" "$PWD"
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+  memory "$PWD/_flow_results/memory-bundle" "$PWD" --selection flops
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+  loader "$PWD/_flow_results/loader-exact-bundle" "$PWD" --selection exact
 ```
 
 Each output directory must be new or empty. The current inventory captures
 **55 canonical inputs per package**: ASIC CLI/project/RTL, owner-library build
 files/source, shared ISA/protocol, package metadata and dependency locks. It
 contains no software compatibility hardware facade or reference model.
-`Bundle.render` receives the repository source root, and the manifest copies and
+`Project.emit_bundle` receives the repository source root, and the manifest copies and
 hashes these files along with recording source revision, generated files, target,
 flow settings and separate synthesis/simulation source sets. Source-path/hash
 changes legitimately change bundle identity without changing emitted hardware.
@@ -55,7 +63,9 @@ are the adopted flow inputs. Project names, emitted module names and package ABI
 are preserved independently of source-directory spelling.
 
 The declaration fixes TT `6x4` / CMOS5L, the 48 MHz primary clock, current pins,
-minimum/maximum I/O delays and default Flops policy. Protected clock, source-list
+minimum/maximum I/O delays and explicit instance Flops policy by default. Exact
+defaults to Synthesis; Exact Hardening rejects until physical intent is reviewed.
+Protected clock, source-list
 and target settings reject conflicting raw overrides. The provisional P0 I/O
 assumptions are 0 ns minimum input delay, 1 ns maximum input arrival and 2 ns
 maximum output loading delay. Review board/host timing before claiming physical
@@ -66,25 +76,24 @@ closure; the layout migration did not requalify those assumptions.
 Metadata/declaration-only checking from the repository root:
 
 ```sh
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
-python3 asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
-python3 asic/tinytapeout/scripts/check-adopted-bundle.py --kind memory --metadata-only
-python3 asic/tinytapeout/scripts/check-adopted-bundle.py --kind loader --metadata-only
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune build -j1 @pt3a
+flock ../.protemu-build.lock bash scripts/with-private-asic.sh python3 -B \
+  asic/tinytapeout/scripts/check-adopted-bundle.py --kind loader --selection exact --metadata-only
 ```
 
-These checks emit twice, compare identities/manifest bytes, verify source copies
+These checks emit twice, compare complete file-tree bytes and identities, verify source copies
 and hashes, metadata/configuration/SDC and conflict rejection for
 `CLOCK_PERIOD`, `VERILOG_FILES` and `DIE_AREA`.
 
-Omit `--metadata-only` to additionally run applicable wrapper/serial-peer traces,
+For Flops, omit `--metadata-only` to additionally run applicable wrapper/serial-peer traces,
 Verilator lint and generic Yosys synthesis in the pinned LibreLane Docker image.
 The full check requires an accessible Docker daemon and cached image
 `ghcr.io/librelane/librelane:3.1.0.dev3`; it never pulls the image itself. It needs
 neither runtime access to an ASIC source checkout nor host HDL executables. This
 is emitted-RTL checking, **not P&R or physical qualification**.
 
-Memory mode also verifies the exact RAM identity, 256x16 shape, explicit Flops
-selection, behavioral/implementation roles and absence of initialization in
+Memory mode also verifies the exact RAM identity, 256x16 shape, explicit Flops/Exact
+selection and behavioral/implementation roles. Flops checks absence of initialization in
 implementation RTL. Loader mode retains that contract and tests the independent
 serial peer against the package RTL roles. The production wrapper check is
 narrower than the full consumer contract; see

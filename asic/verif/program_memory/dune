@@ -1,0 +1,4 @@
+(test
+ (name resource_contract_tests)
+ (libraries core hardcaml hardcaml_asic protemu_asic_rtl protemu_chip_project)
+ (preprocess (pps ppx_jane ppx_hardcaml)))

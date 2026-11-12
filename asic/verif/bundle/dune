@@ -1,0 +1,32 @@
+; This focused alias emits bundles but never invokes HDL/physical tools.
+(rule
+ (alias pt3a)
+ (deps check_bundle.py test_check_bundle.py)
+ (action (run python3 -B %{dep:test_check_bundle.py})))
+
+(rule
+ (alias pt3a)
+ (deps
+  check_bundle.py
+  ; The checker reads real-checkout provenance and the compatibility script, which
+  ; is outside tinytapeout's Dune dirs. Re-observe them on every explicit gate.
+  (universe)
+  ../../../dune-project
+  ../../../hardcaml_protemu.opam
+  (source_tree ../../cli)
+  (source_tree ../../project)
+  (source_tree ../../rtl)
+  (source_tree ../../../spec/isa)
+  (source_tree ../../../ip/host_link/protocol)
+  (source_tree ../../../ip/mechanisms/rtl)
+  (source_tree ../../../ip/program_memory_controller/rtl)
+  (source_tree ../../../ip/emulator_core/rtl)
+  (source_tree ../../../ip/host_link/rtl)
+  (source_tree ../../../ip/protemu_system/rtl)
+  ../../tinytapeout/asic-dependencies.lock
+  ../../tinytapeout/toolchain.lock)
+ (action
+  (run python3 -B %{dep:check_bundle.py}
+   --cli %{exe:../../cli/asic_bundle.exe}
+   --source-root %{workspace_root}
+   --evidence-dir %{env:PT3A_EVIDENCE_DIR=})))

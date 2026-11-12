@@ -13,7 +13,7 @@ let create context (i : _ I.t) =
   let core_reset = Tt_cmos5l.synchronised_reset ~clock:i.clk ~rst_n:i.rst_n () in
   let core =
     P0_observable.create
-      (Elaboration_context.scope context)
+      (Elaboration.Context.scope context)
       { P0_observable.I.clock_i = i.clk
       ; reset_i = core_reset
       ; enable_i = i.ena

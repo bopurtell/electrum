@@ -27,7 +27,7 @@ let create context (i : _ I.t) =
   let memory_read_data = wire Program_memory_controller.Config.program_width in
   let core =
     Program_memory_controller.create
-      (Elaboration_context.scope context)
+      (Elaboration.Context.scope context)
       { Program_memory_controller.I.clock_i = i.clk
       ; reset_i = core_reset
       ; en_i = i.ena

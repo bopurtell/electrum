@@ -10,11 +10,11 @@ open! Hardcaml_asic
 let () =
   let mode, output =
     match Array.to_list (Sys.get_argv ()) with
-    | [ _; "simulation"; output ] -> Elaboration_mode.Simulation, output
+    | [ _; "simulation"; output ] -> Elaboration.Mode.Simulation, output
     | [ _; "implementation"; output ] -> Implementation, output
     | _ -> failwith "usage: emit_program_memory_backend (simulation|implementation) FILE"
   in
-  let circuit = Program_memory_backend_design.build mode |> Build.circuit in
+  let circuit = Program_memory_backend_design.build mode |> Elaborated_project.circuit in
   let rtl = Rtl.create Verilog [ circuit ] |> Rtl.full_hierarchy |> Rope.to_string in
   Out_channel.write_all output ~data:rtl
 ;;

@@ -14,7 +14,7 @@ let create context (i : _ I.t) =
   let memory_read_data = wire Program_memory_controller.Config.program_width in
   let system =
     Protemu_top.create
-      (Elaboration_context.scope context)
+      (Elaboration.Context.scope context)
       { Protemu_top.I.clock_i = i.clk
       ; reset_i = core_reset
       ; enable_i = i.ena

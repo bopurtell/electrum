@@ -20,7 +20,14 @@
  (name verification)
  (deps
   (alias verification-required)
-  (alias_rec rtl)))
+   (alias_rec rtl)))
+
+; Bounded consumer adoption: no HDL tools, PDK access or implementation flow.
+(alias
+ (name pt3a)
+ (deps
+  (alias asic/verif/program_memory/runtest)
+  (alias asic/verif/bundle/pt3a)))
 
 (rule
  (alias verification-long)

@@ -18,7 +18,7 @@ module Design = struct
     let read_data = Signal.wire Program_memory_controller.Config.program_width in
     let core =
       Program_memory_controller.create
-        (Elaboration_context.scope context)
+        (Elaboration.Context.scope context)
         { i with prog_mem_read_data_i = read_data }
     in
     let config =
