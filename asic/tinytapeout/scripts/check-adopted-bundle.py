@@ -32,7 +32,73 @@ def tree(root):
             for path in root.rglob("*") if path.is_file()}
 
 
-def check_bundle(root, bundle, kind, selection="flops"):
+def check_loader_physical(manifest, config, files):
+    """Declaration geometry only: no placed database, power or routing acceptance."""
+    assert manifest["project"] == "protemu_loader"
+    assert manifest["operation"] == "Hardening"
+    macro = "RM_IHPSG13_1P_256x16_c2_bm_bist"
+    supplies = {"VDD!": "VPWR", "VDDARRAY!": "VPWR", "VSS!": "VGND"}
+    candidate = {
+        "resource": "program", "instance": "hc_resource_7_program", "module": macro,
+        "location_um": [40., 480.], "orientation": "R0", "halo_um": 2.,
+        "supplies": supplies,
+    }
+    contract = manifest["macro_contract"]
+    assert contract["schema_version"] == 2
+    assert contract["execution"] == "fresh_full"
+    assert contract["physical_plan"] == {
+        "schema_version": 1, "strategy": "cmos5l_m4_edge_access_v1",
+        "plan_file": "physical/macro-plan.json", "pdn_tcl": "physical/pdn.tcl",
+        "checking_profile": "cmos5l_real_gds_v1",
+        "lvs_scope": "abstract_macro_boundary_with_schematic_cdl", "macros": [candidate],
+    }
+    assert json.loads(files["physical/macro-plan.json"]) == contract["physical_plan"]
+    assert contract["macros"][0]["physical_intent"] == {
+        "location_um": [40., 480.], "orientation": "R0", "halo_um": 2.,
+        "power": supplies, "execution": "fresh_full",
+    }
+    assert set(config["MACROS"]) == {macro}
+    assert config["MACROS"][macro]["instances"] == {
+        "hc_resource_7_program": {"location": [40., 480.], "orientation": "R0"}}
+    assert config["DIE_AREA"] == "0 0 1289.28 710.64"
+    # Actual reference 6x4 geometry, not the example's (40,81) acceptance.
+    core = (2.88, 3.78, 1286.4, 706.86)
+    bounds = (40. - 2., 480. - 2., 40. + 236.8 + 2., 480. + 118.78 + 2.)
+    assert core[0] <= bounds[0] < bounds[2] <= core[2]
+    assert core[1] <= bounds[1] < bounds[3] <= core[3]
+    assert config["FP_MACRO_HORIZONTAL_HALO"] == config["FP_MACRO_VERTICAL_HALO"] == 2.
+    assert config["PDN_MACRO_CONNECTIONS"] == [
+        "^hc_resource_7_program$ VPWR VGND VDD! VSS!",
+        "^hc_resource_7_program$ VPWR VGND VDDARRAY! VSS!",
+    ]
+    assert config["PDN_CFG"] == "dir::../physical/pdn.tcl"
+    assert config["PDN_CONNECT_MACROS_TO_GRID"] is True
+    assert config["PDN_MULTILAYER"] is False
+    assert config["PDN_VERTICAL_LAYER"] == "Metal4"
+    assert (config["PDN_VWIDTH"], config["PDN_VPITCH"], config["PDN_VOFFSET"]) == (2.1, 50., 10.)
+    assert config["PDN_RAIL_LAYER"] == "Metal1"
+    assert config["PDN_RAIL_WIDTH"] == 0.44
+    for key in ("PDN_ENABLE_RAILS", "PDN_ENABLE_PINS", "PDN_ENABLE_GLOBAL_CONNECTIONS"):
+        assert config[key] is True
+    assert config["PDN_SKIPTRIM"] is False and config["PDN_CORE_RING"] is False
+    assert config["RUN_KLAYOUT_DRC"] is True
+    assert not any(key.startswith("FP_PDN_") for key in config)
+    obstruction, = config["ROUTING_OBSTRUCTIONS"]
+    layer, *rectangle = obstruction.split()
+    assert layer == "Metal4" and list(map(float, rectangle)) == [40., 480., 276.8, 598.78]
+    pdn = files["physical/pdn.tcl"].decode()
+    assert "resource $resource footprint/halo exceeds usable core" in pdn
+    assert "no legal edge contact for $supply" in pdn
+    assert "foreach supply {VDD! VDDARRAY! VSS!}" in pdn
+    assert ("lappend ::hc_pdn::instances [list [encoding convertfrom utf-8 "
+            "[binary decode hex 70726f6772616d]] {hc_resource_7_program} {" + macro +
+            "} 40 480 2]") in pdn
+
+
+def check_bundle(root, bundle, kind, selection="flops", operation=None):
+    operation = operation or ("synthesis" if selection == "exact" else "hardening")
+    assert operation in ("synthesis", "hardening")
+    physical = selection == "exact" and operation == "hardening"
     manifest = json.loads((bundle / "manifest.json").read_text())
     payload = {key: value for key, value in manifest.items() if key != "identity"}
     assert hashlib.sha256(json.dumps(
@@ -49,7 +115,16 @@ def check_bundle(root, bundle, kind, selection="flops"):
     suffix = {"observable": "", "memory": "_memory", "loader": "_loader"}[kind]
     assert manifest["top_module"] == "tt_um_leemperor_hardcaml_protemu" + suffix
     assert manifest["project"] == "protemu_" + kind
-    assert manifest["operation"] == ("Synthesis" if selection == "exact" else "Hardening")
+    assert manifest["operation"] == operation.capitalize()
+    assert config == manifest["flow_configuration"]
+    assert manifest.get("timing_intent") is None
+    assert manifest.get("timing_physical_qualification") is None
+    if not physical:
+        assert {key: config[key] for key in (
+            "RUN_KLAYOUT_DRC", "FP_PDN_VPITCH", "FP_PDN_VWIDTH", "FP_PDN_MULTILAYER")} == {
+                "RUN_KLAYOUT_DRC": 0, "FP_PDN_VPITCH": 50.,
+                "FP_PDN_VWIDTH": 2.1, "FP_PDN_MULTILAYER": 0}
+        assert not any(path.startswith("physical/") for path in files)
     expected_tools = {
         "support_tools_revision": lock["support_tools_revision"],
         "pdk_revision": lock["pdk_revision"],
@@ -65,6 +140,14 @@ def check_bundle(root, bundle, kind, selection="flops"):
     ]
     assert config["CLOCK_PORT"] == "clk"
     assert abs(config["CLOCK_PERIOD"] - 1e9 / 48e6) < 1e-10
+    assert config["CLOCK_UNCERTAINTY_CONSTRAINT"] == 0.25
+    assert config["CLOCK_TRANSITION_CONSTRAINT"] == 0.15
+    assert config["TIME_DERATING_CONSTRAINT"] == 5.
+    assert config["MAX_FANOUT_CONSTRAINT"] == 10
+    assert config["OUTPUT_CAP_LOAD"] == 6.
+    if selection == "exact":
+        assert config["STA_CORNERS"] == [
+            "nom_fast_1p32V_m40C", "nom_slow_1p08V_125C", "nom_typ_1p20V_25C"]
     assert config["DESIGN_NAME"] == manifest["top_module"]
     assert config["VERILOG_FILES"] == [
         "dir::tt_um_leemperor_hardcaml_protemu" + suffix + ".v"
@@ -75,7 +158,17 @@ def check_bundle(root, bundle, kind, selection="flops"):
     info = (bundle / "info.yaml").read_text()
     assert 'tiles: "6x4"' in info
     assert f'top_module: "{manifest["top_module"]}"' in info
-    assert "create_clock -name clk" in (bundle / "constraints/top.sdc").read_text()
+    sdc = (bundle / "constraints/top.sdc").read_text()
+    assert "create_clock -name clk" in sdc
+    assert sdc.count("create_clock ") == 1
+    assert not any(command in sdc for command in (
+        "set_false_path", "set_multicycle_path", "create_generated_clock"))
+    for port in ("ui_in", "uio_in", "ena", "rst_n"):
+        for bound, delay in (("min", 0), ("max", 1)):
+            assert f"set_input_delay -{bound} {delay} -clock clk [get_ports {{{port}}}]" in sdc
+    for port in ("uo_out", "uio_out", "uio_oe"):
+        for bound, delay in (("min", 0), ("max", 2)):
+            assert f"set_output_delay -{bound} {delay} -clock clk [get_ports {{{port}}}]" in sdc
     source_paths = {item["path"] for item in manifest["source_inputs"]}
     assert {
         "asic/cli/dune", "asic/rtl/dune", "asic/rtl/bringup/dune",
@@ -154,10 +247,14 @@ def check_bundle(root, bundle, kind, selection="flops"):
             assert len(expected["source_roles"]) == 11
             assert len(set(expected["source_roles"])) == 11
             contract = manifest["macro_contract"]
-            assert contract["schema_version"] == 1
-            assert contract["execution"] == "synthesis_only"
-            assert "physical_plan" not in contract
-            assert not any(path.startswith("physical/") for path in files)
+            if physical:
+                assert kind == "loader"
+                check_loader_physical(manifest, config, files)
+            else:
+                assert contract["schema_version"] == 1
+                assert contract["execution"] == "synthesis_only"
+                assert "physical_plan" not in contract
+                assert not any(path.startswith("physical/") for path in files)
             assert len(contract["macros"]) == 1
             actual = contract["macros"][0]
             assert (actual["resource"], actual["module"], actual["instance"]) == (
@@ -214,6 +311,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--metadata-only", action="store_true")
     parser.add_argument("--selection", choices=("flops", "exact"), default="flops")
+    parser.add_argument("--operation", choices=("synthesis", "hardening"))
     parser.add_argument("--emitter", type=pathlib.Path)
     parser.add_argument(
         "--kind", choices=("observable", "memory", "loader"), default="observable"
@@ -225,13 +323,15 @@ def main():
     build_dir = pathlib.Path(os.environ.get("DUNE_BUILD_DIR", str(root / "_build")))
     emitter = (args.emitter or build_dir / "default/asic/cli/asic_bundle.exe").resolve()
     selection_args = ["--selection", args.selection]
+    if args.operation:
+        selection_args += ["--operation", args.operation]
     run(str(emitter), *selection_args, "--check-conflicts", args.kind, cwd=root)
     with tempfile.TemporaryDirectory(prefix="protemu-adopted-") as scratch:
         scratch = pathlib.Path(scratch)
         first, second = scratch / "first", scratch / "second"
         run(str(emitter), *selection_args, args.kind, str(first), str(root), cwd=root)
         run(str(emitter), *selection_args, args.kind, str(second), str(root), cwd=root)
-        assert check_bundle(root, first, args.kind, args.selection) == check_bundle(root, second, args.kind, args.selection)
+        assert check_bundle(root, first, args.kind, args.selection, args.operation) == check_bundle(root, second, args.kind, args.selection, args.operation)
         assert (first / "manifest.json").read_bytes() == (
             second / "manifest.json"
         ).read_bytes()

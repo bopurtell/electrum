@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Bounded PT.3a emission/resource checks. No builds, HDL tools, PDK or EDA."""
+"""Bounded PT.3a/PT.3c emission/resource checks. No builds, HDL tools, PDK or EDA."""
 
 import argparse
 import contextlib
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -17,7 +18,8 @@ def run(*args, code=0):
     return result
 
 
-def check_snapshot(manifest, selection):
+def check_snapshot(manifest, selection, operation=None):
+    operation = operation or ("synthesis" if selection == "exact" else "hardening")
     snapshot = manifest["resource_snapshot"]
     assert snapshot["schema_version"] == 1
     assert snapshot["scope"] == "resolved"
@@ -61,7 +63,15 @@ def check_snapshot(manifest, selection):
             "timed_simulation_model", "timed_simulation_model",
             "timing_model", "timing_model", "timing_model",
             "physical_abstract", "physical_layout", "spice_netlist"])
-    assert resource["physical_intent"] == {"status": "unavailable"}
+    if selection == "exact" and operation == "hardening":
+        assert manifest["project"] == "protemu_loader"
+        assert resource["physical_intent"] == {
+            "status": "resolved_intent", "location_um": [40., 480.], "halo_um": 2.,
+            "orientation": "R0",
+            "supplies": {"VDD!": "VPWR", "VDDARRAY!": "VPWR", "VSS!": "VGND"},
+        }
+    else:
+        assert resource["physical_intent"] == {"status": "unavailable"}
 
 
 def main():
@@ -118,25 +128,58 @@ def main():
         rejected = scratch / "observable-exact-rejected"
         run(cli, "--selection", "exact", "observable", rejected, root, code=2)
         assert not rejected.exists(), "unsupported observable Exact emitted output"
-        for kind in ("memory", "loader"):
-            rejected = scratch / f"{kind}-hardening-rejected"
-            result = run(cli, "--selection", "exact", "--operation", "hardening",
-                         kind, rejected, root, code=2)
-            assert "physical" in result.stderr.lower()
-            assert not rejected.exists(), "Exact Hardening emitted without physical intent"
+        hardening = [scratch / f"loader-exact-hardening-{repeat}" for repeat in range(2)]
+        run(cli, "--selection", "exact", "--operation", "hardening", "--check-conflicts", "loader")
+        for output in hardening:
+            run(cli, "--selection", "exact", "--operation", "hardening", "loader", output, root)
+            checks.check_bundle(root, output, "loader", "exact", "hardening")
+            manifest = json.loads((output / "manifest.json").read_text())
+            check_snapshot(manifest, "exact", "hardening")
+        saved = checks.tree(hardening[0])
+        assert saved == checks.tree(hardening[1]), "Hardening complete byte repeat"
+        run(cli, "--selection", "exact", "--operation", "hardening", "loader", hardening[0], root, code=2)
+        assert checks.tree(hardening[0]) == saved, "Hardening nonempty refusal changed bytes"
+        synthesis = scratch / "loader-exact-0"
+        synth_manifest = json.loads((synthesis / "manifest.json").read_text())
+        for role in ("synthesis_sources", "simulation_sources"):
+            assert manifest[role] == synth_manifest[role]
+            for path in manifest[role]:
+                assert (hardening[0] / path).read_bytes() == (synthesis / path).read_bytes(), role
+        assert (hardening[0] / "constraints/top.sdc").read_bytes() == (synthesis / "constraints/top.sdc").read_bytes()
+        assert manifest["identity"] != synth_manifest["identity"]
+        identities["loader", "exact-hardening"] = manifest["identity"]
+        print("PASS PT.3c loader candidate (40,480) R0 halo2: repeated physical metadata; synthesis/Hardening RTL and unexcepted SDC identical; no EDA")
+        rejected = scratch / "memory-hardening-rejected"
+        result = run(cli, "--selection", "exact", "--operation", "hardening",
+                     "memory", rejected, root, code=2)
+        assert "physical" in result.stderr.lower()
+        assert not rejected.exists(), "memory Exact Hardening emitted without reviewed physical intent"
         for options in (("--selection", "auto"), ("--selection",),
                         ("--selection", "flops", "--selection", "exact")):
             run(cli, *options, code=2)
-        receipt = {"schema_version": 1, "status": "passed", "scope": "PT.3a; no EDA",
+        receipt = {"schema_version": 1, "status": "passed", "scope": "PT.3a and PT.3c loader physical declaration only; no EDA",
                    "source_revision": run("git", "-C", root, "rev-parse", "HEAD").stdout.strip(),
                    "cli": str(cli), "bundles": [
-                       {"kind": kind, "selection": selection, "identity": identity,
+                       {"kind": kind, "selection": "exact" if selection == "exact-hardening" else selection,
+                        "operation": "hardening" if selection in ("flops", "exact-hardening") else "synthesis",
+                        "identity": identity,
                         "repeats": [f"{kind}-{selection}-{repeat}" for repeat in range(2)]}
                        for (kind, selection), identity in identities.items()]}
+        receipt["loader_physical_candidate"] = {
+            "resource": "program", "location_um": [40., 480.], "orientation": "R0",
+            "halo_um": 2., "bounds_with_halo_um": [38., 478., 278.8, 600.78],
+            "scope": "declaration geometry; actual core fit, power access, routing and timing unverified",
+        }
+        receipt["loader_operation_equivalence"] = {
+            "synthesis_identity": synth_manifest["identity"], "hardening_identity": manifest["identity"],
+            "identical_rtl_and_sdc_sha256": {
+                path: hashlib.sha256((hardening[0] / path).read_bytes()).hexdigest()
+                for path in [*manifest["synthesis_sources"], *manifest["simulation_sources"], "constraints/top.sdc"]},
+        }
         (scratch / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
         if args.evidence_dir:
             print(f"PT.3a retained evidence: {scratch / 'receipt.json'}")
-    print("PASS PT.3a legacy defaults, observable zero resources and Exact rejection; no EDA")
+    print("PASS PT.3a defaults, observable zero resources, memory Exact Hardening rejection and PT.3c loader metadata; no EDA")
 
 
 if __name__ == "__main__":

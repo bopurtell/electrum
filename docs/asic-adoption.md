@@ -65,7 +65,8 @@ are preserved independently of source-directory spelling.
 
 The declaration fixes TT `6x4` / CMOS5L, the 48 MHz primary clock, current pins,
 minimum/maximum I/O delays and explicit instance Flops policy by default. Exact
-defaults to Synthesis; Exact Hardening rejects until physical intent is reviewed.
+defaults to Synthesis; explicit loader Exact Hardening uses the
+[PT.3c physical candidate](pt3c-physical-attempt.md), whose acceptance remains open.
 Protected clock, source-list
 and target settings reject conflicting raw overrides. The provisional P0 I/O
 assumptions are 0 ns minimum input delay, 1 ns maximum input arrival and 2 ns

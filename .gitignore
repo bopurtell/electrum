@@ -36,6 +36,7 @@ protemu-artifacts/
 # Local PT.3 dependency installation and retained verification evidence
 /.dev/pt3a-provider/
 /.dev/pt3a-verification/
+/.dev/pt3c-loader-metadata-*/
 
 # release staging (build products; regenerated per release)
 MANIFEST.txt

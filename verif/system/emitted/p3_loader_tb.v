@@ -1,5 +1,14 @@
 `timescale 1ns/1ps
 
+// Public macro boundary only. A retained gate bench may override the instance
+// expression after verifying the unique final macro. No generated RTL net probes.
+`ifndef PT3_PROGRAM_INSTANCE
+`define PT3_PROGRAM_INSTANCE dut.hc_resource_7_program
+`endif
+`ifndef PT3_CLOCK_PERIOD_NS
+`define PT3_CLOCK_PERIOD_NS 10.0
+`endif
+
 /* PT3b runner contract (legacy callers need no new options):
    -DPT3B selects the focused system scenarios below instead of the legacy serial
    timing/robustness sweep. -DLOADER_WRAPPER selects the real production package.
@@ -16,6 +25,7 @@
 */
 module p3_loader_tb;
   reg clock_i = 0;
+  localparam real CLOCK_PERIOD_NS = `PT3_CLOCK_PERIOD_NS;
 `ifdef PT3B
   reg reset_i = 0;
 `else
@@ -41,8 +51,10 @@ module p3_loader_tb;
   reg [7:0] request [0:127];
   reg [7:0] response [0:31];
   integer write_count = 0;
-  integer host_low = 40;
-  integer host_high = 40;
+  // The serial synchronizers require the same core-cycle settling budget when
+  // selecting a slower package clock. Legacy 10 ns defaults remain 40 ns.
+  realtime host_low = 4.0 * CLOCK_PERIOD_NS;
+  realtime host_high = 4.0 * CLOCK_PERIOD_NS;
   integer phase;
   integer generated_trial;
   reg [31:0] generated_state;
@@ -88,10 +100,11 @@ module p3_loader_tb;
   assign serial_data_o = wrapper_uo_out[0];
   assign serial_ready_o = wrapper_uo_out[1];
 `ifdef PT3B_EXACT
-  assign prog_mem_enable_o = dut.hc_resource_7_program.A_MEN;
-  assign prog_mem_write_enable_o = dut.hc_resource_7_program.A_WEN;
-  assign prog_mem_address_o = dut.hc_resource_7_program.A_ADDR;
-  assign prog_mem_write_data_o = dut.hc_resource_7_program.A_DIN;
+  wire pt3b_memory_clock = `PT3_PROGRAM_INSTANCE.A_CLK;
+  assign prog_mem_enable_o = `PT3_PROGRAM_INSTANCE.A_MEN;
+  assign prog_mem_write_enable_o = `PT3_PROGRAM_INSTANCE.A_WEN;
+  assign prog_mem_address_o = `PT3_PROGRAM_INSTANCE.A_ADDR;
+  assign prog_mem_write_data_o = `PT3_PROGRAM_INSTANCE.A_DIN;
 `else
   assign prog_mem_enable_o = 0;
   assign prog_mem_write_enable_o = 0;
@@ -132,10 +145,16 @@ module p3_loader_tb;
   );
 `endif
 
-  always #5 clock_i = ~clock_i;
+  always #(CLOCK_PERIOD_NS / 2.0) clock_i = ~clock_i;
 
 `ifdef PT3B
+`ifdef PT3B_EXACT
+  // CTS can insert delta-cycle clock buffering. Count the actual macro edge,
+  // not the package edge; cancellation waits until the following falling edge.
+  always @(posedge pt3b_memory_clock) begin
+`else
   always @(posedge clock_i) begin
+`endif
     if (prog_mem_enable_o !== 1'b0 && prog_mem_enable_o !== 1'b1)
       $fatal(1, "PT3B unknown RAM enable");
     if (prog_mem_enable_o === 1'b1) begin
@@ -149,18 +168,18 @@ module p3_loader_tb;
         pt3b_reads = pt3b_reads + 1;
       else $fatal(1, "PT3B unknown RAM operation");
 `ifdef PT3B_EXACT
-      if (dut.hc_resource_7_program.A_REN !== !prog_mem_write_enable_o ||
-          dut.hc_resource_7_program.A_BM !== 16'hffff ||
-          dut.hc_resource_7_program.A_DLY !== 1'b1 ||
-          dut.hc_resource_7_program.A_BIST_EN !== 1'b0)
+      if (`PT3_PROGRAM_INSTANCE.A_REN !== !prog_mem_write_enable_o ||
+          `PT3_PROGRAM_INSTANCE.A_BM !== 16'hffff ||
+          `PT3_PROGRAM_INSTANCE.A_DLY !== 1'b1 ||
+          `PT3_PROGRAM_INSTANCE.A_BIST_EN !== 1'b0)
         $fatal(1, "PT3B macro port binding violation");
 `endif
     end
 `ifdef PT3B_EXACT
-    pt3b_macro_before = dut.hc_resource_7_program.A_DOUT;
+    pt3b_macro_before = `PT3_PROGRAM_INSTANCE.A_DOUT;
     pt3b_macro_disabled = (prog_mem_enable_o === 1'b0);
     #1;
-    if (pt3b_macro_disabled && dut.hc_resource_7_program.A_DOUT !== pt3b_macro_before)
+    if (pt3b_macro_disabled && `PT3_PROGRAM_INSTANCE.A_DOUT !== pt3b_macro_before)
       $fatal(1, "PT3B disabled macro output did not hold");
 `endif
   end

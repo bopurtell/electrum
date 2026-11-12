@@ -7,6 +7,14 @@ open! Hardcaml_asic
 open! Protemu_chip_project
 
 let check_conflicts ~selection ?operation kind =
+  let operation =
+    Option.value
+      operation
+      ~default:
+        (match selection with
+         | Resource_policy.Requirement.Exact -> Flow.Operation.Synthesis
+         | _ -> Hardening)
+  in
   List.iter
     [ "CLOCK_PERIOD", "clock"; "VERILOG_FILES", "source"; "DIE_AREA", "target" ]
     ~f:(fun (key, label) ->
@@ -16,8 +24,8 @@ let check_conflicts ~selection ?operation kind =
       let result =
         Chip_project.project
           ~selection
-          ?operation
-          ~overrides:(Tt_cmos5l.overrides ~extra:[ conflicting ] ())
+          ~operation
+          ~overrides:(Chip_project.default_overrides ~selection ~operation @ [ conflicting ])
           kind
         |> Or_error.bind ~f:Project.elaborate_for_flow
       in
@@ -43,8 +51,8 @@ let usage =
    [observable|memory|loader] OUTPUT_DIR SOURCE_ROOT | \
    --check-conflicts [observable|memory|loader]\n\
    Defaults: flops/hardening; exact defaults to synthesis.\n\
-   Exact requires memory or loader; exact hardening requires reviewed physical intent \
-   and is unsupported in PT.3a.\n"
+   Exact requires memory or loader; explicit exact hardening is supported only for \
+   loader, with the PT.3c placement candidate (not physical acceptance).\n"
 ;;
 
 (* Strip additive options without changing the legacy positional forms. Repeated,

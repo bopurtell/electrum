@@ -1,7 +1,9 @@
 ; This focused alias emits bundles but never invokes HDL/physical tools.
 (rule
  (alias pt3a)
- (deps check_bundle.py test_check_bundle.py)
+ ; The fixture tests load the compatibility checker from the real checkout; that
+ ; scripts directory is intentionally excluded from Dune traversal.
+ (deps check_bundle.py test_check_bundle.py (universe) (sandbox none))
  (action (run python3 -B %{dep:test_check_bundle.py})))
 
 (rule

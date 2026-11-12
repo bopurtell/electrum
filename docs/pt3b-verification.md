@@ -127,7 +127,12 @@ that these bounded passes resolve the host's previously observed hardware faults
 
 ## Next: PT.3c
 
+The [first PT.3c physical attempt](pt3c-physical-attempt.md) now has a passing
+independent final-netlist functional replay, but failed slow-corner setup and
+unresolved Magic markers. Physical acceptance remains open.
+
 Choose reviewed Protemu-specific macro placement and timing intent, implement the
 actual macro-backed system, then replay its final netlist with the functional macro
-model and retain timing/check outcomes. PT.3a still rejects Exact Hardening without
-that physical intent. Example timing evidence is not Protemu physical acceptance.
+model and retain timing/check outcomes. Loader Exact Hardening now has an explicit
+candidate; memory-only Hardening remains rejected. Example timing evidence is not
+Protemu physical acceptance.

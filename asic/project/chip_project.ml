@@ -166,10 +166,20 @@ let input_paths kind =
   ]
 ;;
 
-(* Selection changes only the registered program resource's implementation. Exact is
-   emission-only Synthesis here: a Hardening declaration needs reviewed physical intent. *)
+let default_overrides ~selection ~operation =
+  match selection, operation with
+  | Resource_policy.Requirement.Exact, Flow.Operation.Hardening ->
+    (* These settings are generated, protected facts of the macro physical plan. *)
+    Tt_cmos5l.overrides
+      ~without:[ "RUN_KLAYOUT_DRC"; "FP_PDN_VPITCH"; "FP_PDN_VWIDTH"; "FP_PDN_MULTILAYER" ]
+      ()
+  | _ -> Tt_cmos5l.overrides ()
+;;
+
+(* Selection changes only the registered program resource's implementation. Exact
+   defaults to Synthesis; explicit loader Hardening uses the reviewed PT.3c candidate. *)
 let project
-  ?(overrides = Tt_cmos5l.overrides ())
+  ?overrides
   ?(selection = Resource_policy.Requirement.Flops)
   ?operation
   kind
@@ -191,10 +201,31 @@ let project
   in
   let%bind () =
     match selection, operation with
-    | Exact, Flow.Operation.Hardening ->
+    | Exact, Flow.Operation.Hardening when not (String.equal kind "loader") ->
       Or_error.error_string
-        "exact Hardening is unsupported in PT.3a: reviewed macro physical placement intent is required; use synthesis"
+        "exact Hardening requires reviewed physical placement intent and is supported only for loader; use synthesis for memory"
     | _ -> Ok ()
+  in
+  let overrides =
+    Option.value overrides ~default:(default_overrides ~selection ~operation)
+  in
+  let macros =
+    match selection, operation with
+    | Exact, Flow.Operation.Hardening ->
+      (* Protemu candidate, not example acceptance: the actual 6x4 core is
+         [2.88,3.78,1286.4,706.86] um. The 236.8x118.78 um stock macro plus 2 um
+         halo occupies [38,478,278.8,600.78], near the upper-left TT signal pins
+         with controller space below its bottom signal edge. x=40 aligns positive
+         M4 fingers [111.70,114.51] with grid [111.83,113.93]. The provider must
+         check actual core fit, all supply contacts and routing at execution. *)
+      [ Macro_intent.tt_cmos5l_r0
+          ~resource:(Resource.Id.of_string_exn "program")
+          ~x_um:40.
+          ~y_um:480.
+          ~halo_um:2.
+          ()
+      ]
+    | _ -> []
   in
   let%bind policy =
     Resource_policy.create
@@ -235,9 +266,12 @@ let project
     ~design
     ~target:
       { harness = Tiny_tapeout { tiles = T6x4 }; technology = Technology.ihp_sg13cmos5l }
-    ~flow:(Flow.librelane ~overrides operation)
+    ~flow:(Flow.librelane ~overrides ~macros operation)
     ~clocks:[ { Clock.port = "clk"; period = Time_float.Span.of_sec (1. /. 48e6) } ]
     ~timing:
+      (* Inherited provisional, unexcepted I/O analysis envelope. Loader/protocol
+         inputs are asynchronous; these delays are not an external phase contract
+         or proof of CDC/reset-release safety. No generated clocks or exceptions. *)
       (Timing.create
          ~input_delays:
            (List.map [ "ui_in"; "uio_in"; "ena"; "rst_n" ] ~f:(fun port ->

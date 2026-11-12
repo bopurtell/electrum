@@ -15,8 +15,9 @@ preserved. Both variants use an explicit instance rule with no fallback:
 - `--selection flops`: explicit flop implementation; legacy positional forms
   remain Flops/Hardening.
 - `--selection exact`: stock `RM_IHPSG13_1P_256x16_c2_bm_bist`, default Synthesis.
-- `--operation synthesis|hardening` is explicit when supplied. Exact Hardening
-  rejects because Protemu-specific placement/physical intent is not yet reviewed.
+- `--operation synthesis|hardening` is explicit when supplied. PT.3a initially
+  rejected Exact Hardening; the [PT.3c loader candidate](pt3c-physical-attempt.md)
+  now enables it for loader only. Physical acceptance is still open.
 - Observable remains resource-free and rejects Exact.
 
 Synthesis here means the emitted bundle's requested operation. No synthesis tool or
