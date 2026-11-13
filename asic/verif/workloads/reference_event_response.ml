@@ -4,8 +4,8 @@
 (* Execute the existing independent model scenario. Its schedule is a functional
    reference, NOT a substitute for the RTL phase-sweep latency measurement. *)
 open! Core
-open! Protemu_isa
-open! Protemu_f_model
+open! Electrum_isa
+open! Electrum_f_model
 
 let checked = function Ok x -> x | Error _ -> failwith "reference scenario rejected"
 
@@ -27,7 +27,7 @@ let () =
   let halted = match trace.outcome with Control_core.Outcome.Halted -> true | _ -> false in
   let wave = Control_core.Trace.wave trace ~pin:0 in
   let words = Array.to_list assembled.image.words in
-  let result = `Assoc ["schema", `String "protemu.event-response-reference";
+  let result = `Assoc ["schema", `String "electrum.event-response-reference";
     "version", `Int 1; "halted", `Bool halted;
     "image_words", `List (List.map words ~f:(fun x -> `Int x));
     "pin0_wave", `String wave; "cycles", `Int trace.counts.cycles;

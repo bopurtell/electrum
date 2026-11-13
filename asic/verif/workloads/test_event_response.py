@@ -22,7 +22,7 @@ def fixture():
                     "oe": int(edge >= 1), "normal_halt": edge >= sync + 7,
                     "fault": False} for edge in range(48)]
         phases.append({"phase": phase, "external_tick": 245 + phase, "samples": samples})
-    return {"schema": "protemu.event-response-capture", "version": 1,
+    return {"schema": "electrum.event-response-capture", "version": 1,
             "status": "completed", "workload": oracle.workload(), "phases": phases}
 
 

@@ -4,9 +4,9 @@
 (* Layered P3.4 coverage over one real [Emulator_core] Cyclesim session. *)
 
 open! Core
-open! Protemu_isa
-module Api = Protemu_host.Host_api
-module Backend = Protemu_simulator.Simulator_backend
+open! Electrum_isa
+module Api = Electrum_host.Host_api
+module Backend = Electrum_simulator.Simulator_backend
 module _ : Api.Device with type t = Backend.t = Backend
 
 let ok = function
@@ -451,7 +451,7 @@ let%test_unit "defined execution fault is inspectable and recoverable" =
   [%test_result: bool] faulted.fault.execution_fault ~expect:true;
   [%test_result: int]
     faulted.fault.kind
-    ~expect:Protemu_core.Execution_unit.Fault.invalid_base;
+    ~expect:Electrum_core.Execution_unit.Fault.invalid_base;
   [%test_result: int] faulted.fault.instruction_slot ~expect:0;
   [%test_result: Api.Error.t]
     (error (Backend.step t ~budget_cycles:0))

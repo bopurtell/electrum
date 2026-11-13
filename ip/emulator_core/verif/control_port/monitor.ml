@@ -22,7 +22,7 @@
 *)
 
 open! Core
-open! Protemu_core
+open! Electrum_core
 module Observed = Item.Observed
 
 (* One cycle's port records, pre-edge. *)

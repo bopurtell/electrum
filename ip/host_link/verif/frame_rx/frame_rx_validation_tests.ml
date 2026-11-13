@@ -25,7 +25,7 @@
 *)
 
 open! Core
-open! Protemu_host_link
+open! Electrum_host_link
 open! Frame_rx_testbench
 
 (* The result, echo, tag, and command presented in the release cycle. *)

@@ -21,22 +21,22 @@
 *)
 
 open! Core
-open! Protemu_mechanisms
-open! Protemu_core
-open! Protemu_host_link
+open! Electrum_mechanisms
+open! Electrum_core
+open! Electrum_host_link
 open! Endpoint_scenario
 module Wire = Host_link_protocol
-module Serial_host = Protemu_serial_host_agent
+module Serial_host = Electrum_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
 module Timing = Serial_host.Config.Timing
 module Pause = Serial_host.Item.Pause
-module Control_port_agent = Protemu_control_port_agent
+module Control_port_agent = Electrum_control_port_agent
 module Request = Control_port_agent.Item.Request
 module Status = Control_port_agent.Item.Status
 module Response = Control_port_agent.Item.Response
 module Offer = Control_port_agent.Item.Offer
-module Endpoint = Protemu_host_link_endpoint
+module Endpoint = Electrum_host_link_endpoint
 module Fixture = Endpoint.Fixture
 module Scoreboard = Endpoint.Scoreboard
 module Latency = Endpoint.Latency

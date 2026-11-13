@@ -7,13 +7,13 @@
 ;
 ; The real loader is driven through its serial pins with the host_link_wire codec, and a
 ; test-only core stub answers its Control_port. The environment is the endpoint fixture
-; in endpoint/ (protemu_host_link_endpoint); hardware_loader_testbench.ml is its
+; in endpoint/ (electrum_host_link_endpoint); hardware_loader_testbench.ml is its
 ; compatibility shim. This is the acceptance baseline for the HL4b extractions. It
 ; supplements, and never replaces, the independent emitted-RTL peer in
 ; tinytapeout/test/p3_loader_tb.v.
 
 (library
- (name protemu_host_link_tests)
+ (name electrum_host_link_tests)
  (wrapped false)
  (modules
   hardware_loader_testbench
@@ -29,11 +29,11 @@
  (libraries
   core
   hardcaml
-  hardcaml_protemu
-  protemu_host_link_wire
-  protemu_serial_host_agent
-  protemu_control_port_agent
-  protemu_host_link_endpoint)
+   hardcaml_protemu
+  electrum_host_link_wire
+  electrum_serial_host_agent
+  electrum_control_port_agent
+  electrum_host_link_endpoint)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

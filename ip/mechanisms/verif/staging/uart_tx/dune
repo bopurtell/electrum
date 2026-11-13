@@ -1,12 +1,12 @@
 (library
- (name protemu_uart_tx_tests)
+ (name electrum_uart_tx_tests)
  (wrapped false)
  (modules uart_tx_testbench uart_tx_unit_tests)
  ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core hardcaml protemu_mechanisms_staging protemu_f_model)
+ (libraries core hardcaml electrum_mechanisms_staging electrum_f_model)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

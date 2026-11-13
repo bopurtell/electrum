@@ -48,7 +48,7 @@
    verilator
    --lint-only
    --top-module
-   tt_um_leemperor_hardcaml_protemu
+   tt_um_leemperor_electrum
    -Wno-DECLFILENAME
    ../src/p0_observable.v
    ../src/project.v)))
@@ -63,7 +63,7 @@
    yosys
    -q
    -p
-   "read_verilog ../src/p0_observable.v ../src/project.v; hierarchy -check -top tt_um_leemperor_hardcaml_protemu; synth -top tt_um_leemperor_hardcaml_protemu; stat")))
+   "read_verilog ../src/p0_observable.v ../src/project.v; hierarchy -check -top tt_um_leemperor_electrum; synth -top tt_um_leemperor_electrum; stat")))
 
 (rule
  (alias rtl)

@@ -1,5 +1,5 @@
 (library
- (name protemu_control_execution_tests)
+ (name electrum_control_execution_tests)
  (wrapped false)
  (modules
   instruction_decoder_tests
@@ -15,12 +15,12 @@
  (libraries
   core
   hardcaml
-  protemu_controller
-  protemu_core
-  protemu_core_legacy
-  protemu_isa
-  protemu_f_model
-  protemu_test_common
+  electrum_controller
+  electrum_core
+  electrum_core_legacy
+  electrum_isa
+  electrum_f_model
+  electrum_test_common
   base_quickcheck
   splittable_random)
  (preprocess

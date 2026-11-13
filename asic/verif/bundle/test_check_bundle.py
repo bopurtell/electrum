@@ -20,10 +20,10 @@ spec.loader.exec_module(checks)
 class SnapshotOracleTests(unittest.TestCase):
     def setUp(self):
         self.manifest = {
-            "project": "protemu_memory", "top_module": "memory_top",
+            "project": "electrum_memory", "top_module": "memory_top",
             "resource_snapshot": {
                 "schema_version": 1, "scope": "resolved", "mode": "implementation",
-                "project": "protemu_memory", "top": "memory_top",
+                "project": "electrum_memory", "top": "memory_top",
                 "resources": [{
                     "id": {"path": [], "name": "program", "display": "program"},
                     "policy": {"kind": "instance", "resource": "program"},
@@ -69,7 +69,7 @@ class PhysicalCandidateOracleTests(unittest.TestCase):
         macro = "RM_IHPSG13_1P_256x16_c2_bm_bist"
         supplies = {"VDD!": "VPWR", "VDDARRAY!": "VPWR", "VSS!": "VGND"}
         self.manifest = {
-            "project": "protemu_loader", "operation": "Hardening",
+            "project": "electrum_loader", "operation": "Hardening",
             "macro_contract": {
                 "schema_version": 2, "execution": "fresh_full",
                 "physical_plan": {

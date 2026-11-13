@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Human-readable summary of one protemu TT/LibreLane run directory.
+"""Human-readable summary of one electrum TT/LibreLane run directory.
 
 Adapted from hardcaml_asic/scripts/report.py at revision
 414b7f4f92a201bd9bceb6864579dc3ee475101f.

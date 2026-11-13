@@ -28,7 +28,7 @@ assert set(entries) == {'flops', 'stock_sram'}
 assert entries['stock_sram']['methodology']['endpoints'] == [
     'synthesis', 'floorplan', 'placement', 'cts', 'routing', 'timing']
 run('flow', 'describe', '--flow', 'stock_sram', '--json')
-with tempfile.TemporaryDirectory(prefix='protemu-public-') as tmp:
+with tempfile.TemporaryDirectory(prefix='electrum-public-') as tmp:
     variants = []
     for flow in ('flops', 'stock_sram'):
         results = Path(tmp) / flow
@@ -41,7 +41,7 @@ with tempfile.TemporaryDirectory(prefix='protemu-public-') as tmp:
                       '--expected-plan-identity', plan['plan_identity'])
         manifest = json.loads((Path(emitted['output_dir']) / 'manifest.json').read_text())
         variant = manifest['hardware_variant']
-        assert variant['design_id'] == 'protemu-loader' and variant['schema_id'] == 'fixed-loader-v1'
+        assert variant['design_id'] == 'electrum-loader' and variant['schema_id'] == 'fixed-loader-v1'
         assert [p['key'] for p in variant['parameters']] == ['package'], 'no shape controls are supported'
         variants.append(variant)
         assert emitted['plan_identity'] == plan['plan_identity']
@@ -68,4 +68,4 @@ with tempfile.TemporaryDirectory(prefix='protemu-public-') as tmp:
                       '--results-root', Path(tmp) / 'preparation', '--json')
     assert preparation
     run('resources', '--flow', 'stock_sram', '--json')
-print('Public Protemu: both catalogs, deterministic Timing plans, exact macro/flop emission, reuse, stale/no-write rejection and durable preparation passed')
+print('Public Electrum: both catalogs, deterministic Timing plans, exact macro/flop emission, reuse, stale/no-write rejection and durable preparation passed')

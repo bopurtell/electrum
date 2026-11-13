@@ -2,7 +2,7 @@
 discover
 check-api 1 0
 expect-error incompatible_api check-api 2 0
-check-isa protemu-p1.5 1
+check-isa electrum-p1.5 1
 expect-error incompatible_isa check-isa incompatible-isa 99
 loaded
 expect-error incompatible_isa load examples/p3.4-bad-isa.pimg

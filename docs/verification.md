@@ -154,7 +154,7 @@ deliberately kept apart so that a disagreement between two of them is evidence r
 
 | Layer | Library | Depends on Hardcaml | Contents |
 | --- | --- | --- | --- |
-| Reference model | `test_protemu_f_model` ([`test/f_model/`](../test/f_model/dune)) | No | 96 expect tests over [`f_model/`](../f_model/dune). |
+| Reference model | `test_electrum_f_model` ([`test/f_model/`](../test/f_model/dune)) | No | 96 expect tests over [`f_model/`](../f_model/dune). |
 | Model/RTL comparison and backend conformance | uniquely named libraries under [`test/common/`](../test/common/dune), [`test/primitives/`](../test/primitives), [`test/core/`](../test/core), and [`test/integration/`](../test/integration) | Yes, except generic support | Directed cycle product tests, cycle harness expect tests, adapter conformance, timed P2.2/P2.6 product tests, and the targeted P2.2 four-state property. |
 | Emitted RTL | none — Dune rules | n/a | iverilog, verilator and yosys checks behind `dune build @rtl`. |
 
@@ -283,9 +283,9 @@ a test, and whatever ran is what the report prints:
 
 | Variable | Effect |
 | --- | --- |
-| `PROTEMU_SEED`, `PROTEMU_TRIALS`, `PROTEMU_SIZE` | Replace the recorded generator settings; a seed sweep is a loop over the first. |
-| `PROTEMU_ARTIFACTS` | The directory a failure report is written to; the default is `protemu-artifacts` beside the runner's working directory. |
-| `PROTEMU_SOURCE_REVISION` | The source revision, for a build that cannot be asked through git. |
+| `ELECTRUM_SEED`, `ELECTRUM_TRIALS`, `ELECTRUM_SIZE` | Replace the recorded generator settings; a seed sweep is a loop over the first. |
+| `ELECTRUM_ARTIFACTS` | The directory a failure report is written to; the default is `electrum-artifacts` beside the runner's working directory. |
+| `ELECTRUM_SOURCE_REVISION` | The source revision, for a build that cannot be asked through git. |
 
 A test that snapshots one seed's report passes `~environment_overrides:false` and
 runs its recorded settings regardless, so a sweep does not fail a fixture for
@@ -352,7 +352,7 @@ relocation does not claim shared-harness adoption or new generated coverage.
 ### Cycle/event adapter conformance
 
 [`backend_conformance.ml`](../test/common/backend_conformance.ml) isolates the event
-dependencies from `protemu_test_common` and characterizes the installed step-testbench
+dependencies from `electrum_test_common` and characterizes the installed step-testbench
 adapters with a test-only four-bit register and one-entry ready/valid sink. One shared
 five-edge scenario loads nonzero state, clears it with reset, and checks input application,
 pre-edge acceptance, settled registered outputs, completion, and refusal after the sink
@@ -392,7 +392,7 @@ experiment establishes adapter sampling and budgeting only, not timed product co
 and [`input_events_timing_tests.ml`](../test/primitives/input_events/input_events_timing_tests.ml)
 form the first event-driven product suite. Timestamped pad/reset/event scenarios feed a
 two-state Evsim adapter and a separate simulator-free predictor built from explicit
-sampling rules plus `Protemu_f_model.Input_pins` and `Event`. Raw simulator signals remain
+sampling rules plus `Electrum_f_model.Input_pins` and `Event`. Raw simulator signals remain
 inside the test adapter. Every generated trial constructs fresh DUT/reference state.
 
 The time unit is an abstract integer tick. The clock rises at 5, 15, 25, and so on. At an
@@ -426,8 +426,8 @@ and
 reuse the P2.2 clock, timestamp, exact-coincidence, delta-settle, and finite-budget
 conventions for the implemented `Input_events` → `Shift_lane` composition. The predictor
 is simulator-free: it maps the external schedule to input-sampling edges, advances
-`Protemu_f_model.Input_pins`, feeds the previous coherent snapshot into
-`Protemu_f_model.Shift_engine`, and reconstructs driven pin transactions from that state.
+`Electrum_f_model.Input_pins`, feeds the previous coherent snapshot into
+`Electrum_f_model.Shift_engine`, and reconstructs driven pin transactions from that state.
 The DUT side reconstructs the same transactions only from `pin_value_o`/`pin_oe_o`; a
 released pin's stored value is deliberately ignored.
 
@@ -606,7 +606,7 @@ The bound is the synchronizer register depth — `stage0`, `stage1`, `previous` 
 digital statement only. It is not metastability, setup/hold, MTBF or analog evidence, and
 four-state simulation does not create any of those.
 
-Known values come from the ordinary `Protemu_f_model.Input_pins` and `Event`; a separate
+Known values come from the ordinary `Electrum_f_model.Input_pins` and `Event`; a separate
 contamination model of three shifted unknown masks supplies the X-sensitive part, so the
 integer reference is never asked to be an X oracle. Observed logic is kept in an
 X/Z-preserving word type, distinct from the `Observation` validity type: validity says
@@ -817,7 +817,7 @@ test/
   host_link/<block>/                  focused PHY/RX/dispatch/TX suites
   integration/host_link/
     endpoint/                         Host_link + controllable core responder
-    system/                           Protemu_top + memory
+    system/                           Electrum_top + memory
     package/                          production Package_top and resource selection
 ```
 
@@ -879,7 +879,7 @@ handlers beyond the lifetime supported by the installed OCaml/step-testbench API
 | Fixture | DUT and environment | What its checks establish |
 | --- | --- | --- |
 | Endpoint | Real `Host_link`; serial host agent; controllable `Control_port` responder | Framing, exact offers, waits, cancellation, response lifecycle; offer counts are not RAM/pin effects |
-| System | Real `Protemu_top` (`Host_link` + `Emulator_core`); contract RAM or selected resource | Real core decisions, image lifecycle, execution, RAM effects, protocol-pin cleanup/recovery |
+| System | Real `Electrum_top` (`Host_link` + `Emulator_core`); contract RAM or selected resource | Real core decisions, image lifecycle, execution, RAM effects, protocol-pin cleanup/recovery |
 | Package | Same production `Package_top` used by emission; selected memory source role; package-pin adapter | Pin mapping, reset/output adaptation, actual resource wiring and selected implementation |
 
 The serial host agent is reused through logical-port adapters. Expose capabilities honestly:
@@ -982,7 +982,7 @@ The three current `p3_loader_tb.v` configurations are independent test execution
 
 | Current alias | DUT boundary | Memory provider |
 | --- | --- | --- |
-| `@loader-core-rtl` | `Loader_core` (future `Protemu_top`) | External testbench 1RW model |
+| `@loader-core-rtl` | `Loader_core` (future `Electrum_top`) | External testbench 1RW model |
 | `@loader-wrapper-rtl` | Production package pins | Internal Simulation-role resource |
 | `@loader-production-rtl` | Same production package pins | Internal Implementation-role explicit-flop resource |
 
@@ -1325,7 +1325,7 @@ and no claim that responder offer counts prove real memory or execution behavior
 
 Prerequisite: VO2 and the reusable package constructor delivered by AM4.
 
-- [ ] Construct real `Protemu_top` with a controllable memory contract model. Reuse the
+- [ ] Construct real `Electrum_top` with a controllable memory contract model. Reuse the
   serial agent; separate memory behavior from independent expected image/access state.
 - [ ] Add reusable, explicitly selected fault capabilities (stored-word corruption versus
   response corruption/suppressed writes), with no fault logic in production circuits.

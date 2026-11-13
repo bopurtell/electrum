@@ -13,8 +13,8 @@ below remains historical; it does not qualify the new macro-backed system.
 selectable `observable`, `memory` and `loader` Tiny Tapeout designs and their
 explicit source inventory. [`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml)
 is the stable emission CLI. ASIC-dependent constructors/resource bindings live
-in [`asic/rtl/`](../asic/rtl/), compiled as `protemu_asic_rtl`; the preserved
-`protemu_chip_project` library depends on it and canonical owner libraries.
+in [`asic/rtl/`](../asic/rtl/), compiled as `electrum_asic_rtl`; the preserved
+`electrum_chip_project` library depends on it and canonical owner libraries.
 
 The observable design retains the pin map of
 `asic/tinytapeout/src/project.v`, two-edge reset release and immediate pad release
@@ -44,12 +44,12 @@ consumer locks. Review lock changes explicitly when upgrading.
 From the repository root, run these sequentially under the shared build lock:
 
 ```sh
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune build -j1 asic/cli/asic_bundle.exe
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune build -j1 asic/cli/asic_bundle.exe
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
   observable "$PWD/_flow_results/observable-bundle" "$PWD"
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
   memory "$PWD/_flow_results/memory-bundle" "$PWD" --selection flops
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
   loader "$PWD/_flow_results/loader-exact-bundle" "$PWD" --selection exact
 ```
 
@@ -82,8 +82,8 @@ closure; the layout migration did not requalify those assumptions.
 Metadata/declaration-only checking from the repository root:
 
 ```sh
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh dune build -j1 @pt3a
-flock ../.protemu-build.lock bash scripts/with-private-asic.sh python3 -B \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune build -j1 @pt3a
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh python3 -B \
   asic/tinytapeout/scripts/check-adopted-bundle.py --kind loader --selection exact --metadata-only
 ```
 

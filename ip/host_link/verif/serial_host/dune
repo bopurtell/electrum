@@ -7,7 +7,7 @@
 ; nothing here needs Hardcaml; the suite's adapter maps them to the DUT's ports.
 
 (library
- (name protemu_serial_host_agent)
+ (name electrum_serial_host_agent)
  (modules item config driver monitor agent)
  (libraries core host_link_protocol)
  (preprocess

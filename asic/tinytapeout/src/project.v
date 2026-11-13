@@ -1,6 +1,6 @@
 `default_nettype none
 
-module tt_um_leemperor_hardcaml_protemu (
+module tt_um_leemperor_electrum (
     input  wire [7:0] ui_in,
     output wire [7:0] uo_out,
     input  wire [7:0] uio_in,

@@ -5,7 +5,7 @@
 | [final_layout_migration.md](final_layout_migration.md) | Delivered final layout: singular ASIC owner, enforced IP libraries, removed public flat API, colocated software/model tests, firmware and historical archive |
 | [repository_layout.md](repository_layout.md) | Current RTL/verif/software-test ownership, library boundaries and compatibility paths |
 | [ownership_layout.md](ownership_layout.md) | Delivered ownership migration, identified baseline, exact preservation results and remaining AM/VO/PT.3 scope |
-| [protemu.pdf](protemu.pdf) | Architecture planning brief: problem framing for the protocol emulator ASIC, proposed cores and primitives, protocol mapping (UART, SPI, I²C, USB, Ethernet), and open architecture questions. Start here for the "why". |
+| [protemu.pdf](protemu.pdf) | Original architecture planning brief: problem framing for the protocol emulator ASIC, proposed cores and primitives, protocol mapping (UART, SPI, I²C, USB, Ethernet), and open architecture questions. Start here for the "why". |
 | [construction-plan.md](construction-plan.md) | Construction plan built on the brief: scope, what exists today, stack ownership, primitive and shared-port memory contracts, ISA study, protocol milestones, host control, ASIC/Workbench integration, build sequence, verification, and open decisions. |
 | [phase_plan.md](phase_plan.md) | Actionable breakdown of the construction plan: stable work-item IDs, phase dependencies, deliverables, completion evidence, the first working UART transmit slice, and the parallel ASIC project/memory adoption track. Use this to select and track implementation work. |
 | [architecture_migration.md](architecture_migration.md) | Current IP/system/chip architecture and AM0–AM6 status: names, ownership, package extraction and protocol/Codec split delivered; AM5 interface work and AM6 acceptance remain |
@@ -28,10 +28,10 @@
 | [p1.5-encoding-decision.md](p1.5-encoding-decision.md) | P1.5's recorded architecture decision: the chosen instruction encoding and what it gives up, the call pair and what it was measured to be worth, the deferred memory-word choice, the assembler's refusals, and where the one shared instruction specification lives. Read it before touching `isa/`. |
 | [p1.4-encoding-study.md](p1.4-encoding-study.md) | P1.4 instruction and storage comparison: two encodings in four memory-word combinations, measured program sizes, cycle counts, branch paths, bit-banged timing, and invalid-instruction behaviour, with what they recommend to P1.5. Area columns are unmeasured until P5. |
 | [asic-adoption.md](asic-adoption.md) | P0.6 project declaration, pinned ASIC dependency, bundle emission, and adopted-wrapper checks. |
-| [flow.md](flow.md) | **The flow, end to end.** `./flow.sh` stages, naming steps, output and `PROTEMU_*` overrides, resuming and inspecting a run, failure behavior, archiving into `flow_results/`, the checks on the flow itself, aliases and the legacy path, and what has been verified. Source of truth; other documents link here. |
+| [flow.md](flow.md) | **The flow, end to end.** `./flow.sh` stages, naming steps, output and `ELECTRUM_*` overrides, resuming and inspecting a run, failure behavior, archiving into `flow_results/`, the checks on the flow itself, aliases and the legacy path, and what has been verified. Source of truth; other documents link here. |
 | [tooling_theory1.md](tooling_theory1.md) | Rationale: why the OCaml/Python boundary sits at the emitted bundle, what makes the bundle a good interface, the `reason` field as the answer to batteries-versus-hooks, and the open packaging problem on the Python side. |
 | [flow_migration.md](flow_migration.md) | History: the migration that made `./flow.sh` the one implementation path — the plan as written and what it verified at the time. |
-| [environment.md](environment.md) | Entry points and environment layers: `./bootstrap.sh`, `source env.sh`, `dune exec protemu -- <command>`, and what to run on a new machine, a fresh clone or worktree, a new shell, or after a lockfile change. |
+| [environment.md](environment.md) | Entry points and environment layers: `./bootstrap.sh`, `source env.sh`, `dune exec electrum -- <command>`, and what to run on a new machine, a fresh clone or worktree, a new shell, or after a lockfile change. |
 | [verification.md](verification.md) | Verification authority: current evidence and planned VO0–VO7 overhaul after AM6; reusable agents/models/scoreboards, test-owned environments, endpoint/system/package fixtures, memory strategy, coverage, event/formal/emitted checks, and preservation/replay contracts. |
 | [serial_host_pilot.md](serial_host_pilot.md) | Implemented SP1–SP6 agent pilot, pending owner review; interface-owned items/drivers/monitors/responders and preserved endpoint/frozen-oracle evidence |
 | [history/](history/README.md) | Historical-document ownership and navigation. |
@@ -45,7 +45,7 @@ For current source navigation, start with [repository_layout.md](repository_layo
 and the root README. The documents below retain product contracts and earlier
 implementation evidence; use the ownership map for relocated source paths.
 
-1. **protemu.pdf** — the design problem and proposed direction.
+1. **protemu.pdf** — the original design problem and proposed direction.
 2. **construction-plan.md** — how the repository gets from scaffold to working system.
 3. **phase_plan.md** — select the next implementation slice and its completion checks.
 4. **environment.md**, then **flow.md** — to set the environment up and then run

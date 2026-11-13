@@ -12,13 +12,13 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms
+open! Electrum_mechanisms_staging
 module Evsim = Hardcaml_event_driven_sim.Two_state_simulator
 module Circuit = Evsim.With_interface (Observed_transfer.I) (Observed_transfer.O)
 module Simulator = Evsim.Simulator
-module F_model = Protemu_f_model
-module Kinds = Protemu_isa.Kinds
+module F_model = Electrum_f_model
+module Kinds = Electrum_isa.Kinds
 
 let time_unit = "tick"
 let half_period = 5

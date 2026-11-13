@@ -21,9 +21,9 @@ end
 module Constants = struct
   let api = { Version.major = 1; minor = 0 }
   let protocol = { Version.major = 1; minor = 0 }
-  let isa_id = "protemu-p1.5"
+  let isa_id = "electrum-p1.5"
   let isa_version = 1
-  let image_format = "protemu-image-sexp"
+  let image_format = "electrum-image-sexp"
   let image_format_version = 1
   let cli_output_version = 1
 end
@@ -250,15 +250,15 @@ module Image = struct
     ; api_major = Constants.api.major
     ; isa_id = Constants.isa_id
     ; isa_version = Constants.isa_version
-    ; layout = Protemu_isa.Assembler.Memory.word16.name
-    ; word_bits = Protemu_isa.Assembler.Memory.word16.word_bits
+    ; layout = Electrum_isa.Assembler.Memory.word16.name
+    ; word_bits = Electrum_isa.Assembler.Memory.word16.word_bits
     ; address_unit = Memory_word
     ; byte_order = Little_endian
     ; words
     }
   ;;
 
-  let of_assembled (assembled : Protemu_isa.Assembler.Assembled.t) =
+  let of_assembled (assembled : Electrum_isa.Assembler.Assembled.t) =
     { (create (Array.to_list assembled.image.words)) with
       layout = assembled.memory.name
     ; word_bits = assembled.memory.word_bits

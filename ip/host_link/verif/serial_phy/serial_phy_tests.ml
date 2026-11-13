@@ -12,7 +12,7 @@
 *)
 
 open! Core
-open! Protemu_host_link
+open! Electrum_host_link
 open! Serial_phy_testbench
 
 let%test_unit "each pin reaches its synchronized level two cycles after it changes" =

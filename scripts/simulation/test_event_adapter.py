@@ -36,7 +36,7 @@ class EventFixture(Fixture):
 
     def compare(self, left, right):
         self.comparisons.append((left, right))
-        return dict(schema='protemu.event-response-comparison', version=1,
+        return dict(schema='electrum.event-response-comparison', version=1,
                     left_digest=provider.sha(left), right_digest=provider.sha(right),
                     status='comparable', physical_area_speed_delta=None)
 
@@ -47,7 +47,7 @@ class EventFixture(Fixture):
         output = Path(argv[argv.index('--output') + 1])
         self.assert_new = not output.exists()
         output.mkdir()
-        raw = dict(schema='protemu.event-response-result', version=1, status='completed',
+        raw = dict(schema='electrum.event-response-result', version=1, status='completed',
             selection=argv[argv.index('--selection') + 1], source_role=argv[argv.index('--mode') + 1],
             asic_workload_result=False, hardware_assignment={'explicit_unit_fixture': True}, tools={})
         for tool in ('emitter', 'reference'):

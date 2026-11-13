@@ -1072,12 +1072,12 @@ Activate (each new shell):
 The adopted flow is ./asic/flow.sh and does not use the staged project. These
 legacy commands do; they remain available during the transition:
 
-  dune exec protemu -- check            RTL regression on the committed RTL:
+  dune exec electrum -- check            RTL regression on the committed RTL:
                                         generation, tests, lint, generic
                                         synthesis, staging
-  dune exec protemu -- legacy-harden    mapped synthesis and place-and-route
+  dune exec electrum -- legacy-harden    mapped synthesis and place-and-route
                                         on the staged project
-  dune exec protemu -- precheck         Tiny Tapeout precheck on a legacy
+  dune exec electrum -- precheck         Tiny Tapeout precheck on a legacy
                                         hardening run (needs Nix)
 
 This prepared an environment. It did not run hardening, timing analysis,

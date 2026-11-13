@@ -1,8 +1,8 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 module Sim = Cyclesim.With_interface (Input_events.I) (Input_events.O)
-module F_model = Protemu_f_model
+module F_model = Electrum_f_model
 
 let bits width n = Bits.of_int_trunc ~width n
 

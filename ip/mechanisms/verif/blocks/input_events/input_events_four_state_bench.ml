@@ -59,7 +59,7 @@ let () =
   measure "two-state-startup" (fun () ->
     ignore
       (Two_state.Circuit.with_processes
-         (Protemu_mechanisms.Input_events.create (Scope.create ~flatten_design:true ()))
+         (Electrum_mechanisms.Input_events.create (Scope.create ~flatten_design:true ()))
          (fun _ _ -> [])
        : Two_state.Circuit.testbench));
   measure "four-state-startup" (fun () ->

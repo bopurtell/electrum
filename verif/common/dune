@@ -1,5 +1,5 @@
 (library
- (name protemu_test_common)
+ (name electrum_test_common)
  (wrapped false)
  (modules observation replay env)
  (libraries core hardcaml splittable_random unix base_quickcheck)

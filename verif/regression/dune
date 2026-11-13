@@ -3,10 +3,10 @@
  (modules verification_sweep)
  (libraries
   core
-  protemu_input_events_tests
-  protemu_observed_transfer_tests
-  protemu_pin_bank_testbench
-  protemu_test_common)
+  electrum_input_events_tests
+  electrum_observed_transfer_tests
+  electrum_pin_bank_testbench
+  electrum_test_common)
  (preprocess
   (pps ppx_jane))
  (flags

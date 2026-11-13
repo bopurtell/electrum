@@ -1,11 +1,11 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_controller
+open! Electrum_controller
 module I = Tt_cmos5l.I
 module O = Tt_cmos5l.O
 
-let name = "tt_um_leemperor_hardcaml_protemu_memory"
+let name = "tt_um_leemperor_electrum_memory"
 
 (* P0.7 test protocol: uio_in[7:5] selects one request and ui_in carries an address/length
    (zero denotes length 256 for load-start only). Opcodes 7 and 6 stage the high and low

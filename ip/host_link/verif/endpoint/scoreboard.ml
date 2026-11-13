@@ -21,8 +21,8 @@
 
 open! Core
 module Wire = Host_link_protocol
-module Serial_host = Protemu_serial_host_agent
-module Control_port_agent = Protemu_control_port_agent
+module Serial_host = Electrum_serial_host_agent
+module Control_port_agent = Electrum_control_port_agent
 module Observed = Serial_host.Item.Observed
 module Read = Serial_host.Item.Read
 module Request = Control_port_agent.Item.Request

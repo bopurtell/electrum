@@ -16,7 +16,7 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Program_memory_controller = Protemu_controller.Program_memory_controller
+module Program_memory_controller = Electrum_controller.Program_memory_controller
 
 module I = struct
   type 'a t =
@@ -28,12 +28,12 @@ module I = struct
       control_request_i : 'a Control_port.Request.t [@rtlsuffix "_i"]
     ; step_valid_i : 'a
     ; prog_mem_read_data_i : 'a [@bits Program_memory_controller.Config.program_width]
-    ; pin_async_i : 'a [@bits Protemu_isa.Pins.count]
-    ; occupied_i : 'a [@bits Protemu_isa.Pins.count]
+    ; pin_async_i : 'a [@bits Electrum_isa.Pins.count]
+    ; occupied_i : 'a [@bits Electrum_isa.Pins.count]
     ; software_claim_valid_i : 'a
-    ; software_claim_mask_i : 'a [@bits Protemu_isa.Pins.count]
+    ; software_claim_mask_i : 'a [@bits Electrum_isa.Pins.count]
     ; software_release_valid_i : 'a
-    ; software_release_mask_i : 'a [@bits Protemu_isa.Pins.count]
+    ; software_release_mask_i : 'a [@bits Electrum_isa.Pins.count]
     ; tx_ready_i : 'a
     ; rx_valid_i : 'a
     ; rx_data_i : 'a [@bits 8]
@@ -89,15 +89,15 @@ module O = struct
     ; mechanism_accepted_o : 'a
     ; mechanism_refused_o : 'a
     ; mechanism_completion_valid_o : 'a
-    ; snapshot_o : 'a [@bits Protemu_isa.Pins.count]
-    ; rising_o : 'a [@bits Protemu_isa.Pins.count]
-    ; falling_o : 'a [@bits Protemu_isa.Pins.count]
-    ; status_o : 'a [@bits Protemu_isa.Event_kind.count]
-    ; status_overflow_o : 'a [@bits Protemu_isa.Event_kind.count]
-    ; pins_o : 'a [@bits Protemu_isa.Pins.count]
-    ; pin_oe_o : 'a [@bits Protemu_isa.Pins.count]
-    ; software_claim_o : 'a [@bits Protemu_isa.Pins.count]
-    ; engine_claim_o : 'a [@bits Protemu_isa.Pins.count]
+    ; snapshot_o : 'a [@bits Electrum_isa.Pins.count]
+    ; rising_o : 'a [@bits Electrum_isa.Pins.count]
+    ; falling_o : 'a [@bits Electrum_isa.Pins.count]
+    ; status_o : 'a [@bits Electrum_isa.Event_kind.count]
+    ; status_overflow_o : 'a [@bits Electrum_isa.Event_kind.count]
+    ; pins_o : 'a [@bits Electrum_isa.Pins.count]
+    ; pin_oe_o : 'a [@bits Electrum_isa.Pins.count]
+    ; software_claim_o : 'a [@bits Electrum_isa.Pins.count]
+    ; engine_claim_o : 'a [@bits Electrum_isa.Pins.count]
     ; software_request_rejected_o : 'a
     ; bank_conflict_o : 'a
     ; timing_busy_o : 'a

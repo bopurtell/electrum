@@ -1,9 +1,9 @@
 (library
- (name protemu_host_api_tests)
+ (name electrum_host_api_tests)
  (wrapped false)
  (modules host_api_tests)
  (inline_tests)
- (libraries core protemu_host protemu_isa)
+ (libraries core electrum_host electrum_isa)
  (preprocess
   (pps ppx_jane))
  (lint

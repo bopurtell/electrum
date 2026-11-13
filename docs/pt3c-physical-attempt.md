@@ -20,7 +20,7 @@ rejected. The candidate uses the stock 256×16 `program` SRAM at **(40,480) µm,
 halo2**, in the TT T6x4 die `[0,0,1289.28,710.64]`. Its expanded footprint is
 `[38,478,278.8,600.78]`. This upper-left candidate follows target pin geometry and
 leaves space below the macro signal pins. Its x coordinate aligns supported power
-access; example placement/timing was not treated as Protemu acceptance.
+access; example placement/timing was not treated as Electrum acceptance.
 
 The provider owns generated PDN settings. Exact Synthesis/Hardening implementation
 RTL, behavioral RTL and SDC were verified byte-equal, with deterministic repeated
@@ -62,7 +62,7 @@ inventories reports/artifacts/resources/cleanup; `ATTEMPT/outcome.json` and
 Final netlist:
 
 ```text
-FLOW/final/nl/tt_um_leemperor_hardcaml_protemu_loader.nl.v
+FLOW/final/nl/tt_um_leemperor_electrum_loader.nl.v
 SHA256 61bd658ea1794aff066a2a4b6a364bee5ec8793cd145b10f9fb170f930528f8d
 ```
 

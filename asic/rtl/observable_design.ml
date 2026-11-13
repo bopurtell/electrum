@@ -1,12 +1,12 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_asic_bringup
+open! Electrum_asic_bringup
 module I = Tt_cmos5l.I
 module O = Tt_cmos5l.O
 
 (* We have about a square um of space. *)
-let name = "tt_um_leemperor_hardcaml_protemu"
+let name = "tt_um_leemperor_electrum"
 
 let create context (i : _ I.t) =
   let open Signal in

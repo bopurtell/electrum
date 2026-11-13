@@ -4,22 +4,22 @@
 (* Directed and bounded generated checks for the real P3.3 loaded-program path. *)
 
 open! Core
-open! Protemu_mechanisms
-open! Protemu_core
-open! Protemu_isa
+open! Electrum_mechanisms
+open! Electrum_core
+open! Electrum_isa
 open! Core_engine_testbench
 open Instruction
 
 let event_bit kind = 1 lsl Event_kind.index kind
 
 let reference_fifo_sequence values =
-  let module Fifo = Protemu_f_model.Fifo in
+  let module Fifo = Electrum_f_model.Fifo in
   let ok = function
     | Ok value -> value
     | Error reason ->
       raise_s
         [%message
-          "unexpected reference FIFO refusal" (reason : Protemu_f_model.Fault.Reject.t)]
+          "unexpected reference FIFO refusal" (reason : Electrum_f_model.Fault.Reject.t)]
   in
   match values with
   | [] -> []
@@ -32,10 +32,10 @@ let reference_fifo_sequence values =
         ~f:(fun fifo value -> ok (Fifo.push fifo value))
     in
     let fifo, first, pushed, popped = Fifo.step full ~push:(Some last) ~pop:true in
-    [%test_result: (unit, Protemu_f_model.Fault.Reject.t) Result.t option]
+    [%test_result: (unit, Electrum_f_model.Fault.Reject.t) Result.t option]
       pushed
       ~expect:(Some (Ok ()));
-    [%test_result: (unit, Protemu_f_model.Fault.Reject.t) Result.t option]
+    [%test_result: (unit, Electrum_f_model.Fault.Reject.t) Result.t option]
       popped
       ~expect:(Some (Ok ()));
     let rec drain fifo result =
@@ -439,7 +439,7 @@ let%test_unit "observed pacing advances only on synchronized selected edges" =
 ;;
 
 let%test_unit "engine ownership refuses a conflicting core write without partial effect" =
-  let module Bank = Protemu_f_model.Pin_bank in
+  let module Bank = Electrum_f_model.Pin_bank in
   let reference =
     match Bank.claim Bank.released ~owner:(Kinds.Owner.Engine 0) ~mask:0x02 with
     | Ok bank -> bank
@@ -447,7 +447,7 @@ let%test_unit "engine ownership refuses a conflicting core write without partial
       raise_s
         [%message
           "unexpected reference pin claim refusal"
-            (reason : Protemu_f_model.Fault.Reject.t)]
+            (reason : Electrum_f_model.Fault.Reject.t)]
   in
   [%test_result: bool]
     (Result.is_error

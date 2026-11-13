@@ -189,6 +189,6 @@ let%expect_test "generated core scenarios record an executable rerun" =
        ~settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=240 PROTEMU_SIZE=32 dune runtest ip/program_memory_controller/verif/controller --force
+    ELECTRUM_SEED=20260920 ELECTRUM_TRIALS=240 ELECTRUM_SIZE=32 dune runtest ip/program_memory_controller/verif/controller --force
     |}]
 ;;

@@ -4,14 +4,14 @@
 (* Combinational P1.5 instruction decoder generated from the shared encoding layout.
 
    Opcode values, field positions, spare masks, and extension shape come from
-   [Protemu_isa.Encoding]. The outputs separate base-word legality from extension
+   [Electrum_isa.Encoding]. The outputs separate base-word legality from extension
    resolution so the execution client can request an extension before committing state.
 *)
 
 open! Core
 open! Hardcaml
 open! Signal
-open! Protemu_isa
+open! Electrum_isa
 
 module Error = struct
   let width = 3

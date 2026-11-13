@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml_asic
-open! Protemu_controller
+open! Electrum_controller
 
 let create context ~clock ~enable ~write_enable ~address ~write_data =
   let memory_config =

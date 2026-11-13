@@ -30,9 +30,9 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Control_port = Protemu_core.Control_port
-module Execution_unit = Protemu_core.Execution_unit
-module Program_memory_controller = Protemu_controller.Program_memory_controller
+module Control_port = Electrum_core.Control_port
+module Execution_unit = Electrum_core.Execution_unit
+module Program_memory_controller = Electrum_controller.Program_memory_controller
 module Wire = Host_link_protocol
 
 (* Response sizing derived from the wire limits, and the descriptor INFO reports. *)
@@ -345,7 +345,7 @@ let create (scope : Scope.t) (i : _ I.t) : _ O.t =
     ; byte (high_byte Program_memory_controller.Config.program_depth)
     ; byte (low_byte Wire.Request.max_payload_length)
     ; byte (high_byte Wire.Request.max_payload_length)
-    ; byte Protemu_isa.Pins.count
+    ; byte Electrum_isa.Pins.count
     ]
   in
   check_payload "INFO" info_payload ~length:Wire.Info.length;

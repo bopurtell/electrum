@@ -6,9 +6,9 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_controller
-open! Protemu_core_legacy
-open! Protemu_isa
+open! Electrum_controller
+open! Electrum_core_legacy
+open! Electrum_isa
 module Sim = Cyclesim.With_interface (Executable_core.I) (Executable_core.O)
 
 type mechanism =

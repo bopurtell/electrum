@@ -7,9 +7,9 @@
 ; records; each suite converts its simulator ports at its adapter.
 
 (library
- (name protemu_control_port_agent)
+ (name electrum_control_port_agent)
  (modules item config responder monitor agent)
- (libraries core protemu_controller protemu_core)
+ (libraries core electrum_controller electrum_core)
  (preprocess
   (pps ppx_jane))
  (lint

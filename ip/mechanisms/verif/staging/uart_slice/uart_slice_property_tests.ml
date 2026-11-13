@@ -263,6 +263,6 @@ let%expect_test "the generated property prints its executable reproduction comma
        ~settings:regression_settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=16 dune runtest ip/mechanisms/verif/staging/uart_slice --force
+    ELECTRUM_SEED=20260920 ELECTRUM_TRIALS=96 ELECTRUM_SIZE=16 dune runtest ip/mechanisms/verif/staging/uart_slice --force
     |}]
 ;;

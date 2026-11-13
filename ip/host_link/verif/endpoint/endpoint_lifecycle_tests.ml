@@ -7,13 +7,13 @@
 *)
 
 open! Core
-module Serial_host = Protemu_serial_host_agent
+module Serial_host = Electrum_serial_host_agent
 module Driver = Serial_host.Driver
-module Control_port_agent = Protemu_control_port_agent
+module Control_port_agent = Electrum_control_port_agent
 module Responder = Control_port_agent.Responder
 module Status = Control_port_agent.Item.Status
 module Offer = Control_port_agent.Item.Offer
-module Endpoint = Protemu_host_link_endpoint
+module Endpoint = Electrum_host_link_endpoint
 module Fixture = Endpoint.Fixture
 
 (* What one scenario could leak into the next: the fixture's time and transcript, both

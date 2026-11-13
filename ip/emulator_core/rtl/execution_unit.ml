@@ -12,8 +12,8 @@
 open! Core
 open! Hardcaml
 open! Signal
-open! Protemu_isa
-module Program_memory_controller = Protemu_controller.Program_memory_controller
+open! Electrum_isa
+module Program_memory_controller = Electrum_controller.Program_memory_controller
 
 module Config = struct
   let pc_bits = 17
@@ -182,7 +182,7 @@ end
 let const ~width value = of_int_trunc ~width value
 let field = Instruction_decoder.field
 
-let enum_index all ~equal value = Protemu_isa.Enum.index all ~equal value
+let enum_index all ~equal value = Electrum_isa.Enum.index all ~equal value
 
 let create (scope : Scope.t) (i : _ I.t) : _ O.t =
   let open Always in

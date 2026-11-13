@@ -5,7 +5,7 @@
    protocol_core_property_tests.ml. *)
 
 open! Core
-open! Protemu_f_model
+open! Electrum_f_model
 open! Protocol_core_testbench
 
 let reset_and_incomplete_images_cannot_run create =

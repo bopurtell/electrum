@@ -27,7 +27,7 @@ already declares `(include_subdirs ...)`, so subdirectories are supported and ju
 unused.
 
 Option A switches that stanza from `qualified` to `unqualified`. Files move into
-subsystem directories, but module names stay flat (`Hardcaml_protemu.Pin_bank`),
+subsystem directories, but module names stay flat (`Electrum.Pin_bank`),
 so no OCaml reference anywhere has to change. Qualified namespaces
 (`Pluggable_primitives.Pin_bank`) are a separate, later decision; see
 [Later steps](#later-steps).
@@ -45,7 +45,7 @@ lib/
   legacy/                 p0_observable executable_core
 ```
 
-`protemu_types.ml` is deleted. It is a 14-line instruction-type enum from before the
+`electrum_types.ml` is deleted. It is a 14-line instruction-type enum from before the
 ISA library existed, and nothing references it.
 
 ### What each directory holds
@@ -127,7 +127,7 @@ git mv instruction_decoder.ml control_execution.ml core_mechanisms.ml integrated
 git mv hardware_loader.ml loader_core.ml host_link/
 git mv uart_tx.ml uart_slice.ml observed_transfer.ml observed_transfer_bank.ml primitive_demo.ml staging/
 git mv p0_observable.ml executable_core.ml legacy/
-git rm protemu_types.ml
+git rm electrum_types.ml
 cd ..
 ```
 
@@ -233,14 +233,14 @@ Dune, script, or test file was modified, so the step 1 baseline is `9f6ed2d`'s s
 installed switch served the pre- and post-move runs.
 
 **What changed.** Steps 2–5 as written: 19 `git mv` renames and `git rm
-lib/protemu_types.ml` (no reference in any `.ml`, `.mli`, or `dune` file); the
+lib/electrum_types.ml` (no reference in any `.ml`, `.mli`, or `dune` file); the
 `lib/dune` stanza and comment; the paths in `bin/asic_bundle.ml` `input_paths`
 (entry order unchanged, loader's `lib/staging/observed_transfer.ml` kept) and the
 checker's `expected_source` and loader source-set assertion. A tree-wide search found
 no other non-documentation consumer of `lib/*.ml` paths. Documentation: all 63 Markdown
 links into `lib/`, the two link texts in `verification.md`, and the current-state
 inventory in `construction-plan.md` §2 were rewritten; that inventory's
-`protemu_types.ml` bullet was removed with the file. Historical command-result records
+`electrum_types.ml` bullet was removed with the file. Historical command-result records
 keep the paths as they were: the `@fmt` backlog lists in the P3.1a, P3.1b, P3.4, and
 P3.5 records, the worktree note in `verification_migration.md`, and dated evidence
 under `tinytapeout/reports/` and `flow_results/`.
@@ -272,7 +272,7 @@ move.
 
 The following proposals are retained as historical context. The active
 [architecture migration](architecture_migration.md) supersedes their naming and sequencing:
-`Loader_core` becomes `Protemu_top`, and namespace/library enforcement is deferred. Use
+`Loader_core` becomes `Electrum_top`, and namespace/library enforcement is deferred. Use
 AM0–AM6 for implementation handoffs rather than treating this list as a second plan.
 
 These were deliberately out of scope for HL1; the original proposals follow.

@@ -1,4 +1,4 @@
-"""Read-only Protemu evidence replay and controlled resource-policy comparison.
+"""Read-only Electrum evidence replay and controlled resource-policy comparison.
 
 Not an ASIC Workload_result adapter. No subprocesses, discovery or publication.
 Caller owns stable local parent directories; hashes are consistency checks, not
@@ -129,7 +129,7 @@ def inspect(path):
     raw_result = path.read_bytes()
     oracle.require(len(raw_result) <= 2*1024*1024, "result too large")
     result = decode_json(raw_result)
-    oracle.require(result["schema"] == "protemu.event-response-result" and
+    oracle.require(result["schema"] == "electrum.event-response-result" and
                    type(result["version"]) is int and result["version"] == 1, "unsupported result")
     oracle.require(result["status"] in ("running", "completed", "failed", "interrupted"), "invalid result status")
     oracle.require(oracle.canonical(result["hardware_assignment"]) == oracle.canonical(ASSIGNMENT)
@@ -236,7 +236,7 @@ def compare(left, right):
     # Recheck first side after the second; do not substitute newer evidence.
     oracle.require(inspect(left)["source_digest"] == a["source_digest"] and
                    inspect(right)["source_digest"] == b["source_digest"], "comparison source changed")
-    return {"schema": "protemu.event-response-comparison", "version": 1, "axis": "resource_policy",
+    return {"schema": "electrum.event-response-comparison", "version": 1, "axis": "resource_policy",
             "system_boundary": a["result"]["system_boundary"],
             "hardware_assignment_identity": a["result"]["hardware_assignment_identity"],
             "left": {"result_path": str(Path(left).absolute()), "selection": a["result"]["selection"],

@@ -18,7 +18,7 @@ def main():
     args = parser.parse_args()
     root = args.source_root.resolve(strict=True)
     project = args.project.resolve(strict=True)
-    temporary = tempfile.TemporaryDirectory(prefix='protemu-profile-') if args.output_root is None else None
+    temporary = tempfile.TemporaryDirectory(prefix='electrum-profile-') if args.output_root is None else None
     output = Path(temporary.name) if temporary else args.output_root.absolute()
     if not temporary:
         output.mkdir(parents=True, exist_ok=False)

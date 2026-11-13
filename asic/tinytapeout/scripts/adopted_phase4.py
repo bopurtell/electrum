@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Protemu-owned TT/LibreLane bundle preflight, execution, and results.
+"""Electrum-owned TT/LibreLane bundle preflight, execution, and results.
 
 Adapted from hardcaml_asic/scripts/phase4.py at revision
 414b7f4f92a201bd9bceb6864579dc3ee475101f. This copy is shipped with
-protemu so a physical run needs no hardcaml_asic source checkout.
+electrum so a physical run needs no hardcaml_asic source checkout.
 """
 
 import argparse

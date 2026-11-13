@@ -113,7 +113,7 @@ def retained_fixture(directory):
             traffic.append({"phase": phase, **counts})
     save("capture.json", capture)
     save("workload.json", oracle.workload())
-    save("reference.json", {"schema": "protemu.event-response-reference", "version": 1,
+    save("reference.json", {"schema": "electrum.event-response-reference", "version": 1,
         "halted": True, "image_words": oracle.CONTRACT["image_words"], "pin0_wave": "zz00000000111",
         "cycles": 13, "fetch_cycles": 6, "instructions": 4, "extension_fetches": 2})
     save("emitted/top.v", "// fixture only, not executable RTL\n")
@@ -124,7 +124,7 @@ def retained_fixture(directory):
     for tool in ("emitter", "reference", "iverilog", "vvp"):
         save("tools/"+tool, "fixture-"+tool)
         tools[tool] = {"path": "/fixture/"+tool, "sha256": producer.sha(("fixture-"+tool).encode())}
-    result = {"schema": "protemu.event-response-result", "version": 1, "status": "completed",
+    result = {"schema": "electrum.event-response-result", "version": 1, "status": "completed",
               "hardware_assignment": producer.ASSIGNMENT, "controls": producer.CONTROLS,
               "system_boundary": producer.SYSTEM_BOUNDARY, "composition": producer.COMPOSITION,
               "hardware_assignment_identity": producer.sha(oracle.canonical(producer.ASSIGNMENT)),
@@ -206,7 +206,7 @@ class RawProducerTests(unittest.TestCase):
             evidence.check_waveform(wave[:wave.index("#300000")], raw)
 
     def test_independent_model_must_execute_expected_program(self):
-        reference = {"schema": "protemu.event-response-reference", "version": 1, "halted": True,
+        reference = {"schema": "electrum.event-response-reference", "version": 1, "halted": True,
                      "image_words": oracle.CONTRACT["image_words"], "pin0_wave": "zz00000000111",
                      "cycles": 13, "fetch_cycles": 6, "instructions": 4, "extension_fetches": 2}
         self.assertIn("not compared", producer.check_reference(reference)["schedule_comparison"])
@@ -350,7 +350,7 @@ class PublicCliTests(unittest.TestCase):
             path = retained_fixture(directory)
             code, value = self.query(["inspect", str(path)])
             self.assertEqual(code, 0)
-            self.assertEqual(value["schema"], "protemu.event-response-inspection")
+            self.assertEqual(value["schema"], "electrum.event-response-inspection")
             self.assertEqual(value["result"]["system_boundary"], "core+Program_memory")
             code, value = self.query(["compare", "--left", str(path), "--right", str(path)])
             self.assertEqual(code, 0)

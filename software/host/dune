@@ -1,8 +1,8 @@
 (library
- (name protemu_host)
- (public_name hardcaml_protemu.host)
+ (name electrum_host)
+ (public_name electrum.host)
  (modules host_api)
- (libraries core protemu_isa)
+ (libraries core electrum_isa)
  (preprocess
   (pps ppx_jane))
  (lint

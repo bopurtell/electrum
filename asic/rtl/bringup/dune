@@ -1,6 +1,6 @@
 (library
- (name protemu_asic_bringup)
- (public_name hardcaml_protemu.asic_bringup)
+ (name electrum_asic_bringup)
+ (public_name electrum.asic_bringup)
  (libraries core hardcaml)
  (preprocess
   (pps ppx_hardcaml ppx_jane))

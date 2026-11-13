@@ -11,7 +11,7 @@
 *)
 
 open! Core
-open! Protemu_f_model
+open! Electrum_f_model
 open! Harness
 
 (* --------------------------------------------------------------------------------------

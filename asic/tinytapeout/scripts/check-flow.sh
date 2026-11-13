@@ -16,7 +16,7 @@ script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 repo_root=$(cd "$script_dir/../../.." && pwd)
 flow="$repo_root/asic/flow.sh"
 
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/protemu-check-flow-XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/electrum-check-flow-XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 
 failures=0
@@ -64,11 +64,11 @@ stub_path="$tmp/stub:$PATH"
 
 # ---------------------------------------------------------------------------
 # Help and argument handling, on a machine with no toolchain at all. env -i
-# drops the environment: no opam switch, no PROTEMU_*, no VIRTUAL_ENV.
+# drops the environment: no opam switch, no ELECTRUM_*, no VIRTUAL_ENV.
 # ---------------------------------------------------------------------------
 out=$(env -i PATH=/usr/bin:/bin HOME="$tmp" "$flow" --help 2>&1); status=$?
 expect "--help works with no OCaml and no flow toolchain" 0 "$out" $status \
-    "Usage: ./asic/flow.sh" "PROTEMU_RUN" "Resuming:"
+    "Usage: ./asic/flow.sh" "ELECTRUM_RUN" "Resuming:"
 
 out=$(env -i PATH=/usr/bin:/bin HOME="$tmp" "$script_dir/adopted-flow.sh" 2>&1); status=$?
 expect "the runner still prints help when called with no steps" 0 "$out" $status \
@@ -90,26 +90,26 @@ expect "invocation from another directory resolves this repository" 2 "$out" $st
 # ---------------------------------------------------------------------------
 # Resuming. A separate invocation names its run; it is never guessed.
 # ---------------------------------------------------------------------------
-out=$(PROTEMU_FLOW_OUT="$tmp/no-run" "$flow" report 2>&1); status=$?
-expect "report without PROTEMU_RUN refuses rather than guessing" 2 "$out" $status \
-    "set PROTEMU_RUN" "not assumed to be yours"
+out=$(ELECTRUM_FLOW_OUT="$tmp/no-run" "$flow" report 2>&1); status=$?
+expect "report without ELECTRUM_RUN refuses rather than guessing" 2 "$out" $status \
+    "set ELECTRUM_RUN" "not assumed to be yours"
 
 mkdir -p "$tmp/no-run/runs/decoy"
-out=$(PROTEMU_FLOW_OUT="$tmp/no-run" "$flow" collect 2>&1); status=$?
+out=$(ELECTRUM_FLOW_OUT="$tmp/no-run" "$flow" collect 2>&1); status=$?
 expect "an existing run directory is not adopted by accident" 2 "$out" $status \
-    "set PROTEMU_RUN"
+    "set ELECTRUM_RUN"
 
-# An existing run is reportable with no switch, no PDK and no PROTEMU_*: env -i
+# An existing run is reportable with no switch, no PDK and no ELECTRUM_*: env -i
 # leaves the system python3 and the recorded artifacts, which is all collect and
 # report may need. The record here is a stub, so the reporter's own verdict is not
 # the check; reaching it is.
 mkdir -p "$tmp/existing-run"
 printf '%s\n' '{"schema_version": 1, "status": "failed", "run_id": "stub"}' \
     >"$tmp/existing-run/run.json"
-out=$(env -i PATH=/usr/bin:/bin HOME="$tmp" PROTEMU_RUN="$tmp/existing-run" \
+out=$(env -i PATH=/usr/bin:/bin HOME="$tmp" ELECTRUM_RUN="$tmp/existing-run" \
     "$flow" report 2>&1); status=$?
 checked=$((checked + 1))
-if [[ $out == *"set PROTEMU_RUN"* || $out != *"== report"* ]]; then
+if [[ $out == *"set ELECTRUM_RUN"* || $out != *"== report"* ]]; then
     failures=$((failures + 1))
     printf 'FAIL %s\n' "reporting an existing run needs no OCaml tooling"
     printf '%s\n' "$out" | sed 's/^/     | /'
@@ -122,9 +122,9 @@ fi
 # ---------------------------------------------------------------------------
 mkdir -p "$tmp/occupied/bundle"
 : >"$tmp/occupied/bundle/manifest.json"
-out=$(PROTEMU_FLOW_OUT="$tmp/occupied" "$flow" emit 2>&1); status=$?
+out=$(ELECTRUM_FLOW_OUT="$tmp/occupied" "$flow" emit 2>&1); status=$?
 expect "emit refuses a bundle that already has files" 2 "$out" $status \
-    "bundle is not empty" "choose a new PROTEMU_FLOW_OUT"
+    "bundle is not empty" "choose a new ELECTRUM_FLOW_OUT"
 if [[ ! -f $tmp/occupied/bundle/manifest.json ]]; then
     failures=$((failures + 1))
     printf 'FAIL %s\n' "emit left the existing bundle in place"
@@ -132,18 +132,18 @@ fi
 
 # Relative overrides belong to the invoking directory, including when the entry
 # point now lives beneath asic/. Nothing may reinterpret them relative to itself.
-out=$(cd "$tmp" && PROTEMU_FLOW_OUT=occupied "$flow" emit 2>&1); status=$?
+out=$(cd "$tmp" && ELECTRUM_FLOW_OUT=occupied "$flow" emit 2>&1); status=$?
 expect "relative flow output is resolved against the caller" 2 "$out" $status \
     "$tmp/occupied/bundle" "bundle is not empty"
 
-out=$(cd "$tmp" && PROTEMU_BUNDLE=occupied/bundle PROTEMU_FLOW_OUT=elsewhere \
+out=$(cd "$tmp" && ELECTRUM_BUNDLE=occupied/bundle ELECTRUM_FLOW_OUT=elsewhere \
     "$flow" emit 2>&1); status=$?
 expect "relative bundle override is resolved against the caller" 2 "$out" $status \
     "$tmp/occupied/bundle" "bundle is not empty"
 
-out=$(cd "$tmp" && PROTEMU_RUN=existing-run "$flow" report 2>&1); status=$?
+out=$(cd "$tmp" && ELECTRUM_RUN=existing-run "$flow" report 2>&1); status=$?
 checked=$((checked + 1))
-if [[ $out == *"set PROTEMU_RUN"* || $out != *"== report"* ]]; then
+if [[ $out == *"set ELECTRUM_RUN"* || $out != *"== report"* ]]; then
     failures=$((failures + 1))
     printf 'FAIL %s\n' "relative run override reaches the caller's recorded run"
 else
@@ -185,7 +185,7 @@ rmdir "$first_dir" "$second_dir" 2>/dev/null
 # diagnostics are.
 # ---------------------------------------------------------------------------
 log="$tmp/interrupt.log"
-PATH="$stub_path" STUB_MODE=sleep PROTEMU_FLOW_OUT="$tmp/interrupted" \
+PATH="$stub_path" STUB_MODE=sleep ELECTRUM_FLOW_OUT="$tmp/interrupted" \
     "$flow" build >"$log" 2>&1 &
 flow_pid=$!
 sleep 1

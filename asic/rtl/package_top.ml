@@ -1,21 +1,21 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_controller
-open! Protemu_system
+open! Electrum_controller
+open! Electrum_system
 module I = Tt_cmos5l.I
 module O = Tt_cmos5l.O
 
-let name = "tt_um_leemperor_hardcaml_protemu_loader"
+let name = "tt_um_leemperor_electrum_loader"
 
 let create context (i : _ I.t) =
   let open Signal in
   let core_reset = Tt_cmos5l.synchronised_reset ~clock:i.clk ~rst_n:i.rst_n () in
   let memory_read_data = wire Program_memory_controller.Config.program_width in
   let system =
-    Protemu_top.create
+    Electrum_top.create
       (Elaboration.Context.scope context)
-      { Protemu_top.I.clock_i = i.clk
+      { Electrum_top.I.clock_i = i.clk
       ; reset_i = core_reset
       ; enable_i = i.ena
       ; serial_select_n_i = bit i.ui_in ~pos:0
@@ -23,7 +23,7 @@ let create context (i : _ I.t) =
       ; serial_data_i = bit i.ui_in ~pos:2
       ; prog_mem_read_data_i = memory_read_data
       ; pin_async_i = i.uio_in
-      ; occupied_i = zero Protemu_isa.Pins.count
+      ; occupied_i = zero Electrum_isa.Pins.count
       }
   in
   let ram_read_data =

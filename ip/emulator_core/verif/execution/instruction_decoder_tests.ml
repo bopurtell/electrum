@@ -6,8 +6,8 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_core
-open! Protemu_isa
+open! Electrum_core
+open! Electrum_isa
 module Sim = Cyclesim.With_interface (Instruction_decoder.I) (Instruction_decoder.O)
 
 let bool signal = Bits.to_bool !signal

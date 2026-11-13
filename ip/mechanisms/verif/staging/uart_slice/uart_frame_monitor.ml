@@ -206,7 +206,7 @@ let decode_exn ~bit_cycles samples =
    [uart_frame.trace] and the Verilog writer beside it. *)
 let to_trace t ~byte ~half_period ~tx_pin =
   let line = Buffer.create 512 in
-  bprintf line "# protemu P2.7 first working slice -- UART 8N1 transmit frame\n";
+  bprintf line "# electrum P2.7 first working slice -- UART 8N1 transmit frame\n";
   bprintf
     line
     "# byte=0x%02x half_period=%d bit_cycles=%d tx_pin=%d\n"

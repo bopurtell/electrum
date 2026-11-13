@@ -4,8 +4,8 @@
   core
   hardcaml
   jane_rope
-  protemu_mechanisms
-  protemu_mechanisms_staging)
+  electrum_mechanisms
+  electrum_mechanisms_staging)
  (preprocess
   (pps ppx_jane))
  (lint

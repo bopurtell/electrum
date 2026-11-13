@@ -19,9 +19,9 @@
    which is what the controlled-failure fixture snapshots; a real failure prints it.
 
    Overrides let one recorded seed be rerun, and let a sweep run many, without editing a
-   test: PROTEMU_SEED, PROTEMU_TRIALS and PROTEMU_SIZE replace the recorded settings,
-   PROTEMU_ARTIFACTS names the directory failure artifacts are written to, and
-   PROTEMU_SOURCE_REVISION supplies the revision when git cannot be asked for it.
+   test: ELECTRUM_SEED, ELECTRUM_TRIALS and ELECTRUM_SIZE replace the recorded settings,
+   ELECTRUM_ARTIFACTS names the directory failure artifacts are written to, and
+   ELECTRUM_SOURCE_REVISION supplies the revision when git cannot be asked for it.
 *)
 
 (* Bound before [Core] is opened, which shadows [Unix] in favour of [Core_unix]. Only
@@ -57,9 +57,9 @@ module Settings = struct
          | Some value -> value
          | None -> raise_s [%message "not an integer" (name : string) (value : string)])
     in
-    { seed = int_env "PROTEMU_SEED" ~default:t.seed
-    ; trials = int_env "PROTEMU_TRIALS" ~default:t.trials
-    ; size = int_env "PROTEMU_SIZE" ~default:t.size
+    { seed = int_env "ELECTRUM_SEED" ~default:t.seed
+    ; trials = int_env "ELECTRUM_TRIALS" ~default:t.trials
+    ; size = int_env "ELECTRUM_SIZE" ~default:t.size
     }
   ;;
 end
@@ -70,7 +70,7 @@ end
    the source tree rather than in the build directory: dune runs an inline test inside a
    sandbox whose parent holds a stub [.git], so a plain [git rev-parse] there fails by
    design. DUNE_SOURCEROOT points back at the checkout and is what the commands are aimed
-   at; PROTEMU_SOURCE_REVISION overrides the answer outright, for a build that knows its
+   at; ELECTRUM_SOURCE_REVISION overrides the answer outright, for a build that knows its
    own provenance better than git does.
 
    All of it is best effort. A run outside a checkout, or without git, records
@@ -184,7 +184,7 @@ module Source_identity = struct
 
   let current () =
     let revision =
-      match Sys.getenv "PROTEMU_SOURCE_REVISION" with
+      match Sys.getenv "ELECTRUM_SOURCE_REVISION" with
       | Some revision -> revision
       | None ->
         (match git "rev-parse HEAD" with
@@ -273,9 +273,9 @@ type t =
 let rerun_command ~source_file ~(settings : Settings.t) =
   let directory = Filename.dirname source_file in
   String.concat
-    [ [%string "PROTEMU_SEED=%{settings.seed#Int} "]
-    ; [%string "PROTEMU_TRIALS=%{settings.trials#Int} "]
-    ; [%string "PROTEMU_SIZE=%{settings.size#Int} "]
+    [ [%string "ELECTRUM_SEED=%{settings.seed#Int} "]
+    ; [%string "ELECTRUM_TRIALS=%{settings.trials#Int} "]
+    ; [%string "ELECTRUM_SIZE=%{settings.size#Int} "]
     ; [%string "dune runtest %{directory} --force"]
     ]
 ;;
@@ -322,7 +322,7 @@ let artifact_appendix t = Source_identity.artifact_appendix t.source
    the process id in the file name. *)
 module Artifacts = struct
   let directory () =
-    Option.value (Sys.getenv "PROTEMU_ARTIFACTS") ~default:"protemu-artifacts"
+    Option.value (Sys.getenv "ELECTRUM_ARTIFACTS") ~default:"electrum-artifacts"
   ;;
 
   let write_to ~directory ~test ~(settings : Settings.t) ~trial ~contents =

@@ -23,17 +23,17 @@
 *)
 
 open! Core
-open! Protemu_core
-open! Protemu_host_link
+open! Electrum_core
+open! Electrum_host_link
 open! Endpoint_scenario
 module Wire = Host_link_protocol
-module Serial_host = Protemu_serial_host_agent
+module Serial_host = Electrum_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
 module Observed = Serial_host.Item.Observed
 module Raw = Serial_host.Item.Raw
 module Exchange = Serial_host.Item.Exchange
-module Endpoint = Protemu_host_link_endpoint
+module Endpoint = Electrum_host_link_endpoint
 module Fixture = Endpoint.Fixture
 module Scoreboard = Endpoint.Scoreboard
 

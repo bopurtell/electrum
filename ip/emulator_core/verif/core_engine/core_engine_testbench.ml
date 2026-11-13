@@ -6,9 +6,9 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_controller
-open! Protemu_core
-open! Protemu_isa
+open! Electrum_controller
+open! Electrum_core
+open! Electrum_isa
 module Sim = Cyclesim.With_interface (Emulator_core.I) (Emulator_core.O)
 
 type request =

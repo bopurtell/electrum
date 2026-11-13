@@ -38,8 +38,8 @@
 *)
 
 open! Core
-open! Protemu_controller
-open! Protemu_core
+open! Electrum_controller
+open! Electrum_core
 module Completion = Item.Completion
 module Request = Item.Request
 module Response = Item.Response

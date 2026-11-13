@@ -123,7 +123,7 @@ def main():
     http, terminal, daemon = None, None, None
     try:
         direct_controls(selection, install, output)
-        tools = json.loads(Path(os.environ['PROTEMU_TOOLS_RECEIPT']).read_text())
+        tools = json.loads(Path(os.environ['ELECTRUM_TOOLS_RECEIPT']).read_text())
         prefix = Path(tools['prefix'])
         environment = dict(os.environ, TERM='xterm-256color', OMP_NUM_THREADS='1',
                            OPENBLAS_NUM_THREADS='1', PYTHONDONTWRITEBYTECODE='1')

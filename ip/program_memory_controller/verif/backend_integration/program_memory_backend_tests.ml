@@ -1,9 +1,9 @@
-(* P0.7 integration of protemu's consumer with hardcaml_asic's registered RAM. *)
+(* P0.7 integration of electrum's consumer with hardcaml_asic's registered RAM. *)
 
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_f_model
+open! Electrum_f_model
 open! Protocol_core_testbench
 
 let build = Program_memory_backend_design.build
@@ -83,11 +83,11 @@ let run_acceptance mode =
   | Some failure -> failwith failure
 ;;
 
-let%test_unit "behavioral RAM elaboration serves the protemu consumer" =
+let%test_unit "behavioral RAM elaboration serves the electrum consumer" =
   run Elaboration.Mode.Simulation
 ;;
 
-let%test_unit "explicit flop RAM elaboration serves the protemu consumer" =
+let%test_unit "explicit flop RAM elaboration serves the electrum consumer" =
   run Elaboration.Mode.Implementation
 ;;
 

@@ -11,7 +11,7 @@
 *)
 
 open! Core
-open! Protemu_host_link
+open! Electrum_host_link
 open! Frame_rx_testbench
 
 (* Little-endian bytes 6 to 9 of what was sent. Used where a CRC byte lands in the payload

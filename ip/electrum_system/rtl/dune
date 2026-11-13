@@ -1,13 +1,13 @@
 (library
- (name protemu_system)
- (public_name hardcaml_protemu.system)
+ (name electrum_system)
+ (public_name electrum.system)
  (libraries
   core
   hardcaml
-  protemu_core
-  protemu_host_link
-  protemu_controller
-  protemu_isa)
+  electrum_core
+  electrum_host_link
+  electrum_controller
+  electrum_isa)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

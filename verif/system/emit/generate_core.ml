@@ -6,10 +6,10 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_controller
-open! Protemu_core
-open! Protemu_core_legacy
-open! Protemu_system
+open! Electrum_controller
+open! Electrum_core
+open! Electrum_core_legacy
+open! Electrum_system
 
 let () =
   let args = Sys.get_argv () in
@@ -30,8 +30,8 @@ let () =
       let module C = Circuit.With_interface (Emulator_core.I) (Emulator_core.O) in
       C.create_exn ~name:"integrated_core" (Emulator_core.create scope)
     | "loader" ->
-      let module C = Circuit.With_interface (Protemu_top.I) (Protemu_top.O) in
-      C.create_exn ~name:"loader_core" (Protemu_top.create scope)
+      let module C = Circuit.With_interface (Electrum_top.I) (Electrum_top.O) in
+      C.create_exn ~name:"loader_core" (Electrum_top.create scope)
     | mode -> failwithf "unknown core mode %S" mode ()
   in
   let rtl = Rtl.create Verilog [ circuit ] |> Rtl.full_hierarchy |> Rope.to_string in

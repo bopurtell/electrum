@@ -1,18 +1,18 @@
 (lang dune 3.17)
 
-(name hardcaml_protemu)
+(name electrum)
 
 (generate_opam_files true)
 
 (source
- (github LeEmperor/hardcaml_protemu))
+ (github LeEmperor/electrum))
 
 (authors "Bohdan Purtell <bohdanpurtell@gmail.com>")
 
 (maintainers "Bohdan Purtell <bohdanpurtell@gmail.com>")
 
 (package
- (name hardcaml_protemu)
+ (name electrum)
  (synopsis "Protocol emulator ASIC written in Hardcaml")
  (description
    "Synthesizable protocol emulator blocks written in Hardcaml. Installs the wrapped RTL\nand ISA libraries plus a transport-independent host API and integrated-core simulator\nbackend.")

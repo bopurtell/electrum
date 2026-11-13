@@ -2,7 +2,7 @@
 
 ## Accepted scope — 2026-11-12
 
-PT.3b emitted-RTL functional verification is complete against Protemu base
+PT.3b emitted-RTL functional verification is complete against Electrum base
 `6f1b235`, with the captured test worktree changes, private ASIC revision
 `b0b3384acbe22c8a30264cbdf0c19008c58bf3c5` and clean PDK revision
 `2bbec755dc67ca3db0261c3d6163e15735d66710`. Production hardware and vendor models
@@ -11,10 +11,10 @@ separate; these are functional, not timed/SDF, simulations.
 
 ## Run
 
-From the Protemu checkout with the [PT.3a private dependency](pt3a-adoption.md):
+From the Electrum checkout with the [PT.3a private dependency](pt3a-adoption.md):
 
 ```sh
-flock ../.protemu-build.lock \
+flock ../.electrum-build.lock \
   bash scripts/with-private-asic.sh dune build -j1 @pt3b
 ```
 
@@ -121,7 +121,7 @@ fixes. Earlier failed/superseded attempts remain retained, including PDK symlink
 admission and source-change-during-run failures. A fresh PT.3a gate also passed
 during this work. Ordinary `runtest` was not rerun for these opt-in bench-only changes.
 
-All builds/Verilator compilation used `-j1` and the shared Protemu lock. No physical
+All builds/Verilator compilation used `-j1` and the shared Electrum lock. No physical
 EDA, dependency reinstall, Git staging, commit or push occurred. No claim is made
 that these bounded passes resolve the host's previously observed hardware faults.
 
@@ -131,8 +131,8 @@ The [first PT.3c physical attempt](pt3c-physical-attempt.md) now has a passing
 independent final-netlist functional replay, but failed slow-corner setup and
 unresolved Magic markers. Physical acceptance remains open.
 
-Choose reviewed Protemu-specific macro placement and timing intent, implement the
+Choose reviewed Electrum-specific macro placement and timing intent, implement the
 actual macro-backed system, then replay its final netlist with the functional macro
 model and retain timing/check outcomes. Loader Exact Hardening now has an explicit
 candidate; memory-only Hardening remains rejected. Example timing evidence is not
-Protemu physical acceptance.
+Electrum physical acceptance.

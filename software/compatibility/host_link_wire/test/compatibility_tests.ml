@@ -1,6 +1,6 @@
 open! Core
 module P = Host_link_protocol
-module W = Protemu_host_link_wire.Wire
+module W = Electrum_host_link_wire.Wire
 
 let%test_unit "legacy facade and canonical API share types in both directions" =
   let request : P.Request.t = W.Request.Verify_word { address = 256; expected = 65535 } in

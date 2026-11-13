@@ -10,17 +10,17 @@
 ; directory.
 
 (library
- (name protemu_host_link_endpoint)
+ (name electrum_host_link_endpoint)
  (modules latency fixture scoreboard)
  (libraries
   core
   hardcaml
-  protemu_mechanisms
-  protemu_core
-  protemu_host_link
+  electrum_mechanisms
+  electrum_core
+  electrum_host_link
   host_link_protocol
-  protemu_serial_host_agent
-  protemu_control_port_agent)
+  electrum_serial_host_agent
+  electrum_control_port_agent)
  (preprocess
   (pps ppx_jane))
  (lint
@@ -29,7 +29,7 @@
   (:standard -w -27-57-33-34-35-40-63-47-26)))
 
 (library
- (name protemu_host_link_endpoint_tests)
+ (name electrum_host_link_endpoint_tests)
  (wrapped false)
  (modules
   endpoint_scenario
@@ -45,13 +45,13 @@
    (:standard -source-tree-root .)))
  (libraries
   core
-  protemu_mechanisms
-  protemu_core
-  protemu_host_link
+  electrum_mechanisms
+  electrum_core
+  electrum_host_link
   host_link_protocol
-  protemu_serial_host_agent
-  protemu_control_port_agent
-  protemu_host_link_endpoint)
+  electrum_serial_host_agent
+  electrum_control_port_agent
+  electrum_host_link_endpoint)
  (preprocess
   (pps ppx_jane))
  (lint

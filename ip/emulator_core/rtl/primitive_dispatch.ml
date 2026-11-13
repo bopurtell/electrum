@@ -11,12 +11,12 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Byte_fifo = Protemu_mechanisms.Byte_fifo
-module Input_events = Protemu_mechanisms.Input_events
-module Pin_bank = Protemu_mechanisms.Pin_bank
-module Shift_lane = Protemu_mechanisms.Shift_lane
-module Timing = Protemu_mechanisms.Timing
-open! Protemu_isa
+module Byte_fifo = Electrum_mechanisms.Byte_fifo
+module Input_events = Electrum_mechanisms.Input_events
+module Pin_bank = Electrum_mechanisms.Pin_bank
+module Shift_lane = Electrum_mechanisms.Shift_lane
+module Timing = Electrum_mechanisms.Timing
+open! Electrum_isa
 
 module Reason = struct
   let width = Execution_unit.Config.mechanism_reason_bits

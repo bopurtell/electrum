@@ -2,14 +2,14 @@
 module U = Unix
 open! Core
 open Hardcaml_asic
-open Protemu_chip_project
+open Electrum_chip_project
 
 let usage = "project flow list|describe|plan|emit|run | describe|prepare|preview|resources [OPTIONS]"
 let bad message = failwith (message ^ "\n" ^ usage)
 let ok = Or_error.ok_exn
 let absolute path = if Filename.is_relative path then Filename.concat (U.getcwd ()) path else path
 let rec discover path =
-  if Stdlib.Sys.file_exists (Filename.concat path "hardcaml_protemu.opam") then path
+  if Stdlib.Sys.file_exists (Filename.concat path "electrum.opam") then path
   else let parent = Filename.dirname path in
     if String.equal path parent then bad "use --project-root" else discover parent
 let rec mkdir path =
@@ -120,7 +120,7 @@ let main named command args =
         let store = Option.value_map !results ~f:absolute
           ~default:(Filename.concat source_root "_flow_results/workbench/preparation") in
         let module E = Hardcaml_asic_execution in
-        let request = E.Identity_json.parse (Yojson.Safe.to_string (`Assoc ["project", `String "protemu_loader";
+        let request = E.Identity_json.parse (Yojson.Safe.to_string (`Assoc ["project", `String "electrum_loader";
           "flow", `String selected_flow; "source_root", `String source_root]))
           |> Result.map_error ~f:E.Identity_json.error_message |> Result.ok_or_failwith in
         let outcome = E.Preparation_service.run_cli ~store ~request ~json:!json

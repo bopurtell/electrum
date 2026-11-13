@@ -93,7 +93,7 @@ hardware lives in two files:
 
 | Piece | Location | Role |
 | --- | --- | --- |
-| Wire definitions: magic, version, command/result codes, capability bits, INFO/STATUS layouts, fault/phase values, CRC-8 parameters, software codec | `Wire` in [`host_link_wire/wire.ml`](../host_link_wire/wire.ml), library `hardcaml_protemu.host_link_wire` (no Hardcaml) | Protocol |
+| Wire definitions: magic, version, command/result codes, capability bits, INFO/STATUS layouts, fault/phase values, CRC-8 parameters, software codec | `Wire` in [`host_link_wire/wire.ml`](../host_link_wire/wire.ml), library `electrum.host_link_wire` (no Hardcaml) | Protocol |
 | Synthesizable CRC-8 and elaboration-time wire consistency checks | `Wire_crc.crc8_byte` in [`wire_crc.ml`](../lib/host_link/wire_crc.ml), used by `Frame_rx` and `Command_dispatch` and checking its CRC parameters at every use; each block's own `check_wire_encodings`, with the shared layout check in [`wire_layout.ml`](../lib/host_link/wire_layout.ml) (HL4b4) | Protocol, hardware side |
 | Serial PHY: two-stage synchronizers on `LSEL_N`/`LCLK`/`LDI`, edge detection, select-high (deselect) qualification | `Serial_phy` in [`serial_phy.ml`](../lib/host_link/serial_phy.ml), composed by `Hardware_loader` (HL4b1) | Transport |
 | Frame receive: bit shifting and byte assembly, byte count, saturation and sticky overrun, header and payload capture, CRC accumulation, deselect validation, retained request fields | `Frame_rx` in [`frame_rx.ml`](../lib/host_link/frame_rx.ml), composed by `Hardware_loader`, which supplies request eligibility (HL4b2) | Framing |
@@ -352,7 +352,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
   any existing obligation.
   *Done in the working tree, uncommitted.* Tested revision `89a3fe8` plus the
   uncommitted HL3 diff, recorded separately. [`test/host_link/`](../test/host_link/archived/hl4a/hardware_loader_testbench.ml)
-  (library `protemu_host_link_tests`, in ordinary `@runtest`) has 32 tests against the
+  (library `electrum_host_link_tests`, in ordinary `@runtest`) has 32 tests against the
   real, unsplit `Hardware_loader`, driven only through its serial pins with `Wire` and
   answered by a test-only `Control_port` stub. Contract-faithful cases and labelled
   robustness probes (delayed, stalled, or stray completions) are kept apart. The suite
@@ -488,7 +488,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
   *Done: all four blocks have accepted focused tests; parent accepted on 2026-09-25.*
 - [x] **HL4c1 — `Serial_phy` tests.** *Done in the working tree, uncommitted.*
   [`test/host_link/serial_phy/`](../test/host_link/serial_phy/serial_phy_testbench.ml)
-  (library `protemu_serial_phy_tests`, in `@runtest`) has 8 timing tests and 3 diagnostics
+  (library `electrum_serial_phy_tests`, in `@runtest`) has 8 timing tests and 3 diagnostics
   negatives against hand-written cycles: synchronizer latency, one-cycle events without
   repeats, the qualification threshold, saturation and restart, coincident transitions,
   and the different reset and disable behavior. Four temporary PHY mutations were each
@@ -497,7 +497,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
 - [x] **HL4c2 — `Frame_rx` tests.** *Done in the working tree, uncommitted; accepted with
   HL4b2 on 2026-09-24.*
   [`test/host_link/frame_rx/`](../test/host_link/frame_rx/frame_rx_testbench.ml) (library
-  `protemu_frame_rx_tests`, in `@runtest`) has 22 tests and 4 diagnostics negatives. They
+  `electrum_frame_rx_tests`, in `@runtest`) has 22 tests and 4 diagnostics negatives. They
   drive the receiver with explicit PHY-level events and check hand-written results, fields,
   and cycles: every legal request, bit order and sample cycle, pauses, truncation, partial
   and extra bytes, sticky overrun and prefix attacks, declared-length disagreement,
@@ -508,7 +508,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
 - [x] **HL4c3 — `Command_dispatch` tests.** *Done in the working tree,
   uncommitted; accepted with HL4b3 on 2026-09-25.*
   [`test/host_link/command_dispatch/`](../test/host_link/command_dispatch/command_dispatch_testbench.ml)
-  (library `protemu_command_dispatch_tests`, in `@runtest`) has 34 tests and 5 diagnostics
+  (library `electrum_command_dispatch_tests`, in `@runtest`) has 34 tests and 5 diagnostics
   negatives. They drive the dispatcher with explicit `Frame_rx` handoffs and a test-only
   core stub and check hand-written offers, full request records, responses, and cycles:
   every command and operand, unknown commands, every wrong fixed length, full-width device
@@ -522,7 +522,7 @@ use the HL2 codec, and its dispatcher speaks the HL3 port.
 - [x] **HL4c4 — `Frame_tx` tests.** *Done in the working tree, uncommitted;
   accepted by planning with HL4b4 on 2026-09-25.*
   [`test/host_link/frame_tx/`](../test/host_link/frame_tx/frame_tx_testbench.ml) (library
-  `protemu_frame_tx_tests`, in `@runtest`) has 24 tests and 5 diagnostics negatives. They
+  `electrum_frame_tx_tests`, in `@runtest`) has 24 tests and 5 diagnostics negatives. They
   drive the transmitter with explicit PHY-level events and published frames and check
   hand-written bits and cycles: every legal length, the capture edge, retention, store and
   shifter independence, qualified and unqualified arming, a publication coinciding with the

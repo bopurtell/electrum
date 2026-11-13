@@ -74,7 +74,7 @@ HL4a/HL4c1/HL4c2 expectation changed.
   | `lib/host_link/frame_rx.ml` | Two comments name `Command_dispatch`; code unchanged | `9d927f9af8bbddcae2b91a6616e3f4178121c81ca8064114b9c53a1ef6a572d1` |
   | `bin/asic_bundle.ml` | Loader source inventory adds `lib/host_link/command_dispatch.ml` | `21a3cc864f9f59ff16d0625f1940caaf8a82d9bf23f9ac8349e046340a741b60` |
   | `tinytapeout/scripts/check-adopted-bundle.py` | Loader check requires that input | `658ada0d8eaa89b4da3df4a9fb88156a71e2484a27b20df5f02a439363a9b6a6` |
-  | `test/host_link/command_dispatch/dune` (new) | Library `protemu_command_dispatch_tests`, in `@runtest` | `985b8c1e6ec18d3f551727842614642c9c00368aacdd7a0e25ba4a3637085572` |
+  | `test/host_link/command_dispatch/dune` (new) | Library `electrum_command_dispatch_tests`, in `@runtest` | `985b8c1e6ec18d3f551727842614642c9c00368aacdd7a0e25ba4a3637085572` |
   | `test/host_link/command_dispatch/command_dispatch_testbench.ml` (new) | Cycle owner, core stub, handoff drivers, sampling, checks, diagnostics | `5a464282d5a54126b0194530e4e054bc1296d48b36bcab32c4134d506b2445f3` |
   | `test/host_link/command_dispatch/command_dispatch_command_tests.ml` (new) | 7 tests: offers, operands, lengths, bounds, precedence | `c26d30ac00523325fdd48fb76816a96ca89af10e501d9a98d247f6cd0f948611` |
   | `test/host_link/command_dispatch/command_dispatch_response_tests.ml` (new) | 9 tests: INFO, STATUS, refusals, framing errors, correlation | `b167c7067d42de2a5b0b60f1df97385c54e39d2a2cf8216f657ce7bab4df5b46` |
@@ -230,7 +230,7 @@ dispatch, or wait), and its order after P is kept anyway.
   still written into `response_store`/`response_length` while the loader's S8 (or the
   reset clear) removes `response_pending`.
 - **Dependencies.** `Command_dispatch` depends on Hardcaml, `Wire`, `Control_port`,
-  `Protocol_core.Config` and `Protemu_isa.Pins` (widths and INFO facts), and
+  `Protocol_core.Config` and `Electrum_isa.Pins` (widths and INFO facts), and
   `Frame_rx.crc8_byte` (the preserved CRC helper). It does not depend on
   `Hardware_loader`, `Serial_phy`, response storage, or `Frame_rx`'s block. `Frame_rx` and
   `Serial_phy` are unchanged and do not depend on it.
@@ -362,7 +362,7 @@ No defect was found. The focused tests pin these existing properties:
 ## Focused tests (HL4c3)
 
 [`test/host_link/command_dispatch/`](../test/host_link/command_dispatch/command_dispatch_testbench.ml)
-(library `protemu_command_dispatch_tests`, in ordinary `@runtest`, 39 tests, about 3 s)
+(library `electrum_command_dispatch_tests`, in ordinary `@runtest`, 39 tests, about 3 s)
 follows the per-module convention. The testbench owns the only simulator loop (`cycle`),
 pre-/post-edge sampling, and finite waits (`wait_for`, default budget 100 cycles). It raises
 `Dispatch_failure` with scenario, cycle, phase, what was checked, expected and actual
@@ -511,8 +511,8 @@ digest `42e943a74c4d93ec1744e785a799fb3311109fbbf1c9bba3cba3e01247d86702` before
 
 | Loader bundle file | Pre SHA-256 | Post SHA-256 |
 | --- | --- | --- |
-| `src/tt_um_leemperor_hardcaml_protemu_loader.v` | `4234f98d3539721a4e3ba55e12b03f549b8539af12db56a48e6485b4e518540f` | `0c748fed19afa11026dff603d8d85382aa279a34decd81418c53dcf81fa38770` |
-| `simulation/tt_um_leemperor_hardcaml_protemu_loader.v` | `0ce8cba4af993c7e90d20cb8101e621d4bb4420f0af2dd7546b02e699f12a3a3` | `f37cb851b7dc582d358cd8436bbf185690a8bbd3889eedce326c4bb9142b4e5a` |
+| `src/tt_um_leemperor_electrum_loader.v` | `4234f98d3539721a4e3ba55e12b03f549b8539af12db56a48e6485b4e518540f` | `0c748fed19afa11026dff603d8d85382aa279a34decd81418c53dcf81fa38770` |
+| `simulation/tt_um_leemperor_electrum_loader.v` | `0ce8cba4af993c7e90d20cb8101e621d4bb4420f0af2dd7546b02e699f12a3a3` | `f37cb851b7dc582d358cd8436bbf185690a8bbd3889eedce326c4bb9142b4e5a` |
 
 **External ports.** `ports.py` inventories are identical before and after: `loader_core` 17
 ports (listing SHA-256 `8df490088f44e99e71f8204f5d1222948b38df2ac3092e1a3086b4605e7a0b97`),
@@ -587,9 +587,9 @@ roles 24 316 → 24 332 and 20 782 → 20 798.
 
 The configuration is the loader checker's own, unchanged: the pinned image above, `docker
 run --rm --pull=never --network none`, and
-`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy
--check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top
-tt_um_leemperor_hardcaml_protemu_loader; stat'` on the production synthesis source.
+`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_electrum_loader.v; hierarchy
+-check -top tt_um_leemperor_electrum_loader; synth -top
+tt_um_leemperor_electrum_loader; stat'` on the production synthesis source.
 `synth_stat.sh` ran the identical container and command on the loader bundle emitted by
 each capture (the checker discards stdout); the full checker also passed after.
 
@@ -599,7 +599,7 @@ source, tool, or configuration difference. The unsplit 25 108 is kept for the cu
 comparison. The raw `stat` block ends with Yosys's run-time line, so its hash differs from
 run to run; the digests below cover the block up to that line (31 lines).
 
-**Checker path, `tt_um_leemperor_hardcaml_protemu_loader`** (Yosys 0.66):
+**Checker path, `tt_um_leemperor_electrum_loader`** (Yosys 0.66):
 
 | Cell type | Unsplit | HL4b2 accepted = HL4b3 before | HL4b3 after | Δ vs HL4b2 | Δ vs unsplit |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -990,7 +990,7 @@ what picks the flip-flops.
 # $1 and then list every flip-flop with the wire bit its Q output drives, to $2.
 set -euo pipefail
 bundle="$(cd "$1" && pwd)"
-top=tt_um_leemperor_hardcaml_protemu_loader
+top=tt_um_leemperor_electrum_loader
 image="ghcr.io/librelane/librelane:$(grep '^librelane_version=' tinytapeout/asic-dependencies.lock | cut -d= -f2)"
 docker run --rm --pull=never --network none -v "$bundle:/bundle:ro" \
   --entrypoint sh "$image" -ec \
@@ -1020,7 +1020,7 @@ PY
 
 Usage: variants.py PRE POST OUTDIR
 
-Writes OUTDIR/<name>/src/tt_um_leemperor_hardcaml_protemu_loader.v for each variant, to be
+Writes OUTDIR/<name>/src/tt_um_leemperor_electrum_loader.v for each variant, to be
 synthesized with the checker's own container and command (synth_stat.sh). Every edit is a
 consistent renaming on emitted RTL; none changes logic.
 
@@ -1035,7 +1035,7 @@ import random
 import re
 import sys
 
-TOP = "tt_um_leemperor_hardcaml_protemu_loader"
+TOP = "tt_um_leemperor_electrum_loader"
 REGS = ["dispatch", "wait_read", "wait_abort"]
 pre = open(sys.argv[1]).read()
 post = open(sys.argv[2]).read()
@@ -1101,7 +1101,7 @@ changes. Each edit is an exact asserted substitution.
 import pathlib
 import sys
 
-TOP = "tt_um_leemperor_hardcaml_protemu_loader"
+TOP = "tt_um_leemperor_electrum_loader"
 pre = open(sys.argv[1]).read()
 post = open(sys.argv[2]).read()
 out = pathlib.Path(sys.argv[3])

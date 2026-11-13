@@ -13,7 +13,7 @@
 *)
 
 open! Core
-open! Protemu_host_link
+open! Electrum_host_link
 open! Frame_tx_testbench
 
 (* Where in a response's life a one-cycle reset or disable lands. *)

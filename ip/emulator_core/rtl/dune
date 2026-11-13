@@ -1,7 +1,7 @@
 (library
- (name protemu_core)
- (public_name hardcaml_protemu.core)
- (libraries core hardcaml protemu_controller protemu_mechanisms protemu_isa)
+ (name electrum_core)
+ (public_name electrum.core)
+ (libraries core hardcaml electrum_controller electrum_mechanisms electrum_isa)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

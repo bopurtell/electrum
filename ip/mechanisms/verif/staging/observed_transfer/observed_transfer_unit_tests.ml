@@ -1,7 +1,7 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms
+open! Electrum_mechanisms_staging
 open! Observed_transfer_testbench
 
 let%test_unit "P2.6 observed edges pace a preconfigured lane and abort releases pins" =

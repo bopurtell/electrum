@@ -4,7 +4,7 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms_staging
 module Sim = Cyclesim.With_interface (Observed_transfer_bank.I) (Observed_transfer_bank.O)
 
 let bits width value = Bits.of_int_trunc ~width value

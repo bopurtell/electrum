@@ -4,7 +4,7 @@
 (* Unit coverage for P3.4 image metadata, compatibility, and structured error codes. *)
 
 open! Core
-module Api = Protemu_host.Host_api
+module Api = Electrum_host.Host_api
 
 let discovery =
   { Api.Discovery.api_version = Api.Constants.api

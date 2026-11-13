@@ -1,9 +1,9 @@
 (library
- (name protemu_host_simulator_tests)
+ (name electrum_host_simulator_tests)
  (wrapped false)
  (modules host_simulator_tests)
  (inline_tests)
- (libraries core protemu_host protemu_simulator protemu_isa protemu_core)
+ (libraries core electrum_host electrum_simulator electrum_isa electrum_core)
  (preprocess
   (pps ppx_jane))
  (lint

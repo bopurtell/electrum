@@ -23,7 +23,7 @@ _opam/
 *.vcd
 
 # verification harness failure reports (docs/verification.md section 8)
-protemu-artifacts/
+electrum-artifacts/
 
 # Legacy runtime locations are held in place, never implicitly migrated.
 /.venv/

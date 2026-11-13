@@ -77,7 +77,7 @@ def check_capture(capture):
     No host seconds, Fmax, analog CDC claim, fetch count or physical delta is inferred.
     """
     fields(capture, ("schema", "version", "status", "workload", "phases"), "capture")
-    require(capture["schema"] == "protemu.event-response-capture", "unsupported capture schema")
+    require(capture["schema"] == "electrum.event-response-capture", "unsupported capture schema")
     require(type(capture["version"]) is int and capture["version"] == 1,
             "unsupported capture version")
     require(capture["status"] == "completed", "capture is not completed")

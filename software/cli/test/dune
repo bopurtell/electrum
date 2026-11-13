@@ -1,7 +1,7 @@
 (rule
  (target p3.4-echo.generated.pimg)
  (action
-  (run %{exe:../protemu.exe} sim write-echo-image -output %{target})))
+  (run %{exe:../electrum.exe} sim write-echo-image -output %{target})))
 
 (rule
  (alias runtest)
@@ -23,7 +23,7 @@
     (chdir
      ..
      (run
-      %{exe:../protemu.exe}
+      %{exe:../electrum.exe}
       sim
       script
       examples/p3.4-workflow.sim
@@ -49,7 +49,7 @@
      (with-accepted-exit-codes
       2
       (run
-       %{exe:../protemu.exe}
+       %{exe:../electrum.exe}
        sim
        script
        examples/p3.4-failing-workflow.sim)))))))
@@ -75,7 +75,7 @@
     p3.4-invalid-capacity.stderr
     (with-accepted-exit-codes
      2
-     (run %{exe:../protemu.exe} sim info -trace-capacity 0))))))
+     (run %{exe:../electrum.exe} sim info -trace-capacity 0))))))
 
 (rule
  (alias runtest)
@@ -100,7 +100,7 @@
     (with-accepted-exit-codes
      2
      (run
-      %{exe:../protemu.exe}
+      %{exe:../electrum.exe}
       sim
       script
       %{dep:../examples/p3.4-mismatched-expect.sim}))))))
@@ -130,7 +130,7 @@
     (chdir
      ..
      (run
-      %{exe:../protemu.exe}
+      %{exe:../electrum.exe}
       sim
       script
       examples/p3.4-transfer-timeout.sim))))))

@@ -68,7 +68,7 @@ expectation changed.
   | `lib/host_link/hardware_loader.ml` | Composes `Frame_rx`; 13 registers, their statements, and the receive/validation expressions removed | `766367444766dbd96376964239177305fa455634cdfd4576a22e9fba8d3c5b02` |
   | `bin/asic_bundle.ml` | Loader source inventory adds `lib/host_link/frame_rx.ml` | `e2931db6ba971718308b3b02dda60042072f7a7d9eac504c4fe14a97a55303c6` |
   | `tinytapeout/scripts/check-adopted-bundle.py` | Loader check requires that input | `58c3adfa1e9c85ef475af6fcf1ebf7fdc8fed62a43fde13c957a31cf4b552a2a` |
-  | `test/host_link/frame_rx/dune` (new) | Library `protemu_frame_rx_tests`, in `@runtest` | `1a30b1ba93a78896c6b5591839726a2d28bcc7bfc19ac13fdea55d5dab629f24` |
+  | `test/host_link/frame_rx/dune` (new) | Library `electrum_frame_rx_tests`, in `@runtest` | `1a30b1ba93a78896c6b5591839726a2d28bcc7bfc19ac13fdea55d5dab629f24` |
   | `test/host_link/frame_rx/frame_rx_testbench.ml` (new) | Cycle owner, PHY-level drivers, sampling, checks, diagnostics | `32f8545efdc82e62239f69ee0f03faa427d822a1ccc5ccff4bddaa80814a5947` |
   | `test/host_link/frame_rx/frame_rx_receive_tests.ml` (new) | 4 tests: legal receive and handoff | `9a8c3dd4dcacb51460763b52b1d5f6f7ab88fa4ccd838aa7994c6f015813845d` |
   | `test/host_link/frame_rx/frame_rx_validation_tests.ml` (new) | 9 tests: length, overrun, validation, correlation | `65230052ce2baf00004fb0a685bc2cf882e8b3d0b76be75f2ed3ed815d231d0b` |
@@ -307,7 +307,7 @@ No defect was found. The focused tests pin these existing properties:
 ## Focused tests (HL4c2)
 
 [`test/host_link/frame_rx/`](../test/host_link/frame_rx/frame_rx_testbench.ml) (library
-`protemu_frame_rx_tests`, in ordinary `@runtest`, 26 tests, about 2 s) follows the
+`electrum_frame_rx_tests`, in ordinary `@runtest`, 26 tests, about 2 s) follows the
 per-module convention. The testbench owns the only simulator loop (`cycle`), pre-/post-edge
 sampling, and finite waits (`wait_for`, default budget 100 cycles). It raises `Rx_failure`
 with scenario, cycle, phase, what was checked, expected and actual values, and a transcript
@@ -429,8 +429,8 @@ digest `42e943a74c4d93ec1744e785a799fb3311109fbbf1c9bba3cba3e01247d86702` before
 
 | Loader bundle file | Pre SHA-256 | Post SHA-256 |
 | --- | --- | --- |
-| `src/tt_um_leemperor_hardcaml_protemu_loader.v` | `6c03b88f53d6fba6c20b60da803bdb039e4d1e242fc36c00155dd3e9964a9817` | `4234f98d3539721a4e3ba55e12b03f549b8539af12db56a48e6485b4e518540f` |
-| `simulation/tt_um_leemperor_hardcaml_protemu_loader.v` | `316698b26c1efc79db1932c7d21c6bb15f33d47fe5f39cd8799908e44dc071e2` | `0ce8cba4af993c7e90d20cb8101e621d4bb4420f0af2dd7546b02e699f12a3a3` |
+| `src/tt_um_leemperor_electrum_loader.v` | `6c03b88f53d6fba6c20b60da803bdb039e4d1e242fc36c00155dd3e9964a9817` | `4234f98d3539721a4e3ba55e12b03f549b8539af12db56a48e6485b4e518540f` |
+| `simulation/tt_um_leemperor_electrum_loader.v` | `316698b26c1efc79db1932c7d21c6bb15f33d47fe5f39cd8799908e44dc071e2` | `0ce8cba4af993c7e90d20cb8101e621d4bb4420f0af2dd7546b02e699f12a3a3` |
 
 **External ports.** `ports.py` read each module header and declarations (index, direction,
 width, name). The inventories are identical before and after: `loader_core` 17 ports
@@ -493,9 +493,9 @@ assignment shapes only by the extra `~` and the AND operand order.
 
 The configuration is the loader checker's own, unchanged: the pinned image above, `docker
 run --rm --pull=never --network none`, and
-`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy
--check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top
-tt_um_leemperor_hardcaml_protemu_loader; stat'` on the production synthesis source. The
+`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_electrum_loader.v; hierarchy
+-check -top tt_um_leemperor_electrum_loader; synth -top
+tt_um_leemperor_electrum_loader; stat'` on the production synthesis source. The
 checker discards stdout, so `synth_stat.sh` ran the identical container and command on the
 loader bundle emitted by each capture; the checker itself also passed before and after.
 
@@ -503,7 +503,7 @@ loader bundle emitted by each capture; the checker itself also passed before and
 column, so the next baseline is the accepted HL4b1 result with no source, tool, or
 configuration difference. The unsplit 25 108 is kept for the cumulative comparison.
 
-**Checker path, `tt_um_leemperor_hardcaml_protemu_loader`** (Yosys 0.66):
+**Checker path, `tt_um_leemperor_electrum_loader`** (Yosys 0.66):
 
 | Cell type | Unsplit (HL4b1 before) | HL4b1 accepted = HL4b2 before | HL4b2 after | Δ vs HL4b1 | Δ vs unsplit |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -723,7 +723,7 @@ set -euo pipefail
 bundle="$(cd "$1" && pwd)"
 log="$2"
 root="$(pwd)"
-top=tt_um_leemperor_hardcaml_protemu_loader
+top=tt_um_leemperor_electrum_loader
 image="ghcr.io/librelane/librelane:$(grep '^librelane_version=' tinytapeout/asic-dependencies.lock | cut -d= -f2)"
 docker run --rm --pull=never --network none \
   -v "$bundle:/bundle:ro" -v "$root/tinytapeout/test:/test:ro" \
@@ -845,7 +845,7 @@ print(f"applied {name}")
 
 Usage: variants.py PRE POST OUTDIR
 
-Writes OUTDIR/<name>/src/tt_um_leemperor_hardcaml_protemu_loader.v for each variant, to be
+Writes OUTDIR/<name>/src/tt_um_leemperor_electrum_loader.v for each variant, to be
 synthesized with the checker's own container and command (synth_stat.sh). Every edit is an
 exact, asserted text substitution on emitted RTL; none changes logic except where the name
 says it adds or removes one of the two HL4b2 structural differences.
@@ -867,7 +867,7 @@ import random
 import re
 import sys
 
-TOP = "tt_um_leemperor_hardcaml_protemu_loader"
+TOP = "tt_um_leemperor_electrum_loader"
 REGS = ["bit_count", "byte_count", "byte_shift", "crc_match", "payload", "payload_length",
         "request_active", "request_command", "request_crc", "request_magic",
         "request_overrun", "request_tag", "request_version"]
@@ -976,16 +976,16 @@ with `./scripts/with-switch.sh dune exec -j 5 bin/generate_core.exe -- loader <f
 M4 was applied, then renamed with the same `sed`) and `equiv_status -assert` replaced by
 `equiv_status`, so it reports the unproven cells instead of stopping.
 
-`wgold.v` and `wgate.v` are the pre and post `src/tt_um_leemperor_hardcaml_protemu_loader.v`,
+`wgold.v` and `wgate.v` are the pre and post `src/tt_um_leemperor_electrum_loader.v`,
 the gate with the same `sed 's/loader\$frame_rx\$reg_/loader$reg_/g'` rename.
 
 ### `wrapper_plain.ys`
 
 ```text
 read_verilog wgold.v
-rename tt_um_leemperor_hardcaml_protemu_loader gold
+rename tt_um_leemperor_electrum_loader gold
 read_verilog wgate.v
-rename tt_um_leemperor_hardcaml_protemu_loader gate
+rename tt_um_leemperor_electrum_loader gate
 proc -norom
 opt_clean
 rename -hide w:signal_* w:signal_reg_* %d
@@ -1001,9 +1001,9 @@ equiv_status
 
 ```text
 read_verilog wgold.v
-rename tt_um_leemperor_hardcaml_protemu_loader gold
+rename tt_um_leemperor_electrum_loader gold
 read_verilog wgate.v
-rename tt_um_leemperor_hardcaml_protemu_loader gate
+rename tt_um_leemperor_electrum_loader gate
 proc -norom
 async2sync
 opt_clean

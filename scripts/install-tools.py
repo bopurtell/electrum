@@ -279,8 +279,8 @@ def activation():
     generation = Path(value['generation'])
     prefix, switch = Path(value['prefix']), Path(receipt['switch_prefix'])
     # Generate from validated metadata, never evaluate a mutable activation file.
-    print(f'export PROTEMU_TOOLS_RECEIPT={shlex.quote(str(generation / "receipt.json"))}')
-    print(f'export PROTEMU_TOOLS_PREFIX={shlex.quote(str(prefix))}')
+    print(f'export ELECTRUM_TOOLS_RECEIPT={shlex.quote(str(generation / "receipt.json"))}')
+    print(f'export ELECTRUM_TOOLS_PREFIX={shlex.quote(str(prefix))}')
     print(f'export OCAMLPATH={shlex.quote(str(prefix / "lib") + ":" + str(switch / "lib"))}')
     for key, path in dict(OPAM_SWITCH_PREFIX=switch, OCAMLLIB=switch / 'lib/ocaml',
                           CAMLLIB=switch / 'lib/ocaml',

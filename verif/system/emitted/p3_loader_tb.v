@@ -113,7 +113,7 @@ module p3_loader_tb;
 `endif
   assign pins_o = wrapper_uio_out;
   assign pin_oe_o = wrapper_uio_oe;
-  tt_um_leemperor_hardcaml_protemu_loader dut (
+  tt_um_leemperor_electrum_loader dut (
     .ui_in(wrapper_ui_in),
     .uio_in(pin_async_i),
     .ena(enable_i),

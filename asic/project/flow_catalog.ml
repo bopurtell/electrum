@@ -7,7 +7,7 @@ let create () =
   let open Or_error.Let_syntax in
   let%bind profile =
     Flow.Profile.create ~id:"balanced" ~label:"Balanced"
-      ~description:"Current Protemu synthesis defaults; unchanged timing envelope"
+      ~description:"Current Electrum synthesis defaults; unchanged timing envelope"
       ~assignments:[]
   in
   let%bind timing_repair =

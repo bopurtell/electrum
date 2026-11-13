@@ -45,7 +45,7 @@ served every pre- and post-change run.
 
 [`control_port.ml`](../lib/emulator_core/control_port.ml) holds three direction-neutral
 records with `[@@deriving hardcaml]`. The module depends only on the width definitions of
-`Protocol_core.Config`, `Control_execution`, and `Protemu_isa.Pins`, which do not depend
+`Protocol_core.Config`, `Control_execution`, and `Electrum_isa.Pins`, which do not depend
 on it. It depends on no consumer, so there is no cycle. Every field keeps its previous
 width. Nothing was merged, compressed, or removed.
 

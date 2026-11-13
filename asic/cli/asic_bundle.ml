@@ -4,7 +4,7 @@
 
 open! Core
 open! Hardcaml_asic
-open! Protemu_chip_project
+open! Electrum_chip_project
 
 let check_conflicts ~selection ?operation kind =
   let operation =

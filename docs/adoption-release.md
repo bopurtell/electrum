@@ -2,20 +2,20 @@
 
 ## Result
 
-**Normal installed tooling is complete in the accepted scope below.** Protemu
+**Normal installed tooling is complete in the accepted scope below.** Electrum
 builds against a checked local installation, exposes public named flows and
 preparation, runs real simulation cases in Workbench, and displays a large retained
 negative timing result with validated provenance. Existing failed evidence was
-preserved. This is not a claim of Protemu timing closure or full physical acceptance.
+preserved. This is not a claim of Electrum timing closure or full physical acceptance.
 
 ## Everyday commands on this machine
 
-From the Protemu checkout:
+From the Electrum checkout:
 
 ```sh
 source scripts/env.sh
-flock ../.protemu-build.lock dune build -j10 @all
-flock ../.protemu-build.lock dune runtest -j2
+flock ../.electrum-build.lock dune build -j10 @all
+flock ../.electrum-build.lock dune runtest -j2
 
 bash scripts/workbench.sh status
 bash scripts/workbench.sh daemon
@@ -141,7 +141,7 @@ This is 6–6.9 periods under the 10-tick simulation clock contract. Flops/Exact
 comparison has ten zero deltas with controlled assignment, sampling and tool/source
 identities. The independent software model's 13-cycle schedule is a different
 measurement and is not compared as a speed result. Artifacts are generic
-`protemu.event-response-result` JSON and VCD, **not** ASIC's memory-only
+`electrum.event-response-result` JSON and VCD, **not** ASIC's memory-only
 `Workload_result`. Whole-package physical/performance selection is not inferred.
 
 Actual public RPC execution and production PTY navigation/viewing verified real
@@ -209,18 +209,18 @@ is not blanket acceptance or a promise that future full runs cannot time out.
 See `_flow_results/pt3c/magic-controls-0d5ed7ff-20261112-02/` and
 `magic-recheck-0d5ed7ff-20261112-01/`.
 
-## Nine-part status: generic capability versus Protemu obligation
+## Nine-part status: generic capability versus Electrum obligation
 
 | Item | Current disposition |
 | --- | --- |
 | PT.0 | Complete in bounded example scope; original probe failures preserved |
 | PT.1 | Required stock Exact backend complete; timed-model work optional/deferred |
-| PT.2 | Stock/R0 library/example physical scope complete; Protemu Magic recheck passes separately |
-| PT.3 | Normal adoption, system regression and routed functionality pass; **Protemu setup timing/full physical acceptance remain open** |
+| PT.2 | Stock/R0 library/example physical scope complete; Electrum Magic recheck passes separately |
+| PT.3 | Normal adoption, system regression and routed functionality pass; **Electrum setup timing/full physical acceptance remain open** |
 | PT.4 | Normal installed preparation and exact resource inventory pass |
 | PT.5 | Public reporting/inspection works; historical failed coarse record still cannot prove all stage/retention/resource measurements |
 | PT.6 | Normal installed Resources UI and bounded typed negative Timing reinspection pass |
-| PT.7 | Constraint review identifies real topology/IO limits; ordinary STA works, **Protemu-specific linked exceptions/physical timing adequacy remain open** |
+| PT.7 | Constraint review identifies real topology/IO limits; ordinary STA works, **Electrum-specific linked exceptions/physical timing adequacy remain open** |
 | PT.8 | Fixed loader association and controlled core+RAM functional comparison pass; **whole-package performance/physical selection remain open** |
 
 The old `0d5ed7ff` reader reports unresolved realization because its failed record
@@ -242,7 +242,7 @@ timing-inspection paths. All owned daemons/clients/children stopped; no EDA rema
 
 This does not qualify every future backlog item, multi-macro profile, full signoff,
 P6 compiled-source stamping, platform portability or unsupported linked exceptions.
-The owner subsequently committed/pushed ASIC as `4b6bb60` and Protemu as `edbcee9`;
+The owner subsequently committed/pushed ASIC as `4b6bb60` and Electrum as `edbcee9`;
 Workbench still has uncommitted tooling changes. The normal ASIC selector now uses
 that committed revision; the retained acceptance evidence above remains tied to
 its original working-tree captures. No Git staging, commits, pushes or authorship

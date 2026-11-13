@@ -215,7 +215,7 @@ module p2_uart_slice_tb;
     begin
       trace = $fopen("uart_slice_rtl.trace", "w");
       if (trace == 0) $fatal(1, "could not open the trace file");
-      $fwrite(trace, "# protemu P2.7 first working slice -- UART 8N1 transmit frame\n");
+      $fwrite(trace, "# electrum P2.7 first working slice -- UART 8N1 transmit frame\n");
       $fwrite(trace, "# byte=0x%02h half_period=%0d bit_cycles=%0d tx_pin=%0d\n",
               BYTE_VALUE[7:0], HALF_PERIOD, BIT_CYCLES, TX_PIN);
       $fwrite(trace, "# slot label level start end\n");

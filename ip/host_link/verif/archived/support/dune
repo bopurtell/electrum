@@ -3,11 +3,15 @@
 (library
  (name hardcaml_protemu)
  (libraries
-  protemu_mechanisms
-  protemu_mechanisms_staging
-  protemu_controller
-  protemu_core
-  protemu_core_legacy
-  protemu_host_link
-  protemu_system
-  protemu_asic_bringup))
+  electrum_mechanisms
+  electrum_mechanisms_staging
+  electrum_controller
+  electrum_core
+  electrum_core_legacy
+  electrum_host_link
+  electrum_system
+  electrum_asic_bringup
+  electrum_host_link_wire
+  electrum_host_link_endpoint
+  electrum_serial_host_agent
+  electrum_control_port_agent))

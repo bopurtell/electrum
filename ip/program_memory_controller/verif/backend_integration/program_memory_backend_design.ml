@@ -6,13 +6,13 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_controller
+open! Electrum_controller
 
 module Design = struct
   module I = Program_memory_controller.I
   module O = Program_memory_controller.O
 
-  let name = "protemu_program_memory_backend"
+  let name = "electrum_program_memory_backend"
 
   let create context (i : _ I.t) =
     let read_data = Signal.wire Program_memory_controller.Config.program_width in
@@ -45,10 +45,10 @@ end
 
 let project () =
   Project.create
-    ~name:"protemu_program_memory_backend"
+    ~name:"electrum_program_memory_backend"
     ~metadata:
-      { title = "Protemu program memory backend test"
-      ; author = "hardcaml_protemu"
+      { title = "Electrum program memory backend test"
+      ; author = "electrum"
       ; description = "Consumer integration with explicit flop-backed memory"
       }
     ~design:(module Design)

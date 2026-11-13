@@ -29,7 +29,7 @@ generated stand-in would read as though someone had checked the result.
 
 Usage:
   ./flow.sh archive                                 # the run this invocation made
-  PROTEMU_RUN=/path/to/run ./flow.sh archive        # an earlier run
+  ELECTRUM_RUN=/path/to/run ./flow.sh archive        # an earlier run
   asic/tinytapeout/scripts/adopted_archive.py RUN_DIR --output _flow_results/archives/NAME
   asic/tinytapeout/scripts/adopted_archive.py RUN_DIR --output DIR --force
   asic/tinytapeout/scripts/adopted_archive.py RUN_DIR --list   # selection only, writes nothing

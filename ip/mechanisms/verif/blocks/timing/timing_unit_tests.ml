@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 open! Timing_testbench
 
 let%test_unit "P2.3 exact delay, immediate level, stale edge, and timeout precedence" =

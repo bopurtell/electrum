@@ -35,7 +35,7 @@ def run_case(install, case, attempt, directory, *, run_command=None, evidence_re
     retained = Path(event['results_root'])
     retained.mkdir(parents=True, exist_ok=True)
     output = retained / (attempt + '-' + case + '-' + uuid.uuid4().hex)
-    result = dict(contract='protemu.fs2-event-attempt', schema_version=1,
+    result = dict(contract='electrum.fs2-event-attempt', schema_version=1,
                   attempt_id=attempt, case_id=case, seed='0', selection=selection, source_role=role,
                   status='running', source_fence='pending', retained_result=str(output / 'result.json'),
                   asic_workload_result=False, association='producer-owned hardware_assignment; no loader bundle association',
@@ -151,7 +151,7 @@ def comparison(events, install, attempt, completed, artifact_root, *, evidence_r
     provider.require(compared['left_digest'] == completed['flops']['producer_result_sha256'] and
                      compared['right_digest'] == completed['exact']['producer_result_sha256'],
                      'comparison replaced an exact attempt result')
-    value = dict(contract='protemu.fs2-event-comparison', schema_version=1, attempt_id=attempt,
+    value = dict(contract='electrum.fs2-event-comparison', schema_version=1, attempt_id=attempt,
                  left_case='flops', right_case='exact', left_result=str(left), right_result=str(right),
                  asic_workload_result=False, comparison=compared)
     path = artifact_root / 'event-comparison.json'

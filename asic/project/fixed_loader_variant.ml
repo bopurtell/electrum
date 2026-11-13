@@ -8,7 +8,7 @@ let create () =
   let%bind package = Hardware_variant.Parameter.create
     ~key:"package" ~kind:(Enumeration [ "loader-v1" ]) in
   let%bind schema = Hardware_variant.Schema.create
-    ~design_id:"protemu-loader" ~schema_id:"fixed-loader-v1" ~parameters:[ package ] in
+    ~design_id:"electrum-loader" ~schema_id:"fixed-loader-v1" ~parameters:[ package ] in
   Hardware_variant.create ~schema ~assignments:[ "package", Enum "loader-v1" ]
 ;;
 

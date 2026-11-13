@@ -11,13 +11,13 @@
 ; when the P3.4 host API needs to be depended on from elsewhere.
 
 (library
- (name protemu_f_model)
- (libraries core protemu_isa protemu_firmware_examples)
+ (name electrum_f_model)
+ (libraries core electrum_isa electrum_firmware_examples)
  (flags
   ; The instruction specification is opened into every module here, so [Kinds], [Pins],
   ; [Encoding] and the rest are reached by their own names. The model consumes the
   ; specification; it does not own it, and nothing in this directory may redefine it.
-  (:standard -open Protemu_isa))
+  (:standard -open Electrum_isa))
  (preprocess
   (pps ppx_jane))
  (lint

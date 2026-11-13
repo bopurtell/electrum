@@ -14,7 +14,7 @@
   ; is outside tinytapeout's Dune dirs. Re-observe them on every explicit gate.
   (universe)
   ../../../dune-project
-  ../../../hardcaml_protemu.opam
+  ../../../electrum.opam
   (source_tree ../../cli)
   (source_tree ../../project)
   (source_tree ../../rtl)
@@ -24,7 +24,7 @@
   (source_tree ../../../ip/program_memory_controller/rtl)
   (source_tree ../../../ip/emulator_core/rtl)
   (source_tree ../../../ip/host_link/rtl)
-  (source_tree ../../../ip/protemu_system/rtl)
+  (source_tree ../../../ip/electrum_system/rtl)
   ../../tinytapeout/asic-dependencies.lock
   ../../tinytapeout/toolchain.lock)
  (action

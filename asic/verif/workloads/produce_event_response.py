@@ -5,7 +5,7 @@ Interface for the FS2 owner (no builds, provisioning, Docker or discovery):
   python3 -B asic/verif/workloads/produce_event_response.py \
     --selection flops|exact --output NEWDIR --pdk PDK_ROOT
 Optional --mode behavioral is a separate baseline, never Exact implementation.
-Artifacts: result.json (Protemu schema), capture.json, reference.json, per-phase
+Artifacts: result.json (Electrum schema), capture.json, reference.json, per-phase
 raw.trace + waveform.vcd, emitted top.v/inventory, source/tool/model snapshots.
 All execution is opt-in via main(); importing pure readers launches nothing.
 """
@@ -33,19 +33,19 @@ MODELS = {
         "d0a6258f8e9c93d1d5b1f78c0a1d66f30d28b1ad8037e5e07f53d1a4e3670b12",
 }
 SYSTEM_BOUNDARY = "core+Program_memory"
-COMPOSITION = {"system_boundary": SYSTEM_BOUNDARY, "top_module": "protemu_event_response",
-               "core": "Protemu_core.Emulator_core", "memory": "Protemu_asic_rtl.Program_memory",
+COMPOSITION = {"system_boundary": SYSTEM_BOUNDARY, "top_module": "electrum_event_response",
+               "core": "Electrum_core.Emulator_core", "memory": "Electrum_asic_rtl.Program_memory",
                "host_transport": "direct-control-port", "host_link": False,
                "package_wrapper": False, "program_depth": 256, "program_width": 16,
                "read_latency_edges": 1}
-# This is NOT the installer's protemu-loader/fixed-loader-v1 Hardware_variant.
+# This is NOT the installer's electrum-loader/fixed-loader-v1 Hardware_variant.
 # It identifies this verification composition, separately from resource policy.
-ASSIGNMENT = {"design": "protemu-event-response-core-program-memory-v1",
+ASSIGNMENT = {"design": "electrum-event-response-core-program-memory-v1",
               "system_boundary": SYSTEM_BOUNDARY, "host_transport": "direct-control-port",
               "host_link": False, "package_wrapper": False, "program_depth": 256,
               "program_width": 16, "read_latency_edges": 1, "isa": "current-word16",
               "cores": 1, "shift_lanes": 1}
-CONTROLS = {"adapter": "protemu.event-response-emitted-v1", "clock_period_ns": 10,
+CONTROLS = {"adapter": "electrum.event-response-emitted-v1", "clock_period_ns": 10,
             "sampling": oracle.CONTRACT["sampling"], "capture_edges": 48,
             "model_semantics": "digital-functional-latency1-no-initial-RAM-assumptions"}
 
@@ -143,7 +143,7 @@ def parse_trace(text, phase):
 
 
 def check_reference(value):
-    oracle.require(value == {"schema": "protemu.event-response-reference", "version": 1,
+    oracle.require(value == {"schema": "electrum.event-response-reference", "version": 1,
         "halted": True, "image_words": oracle.CONTRACT["image_words"],
         "pin0_wave": "zz00000000111", "cycles": 13, "fetch_cycles": 6,
         "instructions": 4, "extension_fetches": 2}, "independent model scenario differs")
@@ -214,7 +214,7 @@ def main(argv=None):
                    "output must be outside the observed source directories")
     output.mkdir(exist_ok=False)  # Parent must exist. Never reuse/overwrite evidence.
     producer = Producer(output, args.timeout)
-    result = {"schema": "protemu.event-response-result", "version": 1, "status": "running",
+    result = {"schema": "electrum.event-response-result", "version": 1, "status": "running",
               "created_utc": datetime.now(timezone.utc).isoformat(), "selection": args.selection,
               "source_role": args.mode, "hardware_assignment": ASSIGNMENT,
               "system_boundary": SYSTEM_BOUNDARY, "composition": COMPOSITION,
@@ -294,7 +294,7 @@ def main(argv=None):
             if phase >= 0:
                 phases.append(run)
                 traffic.append({"phase": phase, **counts})
-        capture = {"schema": "protemu.event-response-capture", "version": 1,
+        capture = {"schema": "electrum.event-response-capture", "version": 1,
                    "status": "completed", "workload": oracle.workload(), "phases": phases}
         write_json(output / "capture.json", capture)
         measurements = oracle.check_capture(capture)

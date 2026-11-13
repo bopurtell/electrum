@@ -26,7 +26,7 @@ module event_response_tb;
   integer fd, decision_seen=0, decision_now, request_now;
   reg [15:0] words[0:5];
   reg [4095:0] trace_path, wave_path;
-  protemu_event_response dut (
+  electrum_event_response dut (
     .clock_i(clock_i), .reset_i(reset_i), .en_i(en_i),
     .load_start_valid_i(load_start_valid_i), .load_length_i(load_length_i),
     .load_write_valid_i(load_write_valid_i), .load_address_i(load_address_i), .load_data_i(load_data_i),

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - name: Check out protemu
+      - name: Check out electrum
         uses: actions/checkout@v4
         with:
           path: scaf

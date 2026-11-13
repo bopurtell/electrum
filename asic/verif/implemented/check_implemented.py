@@ -19,7 +19,7 @@ import shutil
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 BENCH = ROOT / "verif/system/emitted/p3_loader_tb.v"
-TOP = "tt_um_leemperor_hardcaml_protemu_loader"
+TOP = "tt_um_leemperor_electrum_loader"
 MACRO = "RM_IHPSG13_1P_256x16_c2_bm_bist"
 PERIOD = "20.833333"
 SCOPE = "zero_delay_gate_functional_not_timing_conformance"
@@ -261,7 +261,7 @@ def audit_run_inputs(bundle, runroot, *, allow_failed=False):
     payload = {k: v for k, v in manifest.items() if k != "identity"}
     require(hashlib.sha256(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
             == manifest["identity"], "bundle identity mismatch")
-    require(manifest["top_module"] == TOP and manifest["project"] == "protemu_loader"
+    require(manifest["top_module"] == TOP and manifest["project"] == "electrum_loader"
             and manifest["operation"] == "Hardening" and manifest["target"]["technology"] == "ihp-sg13cmos5l",
             "implemented macro loader bundle required")
     files = manifest["files"]

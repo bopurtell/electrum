@@ -7,7 +7,7 @@ project:
   language: "Verilog"
   clock_hz: 48000000
   tiles: "6x4"
-  top_module: "tt_um_leemperor_hardcaml_protemu"
+  top_module: "tt_um_leemperor_electrum"
   source_files:
     - "p0_observable.v"
     - "project.v"

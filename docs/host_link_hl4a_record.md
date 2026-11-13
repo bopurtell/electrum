@@ -36,7 +36,7 @@ production source, wire value, codec policy, timing requirement, or existing tes
 
   | Path | Change |
   | --- | --- |
-  | `test/host_link/dune` (new) | Library `protemu_host_link_tests` with inline tests, part of ordinary `@runtest` |
+  | `test/host_link/dune` (new) | Library `electrum_host_link_tests` with inline tests, part of ordinary `@runtest` |
   | `test/host_link/hardware_loader_testbench.ml` (new) | Cycle owner, core stub, serial driver and monitor, checks and diagnostics |
   | `test/host_link/hardware_loader_transaction_tests.ml` (new) | 10 tests: legal transactions, timing, pauses, replay/commit, arming |
   | `test/host_link/hardware_loader_framing_tests.ml` (new) | 7 tests: framing, overrun, prefixes, truncation, correlation threshold |

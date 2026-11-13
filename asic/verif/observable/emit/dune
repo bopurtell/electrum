@@ -7,7 +7,7 @@
   core
   hardcaml
   jane_rope
-  protemu_asic_bringup)
+  electrum_asic_bringup)
  (flags
   (:standard -w -27-57-33-34-35-40-63-47-26-37-32))
  (preprocess

@@ -8,7 +8,7 @@
    [Simulator_backend] (directly in Cyclesim) are two transports over it. The records are
    direction-neutral; a module embeds them with its own [_i] or [_o] suffix, so the fields
    keep the port names they had before the records existed. This module depends only on
-   the width definitions of [Program_memory_controller], [Execution_unit], and [Protemu_isa], never
+   the width definitions of [Program_memory_controller], [Execution_unit], and [Electrum_isa], never
    on a consumer.
 
    Step, pin claim/release, queues, pads, and program RAM are not part of this port. They
@@ -92,7 +92,7 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Program_memory_controller = Protemu_controller.Program_memory_controller
+module Program_memory_controller = Electrum_controller.Program_memory_controller
 
 (* The shared request subset. A field is a valid bit or an operand of the request named by
    its prefix. Addresses and lengths keep [Program_memory_controller]'s request width, one bit wider
@@ -164,9 +164,9 @@ module Status = struct
     ; fault_kind : 'a [@bits Execution_unit.Fault.width]
     ; pc : 'a [@bits Execution_unit.Config.pc_bits]
     ; phase : 'a [@bits Execution_unit.Phase.width]
-    ; pin_oe : 'a [@bits Protemu_isa.Pins.count]
-    ; software_claim : 'a [@bits Protemu_isa.Pins.count]
-    ; engine_claim : 'a [@bits Protemu_isa.Pins.count]
+    ; pin_oe : 'a [@bits Electrum_isa.Pins.count]
+    ; software_claim : 'a [@bits Electrum_isa.Pins.count]
+    ; engine_claim : 'a [@bits Electrum_isa.Pins.count]
     }
   [@@deriving hardcaml]
 end

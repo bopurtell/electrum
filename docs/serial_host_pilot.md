@@ -55,7 +55,7 @@ baseline the pilot must reproduce. Where this document's layout differs from the
    `inline_tests`, so other suites (endpoint, system, package fixtures) can depend on it
    without linking another suite's tests. Its tests live in the owning suite's library.
    Users alias it the way they alias the codec:
-   `module Serial_host = Protemu_serial_host_agent`.
+   `module Serial_host = Electrum_serial_host_agent`.
 3. **Items are per agent, not per directory.** Each agent has its own `Item` module for
    the transactions crossing its boundary. Product protocol types (`Wire.Request.t`,
    `Wire.Response.t`) stay in `host_link_wire/` and are referenced, never redefined or
@@ -89,7 +89,7 @@ After SP5:
 
 ```text
 test/host_link/                directories only
-  serial_host/                 library protemu_serial_host_agent (SP1–SP2)
+  serial_host/                 library electrum_serial_host_agent (SP1–SP2)
     dune
     item.ml                    serial transactions and pure helpers
     config.ml                  timing envelope, budgets
@@ -97,8 +97,8 @@ test/host_link/                directories only
     monitor.ml                 SP2 (passive)
     agent.ml                   SP2
   endpoint/                    SP4–SP5; the authoritative Host_link-level suite
-    dune                       library protemu_host_link_endpoint (no inline_tests) and
-                               test library protemu_host_link_endpoint_tests
+    dune                       library electrum_host_link_endpoint (no inline_tests) and
+                               test library electrum_host_link_endpoint_tests
     latency.ml                 checker's latency predictions (moved from the testbench)
     fixture.ml                 scheduler, agents, adapters, transcript, Harness_failure, run
     scoreboard.ml              opt-in end-of-scenario check over both monitors
@@ -111,7 +111,7 @@ test/host_link/                directories only
     endpoint_lifecycle_tests.ml      fresh-state isolation of two scoped runs
   archived/
     .ocamlformat-ignore        frozen code is never reformatted
-    hl4a/                      library protemu_host_link_tests, frozen (SP5a); 40 tests
+    hl4a/                      library electrum_host_link_tests, frozen (SP5a); 40 tests
       dune                     header comment says it is the frozen archive
       hardware_loader_testbench.ml HL4a compatibility shim over the fixture, plus HL4a helpers
       hardware_loader_*_tests.ml   the original HL4a suite (32 tests)
@@ -119,7 +119,7 @@ test/host_link/                directories only
   command_dispatch/
     command_dispatch_testbench.ml  consumes the Control_port agent through a Core_stub shim
   serial_phy/ frame_rx/ frame_tx/  block suites, unchanged
-test/core/control_port/        library protemu_control_port_agent (SP3)
+test/core/control_port/        library electrum_control_port_agent (SP3)
   dune
   item.ml                      decoded Request, Offer, Response, Completion, Status
   config.ml                    Mode (Responder | Passive), Injection policy
@@ -132,9 +132,9 @@ test/core/control_port/        library protemu_control_port_agent (SP3)
 
 ### SP1 — Serial-host library with `Item` and `Config`
 
-- [x] Create `test/host_link/serial_host/` with a wrapped library `protemu_serial_host`
+- [x] Create `test/host_link/serial_host/` with a wrapped library `electrum_serial_host`
   (no `inline_tests`) containing `Item` and `Config`. It depends only on what these
-  modules need (expected: `core`, `protemu_host_link_wire`); no Hardcaml dependency yet.
+  modules need (expected: `core`, `electrum_host_link_wire`); no Hardcaml dependency yet.
 - [x] **Move** (do not copy) the types and pure helpers listed for `Item` and `Config` in
   the ownership table out of `hardware_loader_testbench.ml`, keeping their definitions,
   comments, and behavior. The testbench refers to them through module aliases so the four
@@ -254,8 +254,8 @@ Current state (inventory, 2026-10-18):
 Design constraints:
 
 - **Location and library.** `test/core/control_port/`, a wrapped library
-  `protemu_control_port_agent` with no `inline_tests`, modules `item`, `config`,
-  `responder`, `monitor`, `agent`. It may depend on `hardcaml_protemu` for the
+  `electrum_control_port_agent` with no `inline_tests`, modules `item`, `config`,
+  `responder`, `monitor`, `agent`. It may depend on `electrum` for the
   `Control_port` records and widths. It works on `int` port records; each suite converts
   `Bits.t` at its adapter.
 - **`Item`:** decoded `Request` (with `of_port` over `int Control_port.Request.t`),
@@ -316,7 +316,7 @@ written in the new style.
 Design constraints:
 
 - **Location.** `test/host_link/endpoint/`, one library with `inline_tests`
-  (`protemu_host_link_endpoint_tests`) holding the fixture module and the pilot test
+  (`electrum_host_link_endpoint_tests`) holding the fixture module and the pilot test
   files. Host_link owns the endpoint, so the fixture stays in its suite. If the HL4a
   library must depend on the fixture, split the fixture into its own non-test library in
   the same directory instead and record why.
@@ -392,7 +392,7 @@ Target layout:
 test/host_link/
   archived/
     .ocamlformat-ignore        frozen code is never reformatted
-    hl4a/                      library protemu_host_link_tests, moved verbatim
+    hl4a/                      library electrum_host_link_tests, moved verbatim
       dune                     (only its header comment may change)
       hardware_loader_testbench.ml, hardware_loader_*_tests.ml, serial_host_monitor_tests.ml
   serial_host/                 unchanged
@@ -416,7 +416,7 @@ Archive rules:
 - Move with plain `mv`, never `git mv` (no index writes). Every moved `.ml` file is
   byte-identical to its source (`sha256sum` before and after). The dune file moves too,
   and only its header comment may change, to say the directory is a frozen archive. The
-  library name stays `protemu_host_link_tests`.
+  library name stays `electrum_host_link_tests`.
 - Add `test/host_link/archived/.ocamlformat-ignore` so `@fmt` skips frozen code. That also
   clears the pre-existing `hardware_loader_framing_tests.ml` `@fmt` failure. The
   `frame_rx_validation_tests.ml` failure is out of scope.
@@ -542,24 +542,24 @@ the working tree differed from it only in docs: `docs/README.md` and
 
 Created:
 
-- `test/host_link/serial_host/dune`: wrapped library `protemu_serial_host`, modules
-  `item config`, no `inline_tests`; `libraries core protemu_host_link_wire`, `ppx_jane`,
+- `test/host_link/serial_host/dune`: wrapped library `electrum_serial_host`, modules
+  `item config`, no `inline_tests`; `libraries core electrum_host_link_wire`, `ppx_jane`,
   `ppx_js_style` lint and the same warning flags as its siblings. No Hardcaml.
 - `test/host_link/serial_host/item.ml`: `hex`, `bits_of_byte`, `bytes_of_bits`,
   `Outcome`, `Pause`, `Read`, `Exchange`, `encode`, `Raw`. Wire is referenced as
-  `module Wire = Protemu_host_link_wire.Wire`; no Wire type is redefined.
+  `module Wire = Electrum_host_link_wire.Wire`; no Wire type is redefined.
 - `test/host_link/serial_host/config.ml`: `Timing` (`t`, `minimum`, `envelope`,
   `validate`) and `ready_budget = 20_000`.
 
 Changed:
 
 - `test/host_link/hardware_loader_testbench.ml`: the moved definitions are deleted and
-  replaced, after `module Sim`, by aliases (`module Serial_host = Protemu_serial_host`,
+  replaced, after `module Sim`, by aliases (`module Serial_host = Electrum_serial_host`,
   `Timing`, `Outcome`, `Pause`, `Read`, `Exchange`, `Raw`, and `hex`, `bits_of_byte`,
   `bytes_of_bits`, `encode`). `wait_ready`'s default budget is now
   `Serial_host.Config.ready_budget`. The header sentence saying `Raw` is local to the
   suite was corrected. Everything that touches the simulator or stub stayed.
-- `test/host_link/dune`: `protemu_serial_host` added to `libraries`.
+- `test/host_link/dune`: `electrum_serial_host` added to `libraries`.
 
 Every moved block is byte-identical to its original text (checked with a script against
 a copy of the pre-change file). New one-line comments were added above `hex`, the
@@ -623,7 +623,7 @@ Changed:
 - `serial_host/config.ml`: `Mode` (`Active | Passive`), `t = { mode; timing }`, `active`,
   `passive`; header updated.
 - `serial_host/dune`: modules `item config driver monitor agent`; comment updated. Still
-  `core` and `protemu_host_link_wire` only, no Hardcaml.
+  `core` and `electrum_host_link_wire` only, no Hardcaml.
 - `hardware_loader_testbench.ml`: the fourteen driver functions and `commit_if_valid` are
   replaced by one-line wrappers or aliases with the same names and argument order; it
   gains the port-side adapter `serial_pins`, the driver-side `serial_host_hooks`, the
@@ -637,7 +637,7 @@ The four HL4a test files are unedited (SHA-256 identical to the baseline copy). 
 moved function keeps its comment; the only body changes are the mechanical substitutions
 below.
 
-API (library `Protemu_serial_host`, no `.mli`):
+API (library `Electrum_serial_host`, no `.mli`):
 
 ```ocaml
 (* Driver: pin adapter and environment hooks *)
@@ -798,9 +798,9 @@ uncommitted SP1/SP2 tree recorded above. Nothing was committed or staged. A copy
 
 Created (`test/core/control_port/`):
 
-- `dune`: wrapped library `protemu_control_port_agent`, modules
+- `dune`: wrapped library `electrum_control_port_agent`, modules
   `item config responder monitor agent`, no `inline_tests`; `libraries core
-  hardcaml_protemu`, `ppx_jane`, `ppx_js_style` lint, the siblings' warning flags.
+  electrum`, `ppx_jane`, `ppx_js_style` lint, the siblings' warning flags.
 - `item.ml`: `Request` (with `of_port` over `int Control_port.Request.t`), `Completion`,
   `Offer`, `Response`, `Status` (`t`, `sexp_of_t`, `equal`, `halted_idle`, `running`,
   `cleaned`, list `summary`), and `Observed`.
@@ -823,7 +823,7 @@ Changed:
   the shared `Status` values, and `Core_stub` deleted; same shim, field, adapter, and
   monitor call; `offers` reads the monitor; header and contract item 3 updated.
 - `test/host_link/dune`, `test/host_link/command_dispatch/dune`: add
-  `protemu_control_port_agent`.
+  `electrum_control_port_agent`.
 - `test/host_link/command_dispatch/command_dispatch_{command,lifecycle,response,wait}_tests.ml`:
   the 13 occurrences of `t.stub.memory N` became `t.stub.memory.(N)`. Formatting then
   dropped the now-redundant parentheses on 10 of those same lines
@@ -833,7 +833,7 @@ The four HL4a test files and `serial_host_monitor_tests.ml` are byte-identical
 (`sha256sum -c` against the start copy). Nothing under `lib/` or `host_link_wire/`
 changed.
 
-API (library `Protemu_control_port_agent`, no `.mli`):
+API (library `Electrum_control_port_agent`, no `.mli`):
 
 ```ocaml
 (* Item *)
@@ -910,7 +910,7 @@ high. `Sample.status` is carried but emits nothing yet.
 Shim, identical in both testbenches apart from the comment:
 
 ```ocaml
-module Control_port_agent = Protemu_control_port_agent
+module Control_port_agent = Electrum_control_port_agent
 module Request = Control_port_agent.Item.Request
 module Status = Control_port_agent.Item.Status      (* dispatch: include + string summary *)
 module Core_stub = struct
@@ -1057,7 +1057,7 @@ Changed:
 
 - `test/host_link/hardware_loader_testbench.ml`: reduced to the shim below (730 → 322
   lines). Header rewritten.
-- `test/host_link/dune`: `protemu_host_link_endpoint` added to `libraries`; header
+- `test/host_link/dune`: `electrum_host_link_endpoint` added to `libraries`; header
   comment names the fixture.
 - `test/host_link/serial_host/driver.ml`: header comment only, pointing at the LDO-low
   decision below.
@@ -1069,24 +1069,24 @@ start copy (`diff -r`). Nothing under `lib/` or `host_link_wire/` changed. Each 
 definition other than `cycle`, `serial_host_hooks`, `create`, and the exception is
 textually identical (whitespace-normalized comparison against the start copy).
 
-Dune arrangement. The HL4a library (`protemu_host_link_tests`) must depend on the fixture,
+Dune arrangement. The HL4a library (`electrum_host_link_tests`) must depend on the fixture,
 because its testbench becomes a shim over it, so the fixture cannot live in a library with
 `inline_tests`: depending on one would link this directory's tests into the HL4a runner.
 `test/host_link/endpoint/dune` therefore holds two libraries with disjoint `modules`:
 
-- `protemu_host_link_endpoint` (wrapped, no `inline_tests`): `latency fixture
-  scoreboard`; `core hardcaml hardcaml_protemu protemu_host_link_wire
-  protemu_serial_host protemu_control_port_agent`; `ppx_jane`.
-- `protemu_host_link_endpoint_tests` (`wrapped false`, `inline_tests` with the
+- `electrum_host_link_endpoint` (wrapped, no `inline_tests`): `latency fixture
+  scoreboard`; `core hardcaml electrum electrum_host_link_wire
+  electrum_serial_host electrum_control_port_agent`; `ppx_jane`.
+- `electrum_host_link_endpoint_tests` (`wrapped false`, `inline_tests` with the
   `-source-tree-root .` workaround): the three test files; depends on the fixture library
   and the two agents, never on the HL4a library.
 
 There is no cycle: HL4a → fixture → agents. This is the "split" the SP4 location
-constraint allows; the single `protemu_host_link_endpoint_tests` library it names as the
+constraint allows; the single `electrum_host_link_endpoint_tests` library it names as the
 default would have forced HL4a to link the pilots.
 
-Fixture API (`Protemu_host_link_endpoint`, no `.mli`; users alias it as
-`module Endpoint = Protemu_host_link_endpoint`):
+Fixture API (`Electrum_host_link_endpoint`, no `.mli`; users alias it as
+`module Endpoint = Electrum_host_link_endpoint`):
 
 ```ocaml
 (* Fixture *)
@@ -1359,7 +1359,7 @@ against the pre-move sums passes for all six `.ml` files, straight after the mov
 again at the end of the step. The dune file differs only in its header comment, which now
 says it is the frozen HL4a archive, that SP5 ports its tests to `endpoint/`, and that it
 is never edited or reformatted; everything from `(library` on is byte-identical (`cmp`),
-so the library is still `protemu_host_link_tests`. `test/host_link/` now holds
+so the library is still `electrum_host_link_tests`. `test/host_link/` now holds
 directories only.
 
 Nothing in the archive was path-sensitive. The suite builds and passes its 40 tests
@@ -1382,7 +1382,7 @@ Created:
   again; with it restored, only `frame_rx_validation_tests.ml`. The `.ocamlformat` profile
   is unchanged.
 - `test/host_link/endpoint/endpoint_scenario.ml` (216 lines), in the test library
-  `protemu_host_link_endpoint_tests`: HL4a's scenario and check helpers, one
+  `electrum_host_link_endpoint_tests`: HL4a's scenario and check helpers, one
   implementation, written against `Fixture`, `Scoreboard`, and `Serial_host.Driver`.
 
 Changed:

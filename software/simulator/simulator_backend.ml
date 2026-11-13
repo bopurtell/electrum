@@ -11,9 +11,9 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_controller
-open! Protemu_core
-module Api = Protemu_host.Host_api
+open! Electrum_controller
+open! Electrum_core
+module Api = Electrum_host.Host_api
 module Sim = Cyclesim.With_interface (Emulator_core.I) (Emulator_core.O)
 
 type request =
@@ -343,13 +343,13 @@ let discover t =
   ; image =
       { Api.Image_format.name = Api.Constants.image_format
       ; version = Api.Constants.image_format_version
-      ; layout = Protemu_isa.Assembler.Memory.word16.name
+      ; layout = Electrum_isa.Assembler.Memory.word16.name
       ; word_bits = Program_memory_controller.Config.program_width
       ; depth_words = Program_memory_controller.Config.program_depth
       ; address_unit = Memory_word
       ; byte_order = Little_endian
       }
-  ; pin_count = Protemu_isa.Pins.count
+  ; pin_count = Electrum_isa.Pins.count
   ; queues =
       [ { Api.Queue_info.name = "host-tx"
         ; direction = "host-to-device-rx-fifo"
@@ -759,7 +759,7 @@ let configure_pins t configuration =
     | Api.Pin_configuration.Claim mask -> "pin-claim", Pin_claim mask, mask
     | Release mask -> "pin-release", Pin_release mask, mask
   in
-  if mask < 0 || mask >= 1 lsl Protemu_isa.Pins.count
+  if mask < 0 || mask >= 1 lsl Electrum_isa.Pins.count
   then
     Error
       (Api.Error.Invalid_argument
@@ -889,7 +889,7 @@ let wait_halted t ~budget_cycles =
 ;;
 
 let set_external_pins t value =
-  if value < 0 || value >= 1 lsl Protemu_isa.Pins.count
+  if value < 0 || value >= 1 lsl Electrum_isa.Pins.count
   then
     Error
       (Api.Error.Invalid_argument
@@ -900,7 +900,7 @@ let set_external_pins t value =
 ;;
 
 let set_occupied_pins t value =
-  if value < 0 || value >= 1 lsl Protemu_isa.Pins.count
+  if value < 0 || value >= 1 lsl Electrum_isa.Pins.count
   then
     Error
       (Api.Error.Invalid_argument

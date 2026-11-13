@@ -75,7 +75,7 @@ HL4a/HL4c1/HL4c2/HL4c3 stimulus or expectation changed.
   | `host_link_wire/wire.ml` | Two comments only | `09ff477c1d57825d6665e48344a44c2a338bf1ec037b5e9100e0fa314f52555a` |
   | `bin/asic_bundle.ml` | Loader inventory adds `frame_tx.ml`, `wire_crc.ml`, `wire_layout.ml` | `08fda53913007d736ddfaeb1eb571a0d57c4b477b571d590f621c91393524cd4` |
   | `tinytapeout/scripts/check-adopted-bundle.py` | Loader check requires those three inputs | `76ecaf7d70a357dca596b8a05b45a1b6da14c0c3933b0480beea285d48e8ad0f` |
-  | `test/host_link/frame_tx/dune` (new) | Library `protemu_frame_tx_tests`, in `@runtest` | `0d78f7e11a359aea7850e8334234dad235ae17ed7e7f724c552db4433d8cbe0c` |
+  | `test/host_link/frame_tx/dune` (new) | Library `electrum_frame_tx_tests`, in `@runtest` | `0d78f7e11a359aea7850e8334234dad235ae17ed7e7f724c552db4433d8cbe0c` |
   | `test/host_link/frame_tx/frame_tx_testbench.ml` (new) | Cycle owner, drivers, sampling, checks, diagnostics | `02a56ad6b806a2357de391f733fe0c992860098d799e9516e394e47f65be10a1` |
   | `test/host_link/frame_tx/frame_tx_publication_tests.ml` (new) | 6 tests | `88f516c0eb24b7439e1ba89f1f326daa444833207ce530433e22d541c367a5bb` |
   | `test/host_link/frame_tx/frame_tx_read_tests.ml` (new) | 12 tests | `773b283fff87396ecf0ed7839823760e22171fa2d0980f8d7b81a2d49bcd302b` |
@@ -446,7 +446,7 @@ block. After the eight runs, `wire.ml` and `frame_tx.ml` had their pre-run hashe
 ## Focused tests (HL4c4)
 
 [`test/host_link/frame_tx/`](../test/host_link/frame_tx/frame_tx_testbench.ml) (library
-`protemu_frame_tx_tests`, in ordinary `@runtest`, 29 tests, about 3 s) follows the
+`electrum_frame_tx_tests`, in ordinary `@runtest`, 29 tests, about 3 s) follows the
 per-module convention. The testbench owns the only simulator loop (`cycle`), pre-/post-edge
 sampling, and finite waits (`wait_for`, default budget 100 cycles). It raises `Tx_failure`
 with scenario, cycle, phase, what was checked, expected and actual values, and a transcript
@@ -549,7 +549,7 @@ built with `-j 5` before each checker run. `capture.sh` calls Dune only with `-j
 | Formatting: `dune build -j 5 @lib/host_link/fmt @host_link_wire/fmt @test/host_link/fmt`, and `@bin/fmt` | PASS. Changed files were formatted with `dune promote <file>` (comment rewrapping, one parenthesization in `wire_crc.ml`, and the new test files); the repository `@fmt` backlog was not swept |
 | `git diff --check`; tab/trailing-whitespace scan of the new files | PASS |
 | Final capture after the last source edit | All 15 generator outputs, all 6 bundle Verilog files, and bundle metadata identical to the analysed and proven post RTL |
-| `host_link_wire/` Hardcaml-free | Its `dune` lists `core` only (with `ppx_jane`); `ocamlobjinfo` of `protemu_host_link_wire.cma` imports no Hardcaml module |
+| `host_link_wire/` Hardcaml-free | Its `dune` lists `core` only (with `ppx_jane`); `ocamlobjinfo` of `electrum_host_link_wire.cma` imports no Hardcaml module |
 | Block dependencies | `Command_dispatch`, `Frame_tx`, `Wire_crc`, and `Wire_layout` reference no `Frame_rx` item; only `Loader_core` references `Hardware_loader` |
 | Pre-existing files | The 40 of 51 not intentionally edited keep their starting SHA-256, including every HL4a, HL4c1, HL4c2, and HL4c3 test file and `dune` |
 | `tinytapeout/test/p3_loader_tb.v` | Unchanged: no diff against `HEAD` (blob `2ffc20f0…`), SHA-256 `40d9341f…c9c9` |
@@ -577,8 +577,8 @@ bundles (list digest `42e943a7…6702` before and after).
 
 | Loader bundle file | Pre SHA-256 | Post SHA-256 |
 | --- | --- | --- |
-| `src/tt_um_leemperor_hardcaml_protemu_loader.v` | `0c748fed19afa11026dff603d8d85382aa279a34decd81418c53dcf81fa38770` | `aafcfdba610ce04d11015c6963acbf21bfa3721ee4643371b49f64d735f1168a` |
-| `simulation/tt_um_leemperor_hardcaml_protemu_loader.v` | `f37cb851b7dc582d358cd8436bbf185690a8bbd3889eedce326c4bb9142b4e5a` | `b28f20430ce5d97f692efc61fb65a22b7c415342cd3f20736760363572648a70` |
+| `src/tt_um_leemperor_electrum_loader.v` | `0c748fed19afa11026dff603d8d85382aa279a34decd81418c53dcf81fa38770` | `aafcfdba610ce04d11015c6963acbf21bfa3721ee4643371b49f64d735f1168a` |
+| `simulation/tt_um_leemperor_electrum_loader.v` | `f37cb851b7dc582d358cd8436bbf185690a8bbd3889eedce326c4bb9142b4e5a` | `b28f20430ce5d97f692efc61fb65a22b7c415342cd3f20736760363572648a70` |
 
 **External ports.** `ports.py` inventories are identical before and after: `loader_core` 17
 ports (`8df49008…0b97`), both loader wrapper roles 8 ports (`aff782f7…9707`), and
@@ -633,7 +633,7 @@ Host Yosys 0.33, HL4b2's scripts unchanged ([appendix](#appendix-evidence-script
   one register whose priority changed; the other 1 504 prove (4 min 11 s). The mutant was
   generated with `dune exec -j 5 bin/generate_core.exe -- loader`, and the source was
   restored and hash-checked (`8a311576…5769`) before anything else ran.
-- **Loader wrapper, production synthesis source role, untransformed.** Gold: pre `src/tt_um_leemperor_hardcaml_protemu_loader.v`
+- **Loader wrapper, production synthesis source role, untransformed.** Gold: pre `src/tt_um_leemperor_electrum_loader.v`
   (`0c748fed…8770`); gate: post, renamed the same way (`46625b83…d663`). **5 597 of 5 599
   cells proven** (7 min 15 s). The 2 unproven are the wrapper's own 2-bit reset
   synchronizer `signal_reg_288` (asynchronous preset to `2'b11` from `~rst_n`), which the
@@ -674,12 +674,12 @@ unproven untransformed.
 
 The configuration is the loader checker's own, unchanged: the pinned image above,
 `docker run --rm --pull=never --network none`, and
-`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy
--check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top
-tt_um_leemperor_hardcaml_protemu_loader; stat'` on the production synthesis source,
+`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_electrum_loader.v; hierarchy
+-check -top tt_um_leemperor_electrum_loader; synth -top
+tt_um_leemperor_electrum_loader; stat'` on the production synthesis source,
 through `synth_stat.sh`. The full checker also passed afterwards.
 
-**Checker path, `tt_um_leemperor_hardcaml_protemu_loader`** (Yosys 0.66):
+**Checker path, `tt_um_leemperor_electrum_loader`** (Yosys 0.66):
 
 | Cell type | Unsplit | HL4b3 accepted = HL4b4 before | HL4b4 after | Δ vs HL4b3 | Δ vs unsplit |
 | --- | ---: | ---: | ---: | ---: | ---: |

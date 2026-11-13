@@ -1,14 +1,14 @@
 (library
- (name protemu_pin_bank_testbench)
+ (name electrum_pin_bank_testbench)
  (wrapped false)
  (modules pin_bank_testbench)
  (libraries
   core
   hardcaml
-  protemu_mechanisms
-  protemu_isa
-  protemu_f_model
-  protemu_test_common
+  electrum_mechanisms
+  electrum_isa
+  electrum_f_model
+  electrum_test_common
   base_quickcheck)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
@@ -18,7 +18,7 @@
   (:standard -w -27-57-33-34-35-40-63-47-26)))
 
 (library
- (name protemu_pin_bank_tests)
+ (name electrum_pin_bank_tests)
  (wrapped false)
  (modules pin_bank_expect_tests pin_bank_unit_quickcheck_tests pin_bank_unit_tests)
  ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
@@ -28,10 +28,10 @@
  (libraries
   core
   hardcaml
-  protemu_mechanisms
-  protemu_f_model
-  protemu_pin_bank_testbench
-  protemu_test_common)
+  electrum_mechanisms
+  electrum_f_model
+  electrum_pin_bank_testbench
+  electrum_test_common)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

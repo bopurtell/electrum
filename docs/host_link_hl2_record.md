@@ -17,9 +17,9 @@ value, layout, command/result meaning, pin, or timing requirement changed.
 
   | Path | Change |
   | --- | --- |
-  | `host_link_wire/dune`, `host_link_wire/wire.ml` | New library `protemu_host_link_wire` (public `hardcaml_protemu.host_link_wire`), module `Wire` |
+  | `host_link_wire/dune`, `host_link_wire/wire.ml` | New library `electrum_host_link_wire` (public `electrum.host_link_wire`), module `Wire` |
   | `test/host_link_wire/dune`, `test/host_link_wire/wire_tests.ml` | New pure codec tests |
-  | `lib/dune` | `hardcaml_protemu` also depends on `protemu_host_link_wire` |
+  | `lib/dune` | `electrum` also depends on `electrum_host_link_wire` |
   | `lib/host_link/hardware_loader.ml` | `Config`/`Command`/`Result`/`Capability` removed; wire constants taken from `Wire`; elaboration-time checks added |
   | `bin/asic_bundle.ml` | Loader `input_paths` gains `host_link_wire/dune` and `host_link_wire/wire.ml` |
   | `tinytapeout/scripts/check-adopted-bundle.py` | Loader metadata check requires those two inputs |
@@ -40,7 +40,7 @@ post-change run.
 ### `host_link_wire/`: the wire definitions
 
 One module, [`Wire`](../host_link_wire/wire.ml), transcribing the P3.5 record. Its only
-library dependency is `core`; it has no Hardcaml, `hardcaml_protemu`, simulator, ISA, or
+library dependency is `core`; it has no Hardcaml, `electrum`, simulator, ISA, or
 ASIC dependency. Following the repository convention (no `.mli` files), its API is
 documented in the `.ml`.
 
@@ -76,7 +76,7 @@ commit or replay a response, retry, or apply a timeout.
 
 ### Hardware adoption
 
-`Hardware_loader` binds `module Wire = Protemu_host_link_wire.Wire` and takes from it the
+`Hardware_loader` binds `module Wire = Electrum_host_link_wire.Wire` and takes from it the
 magic bytes, version, command and result codes, capability mask, request/response header
 lengths, request payload offsets and per-command payload lengths, maximum request/response
 lengths, the correlation-echo threshold, the STATUS flag order, and the CRC polynomial and
@@ -84,7 +84,7 @@ initial value. Its `Config` now holds only implementation sizing (`max_request_b
 `request_byte_count_bits`, `max_response_bytes`, `response_bits`) and the INFO device facts
 this design reports (`isa_version = 1`, `memory_layout`, `capabilities = Wire.Capability.all`);
 memory width/depth and pin count still come from `Protocol_core.Config` and
-`Protemu_isa.Pins`.
+`Electrum_isa.Pins`.
 
 The synthesizable `crc8_byte` shift register remains separate from `Wire.Crc.compute`. It
 uses `Wire.Crc.polynomial` and `Wire.Crc.initial`. `check_wire_encodings`, called first in
@@ -191,7 +191,7 @@ commit policy. Distinguishing the two cases on the wire would be a P3.5 protocol
 ## Tests added
 
 [`test/host_link_wire/wire_tests.ml`](../test/host_link_wire/wire_tests.ml), library
-`protemu_host_link_wire_tests`, depends only on `core` and `protemu_host_link_wire`. It has
+`electrum_host_link_wire_tests`, depends only on `core` and `electrum_host_link_wire`. It has
 26 `%test_unit` cases. Every expected byte and decoded field is written out from the P3.5
 tables. Expected CRC bytes come from the independent bitwise script below, which was checked
 against the standard check value, never from `Wire`.
@@ -266,7 +266,7 @@ Every Dune command used `-j 5`, and commands ran strictly one after another.
 | 15 generator outputs regenerated with identical options, `diff -r` against the baseline | Identical, 15 of 15. Rerun on the final source, after the last comment and format edits to `hardware_loader.ml`: identical again. |
 | Bundle Verilog, pre vs post | Identical for the `src/` (synthesis) and `simulation/` (behavioral) roles of observable, memory, and loader. `info.yaml` and `constraints/` are also identical. |
 | `check-adopted-bundle.py --kind observable/memory/loader --metadata-only`, run separately | PASS, PASS, PASS |
-| `dune describe workspace host_link_wire test/host_link_wire`: transitive closure of `hardcaml_protemu.host_link_wire` | 75 libraries, none Hardcaml, `hardcaml_protemu`, simulator, or ASIC. Direct requirement: `core` plus ppx runtime libraries. |
+| `dune describe workspace host_link_wire test/host_link_wire`: transitive closure of `electrum.host_link_wire` | 75 libraries, none Hardcaml, `electrum`, simulator, or ASIC. Direct requirement: `core` plus ppx runtime libraries. |
 | `tinytapeout/test/p3_loader_tb.v` | Unchanged: no diff against `HEAD`; git blob `2ffc20f0f302c5bad5fd9189056b22c8d8cc175d`, SHA-256 `40d9341f32ad02202f78784dbf4c6f9a7685691d8f7da78a50c2303cd2e2c9c9` before and after |
 | `./scripts/with-switch.sh dune build @fmt -j 5` | Same 13-file backlog as the baseline; no HL2-touched file listed. New and edited files were formatted file by file (`dune promote <file>`); the backlog was not swept. |
 | `git diff --check`, plus a trailing-whitespace/tab scan of untracked files | PASS |
@@ -316,12 +316,12 @@ ce4454c0b15fe20e6b22eb290f0b029b11625e0e4c8188d0a109450affd9dd72  uart_tx.v
 ```
 
 ```text
-7678aedb9d5b35c5e9fbf7e0e31e489609a47f9fddc79ed3acf1139ef5168b28  ./loader/simulation/tt_um_leemperor_hardcaml_protemu_loader.v
-c8f92f762d1044dde0bb7a1071a4b41a43c4fe33c4a2cdd10dc4ed31ab213d9c  ./loader/src/tt_um_leemperor_hardcaml_protemu_loader.v
-8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762  ./memory/simulation/tt_um_leemperor_hardcaml_protemu_memory.v
-a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95  ./memory/src/tt_um_leemperor_hardcaml_protemu_memory.v
-c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1  ./observable/simulation/tt_um_leemperor_hardcaml_protemu.v
-c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1  ./observable/src/tt_um_leemperor_hardcaml_protemu.v
+7678aedb9d5b35c5e9fbf7e0e31e489609a47f9fddc79ed3acf1139ef5168b28  ./loader/simulation/tt_um_leemperor_electrum_loader.v
+c8f92f762d1044dde0bb7a1071a4b41a43c4fe33c4a2cdd10dc4ed31ab213d9c  ./loader/src/tt_um_leemperor_electrum_loader.v
+8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762  ./memory/simulation/tt_um_leemperor_electrum_memory.v
+a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95  ./memory/src/tt_um_leemperor_electrum_memory.v
+c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1  ./observable/simulation/tt_um_leemperor_electrum.v
+c275808a7279c617c460c3706cdfd69c0d580b7c3356ec224b66d8730b7b0cb1  ./observable/src/tt_um_leemperor_electrum.v
 ```
 
 ### Bundle metadata and source identity

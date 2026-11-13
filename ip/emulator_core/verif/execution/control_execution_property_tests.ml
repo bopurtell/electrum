@@ -5,7 +5,7 @@
    executor. Programs contain random state operations followed by a finite DBNZ loop. *)
 
 open! Core
-open! Protemu_isa
+open! Electrum_isa
 open! Control_execution_model_tests
 
 module Generator = struct
@@ -161,6 +161,6 @@ let%expect_test "generated P3.2 programs record an executable rerun" =
        ~settings);
   [%expect
     {|
-    PROTEMU_SEED=20260920 PROTEMU_TRIALS=96 PROTEMU_SIZE=24 dune runtest ip/emulator_core/verif/execution --force
+    ELECTRUM_SEED=20260920 ELECTRUM_TRIALS=96 ELECTRUM_SIZE=24 dune runtest ip/emulator_core/verif/execution --force
     |}]
 ;;

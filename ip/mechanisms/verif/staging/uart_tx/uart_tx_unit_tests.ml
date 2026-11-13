@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms_staging
 open! Uart_tx_testbench
 
 let%test_unit "P2.7 independent 8N1 receiver sees idle, start, data, and stop" =

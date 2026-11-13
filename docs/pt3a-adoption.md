@@ -6,7 +6,7 @@ remain the original bounded acceptance evidence.
 
 ## Accepted bounded scope
 
-Implemented against Protemu base `c680ed3` and deliberately selected ASIC revision
+Implemented against Electrum base `c680ed3` and deliberately selected ASIC revision
 `b0b3384acbe22c8a30264cbdf0c19008c58bf3c5`. Adoption uses public
 `Project.create ~source_inputs`, `Project.emit_bundle`, `Timing.create`,
 `Elaboration.Context`, `Elaborated_project` and resource snapshot APIs.
@@ -30,7 +30,7 @@ physical EDA was executed for PT.3a.
 ## Dependency activation
 
 The shared opam installation exposed an older ASIC API despite its path pin.
-Installed the current recorded ASIC into the Protemu-owned private prefix
+Installed the current recorded ASIC into the Electrum-owned private prefix
 `.dev/pt3a-provider/prefix` after successful ASIC `@all`, cache-aware `runtest`, and
 `@install` checks at `-j1`. The latest ASIC commit was verified test-only relative
 to the previously qualified runtime. The shared switch installation was unchanged.
@@ -50,7 +50,7 @@ unstamped; the external receipt supplies the exact attribution.
 
 ## Verification
 
-Sequential commands from this checkout, each under `flock ../.protemu-build.lock`:
+Sequential commands from this checkout, each under `flock ../.electrum-build.lock`:
 
 ```sh
 bash scripts/with-private-asic.sh dune build -j1 @pt3a

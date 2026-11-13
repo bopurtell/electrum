@@ -1,12 +1,12 @@
 (library
- (name protemu_backend_conformance_tests)
+ (name electrum_backend_conformance_tests)
  (wrapped false)
  (modules backend_conformance_expect_tests)
  ; Keep the ppx_expect source-tree workaround in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core protemu_backend_conformance)
+ (libraries core electrum_backend_conformance)
  (preprocess
   (pps ppx_jane))
  (lint

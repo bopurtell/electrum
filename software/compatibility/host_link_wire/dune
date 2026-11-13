@@ -2,8 +2,8 @@
 ; Definitions and byte conversion are implemented by ip/host_link/protocol/ only.
 
 (library
- (name protemu_host_link_wire)
- (public_name hardcaml_protemu.host_link_wire)
+ (name electrum_host_link_wire)
+ (public_name electrum.host_link_wire)
  (libraries core host_link_protocol)
  (preprocess
   (pps ppx_jane))

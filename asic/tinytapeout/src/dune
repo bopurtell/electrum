@@ -103,7 +103,7 @@
   loader_wrapper.synthesis.generated.v)
  (deps
   ../../../dune-project
-  ../../../hardcaml_protemu.opam
+  ../../../electrum.opam
   (source_tree ../../cli)
   (source_tree ../../project)
   (source_tree ../../rtl)
@@ -113,7 +113,7 @@
   (source_tree ../../../ip/program_memory_controller/rtl)
   (source_tree ../../../ip/emulator_core/rtl)
   (source_tree ../../../ip/host_link/rtl)
-  (source_tree ../../../ip/protemu_system/rtl)
+  (source_tree ../../../ip/electrum_system/rtl)
   ../asic-dependencies.lock
   ../toolchain.lock)
  (action
@@ -127,11 +127,11 @@
      %{workspace_root}))
    (run
     /bin/cp
-    loader_bundle/simulation/tt_um_leemperor_hardcaml_protemu_loader.v
+    loader_bundle/simulation/tt_um_leemperor_electrum_loader.v
     loader_wrapper.simulation.generated.v)
    (run
     /bin/cp
-    loader_bundle/src/tt_um_leemperor_hardcaml_protemu_loader.v
+    loader_bundle/src/tt_um_leemperor_electrum_loader.v
     loader_wrapper.synthesis.generated.v))))
 
 ; P3.1b verification tops. These are the same context-registered consumer/RAM

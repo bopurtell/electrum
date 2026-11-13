@@ -1,6 +1,6 @@
 (* University of Florida *)
 (* Author: Bohdan Purtell *)
-(* Module: "protemu_top.ml" *)
+(* Module: "electrum_top.ml" *)
 (*
   Owning toplevel of the protocol emulator system with the emulator core; Has an external program-memory port that the owning chip_top instantiates connected to this item.
 
@@ -28,10 +28,10 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Program_memory_controller = Protemu_controller.Program_memory_controller
-module Control_port = Protemu_core.Control_port
-module Emulator_core = Protemu_core.Emulator_core
-module Host_link = Protemu_host_link.Host_link
+module Program_memory_controller = Electrum_controller.Program_memory_controller
+module Control_port = Electrum_core.Control_port
+module Emulator_core = Electrum_core.Emulator_core
+module Host_link = Electrum_host_link.Host_link
 
 [@@@ocamlformat "disable"]
 module I = struct
@@ -43,8 +43,8 @@ module I = struct
     ; serial_clock_i        : 'a
     ; serial_data_i         : 'a
     ; prog_mem_read_data_i  : 'a [@bits Program_memory_controller.Config.program_width]
-    ; pin_async_i           : 'a [@bits Protemu_isa.Pins.count]
-    ; occupied_i            : 'a [@bits Protemu_isa.Pins.count]
+    ; pin_async_i           : 'a [@bits Electrum_isa.Pins.count]
+    ; occupied_i            : 'a [@bits Electrum_isa.Pins.count]
     }
   [@@deriving hardcaml]
 end
@@ -57,8 +57,8 @@ module O = struct
     ; prog_mem_write_enable_o : 'a
     ; prog_mem_address_o      : 'a [@bits Program_memory_controller.Config.program_address_bits]
     ; prog_mem_write_data_o   : 'a [@bits Program_memory_controller.Config.program_width]
-    ; pins_o                  : 'a [@bits Protemu_isa.Pins.count]
-    ; pin_oe_o                : 'a [@bits Protemu_isa.Pins.count]
+    ; pins_o                  : 'a [@bits Electrum_isa.Pins.count]
+    ; pin_oe_o                : 'a [@bits Electrum_isa.Pins.count]
     }
   [@@deriving hardcaml]
 end
@@ -86,9 +86,9 @@ let create
       ; pin_async_i = i.pin_async_i
       ; occupied_i = i.occupied_i
       ; software_claim_valid_i = gnd
-      ; software_claim_mask_i = zero Protemu_isa.Pins.count
+      ; software_claim_mask_i = zero Electrum_isa.Pins.count
       ; software_release_valid_i = gnd
-      ; software_release_mask_i = zero Protemu_isa.Pins.count
+      ; software_release_mask_i = zero Electrum_isa.Pins.count
       ; tx_ready_i = gnd
       ; rx_valid_i = gnd
       ; rx_data_i = zero 8

@@ -12,8 +12,8 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Program_memory_controller = Protemu_controller.Program_memory_controller
-module Execution_unit = Protemu_core.Execution_unit
+module Program_memory_controller = Electrum_controller.Program_memory_controller
+module Execution_unit = Electrum_core.Execution_unit
 
 module I = struct
   type 'a t =

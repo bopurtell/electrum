@@ -48,7 +48,7 @@ class OwnerTests(unittest.TestCase):
         plan = {"profile": "fixture"}
         (b / "physical/macro-plan.json").write_text(json.dumps(plan))
         manifest = {
-            "top_module": m.TOP, "project": "protemu_loader", "operation": "Hardening",
+            "top_module": m.TOP, "project": "electrum_loader", "operation": "Hardening",
             "identity": "a" * 64,
             "macro_contract": {"schema_version": 2, "execution": "fresh_full",
                 "physical_plan": plan, "macros": [{"resource": "program", "module": m.STOCK,

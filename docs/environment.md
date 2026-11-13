@@ -73,20 +73,20 @@ because individual tests can create child processes:
 
 ```sh
 source scripts/env.sh
-flock ../.protemu-build.lock dune build -j10 @all
-flock ../.protemu-build.lock dune runtest -j2
+flock ../.electrum-build.lock dune build -j10 @all
+flock ../.electrum-build.lock dune runtest -j2
 # Explicit additional HDL verification:
-flock ../.protemu-build.lock dune build -j2 @rtl
+flock ../.electrum-build.lock dune build -j2 @rtl
 ```
 
 `@rtl` runs emitted-RTL simulation/lint and generic synthesis, not physical
-implementation. `dune exec -j5 protemu -- flow` is an alias for `asic/flow.sh`,
-including its full physical default. The public `protemu` name remains available
-through root `dune`'s binding to `software/cli/protemu.exe`; no CLI installation is
-needed. `dune exec -j5 protemu -- bootstrap` converges the flow layer once OCaml
+implementation. `dune exec -j5 electrum -- flow` is an alias for `asic/flow.sh`,
+including its full physical default. The public `electrum` name remains available
+through root `dune`'s binding to `software/cli/electrum.exe`; no CLI installation is
+needed. `dune exec -j5 electrum -- bootstrap` converges the flow layer once OCaml
 exists and only reports on the OCaml layer.
 
-The remaining `protemu` commands (`check`, `stage`, `legacy-harden`, `precheck`)
+The remaining `electrum` commands (`check`, `stage`, `legacy-harden`, `precheck`)
 drive the legacy staged project, a different input from the adopted bundle.
 `./scripts/bootstrap.sh --legacy-project` explicitly stages/configures it; normal
 bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
@@ -122,8 +122,8 @@ the previously active environment from `PATH` instead of stacking environments.
 | --- | --- |
 | New machine | Install the host prerequisites named by `./scripts/bootstrap.sh --check`, including any required group membership; then run `./scripts/bootstrap.sh`. Switch creation and downloads can take substantial time/storage. |
 | Fresh clone or new worktree | Run `./scripts/bootstrap.sh`, then `source scripts/env.sh`. Flow environments are per checkout/worktree. |
-| New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 protemu -- doctor` for a report. `asic/flow.sh` does not require activation. |
-| Inspecting a recorded run | `PROTEMU_RUN=/path/to/run ./asic/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
+| New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 electrum -- doctor` for a report. `asic/flow.sh` does not require activation. |
+| Inspecting a recorded run | `ELECTRUM_RUN=/path/to/run ./asic/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
 | Lockfile or opam dependencies changed | Rerun `./scripts/bootstrap.sh`. The CLI bootstrap command only reports on the OCaml layer. Managed clean PDK/support-tool checkouts are checked against the lock. |
 | Offline | `./scripts/bootstrap.sh --offline` validates/reuses existing state without fetching. |
 | Interrupted bootstrap | Rerun; inspect any partial state the script identifies rather than deleting it automatically. |
@@ -156,7 +156,7 @@ selected allocation. Submission/export and CI publication remain explicit work.
 ## Qualification boundary
 
 The current normal installation is accepted in [the bounded adoption scope](adoption-release.md).
-That record includes installed simulation/UI acceptance, current Protemu physical
+That record includes installed simulation/UI acceptance, current Electrum physical
 attempts and typed negative timing reinspection. The following layout record is
 historical and does not describe the latest qualification:
 

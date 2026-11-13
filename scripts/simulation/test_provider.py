@@ -28,7 +28,7 @@ class Fixture:
             (self.generation / name).write_text('pure fixture ' + name)
         shutil.copyfile(ROOT / 'asic/verif/functional/check_functional.py', self.generation / 'pt3b_oracle.py')
         self.oracle = provider.oracle_module(self.generation)
-        self.install = dict(contract='protemu.fs2-pt3b-install', schema_version=1,
+        self.install = dict(contract='electrum.fs2-pt3b-install', schema_version=1,
             generation=str(self.generation), project_root=str(root), checks_passed=True,
             fixed_variant_identity='a' * 64, source_sha256={}, tools={},
             bundles={}, models=['model0.v', 'model1.v'])

@@ -203,7 +203,7 @@ let%expect_test "a controlled timed mismatch shrinks and replays from its seed" 
       failing trial:    0
       configuration:    ((max_edges 32)(max_transitions 96)(defect Delay_pad_transitions_one_tick))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
+      rerun:            ELECTRUM_SEED=20260919 ELECTRUM_TRIALS=4 ELECTRUM_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
       time unit:        tick
       clock:            period=10, first rising=5
       coincidence:      stimulus settles before the clock transition

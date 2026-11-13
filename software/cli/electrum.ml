@@ -1,6 +1,6 @@
 open! Core
 
-(* The repository's command front door: [dune exec protemu -- <command>].
+(* The repository's command front door: [dune exec electrum -- <command>].
 
    Stateful work (provisioning, staging, hardening, precheck) stays in the scripts under
    scripts/ and asic/tinytapeout/scripts/, which own their options and exit codes;
@@ -144,10 +144,10 @@ let flow =
     ~readme:(fun () ->
       "Passes the named steps to ./asic/flow.sh and returns its exit status unchanged. \
        With no step it runs the whole flow, hardening included, which takes hours.\n\n\
-       ./asic/flow.sh --help is the help for the steps and the PROTEMU_* overrides; this \
+       ./asic/flow.sh --help is the help for the steps and the ELECTRUM_* overrides; this \
        alias cannot show it, because -help is read by this command line first. \
        ./asic/flow.sh is the canonical spelling and the one the documentation uses: the \
-       alias exists so a `protemu` habit still reaches the same runner, and it needs \
+       alias exists so a `electrum` habit still reaches the same runner, and it needs \
        neither dune nor an activated switch.")
     (let%map_open.Command steps = anon (sequence ("STEP" %: string)) in
      fun () -> exec flow_script steps)
@@ -160,7 +160,7 @@ let harden =
   Command.basic
     ~summary:"Harden the emitted bundle: an alias for ./asic/flow.sh run"
     ~readme:(fun () ->
-      "Runs the adopted flow's physical step on the bundle in $PROTEMU_FLOW_OUT: mapped \
+      "Runs the adopted flow's physical step on the bundle in $ELECTRUM_FLOW_OUT: mapped \
        CMOS5L synthesis and place-and-route, into a new run directory. It does not emit \
        the bundle first, so `./asic/flow.sh build emit preflight` (or the whole \
        `./asic/flow.sh`) comes before it.\n\n\
@@ -178,11 +178,11 @@ let harden =
      fun () ->
        (* Translating these would be a guess. The adopted runner is dockerized with the
           pinned image, and it never archives a previous run to make room for this one:
-          each attempt already gets its own directory under $PROTEMU_RUNS. *)
+          each attempt already gets its own directory under $ELECTRUM_RUNS. *)
        let reject flag ~spelling reason =
          eprintf "error: %s is a legacy-harden flag\n" flag;
          eprintf "       %s\n" reason;
-         eprintf "       Use: dune exec protemu -- legacy-harden %s\n" spelling;
+         eprintf "       Use: dune exec electrum -- legacy-harden %s\n" spelling;
          exit 2
        in
        if no_docker
@@ -256,7 +256,7 @@ let precheck =
 
 let command =
   Command.group
-    ~summary:"Host, simulator, environment, and ASIC flow commands for hardcaml_protemu"
+    ~summary:"Host, simulator, environment, and ASIC flow commands for electrum"
     ~readme:(fun () ->
       "First time on a machine or clone: ./scripts/bootstrap.sh\n\
        Each new shell: source scripts/env.sh\n\

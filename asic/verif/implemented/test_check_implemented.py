@@ -57,7 +57,7 @@ class Fixture(unittest.TestCase):
                      "// type: buf\nmodule sg13cmos5l_buf_1 (X, A);\noutput X; input A; buf (X, A);\nendmodule")
         refs = ["pdk_dir::wrapper.v", "pdk_dir::core.v"]
         self.harness.MODEL_HASHES = dict(zip(refs, (gate.sha(wrapper), gate.sha(core))))
-        self.manifest = {"project": "protemu_loader", "top_module": gate.TOP, "operation": "Hardening",
+        self.manifest = {"project": "electrum_loader", "top_module": gate.TOP, "operation": "Hardening",
                          "target": {"technology": "ihp-sg13cmos5l"},
                          "source_inputs": [{"path": "source.ml", "copy": "inputs/source.ml", "sha256": ""}],
                          "synthesis_sources": ["src/top.v"], "simulation_sources": ["simulation/top.v"],

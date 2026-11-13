@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_asic_bringup
+open! Electrum_asic_bringup
 open! Wrapper_testbench
 
 let%test_unit "P0 pin/timer command commits at k+n" =

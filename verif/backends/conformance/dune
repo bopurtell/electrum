@@ -1,7 +1,7 @@
 ; Keep simulator qualification separate from the established cycle runner.
 
 (library
- (name protemu_backend_conformance)
+ (name electrum_backend_conformance)
  (wrapped false)
  (modules backend_conformance)
  (libraries core hardcaml hardcaml_event_driven_sim hardcaml_step_testbench)
@@ -15,7 +15,7 @@
 (executable
  (name backend_conformance_bench)
  (modules backend_conformance_bench)
- (libraries core core_unix protemu_backend_conformance)
+ (libraries core core_unix electrum_backend_conformance)
  (preprocess
   (pps ppx_jane))
  (flags

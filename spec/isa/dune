@@ -13,8 +13,8 @@
 ; of the RTL, as construction-plan.md section 4 requires.
 
 (library
- (name protemu_isa)
- (public_name hardcaml_protemu.isa)
+ (name electrum_isa)
+ (public_name electrum.isa)
  (libraries core)
  (preprocess
   (pps ppx_jane))

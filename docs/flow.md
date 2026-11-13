@@ -32,7 +32,7 @@ source scripts/env.sh           # activation for commands typed in this shell
 To prepare a bundle without hardening:
 
 ```sh
-export PROTEMU_FLOW_OUT="$PWD/_flow_results/my-experiment"
+export ELECTRUM_FLOW_OUT="$PWD/_flow_results/my-experiment"
 ./asic/flow.sh build emit preflight
 ```
 
@@ -52,13 +52,13 @@ build → emit → preflight → run → postcheck → collect → report → ar
 | Stage | What it does | Needs | Writes |
 | --- | --- | --- | --- |
 | `build` | Dune build and runtest through the pinned switch, `-j5` | OCaml layer | `_build/` |
-| `emit` | Emits the immutable bundle from the typed declaration | OCaml layer | `$PROTEMU_BUNDLE` |
-| `preflight` | Validates bundle, collateral, versions, image and configuration; starts no physical run | bundle, flow tools | `$PROTEMU_FLOW_OUT/preflight.json` |
-| `run` | Starts LibreLane hardening on the bundle | bundle, PDK, image | new directory under `$PROTEMU_RUNS`, `run.json` |
+| `emit` | Emits the immutable bundle from the typed declaration | OCaml layer | `$ELECTRUM_BUNDLE` |
+| `preflight` | Validates bundle, collateral, versions, image and configuration; starts no physical run | bundle, flow tools | `$ELECTRUM_FLOW_OUT/preflight.json` |
+| `run` | Starts LibreLane hardening on the bundle | bundle, PDK, image | new directory under `$ELECTRUM_RUNS`, `run.json` |
 | `postcheck` | TT precheck and gate-level wrapper simulation | completed full run and precheck tools | `postcheck.json` |
 | `collect` | Collects recorded run artifacts | explicit run | `results.json` |
 | `report` | Prints timing/physical verdicts; fails required nonpassing verdicts | recorded/collected results | terminal summary |
-| `archive` | Copies verified records/reports from a `completed` run | completed run | `$PROTEMU_FLOW_RESULTS/<date>-<run id>/` |
+| `archive` | Copies verified records/reports from a `completed` run | completed run | `$ELECTRUM_FLOW_RESULTS/<date>-<run id>/` |
 | `bootstrap` | Explicit transitional flow-tool provisioning; prefer `scripts/bootstrap.sh` | host prerequisites | `_flow_tools/` |
 
 `--full` explicitly requests the default sequence and fresh allocation. Steps run
@@ -73,13 +73,13 @@ For example, after preparation and preflight above:
 
 ## Output and artifacts
 
-`PROTEMU_FLOW_OUT` names one experiment: one bundle and its execution attempts.
+`ELECTRUM_FLOW_OUT` names one experiment: one bundle and its execution attempts.
 
 - Full/default runs allocate `_flow_results/flow-<timestamp>-<unique suffix>/`
-  unless `PROTEMU_FLOW_OUT` explicitly names the experiment.
+  unless `ELECTRUM_FLOW_OUT` explicitly names the experiment.
 - Named stages default to `_flow_results/adopted`.
-- Bundles default to `$PROTEMU_FLOW_OUT/bundle`, runs to
-  `$PROTEMU_FLOW_OUT/runs`. Every attempt gets its own run directory; failed runs
+- Bundles default to `$ELECTRUM_FLOW_OUT/bundle`, runs to
+  `$ELECTRUM_FLOW_OUT/runs`. Every attempt gets its own run directory; failed runs
   retain logs.
 - Emission refuses a nonempty bundle directory. Choose a new output directory;
   the flow does not delete an existing bundle to make emission pass.
@@ -95,19 +95,19 @@ For example, after preparation and preflight above:
 
 | Variable | Meaning | Default |
 | --- | --- | --- |
-| `PROTEMU_FLOW_OUT` | experiment directory | fresh `_flow_results/flow-*` for full runs; `_flow_results/adopted` for named stages |
-| `PROTEMU_BUNDLE` | emitted bundle | `$PROTEMU_FLOW_OUT/bundle` |
-| `PROTEMU_RUNS` | execution storage | `$PROTEMU_FLOW_OUT/runs` |
-| `PROTEMU_RUN` | existing run for stages after `run` | none; never guessed |
-| `PROTEMU_FLOW_RESULTS` | archive parent | repository `_flow_results/archives` |
-| `PROTEMU_ARCHIVE` | exact archive destination | derived from run start time/ID |
-| `PROTEMU_STAGE` | `full` or `synthesis` | `full` |
-| `PROTEMU_DESIGN` | `observable`, `memory` or `loader` | `observable` |
-| `PROTEMU_TT` | support-tools checkout | `TT_SUPPORT_TOOLS_DIR` from environment/bootstrap, otherwise `_flow_tools/tt` |
-| `PROTEMU_PDK_ROOT` | IHP CMOS5L PDK root | `PDK_ROOT` from environment/bootstrap, otherwise `_flow_tools/pdk` |
-| `PROTEMU_FLOW_PY` | LibreLane Python | `_flow_tools/venv/bin/python` |
-| `PROTEMU_PRECHECK_PY` | precheck Python | `_flow_tools/precheck-venv/bin/python` |
-| `PROTEMU_ALLOW_PYTHON_MISMATCH` | `0` requires the bundle's exact Python minor | `1` |
+| `ELECTRUM_FLOW_OUT` | experiment directory | fresh `_flow_results/flow-*` for full runs; `_flow_results/adopted` for named stages |
+| `ELECTRUM_BUNDLE` | emitted bundle | `$ELECTRUM_FLOW_OUT/bundle` |
+| `ELECTRUM_RUNS` | execution storage | `$ELECTRUM_FLOW_OUT/runs` |
+| `ELECTRUM_RUN` | existing run for stages after `run` | none; never guessed |
+| `ELECTRUM_FLOW_RESULTS` | archive parent | repository `_flow_results/archives` |
+| `ELECTRUM_ARCHIVE` | exact archive destination | derived from run start time/ID |
+| `ELECTRUM_STAGE` | `full` or `synthesis` | `full` |
+| `ELECTRUM_DESIGN` | `observable`, `memory` or `loader` | `observable` |
+| `ELECTRUM_TT` | support-tools checkout | `TT_SUPPORT_TOOLS_DIR` from environment/bootstrap, otherwise `_flow_tools/tt` |
+| `ELECTRUM_PDK_ROOT` | IHP CMOS5L PDK root | `PDK_ROOT` from environment/bootstrap, otherwise `_flow_tools/pdk` |
+| `ELECTRUM_FLOW_PY` | LibreLane Python | `_flow_tools/venv/bin/python` |
+| `ELECTRUM_PRECHECK_PY` | precheck Python | `_flow_tools/precheck-venv/bin/python` |
+| `ELECTRUM_ALLOW_PYTHON_MISMATCH` | `0` requires the bundle's exact Python minor | `1` |
 
 The runner loads `_flow_tools/toolchain-env.sh` when present. Explicit overrides
 can select existing external tools without reprovisioning. Relative output,
@@ -121,8 +121,8 @@ separate invocation must name its run; the newest directory is never selected
 implicitly:
 
 ```sh
-PROTEMU_RUN=/absolute/path/to/run ./asic/flow.sh postcheck collect report
-PROTEMU_RUN=/absolute/path/to/run ./asic/flow.sh report
+ELECTRUM_RUN=/absolute/path/to/run ./asic/flow.sh postcheck collect report
+ELECTRUM_RUN=/absolute/path/to/run ./asic/flow.sh report
 ```
 
 `collect` and `report` read recorded artifacts using system `python3`; they need
@@ -133,7 +133,7 @@ unpacked executable run tree.
 ## Synthesis only
 
 ```sh
-PROTEMU_STAGE=synthesis ./asic/flow.sh build emit preflight run collect report
+ELECTRUM_STAGE=synthesis ./asic/flow.sh build emit preflight run collect report
 ```
 
 This starts mapped synthesis, not just generic RTL checks. `postcheck` requires a
@@ -182,7 +182,7 @@ Historical evidence:
 
 ```sh
 ./asic/tinytapeout/scripts/check-flow.sh  # stub orchestration, no physical tools
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
+flock ../.electrum-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
 python3 asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
 ```
 
@@ -219,8 +219,8 @@ Runner/reporter/archiver are consumer-side helpers; runtime does not reach into 
 
 | Command | Meaning |
 | --- | --- |
-| `dune exec -j5 protemu -- flow` | alias for `./asic/flow.sh`, including its physical default |
-| `dune exec -j5 protemu -- harden` | `./asic/flow.sh run` |
+| `dune exec -j5 electrum -- flow` | alias for `./asic/flow.sh`, including its physical default |
+| `dune exec -j5 electrum -- harden` | `./asic/flow.sh run` |
 | `asic/tinytapeout/scripts/adopted-flow.sh` | underlying runner; no arguments prints help |
 
 `harden` rejects legacy `-tag`/`-no-docker` flags with an explicit diagnostic
@@ -231,7 +231,7 @@ physical steps. It does not change the adopted runner into a native runner.
 
 ### The legacy path
 
-`protemu check`, `stage`, `legacy-harden` and `precheck` use committed P0 RTL and
+`electrum check`, `stage`, `legacy-harden` and `precheck` use committed P0 RTL and
 hand-maintained `asic/tinytapeout/info.yaml`/`src/config.json`. Explicit
 `./scripts/bootstrap.sh --legacy-project` stages/configures this input under
 `_flow_results/legacy/p0-staged`. The stage lock is
@@ -254,7 +254,7 @@ qualification. Generic synthesis is not mapped/physical closure.
 - P0.5b ran the observable design end-to-end with LibreLane signoff, TT precheck
   and gate-level simulation. It used modified/untracked inputs and cannot be
   restored from `source_revision` alone.
-- P0.5c reproduced the observable result from committed protemu `8d3ada1` with
+- P0.5c reproduced the observable result from committed electrum `8d3ada1` with
   locked ASIC `a257424` in an isolated prefix. Its complete preserved input bundle
   was independently restored/revalidated. This is the last recorded full
   clean-staging physical qualification, not a fresh qualification of the present

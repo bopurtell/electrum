@@ -41,12 +41,12 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 module Evsim = Hardcaml_event_driven_sim.Four_state_simulator
 module Logic = Hardcaml_event_driven_sim.Four_state_logic
 module Circuit = Evsim.With_interface (Input_events.I) (Input_events.O)
 module Simulator = Evsim.Simulator
-module F_model = Protemu_f_model
+module F_model = Electrum_f_model
 
 let time_unit = "tick"
 let half_period = 5

@@ -34,7 +34,7 @@ def tree(root):
 
 def check_loader_physical(manifest, config, files):
     """Declaration geometry only: no placed database, power or routing acceptance."""
-    assert manifest["project"] == "protemu_loader"
+    assert manifest["project"] == "electrum_loader"
     assert manifest["operation"] == "Hardening"
     macro = "RM_IHPSG13_1P_256x16_c2_bm_bist"
     supplies = {"VDD!": "VPWR", "VDDARRAY!": "VPWR", "VSS!": "VGND"}
@@ -113,8 +113,8 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
         ["git", "rev-parse", "HEAD"], cwd=root, text=True
     ).strip()
     suffix = {"observable": "", "memory": "_memory", "loader": "_loader"}[kind]
-    assert manifest["top_module"] == "tt_um_leemperor_hardcaml_protemu" + suffix
-    assert manifest["project"] == "protemu_" + kind
+    assert manifest["top_module"] == "tt_um_leemperor_electrum" + suffix
+    assert manifest["project"] == "electrum_" + kind
     assert manifest["operation"] == operation.capitalize()
     assert config == manifest["flow_configuration"]
     assert manifest.get("timing_intent") is None
@@ -133,10 +133,10 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
     }
     assert {key: manifest["requested_tools"][key] for key in expected_tools} == expected_tools
     assert manifest["synthesis_sources"] == [
-        "src/tt_um_leemperor_hardcaml_protemu" + suffix + ".v"
+        "src/tt_um_leemperor_electrum" + suffix + ".v"
     ]
     assert manifest["simulation_sources"] == [
-        "simulation/tt_um_leemperor_hardcaml_protemu" + suffix + ".v"
+        "simulation/tt_um_leemperor_electrum" + suffix + ".v"
     ]
     assert config["CLOCK_PORT"] == "clk"
     assert abs(config["CLOCK_PERIOD"] - 1e9 / 48e6) < 1e-10
@@ -150,7 +150,7 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
             "nom_fast_1p32V_m40C", "nom_slow_1p08V_125C", "nom_typ_1p20V_25C"]
     assert config["DESIGN_NAME"] == manifest["top_module"]
     assert config["VERILOG_FILES"] == [
-        "dir::tt_um_leemperor_hardcaml_protemu" + suffix + ".v"
+        "dir::tt_um_leemperor_electrum" + suffix + ".v"
     ]
     assert config["PNR_SDC_FILE"] == "dir::../constraints/top.sdc"
     assert config["SIGNOFF_SDC_FILE"] == "dir::../constraints/top.sdc"
@@ -174,7 +174,7 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
         "asic/cli/dune", "asic/rtl/dune", "asic/rtl/bringup/dune",
         "ip/mechanisms/rtl/dune", "ip/program_memory_controller/rtl/dune",
         "ip/emulator_core/rtl/dune", "ip/host_link/rtl/dune",
-        "ip/protemu_system/rtl/dune", "ip/host_link/protocol/dune", "spec/isa/dune",
+        "ip/electrum_system/rtl/dune", "ip/host_link/protocol/dune", "spec/isa/dune",
     } <= source_paths
     assert not any(path.startswith(("software/", "verif/", "lib/", "bin/", "chip_top/"))
                    for path in source_paths)
@@ -203,7 +203,7 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
         else:
             assert 'ui[0]: "Loader select, active low"' in info
             assert 'uo[1]: "Loader response ready"' in info
-            assert {"ip/protemu_system/rtl/protemu_top.ml", "ip/emulator_core/rtl/emulator_core.ml"} <= source_paths
+            assert {"ip/electrum_system/rtl/electrum_top.ml", "ip/emulator_core/rtl/emulator_core.ml"} <= source_paths
             assert {
                 "ip/host_link/protocol/dune",
                 "ip/host_link/protocol/definitions.ml",
@@ -326,7 +326,7 @@ def main():
     if args.operation:
         selection_args += ["--operation", args.operation]
     run(str(emitter), *selection_args, "--check-conflicts", args.kind, cwd=root)
-    with tempfile.TemporaryDirectory(prefix="protemu-adopted-") as scratch:
+    with tempfile.TemporaryDirectory(prefix="electrum-adopted-") as scratch:
         scratch = pathlib.Path(scratch)
         first, second = scratch / "first", scratch / "second"
         run(str(emitter), *selection_args, args.kind, str(first), str(root), cwd=root)
@@ -354,7 +354,7 @@ def main():
                 f"install Docker and run 'docker pull {image}'"
             ) from error
         suffix = {"observable": "", "memory": "_memory", "loader": "_loader"}[args.kind]
-        top = "tt_um_leemperor_hardcaml_protemu" + suffix
+        top = "tt_um_leemperor_electrum" + suffix
         if args.kind == "loader":
             for role in ("simulation", "src"):
                 obj_dir = scratch / ("loader-" + role)
@@ -390,10 +390,10 @@ def main():
         else:
             testbench = "tb.v" if args.kind == "observable" else "p0_memory_tb.v"
             commands = "\n".join([
-                f"iverilog -g2012 -Wall -Wno-timescale -s tb -o /tmp/protemu-wrapper /bundle/src/{top}.v /test/{testbench}",
-                "vvp /tmp/protemu-wrapper",
-                f"iverilog -g2012 -Wall -Wno-timescale -s tb -o /tmp/protemu-wrapper-sim /bundle/simulation/{top}.v /test/{testbench}",
-                "vvp /tmp/protemu-wrapper-sim",
+                f"iverilog -g2012 -Wall -Wno-timescale -s tb -o /tmp/electrum-wrapper /bundle/src/{top}.v /test/{testbench}",
+                "vvp /tmp/electrum-wrapper",
+                f"iverilog -g2012 -Wall -Wno-timescale -s tb -o /tmp/electrum-wrapper-sim /bundle/simulation/{top}.v /test/{testbench}",
+                "vvp /tmp/electrum-wrapper-sim",
                 f"verilator --lint-only --top-module {top} -Wno-DECLFILENAME -Wno-COMBDLY /bundle/src/{top}.v",
                 f"yosys -p 'read_verilog /bundle/src/{top}.v; hierarchy -check -top {top}; synth -top {top}; stat'",
             ])

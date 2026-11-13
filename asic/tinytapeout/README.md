@@ -33,15 +33,15 @@ physical closure of the current loader production top.
 
 The [accepted ASIC architecture](../../../hardcaml_asic/docs/architecture.md)
 supplies elaboration, resource selection, target resolution and build/flow
-artifacts. Protemu owns its design constructors, wrapper/reset/disable behavior,
+artifacts. Electrum owns its design constructors, wrapper/reset/disable behavior,
 TT/CMOS5L target request, clocks/I/O assumptions, pin meanings and resource policy.
 The adapter derives metadata, source lists, constraints and configuration from
 one immutable build and rejects conflicting protected overrides.
 
 [`asic/project/chip_project.ml`](../project/chip_project.ml) declares
 `observable`, `memory` and `loader`; [`asic/rtl/`](../rtl/) supplies their
-ASIC-dependent package compositions. `protemu_chip_project` depends on the
-separate `protemu_asic_rtl` library and canonical IP libraries. See
+ASIC-dependent package compositions. `electrum_chip_project` depends on the
+separate `electrum_asic_rtl` library and canonical IP libraries. See
 [ASIC adoption](../../docs/asic-adoption.md) and the
 [construction plan](../../docs/construction-plan.md).
 
@@ -149,7 +149,7 @@ project authority. Existing ignored runtime state is never implicitly relocated.
 
 Bootstrap prefers an explicit `TT_SUPPORT_TOOLS_DIR`, then the sibling checkout
 `../tt-support-tools-cmos5l` relative to the repository root, otherwise manages
-`_flow_tools/tt`. The adopted runner also supports `PROTEMU_TT` and the other
+`_flow_tools/tt`. The adopted runner also supports `ELECTRUM_TT` and the other
 overrides documented in [flow.md](../../docs/flow.md#environment).
 
 Explicitly prepare the legacy staged project with:
@@ -213,12 +213,12 @@ Current checks from the repository root:
 
 ```sh
 ./asic/tinytapeout/scripts/check-flow.sh  # stub orchestration, no physical tools
-flock ../.protemu-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
+flock ../.electrum-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
 python3 asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
 ```
 
 The full bundle checker additionally runs HDL simulation/lint/generic synthesis
 and requires the pinned Docker image; it does not run P&R. Legacy
-`dune exec -j5 protemu -- check` invokes
+`dune exec -j5 electrum -- check` invokes
 `asic/tinytapeout/scripts/check-p0.sh` and also stages legacy inputs. Neither a
 stub orchestration pass nor emitted-RTL checks replace a fresh physical run.

@@ -1,6 +1,6 @@
 (library
- (name protemu_chip_project)
- (libraries core hardcaml hardcaml_asic protemu_asic_rtl)
+ (name electrum_chip_project)
+ (libraries core hardcaml hardcaml_asic electrum_asic_rtl)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

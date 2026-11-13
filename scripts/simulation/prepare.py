@@ -83,7 +83,7 @@ def verify_current(*, check_sources=True):
 def prepare(args):
     STORE.mkdir(parents=True, exist_ok=True)
     with (STORE / 'prepare.lock').open('a') as lock, \
-         (ROOT.parent / '.protemu-build.lock').open('a') as build_lock:
+         (ROOT.parent / '.electrum-build.lock').open('a') as build_lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         fcntl.flock(build_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         if (STORE / 'current.json').exists():
@@ -94,7 +94,7 @@ def prepare(args):
         generation = STORE / 'generations' / uuid.uuid4().hex
         generation.mkdir(parents=True)
         # The same normal local tool receipt used by env.sh, independently checked.
-        tools = module(ROOT / 'scripts/install-tools.py', 'protemu_installed_tools')
+        tools = module(ROOT / 'scripts/install-tools.py', 'electrum_installed_tools')
         selection, tools_receipt = tools.verify_selection()
         oracle = module(ROOT / 'asic/verif/functional/check_functional.py', 'pt3b_source_oracle')
         snapshot_check = module(ROOT / 'asic/verif/bundle/check_bundle.py', 'pt3b_source_bundle')
@@ -112,7 +112,7 @@ def prepare(args):
         provider.require(after == event_sources, 'event producer source changed during build')
         emitter = ROOT / '_build/default' / TARGET
         source_revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
-        value = dict(contract='protemu.fs2-pt3b-install', schema_version=2, checks_passed=False,
+        value = dict(contract='electrum.fs2-pt3b-install', schema_version=2, checks_passed=False,
                      catalog_schema_version=1, catalog=provider.catalog(), catalog_sha256=provider.catalog_digest(provider.catalog()),
                      generation=str(generation), project_root=str(ROOT), bundles={}, tools={}, models=[],
                      source_sha256={}, files={}, fixed_variant_identity=None,
@@ -162,7 +162,7 @@ def prepare(args):
             evidence = type('Evidence', (), {'record': {'source_revision': source_revision}})()
             manifest = oracle.validate_bundle(bundle, ROOT, choice, 'loader', evidence, snapshot_check.check_snapshot)
             variant = manifest.get('hardware_variant')
-            provider.require(variant is not None and variant['design_id'] == 'protemu-loader' and
+            provider.require(variant is not None and variant['design_id'] == 'electrum-loader' and
                              variant['schema_id'] == 'fixed-loader-v1', 'missing fixed loader variant')
             if expected_variant is None:
                 expected_variant = variant

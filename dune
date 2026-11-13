@@ -1,10 +1,10 @@
-; Makes `dune exec protemu -- <command>` work from anywhere in the repository
-; without installing the executable. See software/cli/protemu.ml.
+; Makes `dune exec electrum -- <command>` work from anywhere in the repository
+; without installing the executable. See software/cli/electrum.ml.
 
 (env
  (_
   (binaries
-   (software/cli/protemu.exe as protemu))))
+   (software/cli/electrum.exe as electrum))))
 
 ; The required verification tier is the ordinary bounded regression plus emitted-RTL
 ; checks. Longer seed sweeps remain explicit because their purpose is depth, not replacing

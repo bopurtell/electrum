@@ -7,8 +7,8 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_isa
-open! Protemu_f_model
+open! Electrum_isa
+open! Electrum_f_model
 open! Control_execution_testbench
 
 let unwrap = function

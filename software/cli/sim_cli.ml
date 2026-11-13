@@ -9,9 +9,9 @@
 *)
 
 open! Core
-open! Protemu_isa
-module Api = Protemu_host.Host_api
-module Backend = Protemu_simulator.Simulator_backend
+open! Electrum_isa
+module Api = Electrum_host.Host_api
+module Backend = Electrum_simulator.Simulator_backend
 
 let atom value = Sexp.Atom value
 let field name value = Sexp.List [ atom name; value ]
@@ -22,7 +22,7 @@ type session = { device : Backend.t }
 let emit_at_cycle ~cycle ~line ~command ~status value =
   let output =
     Sexp.List
-      [ atom "protemu-cli"
+      [ atom "electrum-cli"
       ; field "version" (int_atom Api.Constants.cli_output_version)
       ; field "line" (int_atom line)
       ; field "command" (atom command)

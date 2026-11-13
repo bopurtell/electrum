@@ -3,7 +3,7 @@
 
 (library
  (name host_link_protocol)
- (public_name hardcaml_protemu.host_link_protocol)
+ (public_name electrum.host_link_protocol)
  (libraries core)
  (preprocess
   (pps ppx_jane))

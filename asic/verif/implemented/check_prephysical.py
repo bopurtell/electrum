@@ -3,7 +3,7 @@
 
 This is emitted-RTL functional evidence, never implemented-netlist acceptance.
 Optional cell review exercises the independent reviewer on supplied real collateral;
-the final Protemu used-cell set must still be reviewed after implementation.
+the final Electrum used-cell set must still be reviewed after implementation.
 """
 import argparse
 import hashlib
@@ -83,7 +83,7 @@ def execute(pt3b, output, cells=None):
                   "pt3b_receipt": str(pt3b / "receipt.json"), "instance": instance,
                   "sources": [*sources, str(prepared.resolve())], "inputs": inputs,
                   "supplied_cell_review": cell_review,
-                  "cell_review_scope": "supplied specimen only; final Protemu used-cell review pending"}
+                  "cell_review_scope": "supplied specimen only; final Electrum used-cell review pending"}
         gate.write(output / "prephysical.json", record)
         gate.replay(record, output / "replay")
         gate.write(output / "result.json", {"status": "passed", "scope": record["scope"],

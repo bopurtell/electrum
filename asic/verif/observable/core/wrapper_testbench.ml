@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_asic_bringup
+open! Electrum_asic_bringup
 module Sim = Cyclesim.With_interface (P0_observable.I) (P0_observable.O)
 
 let int signal = Bits.to_int_trunc !signal

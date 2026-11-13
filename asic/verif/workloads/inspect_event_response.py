@@ -6,7 +6,7 @@ compare --left RESULT --right RESULT --json
 
 Exit 0: verified completed inspection / comparable pair.
 Exit 1: readable incomplete result / confounded-or-unavailable pair (JSON retained).
-Exit 2: invalid query/evidence. These are Protemu contracts, not ASIC Workload_result.
+Exit 2: invalid query/evidence. These are Electrum contracts, not ASIC Workload_result.
 """
 
 import argparse
@@ -31,7 +31,7 @@ def main(argv=None, *, stdout=None, stderr=None):
     args = parser.parse_args(argv)
     try:
         if args.command == "inspect":
-            value = {"schema": "protemu.event-response-inspection", "version": 1,
+            value = {"schema": "electrum.event-response-inspection", "version": 1,
                      "result_path": str(args.result.absolute()), **event_evidence.inspect(args.result)}
             code = 0 if value["measurements"] is not None else 1
             summary = f"{value['result']['status']}: {value['result']['system_boundary']}"
@@ -50,7 +50,7 @@ def main(argv=None, *, stdout=None, stderr=None):
     except (ValueError, OSError, KeyError, TypeError, IndexError, StopIteration) as error:
         diagnostic = f"{type(error).__name__}: {error}"
         if args.json:
-            print(json.dumps({"schema": "protemu.event-response-query-error", "version": 1,
+            print(json.dumps({"schema": "electrum.event-response-query-error", "version": 1,
                               "status": "invalid", "diagnostic": diagnostic}), file=stdout)
         else:
             print(diagnostic, file=stderr)

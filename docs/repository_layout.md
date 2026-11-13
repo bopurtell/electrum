@@ -41,11 +41,11 @@ ip/
     verif/{serial_phy,frame_rx,command_dispatch,frame_tx}/
     verif/archived/hl4a/          frozen but ACTIVE regression oracle
     verif/archived/support/       private old-API adapter for the frozen oracle only
-  protemu_system/rtl/             Protemu_top system, external program-RAM port
+  electrum_system/rtl/             Electrum_top system, external program-RAM port
 asic/
   rtl/                           package/observable/memory tops and RAM binding
     bringup/p0_observable.ml
-  project/                       protemu_chip_project library, declaration and input inventory
+  project/                       electrum_chip_project library, declaration and input inventory
   cli/                           ASIC bundle executable
   verif/observable/              P0 core and package-peer checks
   verif/memory/emitted/          explicitly selected memory-package peer
@@ -76,19 +76,19 @@ goldens, example files, program bytes and frozen regressions remain unchanged.
 ## Library boundaries
 
 - Wrapped hardware libraries now enforce owner dependencies. Public sublibraries
-  are `hardcaml_protemu.{mechanisms,mechanisms_staging,controller,core,core_legacy,
-  host_link,system,asic_bringup}`. Their roots are respectively `Protemu_mechanisms`,
-  `Protemu_mechanisms_staging`, `Protemu_controller`, `Protemu_core`,
-  `Protemu_core_legacy`, `Protemu_host_link`, `Protemu_system`, `Protemu_asic_bringup`.
-  There is no installed flat `Hardcaml_protemu` module or Dune main library. The
+  are `electrum.{mechanisms,mechanisms_staging,controller,core,core_legacy,
+  host_link,system,asic_bringup}`. Their roots are respectively `Electrum_mechanisms`,
+  `Electrum_mechanisms_staging`, `Electrum_controller`, `Electrum_core`,
+  `Electrum_core_legacy`, `Electrum_host_link`, `Electrum_system`, `Electrum_asic_bringup`.
+  There is no installed flat `Electrum` module or Dune main library. The
   opam/Findlib package name remains a namespace container for its sublibraries.
 - The original flat name exists only in a private non-installed adapter under
   `ip/host_link/verif/archived/support/`, for the unchanged frozen HL4a suite.
   Canonical owners have no reverse dependency on it; it does not compile RTL copies.
-- `protemu_asic_rtl` owns ASIC-dependent package compositions/`Program_memory`;
-  `protemu_chip_project` owns the declaration. `asic/cli/asic_bundle.ml` is the CLI.
+- `electrum_asic_rtl` owns ASIC-dependent package compositions/`Program_memory`;
+  `electrum_chip_project` owns the declaration. `asic/cli/asic_bundle.ml` is the CLI.
 - `spec/isa/` and `verif/reference/model/` retain their independent APIs and the
-  model has no Hardcaml dependency. Pure `protemu_firmware_examples` owns authored
+  model has no Hardcaml dependency. Pure `electrum_firmware_examples` owns authored
   example programs, reexported type-identically by the model for compatibility.
 - `ip/host_link/protocol/` exposes `Host_link_protocol` definitions and `Codec`
   byte operations. The old protocol API is a separate source-compatible facade

@@ -16,8 +16,8 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_core
-open! Protemu_isa
+open! Electrum_core
+open! Electrum_isa
 open! Core_engine_testbench
 
 let halt_program = program "halt" [ Instruction.Halt ]

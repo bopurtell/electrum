@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 open! Pin_bank_testbench
 
 let%test_unit "P2.1 masked commits, claims, conflict, and release" =
@@ -52,16 +52,16 @@ let%test_unit "P2.1 pin commits and ownership track the independent model" =
   i.enable_i := Bits.vdd;
   Cyclesim.cycle sim;
   i.reset_i := Bits.gnd;
-  let state = ref Protemu_f_model.Pin_bank.released in
+  let state = ref Electrum_f_model.Pin_bank.released in
   let commit mask value output_enable =
     i.write_valid_i := Bits.vdd;
     i.write_mask_i := bits 8 mask;
     i.write_value_i := bits 8 value;
     i.write_oe_i := bits 8 output_enable;
     let expected =
-      Protemu_f_model.Pin_bank.commit
+      Electrum_f_model.Pin_bank.commit
         !state
-        { Protemu_f_model.Pin_bank.Write.mask; value; output_enable }
+        { Electrum_f_model.Pin_bank.Write.mask; value; output_enable }
         ~owner:Kinds.Owner.Software
     in
     Cyclesim.cycle sim;
@@ -80,7 +80,7 @@ let%test_unit "P2.1 pin commits and ownership track the independent model" =
   i.claim_engine_i := Bits.vdd;
   i.claim_mask_i := bits 8 0x30;
   (match
-     Protemu_f_model.Pin_bank.claim !state ~owner:(Kinds.Owner.Engine 0) ~mask:0x30
+     Electrum_f_model.Pin_bank.claim !state ~owner:(Kinds.Owner.Engine 0) ~mask:0x30
    with
    | Ok next -> state := next
    | Error _ -> failwith "model claim was unexpectedly rejected");
@@ -90,7 +90,7 @@ let%test_unit "P2.1 pin commits and ownership track the independent model" =
   commit 0x40 0 0x40;
   i.abort_i := Bits.vdd;
   Cyclesim.cycle sim;
-  state := Protemu_f_model.Pin_bank.released;
+  state := Electrum_f_model.Pin_bank.released;
   check "model abort value" o.pins_o !state.value;
   check "model abort enable" o.pin_oe_o !state.output_enable
 ;;

@@ -119,7 +119,7 @@ revision in `tinytapeout/asic-dependencies.lock`, proven by the library's own
 `test/package_consumer_smoke.sh`. The Python tooling is not distributed at all
 — it lives as scripts in the library's repository, so a consumer copies it:
 
-| protemu file | copied from | lines | local delta |
+| electrum file | copied from | lines | local delta |
 |---|---|---|---|
 | `adopted_phase4.py` | `phase4.py` | 617 | 79 |
 | `adopted_report.py` | `report.py` | 233 | 11 |

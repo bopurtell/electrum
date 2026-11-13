@@ -10,9 +10,9 @@
    and neither adds a runner of its own.
 
    Where the independence lies. The bank's state - value, output enable, and which owner
-   holds which pins - comes from [Protemu_f_model.Pin_bank], which has no Hardcaml
+   holds which pins - comes from [Electrum_f_model.Pin_bank], which has no Hardcaml
    dependency and was written from construction-plan.md section 3 rather than from
-   [Protemu_mechanisms.Pin_bank]. What that module does not own is the interface around
+   [Electrum_mechanisms.Pin_bank]. What that module does not own is the interface around
    it: the port offers up to three requests per edge and accepts at most one, refusal is a
    one-edge [rejected] pulse, and an ownership refusal also sets a sticky [conflict] bit.
    Those are properties of this block's port contract, so [F_model] below states them
@@ -27,10 +27,10 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
-module Kinds = Protemu_isa.Kinds
-module Pins = Protemu_isa.Pins
-module Reference = Protemu_f_model.Pin_bank
+open! Electrum_mechanisms
+module Kinds = Electrum_isa.Kinds
+module Pins = Electrum_isa.Pins
+module Reference = Electrum_f_model.Pin_bank
 module Pin_sim = Cyclesim.With_interface (Pin_bank.I) (Pin_bank.O)
 
 let bits width n = Bits.of_int_trunc ~width n
@@ -56,7 +56,7 @@ module Reject_code = struct
      be visible as itself in a report. *)
   let unexpected = 5
 
-  let of_reject (reject : Protemu_f_model.Fault.Reject.t) =
+  let of_reject (reject : Electrum_f_model.Fault.Reject.t) =
     match reject with
     | Pin_owned _ -> pin_owned
     | Pin_not_owned _ -> pin_not_owned
@@ -325,7 +325,7 @@ module Dut = struct
   ;;
 end
 
-(* The independent reference. [bank] is [Protemu_f_model.Pin_bank]; the three fields
+(* The independent reference. [bank] is [Electrum_f_model.Pin_bank]; the three fields
    beside it are the port contract this environment owns. *)
 module F_model = struct
   type t =

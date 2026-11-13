@@ -43,7 +43,7 @@ let%expect_test "a failure artifact retains dependency, tool, and exact patch da
 ;;
 
 let%expect_test "artifact paths are valid from a dune runner directory" =
-  let directory = [%string "protemu-artifacts-test-%{Replay.Posix.getpid ()#Int}"] in
+  let directory = [%string "electrum-artifacts-test-%{Replay.Posix.getpid ()#Int}"] in
   let path =
     Replay.Artifacts.write_to
       ~directory
@@ -80,7 +80,7 @@ let%expect_test "a controlled mismatch is found, shrunk, and reproduced from its
       ~prerequisite:Generator.begins_with_reset
       ~write_artifact:false
         (* This test snapshots one seed's report, so it runs its recorded settings even
-           during a PROTEMU_SEED sweep; an artifact path carries a process id and would
+           during a ELECTRUM_SEED sweep; an artifact path carries a process id and would
            not be reproducible either. *)
       ~environment_overrides:false
       ~settings:fixture_settings
@@ -105,7 +105,7 @@ let%expect_test "a controlled mismatch is found, shrunk, and reproduced from its
       failing trial:    6
       configuration:    ((engine 0)(defect Ignore_open_drain))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=64 PROTEMU_SIZE=12 dune runtest verif/common/test --force
+      rerun:            ELECTRUM_SEED=20260919 ELECTRUM_TRIALS=64 ELECTRUM_SIZE=12 dune runtest verif/common/test --force
 
     first mismatch:
       edge:             1

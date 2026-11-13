@@ -7,7 +7,7 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_core
+open! Electrum_core
 module Evsim = Hardcaml_event_driven_sim.Two_state_simulator
 module Circuit = Evsim.With_interface (Emulator_core.I) (Emulator_core.O)
 module Simulator = Evsim.Simulator

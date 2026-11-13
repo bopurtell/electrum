@@ -225,7 +225,7 @@ def main():
             not field(s, 'discovery_error'), 'simulation-catalog')
         digest = field(discovered, 'discovery_digest')[0]
         for suite, case, label in (('pt3b-serial-loader', 'exact-implementation', 'serial-vvp'),
-                                    ('protemu-event-response', 'exact', 'nested-event-producer')):
+                                    ('electrum-event-response', 'exact', 'nested-event-producer')):
             launched = rpc('simulation', ['Launch', ['submission_key', 'cancel-' + uuid.uuid4().hex],
                 ['discovery_digest', digest], ['selection', [('suite', suite), ('cases', [case]), ('seed', '0'),
                     ('parameters', []), ('asic_inputs', [])]]], label=label + '-launch')

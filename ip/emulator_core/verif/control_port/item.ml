@@ -12,7 +12,7 @@
 *)
 
 open! Core
-open! Protemu_core
+open! Electrum_core
 
 (* A decoded [Control_port.Request] offer. READ carries no expected word: that operand is
    meaningful only with [readback_verify].

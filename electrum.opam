@@ -7,8 +7,8 @@ and ISA libraries plus a transport-independent host API and integrated-core simu
 backend."""
 maintainer: ["Bohdan Purtell <bohdanpurtell@gmail.com>"]
 authors: ["Bohdan Purtell <bohdanpurtell@gmail.com>"]
-homepage: "https://github.com/LeEmperor/hardcaml_protemu"
-bug-reports: "https://github.com/LeEmperor/hardcaml_protemu/issues"
+homepage: "https://github.com/LeEmperor/electrum"
+bug-reports: "https://github.com/LeEmperor/electrum/issues"
 depends: [
   "ocaml" {>= "5.1"}
   "dune" {>= "3.17" & >= "3.17"}
@@ -44,4 +44,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/LeEmperor/hardcaml_protemu.git"
+dev-repo: "git+https://github.com/LeEmperor/electrum.git"

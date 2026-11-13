@@ -1,7 +1,7 @@
 (executable
  (name asic_bundle)
  (modules asic_bundle)
- (libraries core hardcaml_asic protemu_chip_project)
+ (libraries core hardcaml_asic electrum_chip_project)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint
@@ -10,5 +10,5 @@
 (executable
  (name project)
  (modules project)
- (libraries core hardcaml_asic hardcaml_asic.execution protemu_chip_project yojson unix)
+ (libraries core hardcaml_asic hardcaml_asic.execution electrum_chip_project yojson unix)
  (preprocess (pps ppx_jane)))

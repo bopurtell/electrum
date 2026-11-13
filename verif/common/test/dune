@@ -1,5 +1,5 @@
 (library
- (name protemu_common_tests)
+ (name electrum_common_tests)
  (wrapped false)
  (modules checker_expect_tests replay_expect_tests)
  ; ppx_expect v0.18~preview drops the directory from a test file's path when registering
@@ -9,7 +9,7 @@
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core unix protemu_test_common protemu_pin_bank_testbench)
+ (libraries core unix electrum_test_common electrum_pin_bank_testbench)
  (preprocess
   (pps ppx_jane))
  (lint

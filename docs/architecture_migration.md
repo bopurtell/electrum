@@ -14,7 +14,7 @@ preservation baseline. Dated implementation records retain historical names/resu
 | --- | --- | --- |
 | AM0 | Identified post-rename ownership and AM3 baselines captured | Original pre-AM1/AM2 evidence gaps remain; do not claim retrospective equivalence |
 | AM1 | Core/controller names implemented and preserved | Original owner acceptance remains separately recorded |
-| AM2 | Host_link / Protemu_top ownership implemented and preserved | Original owner acceptance remains separately recorded |
+| AM2 | Host_link / Electrum_top ownership implemented and preserved | Original owner acceptance remains separately recorded |
 | AM3 | **Protocol/Codec separation implemented and independently reviewed** | Owner review; temporary old-source API facade retained |
 | AM4 | **Chip/package/project extraction implemented and independently reviewed** | Owner review; no SRAM/backend upgrade implied |
 | AM5 | **Pending** grouped interfaces and responsibility review | Preserve flattened ports and temporal contracts |
@@ -71,9 +71,9 @@ Future agent prompts must repeat this requirement alongside the no-commits and s
 2. Decompose by responsibility, state ownership, and useful interface contracts. Thin
    composition files are appropriate; a module is not split merely to increase file count.
 3. Source ownership follows `ip/<owner>/{rtl,verif}`, including reusable
-   `ip/protemu_system/`, and singular `asic/{rtl,project,cli,verif}`. Wrapped
+   `ip/electrum_system/`, and singular `asic/{rtl,project,cli,verif}`. Wrapped
    owner libraries now enforce explicit dependencies. Installed consumers use the
-   `Protemu_*` owner roots; the flat `Hardcaml_protemu` API is removed. Only the
+   `Electrum_*` owner roots; the flat `Electrum` API is removed. Only the
    frozen oracle retains a private test adapter. ASIC libraries keep resource/
    target tooling out of reusable hardware.
 4. Keep program storage separate from its access controller and from the system using it.
@@ -91,7 +91,7 @@ differs from the current OCaml owner.
 | Owner | Current source | Responsibility |
 | --- | --- | --- |
 | `Host_link` | `ip/host_link/rtl/host_link.ml` | Complete serial control endpoint; composes PHY/RX/dispatch/TX |
-| `Protemu_top` | `ip/protemu_system/rtl/protemu_top.ml` | Endpoint/core system composition; external program-memory port |
+| `Electrum_top` | `ip/electrum_system/rtl/electrum_top.ml` | Endpoint/core system composition; external program-memory port |
 | `Program_memory_controller` | `ip/program_memory_controller/rtl/program_memory_controller.ml` | Load/readback/verify, image validity, fetch/access arbitration |
 | `Execution_unit` | `ip/emulator_core/rtl/execution_unit.ml` | Execution, architectural state, run/stop/abort/step |
 | `Primitive_dispatch` | `ip/emulator_core/rtl/primitive_dispatch.ml` | Execution-command dispatch and mechanism composition |
@@ -102,7 +102,7 @@ differs from the current OCaml owner.
 | `Chip_project` | `asic/project/chip_project.ml` | Pinout, project declaration and source inventories |
 | `Host_link_protocol` / `Codec` | `ip/host_link/protocol/` | Pure protocol vocabulary/layouts versus software byte conversion |
 
-`Protemu_top` and `Host_link` are compositions, not monolithic implementations of
+`Electrum_top` and `Host_link` are compositions, not monolithic implementations of
 their children. Preserve their extracted boundaries; do not repeat HL4 or invent
 pipeline stages merely to produce more files.
 
@@ -110,7 +110,7 @@ pipeline stages merely to produce more files.
 
 ```text
 Package_top                       target-specific package integration
-├── Protemu_top                   reusable emulator system, no RAM implementation
+├── Electrum_top                   reusable emulator system, no RAM implementation
 │   ├── Host_link
 │   │   ├── Serial_phy            input synchronization and edge events
 │   │   ├── Frame_rx              receive, validation, retained request fields
@@ -139,7 +139,7 @@ and consumer at a transaction boundary does not imply a FIFO or a ready/valid co
 Retained fields, eligibility, one-shot offers, completion waits, and same-cycle priorities
 retain their existing contracts. The serial clock remains sampled data, not a logic clock.
 
-`Protemu_top` connects those components, exposes the program-memory and protocol-pin
+`Electrum_top` connects those components, exposes the program-memory and protocol-pin
 boundaries, and records unused interface tie-offs. It does not decode frames or own RAM.
 `Package_top` supplies memory, maps package pins, and adapts reset/output enables. Package
 choices do not leak into `Host_link` or `Emulator_core`.
@@ -175,7 +175,7 @@ and a well-formed refusal. Software CRC computation can be a pure helper; the ha
   reference implementation.
 
 Implemented canonical API: internal Dune library `host_link_protocol`, public
-package `hardcaml_protemu.host_link_protocol`, root `Host_link_protocol`.
+package `electrum.host_link_protocol`, root `Host_link_protocol`.
 Definitions/types/layouts and CRC parameters are root APIs; software CRC/u16
 conversion and request/response byte operations/errors are under `Codec`.
 
@@ -186,7 +186,7 @@ let encoded = Protocol.Codec.Request.encode ~tag:1 request
 ```
 
 `software/compatibility/host_link_wire/` is a thin temporary source-compatibility facade, public package
-`hardcaml_protemu.host_link_wire`, root path `Protemu_host_link_wire.Wire`. It
+`electrum.host_link_wire`, root path `Electrum_host_link_wire.Wire`. It
 reexports canonical types and helpers; it contains no independent protocol/codec
 implementation. New consumers use the canonical API. Retaining the facade protects
 the frozen regression and external source users, not binary compatibility: compiled
@@ -227,7 +227,7 @@ ip/
     verif/                      controller contracts and RAM-consumer integration
   emulator_core/{rtl,verif}/     execution/dispatch/core and control-port agent
   host_link/{rtl,protocol,verif}/ endpoint/children, pure protocol, agents/environment
-  protemu_system/rtl/            Protemu_top reusable system composition
+  electrum_system/rtl/            Electrum_top reusable system composition
 asic/
   rtl/                          package tops, resource binding and bring-up designs
   project/                      ASIC project declaration and source inventory
@@ -243,13 +243,13 @@ scripts/                        explicit setup/activation helpers
 archive/legacy/                 historical evidence, excluded from live rule discovery
 ```
 
-`protemu_chip_project` may depend on `hardcaml_asic`, `hardcaml_protemu` and target
+`electrum_chip_project` may depend on `hardcaml_asic`, `electrum` and target
 adapters. Reusable hardware must not acquire an ASIC-library dependency. Package
 construction is already outside command-line initialization, so fixtures can use
 the same production composition without importing CLI side effects.
 
 There is no global copy-all hardware assembly and no installed root hardware
-module. The `hardcaml_protemu` package is a container for named sublibraries such
+module. The `electrum` package is a container for named sublibraries such
 as `.core` and `.host_link`. A private26-alias adapter at
 `ip/host_link/verif/archived/support/` lets frozen HL4a run unchanged; it is not
 installed and no canonical library depends on it. Unwrapped test libraries are
@@ -312,7 +312,7 @@ remain only in explicitly historical material or recorded compatibility surfaces
 Prerequisite: AM1.
 
 - [ ] Accept `Host_link` under its IP owner, retaining its four children/helpers.
-- [ ] Accept `Protemu_top` under reusable `ip/protemu_system/rtl/`.
+- [ ] Accept `Electrum_top` under reusable `ip/electrum_system/rtl/`.
 - [ ] Accept the documented logical interfaces, tie-offs and external-memory boundary.
 
 Exit: the top remains thin composition; endpoint behavior and every existing exact-cycle
@@ -338,12 +338,12 @@ Prerequisite: AM3.
 
 **Authorized ordering amendment, 2026-11-11:** owner-approved organizational work
 delivered the package/project extraction independently of AM3, preserving the
-existing protocol API. `protemu_chip_project` now owns tops, RAM binding and
+existing protocol API. `electrum_chip_project` now owns tops, RAM binding and
 declaration; all six bundle RTL roles are byte-identical to the identified current
 baseline. See the implementation record below. This does not accept AM3 or mark
 the broader AM4 owner-acceptance checklist complete implicitly.
 
-- [ ] Accept `protemu_chip_project` with `Package_top`, `Program_memory`, bring-up tops
+- [ ] Accept `electrum_chip_project` with `Package_top`, `Program_memory`, bring-up tops
   and reusable project construction under the chip owner.
 - [ ] Accept the thin argument-parsing/emission entry point in `asic/cli/`; tests must not need to
   import a CLI module with top-level side effects to elaborate a production top.
@@ -442,7 +442,7 @@ Delivered:
 - AM2: `lib/host_link/hardware_loader.ml` removed; `Host_link` (owner's rewrite) is the
   endpoint. In it, the forward-declared response wires take their widths from
   `Frame_tx.I.port_widths` (they were 1 bit), and `~rtlmangle:false` is restored on `I`/`O`.
-  `Protemu_top` instantiates `Host_link` and documents its logical interfaces, tie-offs, and
+  `Electrum_top` instantiates `Host_link` and documents its logical interfaces, tie-offs, and
   external memory boundary.
 - Bundle source-input lists (`bin/asic_bundle.ml`) and `check-adopted-bundle.py` expected
   paths now name the new files.
@@ -482,7 +482,7 @@ historical formal-equivalence gap.
 
 Delivered:26 byte-preserved hardware relocations with a flat public-library facade;
 owner-local verification and agents; shared/root verification versus software tests;
-`protemu_chip_project` package/project extraction; thin bundle CLI; single-source
+`electrum_chip_project` package/project extraction; thin bundle CLI; single-source
 emitted peers with compatibility target rules; source inventories, scripts and CI
 path/budget alignment. No interface grouping, protocol API rename, ASIC dependency
 upgrade or SRAM selection change occurred.
@@ -492,7 +492,7 @@ RTL outputs and six bundle RTL roles are byte-identical; six same-tool bundle
 synthesis statistics, pin metadata, resources and constraints match. Bundle source
 identities change with the explicitly recorded path/formatting changes.
 
-Verification ran sequentially through `flock ../.protemu-build.lock`, switch
+Verification ran sequentially through `flock ../.electrum-build.lock`, switch
 `5.2.0+ox`, explicit `-j5`: install/lint, forced ordinary regression, emitted RTL
 including all three loader-peer tiers, required/long/four-state aliases, CLI golden
 checks, three-kind bundle checks and explicit observable/memory role simulations.
@@ -546,7 +546,7 @@ inventory has47 current source inputs, including the five canonical library file
 and no shim sources. New bundle identities reflect reviewed source changes.
 
 Every Dune invocation used switch `5.2.0+ox`, sequential `-j5` and
-`/home/wayne/devel/jane/.protemu-build.lock`. An earlier caller timeout during RTL
+`/home/wayne/devel/jane/.electrum-build.lock`. An earlier caller timeout during RTL
 checking is retained; the completed forced run took507.642 seconds. Scoped format
 checks pass; the same23 baseline global-format failures remain, with no new failures.
 No physical P&R, dependency upgrade, Git index/history/configuration mutation or

@@ -1,5 +1,5 @@
 (library
- (name protemu_observed_transfer_bank_tests)
+ (name electrum_observed_transfer_bank_tests)
  (wrapped false)
  (modules
   observed_transfer_bank_timing_testbench
@@ -12,10 +12,10 @@
   core
   hardcaml
   hardcaml_event_driven_sim
-  protemu_mechanisms
-  protemu_mechanisms_staging
-  protemu_observed_transfer_tests
-  protemu_test_common)
+  electrum_mechanisms
+  electrum_mechanisms_staging
+  electrum_observed_transfer_tests
+  electrum_test_common)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

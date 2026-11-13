@@ -19,7 +19,7 @@ the wire API describe the earlier ownership-only slice, not an unimplemented AM3
 
 Move existing RTL and verification to their owners, extract package/project
 construction from the bundle CLI, and update active source-path consumers.
-Preserve hardware behavior, flat `Hardcaml_protemu` module names, pure-library
+Preserve hardware behavior, flat `Electrum` module names, pure-library
 boundaries, emitted module/port names, resource `program`, Flops selection and
 latency. Keep the current compatible installed ASIC API (`simulation_build`).
 PT.3 dependency/API and Exact-SRAM adoption remain separate.
@@ -32,7 +32,7 @@ HL4a suite stays active, byte-preserved and excluded from formatting changes.
 
 No Git staging, commits, pushes, index/history/configuration mutation. Existing
 disposable fixture operations are permitted. Builds run **sequentially at `-j5`**
-under `/home/wayne/devel/jane/.protemu-build.lock`, within the owner's global20
+under `/home/wayne/devel/jane/.electrum-build.lock`, within the owner's global20
 pool. Three implementation agents have disjoint source ownership; no concurrent
 heavy builds, provisioning or physical flow is part of this migration.
 
@@ -60,7 +60,7 @@ failures; those failures are retained rather than changing warning policy.
 | `lib/emulator_core/` | `ip/emulator_core/rtl/` |
 | `lib/legacy/executable_core.ml` | `ip/emulator_core/rtl/legacy/` |
 | `lib/host_link/` | `ip/host_link/rtl/` |
-| `lib/system/protemu_top.ml` | `rtl/protemu_top.ml` |
+| `lib/system/electrum_top.ml` | `rtl/electrum_top.ml` |
 | `lib/legacy/p0_observable.ml` | `chip_top/rtl/bringup/p0_observable.ml` |
 | Hardware under `test/primitives/` and staging integration suites | `ip/mechanisms/verif/` |
 | `test/core/protocol_core/` | `ip/program_memory_controller/verif/controller/` |
@@ -118,7 +118,7 @@ adoption are not implicitly completed by this layout work.
   diagnostic-identity adjustments preserve all scenarios, expect blocks, programs,
   seeds and goldens. All475 registrations remain:348 relocated,127 retained.
   The eight frozen archive files, including Dune and formatting exclusion, match.
-- `protemu_chip_project` owns `Chip_project`, `Package_top`, `Program_memory`,
+- `electrum_chip_project` owns `Chip_project`, `Package_top`, `Program_memory`,
   `Observable_design` and `Memory_design`. The current ASIC API, Flops binding,
   latency, reset/output gating and CLI modes remain unchanged.
 - Eight authored HDL benches moved byte-identically. TT compatibility targets still

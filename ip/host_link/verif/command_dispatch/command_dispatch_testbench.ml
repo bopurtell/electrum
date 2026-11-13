@@ -48,11 +48,11 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_core
-open! Protemu_host_link
+open! Electrum_core
+open! Electrum_host_link
 module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Command_dispatch.I) (Command_dispatch.O)
-module Control_port_agent = Protemu_control_port_agent
+module Control_port_agent = Electrum_control_port_agent
 
 let hex bytes =
   String.to_list bytes

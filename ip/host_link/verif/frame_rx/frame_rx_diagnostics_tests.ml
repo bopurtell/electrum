@@ -11,7 +11,7 @@
 *)
 
 open! Core
-open! Protemu_host_link
+open! Electrum_host_link
 open! Frame_rx_testbench
 
 let require_failure t what f =

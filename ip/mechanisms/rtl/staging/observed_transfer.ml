@@ -8,8 +8,8 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Input_events = Protemu_mechanisms.Input_events
-module Shift_lane = Protemu_mechanisms.Shift_lane
+module Input_events = Electrum_mechanisms.Input_events
+module Shift_lane = Electrum_mechanisms.Shift_lane
 
 module I = struct
   type 'a t =

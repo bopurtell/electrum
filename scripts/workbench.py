@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normal Protemu Workbench integration. Run through scripts/workbench.sh.
+"""Normal Electrum Workbench integration. Run through scripts/workbench.sh.
 
 configure builds the current public project CLI and publishes owned companions.
 daemon runs in the foreground; client only connects to an explicitly running daemon.
@@ -50,10 +50,10 @@ def write(path, data):
 
 
 def selected():
-    receipt = Path(os.environ['PROTEMU_TOOLS_RECEIPT'])
+    receipt = Path(os.environ['ELECTRUM_TOOLS_RECEIPT'])
     value = json.loads(receipt.read_text())
     prefix = Path(value['prefix'])
-    if value['checks_passed'] is not True or str(prefix) != os.environ['PROTEMU_TOOLS_PREFIX']:
+    if value['checks_passed'] is not True or str(prefix) != os.environ['ELECTRUM_TOOLS_PREFIX']:
         raise ValueError('source scripts/env.sh first')
     return value, prefix
 
@@ -129,7 +129,7 @@ def configure(args):
                 write(backup, old)
         write(path, data)
     state = dict(schema_version=1, project_root=str(ROOT), prefix=str(prefix),
-                  receipt=os.environ['PROTEMU_TOOLS_RECEIPT'],
+                  receipt=os.environ['ELECTRUM_TOOLS_RECEIPT'],
                   toolchain=str(tools),
                   physical_toolchain=physical,
                  sha256={kind: sha(data) for kind, data in configs.items()},
@@ -200,7 +200,7 @@ def inspect_preparation(prefix, attempt):
     attempt = attempt.resolve(strict=True)
     store = (ROOT / '_flow_results/workbench/preparation').resolve()
     if not attempt.is_relative_to(store) or not attempt.is_dir():
-        raise ValueError('preparation attempt must belong to this Protemu results store')
+        raise ValueError('preparation attempt must belong to this Electrum results store')
     return subprocess.run([str(prefix / 'bin/hardcaml-asic-flow'), 'preparation-inspect', str(attempt), '--json'],
                           cwd=ROOT, check=True).returncode
 
@@ -219,7 +219,7 @@ def main():
     simulation.add_argument('--pdk-root', type=Path, required=True)
     for name in ('status', 'build', 'daemon', 'client'):
         commands.add_parser(name)
-    inspection = commands.add_parser('preparation-inspect', help='read an exact retained Protemu source-preparation attempt')
+    inspection = commands.add_parser('preparation-inspect', help='read an exact retained Electrum source-preparation attempt')
     inspection.add_argument('attempt', type=Path)
     resource = commands.add_parser('resource-prepare', help='explicit source-only preparation; no physical collateral required')
     resource.add_argument('--flow', choices=('flops', 'stock_sram'), default='flops')

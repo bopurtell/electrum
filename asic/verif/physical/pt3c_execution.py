@@ -23,8 +23,8 @@ ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = Path(__file__).resolve()
 STATE = ROOT / ".dev/pt3a-provider"
 TC = ROOT.parent / "hardcaml_asic/.toolchain"
-LOCK = ROOT.parent / ".protemu-build.lock"
-TOP = "tt_um_leemperor_hardcaml_protemu_loader"
+LOCK = ROOT.parent / ".electrum-build.lock"
+TOP = "tt_um_leemperor_electrum_loader"
 STOCK = "RM_IHPSG13_1P_256x16_c2_bm_bist"
 IMAGE = "sha256:d109140b8f17fc54f4fca998beb8124f4949404ec52e339eebd2250854a18b5a"
 LIMITS = {"tool_workers": 6, "container_cpus": 6, "sta_workers": 1}
@@ -147,7 +147,7 @@ def readiness():
 def bundle_snapshot(bundle):
     bundle = Path(bundle).resolve(strict=True)
     manifest = load(bundle / "manifest.json")
-    require(manifest["top_module"] == TOP and manifest["project"] == "protemu_loader",
+    require(manifest["top_module"] == TOP and manifest["project"] == "electrum_loader",
             "requires the actual loader package")
     require(manifest["operation"] == "Hardening", "requires a fresh Hardening bundle")
     contract = manifest["macro_contract"]

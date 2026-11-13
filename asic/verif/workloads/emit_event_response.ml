@@ -8,7 +8,7 @@
 open! Core
 open! Hardcaml
 open! Hardcaml_asic
-open! Protemu_core
+open! Electrum_core
 
 module Design = struct
   module I = struct
@@ -24,7 +24,7 @@ module Design = struct
     [@@deriving hardcaml ~rtlmangle:false]
   end
   module O = Emulator_core.O
-  let name = "protemu_event_response"
+  let name = "electrum_event_response"
 
   let create context (i : _ I.t) =
     let read_data = Signal.wire 16 in
@@ -47,7 +47,7 @@ module Design = struct
       ; transfer_rx_ready_i = Signal.vdd
       } in
     Signal.assign read_data
-      (Protemu_asic_rtl.Program_memory.create context ~clock:i.clock_i
+      (Electrum_asic_rtl.Program_memory.create context ~clock:i.clock_i
          ~enable:o.prog_mem_enable_o ~write_enable:o.prog_mem_write_enable_o
          ~address:o.prog_mem_address_o ~write_data:o.prog_mem_write_data_o);
     o
@@ -69,8 +69,8 @@ let () =
     let policy = Resource_policy.create
       [{ selector = Resource_policy.Selector.instance_exn "program"; requirement }]
       |> Or_error.ok_exn in
-    let project = Project.create ~name:"protemu_event_response_verification"
-      ~metadata:{title="Event response verification"; author="Protemu";
+    let project = Project.create ~name:"electrum_event_response_verification"
+      ~metadata:{title="Event response verification"; author="Electrum";
                  description="Production loaded core with observed public ports"}
       ~design:(module Design)
       ~target:{harness=Tiny_tapeout {tiles=T6x4}; technology=Technology.ihp_sg13cmos5l}
@@ -83,12 +83,12 @@ let () =
     Out_channel.write_all (Filename.concat args.(3) "top.v") ~data:rtl;
     Out_channel.write_all (Filename.concat args.(3) "elaboration.sexp")
       ~data:(Sexp.to_string_hum (Elaboration.Elaborated_project.sexp_of_t elaborated) ^ "\n");
-    let module C = Protemu_controller.Program_memory_controller.Config in
+    let module C = Electrum_controller.Program_memory_controller.Config in
     let composition = `Assoc
       [ "system_boundary", `String "core+Program_memory"
       ; "top_module", `String Design.name
-      ; "core", `String "Protemu_core.Emulator_core"
-      ; "memory", `String "Protemu_asic_rtl.Program_memory"
+      ; "core", `String "Electrum_core.Emulator_core"
+      ; "memory", `String "Electrum_asic_rtl.Program_memory"
       ; "host_transport", `String "direct-control-port"
       ; "host_link", `Bool false
       ; "package_wrapper", `Bool false

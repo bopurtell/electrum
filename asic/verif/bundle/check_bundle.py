@@ -64,7 +64,7 @@ def check_snapshot(manifest, selection, operation=None):
             "timing_model", "timing_model", "timing_model",
             "physical_abstract", "physical_layout", "spice_netlist"])
     if selection == "exact" and operation == "hardening":
-        assert manifest["project"] == "protemu_loader"
+        assert manifest["project"] == "electrum_loader"
         assert resource["physical_intent"] == {
             "status": "resolved_intent", "location_um": [40., 480.], "halo_um": 2.,
             "orientation": "R0",
@@ -93,7 +93,7 @@ def main():
         evidence.mkdir(parents=True, exist_ok=False)
         storage = contextlib.nullcontext(str(evidence))
     else:
-        storage = tempfile.TemporaryDirectory(prefix="protemu-pt3a-")
+        storage = tempfile.TemporaryDirectory(prefix="electrum-pt3a-")
     with storage as temporary:
         scratch = Path(temporary)
         for kind in ("memory", "loader"):

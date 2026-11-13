@@ -1,7 +1,7 @@
 (* Keep the model API while selected-ISA programs have one firmware owner. *)
 module Control_core = Control_core
 module Event = Event
-module Example_programs = Protemu_firmware_examples.Example_programs
+module Example_programs = Electrum_firmware_examples.Example_programs
 module Fault = Fault
 module Fifo = Fifo
 module Firmware = Firmware

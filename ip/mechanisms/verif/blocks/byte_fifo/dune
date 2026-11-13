@@ -1,12 +1,12 @@
 (library
- (name protemu_byte_fifo_tests)
+ (name electrum_byte_fifo_tests)
  (wrapped false)
  (modules byte_fifo_testbench byte_fifo_unit_tests)
  ; Keep the ppx_expect source-tree workaround described in verif/common/test/dune.
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
- (libraries core hardcaml protemu_mechanisms protemu_f_model protemu_isa)
+ (libraries core hardcaml electrum_mechanisms electrum_f_model electrum_isa)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

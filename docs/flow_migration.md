@@ -10,12 +10,12 @@ what was checked at the time. Where the two disagree, `flow.md` is current.
 
 ## Objective
 
-Make `./flow.sh` the canonical command for protemu's ASIC implementation flow.
+Make `./flow.sh` the canonical command for electrum's ASIC implementation flow.
 Use Dune underneath it for compilation, development tests, and bundle emission.
 Use the existing `hardcaml_asic` bundle path as the implementation authority.
 
 Keep `./bootstrap.sh` as the command that prepares and validates the environment.
-Keep orchestration owned by protemu while `hardcaml_asic` is early in development.
+Keep orchestration owned by electrum while `hardcaml_asic` is early in development.
 Its example runner provides a useful pattern, but normal consumer operation must
 not depend on scripts or paths in a sibling library checkout.
 
@@ -25,7 +25,7 @@ constraints, upgrade dependencies, or establish that the design physically close
 
 ## Why this interface
 
-`dune exec protemu -- harden` is technically valid: `dune exec` builds and launches
+`dune exec electrum -- harden` is technically valid: `dune exec` builds and launches
 an executable, and does not make its physical run a cached Dune build rule.
 However, the current executable mostly dispatches to shell scripts. A direct flow
 entry point gives the scripts a simple public interface and allows inspection of
@@ -40,14 +40,14 @@ ordinary `dune build` and `dune runtest` must not start physical implementation.
 
 | Component | Current behavior |
 | --- | --- |
-| [`bootstrap.sh`](../bootstrap.sh) | Converges OCaml dependencies, then invokes the `protemu bootstrap` command for flow tools. |
-| [`bin/protemu.ml`](../bin/protemu.ml) | Provides environment commands and wrappers around legacy staging, hardening, and precheck scripts. |
+| [`bootstrap.sh`](../bootstrap.sh) | Converges OCaml dependencies, then invokes the `electrum bootstrap` command for flow tools. |
+| [`bin/electrum.ml`](../bin/electrum.ml) | Provides environment commands and wrappers around legacy staging, hardening, and precheck scripts. |
 | [`bin/asic_bundle.ml`](../bin/asic_bundle.ml) | Declares the adopted P0 design and emits its `hardcaml_asic` bundle. |
 | [`adopted-flow.sh`](../tinytapeout/scripts/adopted-flow.sh) | Runs explicit `bootstrap`, `emit`, `preflight`, `run`, `postcheck`, `collect`, and `report` steps. No arguments printed help. |
 | [`adopted_phase4.py`](../tinytapeout/scripts/adopted_phase4.py) | Implements bundle preflight, physical execution, postchecks, and result collection. |
 | [`adopted_report.py`](../tinytapeout/scripts/adopted_report.py) | Reads run results and reports physical/timing verdicts. |
 
-At that point, `dune exec protemu -- harden` selected the legacy staged project,
+At that point, `dune exec electrum -- harden` selected the legacy staged project,
 whereas `adopted-flow.sh run` selected the emitted bundle. These are different input paths,
 not interchangeable spellings of the same operation. The default bootstrap also
 staged the legacy project; its `--adopted-only` mode already skipped that work.
@@ -86,7 +86,7 @@ The no-argument command intentionally starts a full physical run. State that
 clearly in help and bootstrap output. Bootstrap remains a separate operation;
 neither full flow execution nor bundle emission should implicitly provision tools.
 
-Use the existing `PROTEMU_*` overrides where practical. These examples describe
+Use the existing `ELECTRUM_*` overrides where practical. These examples describe
 the proposed interface:
 
 ```sh
@@ -95,16 +95,16 @@ source env.sh
 ./flow.sh
 
 # Prepare one named experiment without starting physical implementation.
-export PROTEMU_FLOW_OUT="$PWD/tinytapeout/build/my-experiment"
+export ELECTRUM_FLOW_OUT="$PWD/tinytapeout/build/my-experiment"
 ./flow.sh build emit preflight
 ./flow.sh run postcheck collect report
 
 # Inspect or finish checks on a specific existing run.
-PROTEMU_RUN=/absolute/path/to/run ./flow.sh postcheck collect report
-PROTEMU_RUN=/absolute/path/to/run ./flow.sh report
+ELECTRUM_RUN=/absolute/path/to/run ./flow.sh postcheck collect report
+ELECTRUM_RUN=/absolute/path/to/run ./flow.sh report
 ```
 
-Preserve the existing synthesis-only selection (`PROTEMU_STAGE=synthesis`).
+Preserve the existing synthesis-only selection (`ELECTRUM_STAGE=synthesis`).
 Document an appropriate stage sequence for it; do not automatically run postchecks
 that require a full physical result or present synthesis success as physical closure.
 
@@ -112,14 +112,14 @@ that require a full physical result or present synthesis success as physical clo
 
 - Allocate a fresh output directory for a default full invocation. Use a collision
   resistant name and print its absolute path before starting work.
-- An explicit `PROTEMU_FLOW_OUT` identifies the chosen experiment. Refuse to
+- An explicit `ELECTRUM_FLOW_OUT` identifies the chosen experiment. Refuse to
   overwrite a nonempty bundle; never delete it automatically to make emission pass.
 - Emit once, then consume that immutable bundle for the attempt. Preserve the
   manifest, input provenance, configuration, constraints, and source sets.
 - Create a unique run directory for each physical attempt. Preserve failed runs
   and logs as well as successful ones.
 - Carry the exact run returned by the runner through later stages in the same
-  invocation. Separate invocations use explicit `PROTEMU_RUN`; do not guess the
+  invocation. Separate invocations use explicit `ELECTRUM_RUN`; do not guess the
   intended run by choosing the newest directory.
 - A normal stage failure stops dependent stages and returns a nonzero status.
   Always print a final summary with elapsed stage times, overall time, failed or
@@ -146,7 +146,7 @@ that require a full physical result or present synthesis success as physical clo
    doctor/check paths. Preserve existing environment validation and supported
    bootstrap options. Audit the root bootstrap's current Dune dispatch so
    `--check` does not need to build an executable just to validate flow tools.
-4. Remove ambiguity from `protemu` commands. If retaining `harden` or a new
+4. Remove ambiguity from `electrum` commands. If retaining `harden` or a new
    `flow` alias, delegate to the canonical runner. Preserve legacy access under
    explicitly named legacy commands during transition. Do not silently accept
    old flags such as `-tag` or `-no-docker` with changed meanings: translate them
@@ -207,9 +207,9 @@ claim that the user's bootstrap or a physical run has passed.
 | --- | --- |
 | [`flow.sh`](../flow.sh) | New. The canonical flow command. With no steps it calls the runner with `--full`; otherwise it passes steps through. It resolves the repository from its own location and execs the runner, so exit status is the runner's. |
 | [`adopted-flow.sh`](../tinytapeout/scripts/adopted-flow.sh) | The one orchestration implementation, extended with the `build` stage, `--full` (the default sequence plus fresh output allocation), per-stage timing, the final summary, and signal handling. Dune now runs through `scripts/with-switch.sh`, so no activated shell is required. |
-| [`bootstrap.sh`](../bootstrap.sh) | Calls `bootstrap-toolchain.sh` directly instead of `dune exec protemu -- bootstrap`, so neither mode compiles an executable. Provisioning defaults to the adopted path; `--legacy-project` is the new opt-in for legacy staging. |
+| [`bootstrap.sh`](../bootstrap.sh) | Calls `bootstrap-toolchain.sh` directly instead of `dune exec electrum -- bootstrap`, so neither mode compiles an executable. Provisioning defaults to the adopted path; `--legacy-project` is the new opt-in for legacy staging. |
 | [`bootstrap-toolchain.sh`](../tinytapeout/scripts/bootstrap-toolchain.sh) | Adopted provisioning is the default (`adopted_only=1`); `--legacy-project` restores staging and user-configuration generation, and `--adopted-only` is accepted as a no-op. Both summaries name `./flow.sh` and separate it from the legacy commands. |
-| [`bin/protemu.ml`](../bin/protemu.ml) | `flow` is a new alias that execs `./flow.sh`. `harden` now means `./flow.sh run`. `legacy-harden` is the old staged-project hardening. `check`, `stage` and `precheck` keep their behavior and say in their help which inputs they read. |
+| [`bin/electrum.ml`](../bin/electrum.ml) | `flow` is a new alias that execs `./flow.sh`. `harden` now means `./flow.sh run`. `legacy-harden` is the old staged-project hardening. `check`, `stage` and `precheck` keep their behavior and say in their help which inputs they read. |
 | [`check-flow.sh`](../tinytapeout/scripts/check-flow.sh) | New. Orchestration checks with a stub in place of dune. |
 
 ### Compatibility decisions
@@ -238,8 +238,8 @@ staged project, and `dune build @rtl` were left untouched.
   repeatable-manifest, conflict, wrapper-trace, lint and synthesis checks.
 - `./bootstrap.sh --check`: validates every layer, changes nothing, stages
   nothing, and compiles no executable.
-- `dune exec protemu -- doctor`: both layers ok. `protemu flow report` reaches
-  the runner and returns its exit status (2). `protemu harden -tag NAME` and
+- `dune exec electrum -- doctor`: both layers ok. `electrum flow report` reaches
+  the runner and returns its exit status (2). `electrum harden -tag NAME` and
   `-no-docker` produce the migration diagnostic and exit 2.
 
 ### Remaining limitations

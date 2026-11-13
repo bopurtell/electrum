@@ -49,7 +49,7 @@ implementation; it does not duplicate the helper library's implementation backlo
 
 | Owner | Responsibilities |
 | --- | --- |
-| `hardcaml_protemu` | Core, ISA, assembler, firmware, pin ownership, timing/events/transfers, small FIFOs/register file, loader, host API, reference model, and protocol tests |
+| `electrum` | Core, ISA, assembler, firmware, pin ownership, timing/events/transfers, small FIFOs/register file, loader, host API, reference model, and protocol tests |
 | Emulator project declaration | Design constructor, requested harness/technology, clocks and I/O assumptions, metadata/pin meanings, resource policies, and justified flow overrides |
 | `hardcaml_asic` | Resource contracts/backends, temporary elaboration context, target resolution, immutable build description, constraints/configuration emission, source sets, collateral, and build/run provenance |
 | ASIC Tiny Tapeout integration | Required top-level interface validation, metadata schema/generation, target-derived floorplan/power requirements, and flow staging conventions |
@@ -149,7 +149,7 @@ that rework.
   P3.2's `control_execution.ml`/`executable_core.ml`, while real engines and pins remain P3.3.
   `test/core/protocol_core/` compares it with an independent control model and a 1RW
   contract store under varied unspecified outputs.
-- `isa/`: the instruction specification (Dune library `hardcaml_protemu.isa`, no
+- `isa/`: the instruction specification (Dune library `electrum.isa`, no
   Hardcaml dependency and no execution), which P1.5 chose and recorded in
   [the decision](p1.5-encoding-decision.md). `instruction.ml` is the instruction set,
   `encoding.ml` the opcodes and field layout, `descriptor.ml` the descriptor fields
@@ -160,12 +160,12 @@ that rework.
   here. `Encoding.forms` publishes the field layout as data so P3.2's decoder is built
   from the same values the assembler encodes with.
 - `host_link_wire/`: the P3.5 serial wire format (Dune library
-  `hardcaml_protemu.host_link_wire`, no Hardcaml dependency). `wire.ml` defines the
+  `electrum.host_link_wire`, no Hardcaml dependency). `wire.ml` defines the
   codes, frame and INFO/STATUS layouts, and CRC-8/ATM parameters that
   `lib/host_link/hardware_loader.ml` uses, and a software request encoder and response
   decoder for host code ([HL2](host_link_hl2_record.md)). The
   [P3.5 record](p3.5-hardware-loader.md) remains the protocol authority.
-- `f_model/`: the independent reference execution model (Dune library `protemu_f_model`,
+- `f_model/`: the independent reference execution model (Dune library `electrum_f_model`,
   no Hardcaml dependency), covering P1.1 to P1.5. `machine.ml` holds all model state
   and one rising edge; `operation.ml` is the typed mechanism vocabulary with its
   structural validation; `pin_bank.ml`, `input_pins.ml`, `event.ml`, `fifo.ml`, and
@@ -762,7 +762,7 @@ items; they do not reopen P3.5 framing and are not implemented by the loader rep
 
 P3.4 settles the software boundary in [`host/host_api.ml`](../host/host_api.ml). API and
 abstract operation-protocol version 1.0 identify this software contract, while ISA identity
-`protemu-p1.5` version 1 and image-format version 1 identify program compatibility.
+`electrum-p1.5` version 1 and image-format version 1 identify program compatibility.
 Discovery advertises only the implemented `m16` configuration: 256 sixteen-bit memory
 words, word addresses, complete words in a metadata-bearing S-expression, and
 little-endian byte order for the P3.5 serial byte transport. The file representation does not

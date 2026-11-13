@@ -29,7 +29,7 @@ CASES = {
     'exact-behavioral': ('exact', 'simulation_sources'),
     'exact-implementation': ('exact', 'synthesis_sources'),
 }
-EVENT_SUITE = 'protemu-event-response'
+EVENT_SUITE = 'electrum-event-response'
 EVENT_CASES = {
     'behavioral': ('flops', 'behavioral'),
     'flops': ('flops', 'implementation'),
@@ -114,7 +114,7 @@ def frozen_generation(path, *, qualified=True):
     """
     path = regular(Path(path).absolute())
     value = json.loads(read(path, 8 * LIMIT))
-    require(value['contract'] == 'protemu.fs2-pt3b-install' and type(value['schema_version']) is int
+    require(value['contract'] == 'electrum.fs2-pt3b-install' and type(value['schema_version']) is int
             and value['schema_version'] in (1, 2),
             'unsupported simulation installation')
     require(Path(value['generation']) == path.parent, 'installation moved')
@@ -262,7 +262,7 @@ def check_tree(root):
 
 def event_adapter(install):
     path = local(Path(install['generation']), 'event_adapter.py')
-    spec = importlib.util.spec_from_file_location('protemu_installed_event_adapter', path)
+    spec = importlib.util.spec_from_file_location('electrum_installed_event_adapter', path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -338,7 +338,7 @@ def run_case(install, case, attempt, directory, *, run_command=command):
     bench = local(generation, 'p3_loader_tb.v')
     trace = local(generation, 'serial_trace.v')
     directory.mkdir(exist_ok=False)
-    result = dict(contract='protemu.pt3b-serial-result', schema_version=1, attempt_id=attempt,
+    result = dict(contract='electrum.pt3b-serial-result', schema_version=1, attempt_id=attempt,
                   case_id=case, selection=selection, source_role=role,
                   bundle_identity=manifest['identity'], hardware_variant=manifest['hardware_variant'],
                   bundle_manifest_sha256=sha(local(generation, bundle['manifest'])),

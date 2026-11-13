@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_asic_bringup
+open! Electrum_asic_bringup
 
 let default_output = "asic/tinytapeout/src/p0_observable.v"
 let default_module_name = "p0_observable"

@@ -1,8 +1,8 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms_staging
 module Sim = Cyclesim.With_interface (Uart_tx.I) (Uart_tx.O)
-module F_model = Protemu_f_model
+module F_model = Electrum_f_model
 
 let bits width n = Bits.of_int_trunc ~width n
 

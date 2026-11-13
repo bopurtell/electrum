@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 open! Byte_fifo_testbench
 
 let%test_unit "P2.4 full simultaneous pop/push preserves byte order" =

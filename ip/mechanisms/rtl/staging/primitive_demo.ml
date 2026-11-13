@@ -7,8 +7,8 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Shift_lane = Protemu_mechanisms.Shift_lane
-module Timing = Protemu_mechanisms.Timing
+module Shift_lane = Electrum_mechanisms.Shift_lane
+module Timing = Electrum_mechanisms.Timing
 
 module I = struct
   type 'a t =

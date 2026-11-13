@@ -1,7 +1,7 @@
 ; Pure canonical definitions/codec tests: no hardware or compatibility dependency.
 
 (library
- (name protemu_host_link_protocol_tests)
+ (name electrum_host_link_protocol_tests)
  (wrapped false)
  (modules wire_tests boundary_tests)
  (inline_tests)

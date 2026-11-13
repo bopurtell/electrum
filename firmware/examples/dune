@@ -1,10 +1,10 @@
 ; Selected-ISA programs only: no model, RTL, simulator or host dependency.
 
 (library
- (name protemu_firmware_examples)
- (libraries core protemu_isa)
+ (name electrum_firmware_examples)
+ (libraries core electrum_isa)
  (flags
-  (:standard -open Protemu_isa))
+  (:standard -open Electrum_isa))
  (preprocess
   (pps ppx_jane))
  (lint

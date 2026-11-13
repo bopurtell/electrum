@@ -24,7 +24,7 @@ class Configuration(unittest.TestCase):
             with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', root / '.dev/workbench'), \
                  patch.object(wb, 'stopped'), patch.object(wb, 'selected', return_value=({}, root / 'prefix')), \
                  patch.object(wb.subprocess, 'run'), patch.object(wb, 'validate_toolchain', return_value=metadata) as validate, \
-                 patch.dict(wb.os.environ, PROTEMU_TOOLS_RECEIPT=str(root / 'receipt.json')):
+                 patch.dict(wb.os.environ, ELECTRUM_TOOLS_RECEIPT=str(root / 'receipt.json')):
                 wb.configure(args)
                 config = (root / '.workbench/hardcaml-workbench-asic.sexp').read_text()
                 self.assertIn(str(tools / '.venv/bin/python'), config)
@@ -116,7 +116,7 @@ class Configuration(unittest.TestCase):
                 wb.inspect_preparation(prefix, attempt)
                 self.assertEqual(run.call_args.args[0], [str(prefix / 'bin/hardcaml-asic-flow'),
                     'preparation-inspect', str(attempt), '--json'])
-                with self.assertRaisesRegex(ValueError, 'this Protemu'):
+                with self.assertRaisesRegex(ValueError, 'this Electrum'):
                     wb.inspect_preparation(prefix, other)
                 self.assertEqual(run.call_count, 1)
 
@@ -140,7 +140,7 @@ class Configuration(unittest.TestCase):
             with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', root / '.dev/workbench'), \
                  patch.object(wb, 'stopped'), patch.object(wb, 'selected', return_value=({}, root / 'prefix')), \
                  patch.object(wb.subprocess, 'run'), patch.object(wb, 'simulation_configuration', return_value=data), \
-                 patch.dict(wb.os.environ, PROTEMU_TOOLS_RECEIPT=str(root / 'receipt.json')):
+                 patch.dict(wb.os.environ, ELECTRUM_TOOLS_RECEIPT=str(root / 'receipt.json')):
                 wb.configure(args)
                 args.simulation = False
                 wb.configure(args)
@@ -159,7 +159,7 @@ class Configuration(unittest.TestCase):
                  patch.object(wb, 'stopped'), patch.object(wb, 'selected', return_value=({}, prefix)), \
                  patch.object(wb.subprocess, 'run'), \
                  patch.object(wb, 'validate_toolchain', return_value={'python': {'path': str(root / 'different-tools/.venv/bin/python')}}), \
-                 patch.dict(wb.os.environ, PROTEMU_TOOLS_RECEIPT=str(root / 'receipt.json')):
+                 patch.dict(wb.os.environ, ELECTRUM_TOOLS_RECEIPT=str(root / 'receipt.json')):
                 wb.configure(args)
                 path = root / '.workbench/hardcaml-workbench-asic.sexp'
                 owned = path.read_bytes()

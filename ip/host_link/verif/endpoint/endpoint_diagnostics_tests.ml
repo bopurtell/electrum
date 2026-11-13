@@ -19,15 +19,15 @@
 *)
 
 open! Core
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 open! Endpoint_scenario
 module Wire = Host_link_protocol
-module Serial_host = Protemu_serial_host_agent
+module Serial_host = Electrum_serial_host_agent
 module Driver = Serial_host.Driver
 module Item = Serial_host.Item
 module Timing = Serial_host.Config.Timing
-module Status = Protemu_control_port_agent.Item.Status
-module Endpoint = Protemu_host_link_endpoint
+module Status = Electrum_control_port_agent.Item.Status
+module Endpoint = Electrum_host_link_endpoint
 module Fixture = Endpoint.Fixture
 module Scoreboard = Endpoint.Scoreboard
 module Latency = Endpoint.Latency

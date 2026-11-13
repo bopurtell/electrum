@@ -1,6 +1,6 @@
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms
+open! Electrum_mechanisms
 module Sim = Cyclesim.With_interface (Shift_lane.I) (Shift_lane.O)
 
 let bits width n = Bits.of_int_trunc ~width n

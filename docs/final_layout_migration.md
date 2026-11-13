@@ -11,11 +11,11 @@ It does not group ports/change hardware, upgrade ASIC APIs or adopt SRAM.
 | Source | Destination |
 | --- | --- |
 | `chip_top/` | `asic/` |
-| `rtl/protemu_top.ml` | `ip/protemu_system/rtl/protemu_top.ml` |
+| `rtl/electrum_top.ml` | `ip/electrum_system/rtl/electrum_top.ml` |
 | `lib/` hardware assembly | Owner-local wrapped libraries; no installed flat API; private frozen-oracle adapter only |
 | `host/host_api.ml` | `software/host/` |
 | `host/simulator_backend.ml` | `software/simulator/` |
-| `bin/{protemu,sim_cli}.ml` | `software/cli/` |
+| `bin/{electrum,sim_cli}.ml` | `software/cli/` |
 | `bin/asic_bundle.ml` | `asic/cli/` |
 | `bin/generate.ml` | `asic/verif/observable/emit/` |
 | `bin/generate_p2.ml` | `ip/mechanisms/verif/emit/` |
@@ -42,15 +42,15 @@ Historical archives are not unpacked/repacked or rewritten to use current paths.
 
 ## Enforced library graph
 
-Wrapped owner libraries: `protemu_mechanisms`, `protemu_mechanisms_staging`,
-`protemu_controller`, `protemu_core`, `protemu_core_legacy`, `protemu_host_link`,
-`protemu_system`, and pure `protemu_asic_bringup`. ASIC-dependent RTL/project libraries
+Wrapped owner libraries: `electrum_mechanisms`, `electrum_mechanisms_staging`,
+`electrum_controller`, `electrum_core`, `electrum_core_legacy`, `electrum_host_link`,
+`electrum_system`, and pure `electrum_asic_bringup`. ASIC-dependent RTL/project libraries
 remain separate. Core depends on controller/mechanisms/ISA; host link on core/
 controller/ISA/protocol; system on core/host link/controller/ISA; ASIC on the system
 and resource tools. There is no reverse dependency on the compatibility facade.
 
 No global `include_subdirs unqualified` or copy-all assembly. Following the owner's
-explicit follow-up, the public flat `Hardcaml_protemu` API was removed. Only the
+explicit follow-up, the public flat `Electrum` API was removed. Only the
 frozen oracle sees a private non-installed26-alias adapter at
 `ip/host_link/verif/archived/support/`. Installed/new consumers select the actual
 owner sublibraries. Test-library wrapping is not mechanically changed: existing
@@ -69,7 +69,7 @@ Three implementation owners: (A) hardware libraries/system/compatibility facade,
 (B) software/model/protocol/tests/firmware and active verification imports,
 (C) ASIC/target/CLI/script/inventory/archive integration. Coordinator owns docs,
 resource coordination and independent review. No Git add/commit/push/index/config
-mutation. All builds serial under `../.protemu-build.lock`, switch5.2.0+ox, `-j5`,
+mutation. All builds serial under `../.electrum-build.lock`, switch5.2.0+ox, `-j5`,
 within global20. No physical P&R, tool provisioning or API upgrade.
 
 Use AM3's final17 RTL/six bundle roles and statistics as the hardware baseline,
@@ -92,8 +92,8 @@ limitations and historical evidence gaps.
   canonical owners; no installed project library depends on the private oracle adapter.
 - A fresh isolated installation exposes13 named sublibraries. All eight canonical
   hardware consumers compile/link through both Findlib and a separate installed-only
-  Dune project. Negative probes reject `Hardcaml_protemu` and `(libraries
-  hardcaml_protemu)`; no root CMI/archive installs. The opam/Findlib package remains
+  Dune project. Negative probes reject `Electrum` and `(libraries
+  electrum)`; no root CMI/archive installs. The opam/Findlib package remains
   a namespace container, not a flat-module compatibility promise.
 - All26 hardware bodies preserve construction/logic except explicit owner aliases.
   All17 freshly generated RTL outputs and six bundle roles are byte-identical to

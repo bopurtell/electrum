@@ -1,13 +1,13 @@
 (library
- (name protemu_asic_rtl)
+ (name electrum_asic_rtl)
  (libraries
   core
   hardcaml
   hardcaml_asic
-  protemu_isa
-  protemu_controller
-  protemu_system
-  protemu_asic_bringup)
+  electrum_isa
+  electrum_controller
+  electrum_system
+  electrum_asic_bringup)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

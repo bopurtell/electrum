@@ -45,7 +45,7 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_host_link
+open! Electrum_host_link
 module Wire = Host_link_protocol
 module Sim = Cyclesim.With_interface (Frame_tx.I) (Frame_tx.O)
 

@@ -25,7 +25,7 @@ module Design = struct
 
   let create context (i : _ I.t) =
     { O.read_data =
-        Protemu_asic_rtl.Program_memory.create
+        Electrum_asic_rtl.Program_memory.create
           context
           ~clock:i.clock
           ~enable:i.enable
@@ -146,7 +146,7 @@ let () =
       |> Or_error.ok_exn
       |> check requirement mode;
       List.iter [ "memory"; "loader" ] ~f:(fun kind ->
-        Protemu_chip_project.Chip_project.project ~selection:requirement kind
+        Electrum_chip_project.Chip_project.project ~selection:requirement kind
         |> Or_error.bind ~f:(Project.elaborate ~mode)
         |> Or_error.ok_exn
         |> check requirement mode);

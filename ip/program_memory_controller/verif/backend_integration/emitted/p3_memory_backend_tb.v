@@ -49,7 +49,7 @@ module p3_memory_backend_tb;
     wire verification_failed_o, fetch_fault_event_o, fetch_fault_o;
     integer edge_count = 0;
 
-    protemu_program_memory_backend dut (.*);
+    electrum_program_memory_backend dut (.*);
 
     task fail;
         input [8*64-1:0] scenario;

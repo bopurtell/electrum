@@ -4,10 +4,10 @@
   core
   hardcaml
   jane_rope
-  protemu_controller
-  protemu_core
-  protemu_core_legacy
-  protemu_system)
+  electrum_controller
+  electrum_core
+  electrum_core_legacy
+  electrum_system)
  (preprocess
   (pps ppx_jane))
  (lint

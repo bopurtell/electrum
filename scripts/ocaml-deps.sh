@@ -27,7 +27,7 @@ readonly OX_REPOSITORY=git+https://github.com/oxcaml/opam-repository.git
 
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 readonly repo_root
-readonly opam_file="$repo_root/hardcaml_protemu.opam"
+readonly opam_file="$repo_root/electrum.opam"
 
 install=0
 

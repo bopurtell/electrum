@@ -12,7 +12,7 @@
 
 open! Core
 open! Hardcaml
-open! Protemu_mechanisms_staging
+open! Electrum_mechanisms_staging
 open! Uart_slice_testbench
 
 let%test_unit "P2.7 the pin bank carries the frame an independent receiver decodes" =
@@ -64,7 +64,7 @@ let%expect_test "P2.7 the saved frame trace" =
   print_string (trace_of (fst (slice_samples ())) ~byte ~half_period ~tx_pin);
   [%expect
     {|
-    # protemu P2.7 first working slice -- UART 8N1 transmit frame
+    # electrum P2.7 first working slice -- UART 8N1 transmit frame
     # byte=0xa6 half_period=4 bit_cycles=8 tx_pin=0
     # slot label level start end
     0 start 0 0 8

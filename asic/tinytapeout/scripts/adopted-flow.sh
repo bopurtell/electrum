@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# The protemu ASIC flow: the one orchestration implementation behind ./asic/flow.sh.
+# The electrum ASIC flow: the one orchestration implementation behind ./asic/flow.sh.
 #
 # It drives an emitted hardcaml_asic bundle through the adopted path. Every step
 # is explicit; only "run" starts LibreLane, and only "postcheck" runs physical
@@ -40,9 +40,9 @@ those, in the order given; no step ever runs an earlier one for you.
 
 Steps:
   build       dune build and dune runtest, through the pinned opam switch
-  emit        write the immutable adopted bundle into $PROTEMU_FLOW_OUT/bundle
+  emit        write the immutable adopted bundle into $ELECTRUM_FLOW_OUT/bundle
   preflight   validate bundle, collateral, versions, image, and configuration
-  run         harden: start LibreLane and create a new run under $PROTEMU_RUNS
+  run         harden: start LibreLane and create a new run under $ELECTRUM_RUNS
   postcheck   TT precheck and gate-level wrapper simulation after a full run
   collect     write results.json for a run
   report      print the physical/timing summary for a run
@@ -52,40 +52,40 @@ Steps:
               what ./asic/flow.sh runs when given no steps.
 
 Output:
-  A run directory under PROTEMU_FLOW_OUT is scratch: it is ~240 MB, gitignored,
+  A run directory under ELECTRUM_FLOW_OUT is scratch: it is ~240 MB, gitignored,
   and disposable. "archive" promotes the ~1 MB a reader actually checks into
   _flow_results/archives/<date>-<run id>/. Curate it by writing a README.md
   beside the records; re-archiving never deletes one. These outputs are ignored;
   deliberately promote durable evidence separately from historical archives.
 
-  PROTEMU_FLOW_OUT holds one bundle and its runs. --full allocates a fresh one
-  under _flow_results/ unless PROTEMU_FLOW_OUT names the experiment; named
+  ELECTRUM_FLOW_OUT holds one bundle and its runs. --full allocates a fresh one
+  under _flow_results/ unless ELECTRUM_FLOW_OUT names the experiment; named
   steps default to _flow_results/adopted. Emission refuses a bundle
-  directory that already has files: choose a new PROTEMU_FLOW_OUT rather than
+  directory that already has files: choose a new ELECTRUM_FLOW_OUT rather than
   deleting one.
 
 Resuming:
   A step after "run" uses the run this invocation produced. A separate
-  invocation must name it: PROTEMU_RUN=/path/to/run ./asic/flow.sh report. The run
-  directory is never guessed from the newest one under PROTEMU_RUNS.
+  invocation must name it: ELECTRUM_RUN=/path/to/run ./asic/flow.sh report. The run
+  directory is never guessed from the newest one under ELECTRUM_RUNS.
 
 Environment:
-  PROTEMU_FLOW_OUT  output directory for this experiment
-  PROTEMU_BUNDLE    the emitted bundle             ($PROTEMU_FLOW_OUT/bundle)
-  PROTEMU_RUNS      run storage, one per attempt   ($PROTEMU_FLOW_OUT/runs)
-  PROTEMU_RUN       an existing run, for steps after "run"
-  PROTEMU_FLOW_RESULTS  archives, one per run     (./_flow_results/archives)
-  PROTEMU_ARCHIVE   exact archive directory for this run
-  PROTEMU_STAGE     full | synthesis, how far "run" goes             (full)
-  PROTEMU_DESIGN    observable | memory | loader, bundle design (observable)
-  PROTEMU_TT        tt-support-tools checkout
-  PROTEMU_PDK_ROOT  PDK root (IHP sg13cmos5l)
-  PROTEMU_FLOW_PY   python of the LibreLane venv
-  PROTEMU_PRECHECK_PY  python of the TT precheck venv
-  PROTEMU_ALLOW_PYTHON_MISMATCH  0 to require the bundle's exact minor  (1)
+  ELECTRUM_FLOW_OUT  output directory for this experiment
+  ELECTRUM_BUNDLE    the emitted bundle             ($ELECTRUM_FLOW_OUT/bundle)
+  ELECTRUM_RUNS      run storage, one per attempt   ($ELECTRUM_FLOW_OUT/runs)
+  ELECTRUM_RUN       an existing run, for steps after "run"
+  ELECTRUM_FLOW_RESULTS  archives, one per run     (./_flow_results/archives)
+  ELECTRUM_ARCHIVE   exact archive directory for this run
+  ELECTRUM_STAGE     full | synthesis, how far "run" goes             (full)
+  ELECTRUM_DESIGN    observable | memory | loader, bundle design (observable)
+  ELECTRUM_TT        tt-support-tools checkout
+  ELECTRUM_PDK_ROOT  PDK root (IHP sg13cmos5l)
+  ELECTRUM_FLOW_PY   python of the LibreLane venv
+  ELECTRUM_PRECHECK_PY  python of the TT precheck venv
+  ELECTRUM_ALLOW_PYTHON_MISMATCH  0 to require the bundle's exact minor  (1)
   Collateral defaults come from this repository's bootstrap.
 
-PROTEMU_STAGE=synthesis stops after mapped synthesis. Use it with
+ELECTRUM_STAGE=synthesis stops after mapped synthesis. Use it with
 "build emit preflight run collect report": postcheck needs a completed full
 run, and mapped synthesis alone is not physical closure.
 USAGE
@@ -116,27 +116,27 @@ done
 # of them never land in one bundle; named steps keep the fixed default, which is
 # what makes "./asic/flow.sh postcheck collect report" find yesterday's work.
 mkdir -p "$repo_root/_flow_results"
-if [[ -n ${PROTEMU_FLOW_OUT:-} ]]; then
-    out=$PROTEMU_FLOW_OUT
+if [[ -n ${ELECTRUM_FLOW_OUT:-} ]]; then
+    out=$ELECTRUM_FLOW_OUT
 elif [[ $full -eq 1 ]]; then
     out=$(mktemp -d "$repo_root/_flow_results/flow-$(date +%Y%m%d-%H%M%S)-XXXXXX")
 else
     out=$repo_root/_flow_results/adopted
 fi
-bundle=${PROTEMU_BUNDLE:-$out/bundle}
-runs=${PROTEMU_RUNS:-$out/runs}
-run_dir=${PROTEMU_RUN:-}
+bundle=${ELECTRUM_BUNDLE:-$out/bundle}
+runs=${ELECTRUM_RUNS:-$out/runs}
+run_dir=${ELECTRUM_RUN:-}
 for name in out bundle runs run_dir; do
     value=${!name}
     if [[ -n $value && $value != /* ]]; then printf -v "$name" '%s' "$PWD/$value"; fi
 done
-allow_python_mismatch=${PROTEMU_ALLOW_PYTHON_MISMATCH:-1}
+allow_python_mismatch=${ELECTRUM_ALLOW_PYTHON_MISMATCH:-1}
 
 mismatch_args=()
 case $allow_python_mismatch in
     0) ;;
     1) mismatch_args=(--allow-python-mismatch) ;;
-    *) echo "flow: PROTEMU_ALLOW_PYTHON_MISMATCH must be 0 or 1" >&2; exit 2 ;;
+    *) echo "flow: ELECTRUM_ALLOW_PYTHON_MISMATCH must be 0 or 1" >&2; exit 2 ;;
 esac
 
 say() { printf '\n== %s\n' "$*" >&2; }
@@ -256,21 +256,21 @@ load_toolchain() {
         # shellcheck disable=SC1090
         source "$env_file"
     fi
-    tool_tt=${PROTEMU_TT:-${TT_SUPPORT_TOOLS_DIR:-$repo_root/_flow_tools/tt}}
-    tool_pdk=${PROTEMU_PDK_ROOT:-${PDK_ROOT:-$repo_root/_flow_tools/pdk}}
-    tool_python=${PROTEMU_FLOW_PY:-$repo_root/_flow_tools/venv/bin/python}
-    tool_precheck_python=${PROTEMU_PRECHECK_PY:-$repo_root/_flow_tools/precheck-venv/bin/python}
+    tool_tt=${ELECTRUM_TT:-${TT_SUPPORT_TOOLS_DIR:-$repo_root/_flow_tools/tt}}
+    tool_pdk=${ELECTRUM_PDK_ROOT:-${PDK_ROOT:-$repo_root/_flow_tools/pdk}}
+    tool_python=${ELECTRUM_FLOW_PY:-$repo_root/_flow_tools/venv/bin/python}
+    tool_precheck_python=${ELECTRUM_PRECHECK_PY:-$repo_root/_flow_tools/precheck-venv/bin/python}
     if [[ ! -d $tool_tt || ! -d $tool_pdk || ! -x $tool_python ]]; then
         echo "flow: flow tools are not provisioned; run ./scripts/bootstrap.sh" >&2
         echo "flow: (./scripts/bootstrap.sh --check names what is missing)" >&2
-        echo "flow: or set PROTEMU_TT, PROTEMU_PDK_ROOT, and PROTEMU_FLOW_PY" >&2
+        echo "flow: or set ELECTRUM_TT, ELECTRUM_PDK_ROOT, and ELECTRUM_FLOW_PY" >&2
         return 2
     fi
 }
 
 need_run() {
     if [[ -z $run_dir || ! -f $run_dir/run.json ]]; then
-        echo "flow: set PROTEMU_RUN to the run directory printed by 'run'" >&2
+        echo "flow: set ELECTRUM_RUN to the run directory printed by 'run'" >&2
         echo "flow: runs are under $runs; the newest is not assumed to be yours" >&2
         return 2
     fi
@@ -293,14 +293,14 @@ step_emit() {
     # the emitter fail with its own message partway down a seven-step run.
     if [[ -d $bundle && -n $(ls -A "$bundle" 2>/dev/null) ]]; then
         echo "flow: bundle is not empty: $bundle" >&2
-        echo "flow: choose a new PROTEMU_FLOW_OUT" >&2
+        echo "flow: choose a new ELECTRUM_FLOW_OUT" >&2
         return 2
     fi
     mkdir -p "$out"
     dune_ build asic/cli/asic_bundle.exe || return $?
-    local design=${PROTEMU_DESIGN:-observable}
+    local design=${ELECTRUM_DESIGN:-observable}
     [[ $design == observable || $design == memory || $design == loader ]] || {
-        echo "flow: PROTEMU_DESIGN must be observable, memory, or loader" >&2; return 2;
+        echo "flow: ELECTRUM_DESIGN must be observable, memory, or loader" >&2; return 2;
     }
     "$repo_root/_build/default/asic/cli/asic_bundle.exe" "$design" "$bundle" "$repo_root"
 }
@@ -319,9 +319,9 @@ step_preflight() {
 
 step_run() {
     load_toolchain || return $?
-    local stage=${PROTEMU_STAGE:-full} record status=0
+    local stage=${ELECTRUM_STAGE:-full} record status=0
     [[ $stage == full || $stage == synthesis ]] || {
-        echo "flow: PROTEMU_STAGE must be full or synthesis" >&2; return 2;
+        echo "flow: ELECTRUM_STAGE must be full or synthesis" >&2; return 2;
     }
     mkdir -p "$runs"
     say "run --stage $stage (hardening; this is the long one)"
@@ -382,8 +382,8 @@ step_report() {
 # beside them is left alone.
 step_archive() {
     need_run || return $?
-    local results=${PROTEMU_FLOW_RESULTS:-$repo_root/_flow_results/archives}
-    local dest=${PROTEMU_ARCHIVE:-} name
+    local results=${ELECTRUM_FLOW_RESULTS:-$repo_root/_flow_results/archives}
+    local dest=${ELECTRUM_ARCHIVE:-} name
     if [[ -z $dest ]]; then
         name=$(python3 - "$run_dir/run.json" <<'PY'
 import json, sys

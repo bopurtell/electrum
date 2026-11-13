@@ -177,7 +177,7 @@ let%expect_test "a pad leak into the event path fails the isolation check" =
       failing trial:    0
       configuration:    ((max_edges 32)(max_transitions 96)(defect Leak_pad_into_events))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
+      rerun:            ELECTRUM_SEED=20260919 ELECTRUM_TRIALS=4 ELECTRUM_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
       time unit:        tick
       clock:            period=10, first rising=5
       coincidence:      stimulus settles before the clock transition
@@ -253,7 +253,7 @@ let%expect_test "an observer that reads X as zero fails the contamination check"
       failing trial:    0
       configuration:    ((max_edges 32)(max_transitions 96)(defect Coerce_unknown_to_zero))
       source identity:  <recorded; redacted in expect output>
-      rerun:            PROTEMU_SEED=20260919 PROTEMU_TRIALS=4 PROTEMU_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
+      rerun:            ELECTRUM_SEED=20260919 ELECTRUM_TRIALS=4 ELECTRUM_SIZE=8 dune runtest ip/mechanisms/verif/blocks/input_events --force
       time unit:        tick
       clock:            period=10, first rising=5
       coincidence:      stimulus settles before the clock transition

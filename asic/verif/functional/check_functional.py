@@ -257,8 +257,8 @@ def validate_bundle(bundle, root, selection, kind, evidence, check_snapshot):
     require(len(files) == len(actual) - 1 and
             {x["path"]: x["sha256"] for x in files} ==
             {k: v for k, v in actual.items() if k != "manifest.json"}, "bundle inventory mismatch")
-    require(manifest["project"] == "protemu_" + kind, "wrong emitted project")
-    require(manifest["top_module"] == "tt_um_leemperor_hardcaml_protemu_" + kind,
+    require(manifest["project"] == "electrum_" + kind, "wrong emitted project")
+    require(manifest["top_module"] == "tt_um_leemperor_electrum_" + kind,
             "wrong emitted top")
     require(manifest["operation"] == ("Synthesis" if selection == "exact" else "Hardening"),
             "unexpected emitted operation")
@@ -302,9 +302,9 @@ def execute(args, evidence):
     lock = dict(line.split("=", 1) for line in
                 (root / "asic/tinytapeout/asic-dependencies.lock").read_text().splitlines()
                 if line and not line.startswith("#"))
-    receipt_path = Path(os.environ.get("PROTEMU_ASIC_RECEIPT", "/missing-private-provider"))
+    receipt_path = Path(os.environ.get("ELECTRUM_ASIC_RECEIPT", "/missing-private-provider"))
     provider = json.loads(receipt_path.read_text())
-    prefix = Path(os.environ.get("PROTEMU_ASIC_PREFIX", "/missing-private-prefix"))
+    prefix = Path(os.environ.get("ELECTRUM_ASIC_PREFIX", "/missing-private-prefix"))
     require(provider["checks_passed"] is True and provider["revision"] == lock["asic_revision"]
             and provider["prefix"] == str(prefix), "private provider receipt mismatch")
     require(inventory(prefix) == provider["installed_sha256"], "private provider inventory drift")

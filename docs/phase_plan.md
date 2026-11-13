@@ -57,14 +57,14 @@ the corresponding decision has evidence.
 
 Follow [formatting_guide.md](formatting_guide.md) for source changes. Current
 hardware lives under `ip/*/rtl` and `asic/rtl`, including the reusable system as
-`ip/protemu_system`. Owner-local `verif/` and shared/system root `verif/` contain DUT
+`ip/electrum_system`. Owner-local `verif/` and shared/system root `verif/` contain DUT
 verification; software/model/tool checks live in owner-local `test/` directories.
 `software/cli/` and `asic/cli/` retain command entry points, `spec/isa/` the instruction
 specification/assembler, `verif/reference/model/` the independent model, and
 `asic/tinytapeout/` target integration. The model is a separate Dune
-library, `protemu_f_model`, with no Hardcaml dependency, so a diagnostic model can never
+library, `electrum_f_model`, with no Hardcaml dependency, so a diagnostic model can never
 reach a synthesis source set and cannot share a mistake with the RTL; its tests live in
-`verif/reference/model/test/`. `spec/isa/` is a third library, `hardcaml_protemu.isa`, below both of them:
+`verif/reference/model/test/`. `spec/isa/` is a third library, `electrum.isa`, below both of them:
 P1.5 put the encoding there because `lib/` is installed and `f_model/` is not, so the
 assembler and the RTL decoder could not otherwise share one description of the
 instruction word. New host and firmware locations should be chosen when their first real

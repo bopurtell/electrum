@@ -1,5 +1,5 @@
 (library
- (name protemu_protocol_core_tests)
+ (name electrum_protocol_core_tests)
  (wrapped false)
  (modules
   protocol_core_testbench
@@ -12,9 +12,9 @@
  (libraries
   core
   hardcaml
-  protemu_controller
-  protemu_f_model
-  protemu_test_common
+  electrum_controller
+  electrum_f_model
+  electrum_test_common
   base_quickcheck
   splittable_random)
  (preprocess

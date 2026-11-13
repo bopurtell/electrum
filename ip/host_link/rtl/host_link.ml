@@ -8,7 +8,7 @@
 open! Core
 open! Hardcaml
 open! Signal
-module Control_port = Protemu_core.Control_port
+module Control_port = Electrum_core.Control_port
 
 module I = struct
   type 'a t = 

@@ -57,7 +57,7 @@ value, port, timing requirement, or HL4a expectation changed.
   | `lib/host_link/hardware_loader.ml` | Composes `Serial_phy`; nine registers and their assignments removed | `856e0cfa1e663635338c0a4c328969c100bf8a69bea5723e08b7641cde98a774` |
   | `bin/asic_bundle.ml` | Loader source inventory adds `lib/host_link/serial_phy.ml` | `1afb1d17ac796089dc47c29f23a4c5b9577288cd6dd7c92f391f9d64f9ba98d2` |
   | `tinytapeout/scripts/check-adopted-bundle.py` | Loader check requires that input | `b6ea1561e920cc8bab3e04a32056941a18469d69889887d24c947f99f7b6d230` |
-  | `test/host_link/serial_phy/dune` (new) | Library `protemu_serial_phy_tests`, in `@runtest` | `2c1bdea8aa7680a24a51d5680778c5d4620e789404899c140b48ece17cbd5923` |
+  | `test/host_link/serial_phy/dune` (new) | Library `electrum_serial_phy_tests`, in `@runtest` | `2c1bdea8aa7680a24a51d5680778c5d4620e789404899c140b48ece17cbd5923` |
   | `test/host_link/serial_phy/serial_phy_testbench.ml` (new) | Cycle owner, sampling, checks, diagnostics | `dbe26fe6a94270f765d0bbd2e5147fe4fc37b5b529256986d287b25a1ef78bc8` |
   | `test/host_link/serial_phy/serial_phy_tests.ml` (new) | 8 timing tests | `bd7da6e6e8ce767037857f7319254cdb5f659a11176eacefb0efb4e19411d9d3` |
   | `test/host_link/serial_phy/serial_phy_diagnostics_tests.ml` (new) | 3 negatives | `b427cc3a3db545b0e6fd6c97f4fe4bf47f4a0913bebcfce0424efea4828a1550` |
@@ -225,7 +225,7 @@ after new inputs settle.
 ## Focused tests (HL4c1)
 
 [`test/host_link/serial_phy/`](../test/host_link/serial_phy/serial_phy_testbench.ml)
-(library `protemu_serial_phy_tests`, in ordinary `@runtest`) follows the per-module
+(library `electrum_serial_phy_tests`, in ordinary `@runtest`) follows the per-module
 convention: the testbench owns the only simulator loop (`cycle`), pre-/post-edge sampling,
 finite waits (`wait_for`, default budget 100 cycles), checks, and `Phy_failure` reports
 (scenario, cycle, phase, what, expected, actual, and the inputs and high outputs of recent
@@ -344,8 +344,8 @@ identical for all three bundles (list digest
 
 | Loader bundle file | Pre SHA-256 | Post SHA-256 |
 | --- | --- | --- |
-| `src/tt_um_leemperor_hardcaml_protemu_loader.v` | `c8f92f762d1044dde0bb7a1071a4b41a43c4fe33c4a2cdd10dc4ed31ab213d9c` | `6c03b88f53d6fba6c20b60da803bdb039e4d1e242fc36c00155dd3e9964a9817` |
-| `simulation/tt_um_leemperor_hardcaml_protemu_loader.v` | `7678aedb9d5b35c5e9fbf7e0e31e489609a47f9fddc79ed3acf1139ef5168b28` | `316698b26c1efc79db1932c7d21c6bb15f33d47fe5f39cd8799908e44dc071e2` |
+| `src/tt_um_leemperor_electrum_loader.v` | `c8f92f762d1044dde0bb7a1071a4b41a43c4fe33c4a2cdd10dc4ed31ab213d9c` | `6c03b88f53d6fba6c20b60da803bdb039e4d1e242fc36c00155dd3e9964a9817` |
+| `simulation/tt_um_leemperor_electrum_loader.v` | `7678aedb9d5b35c5e9fbf7e0e31e489609a47f9fddc79ed3acf1139ef5168b28` | `316698b26c1efc79db1932c7d21c6bb15f33d47fe5f39cd8799908e44dc071e2` |
 
 Unchanged (both roles, pre and post): memory `a6c3ad27c175d89571ae393dfb7a2044253a6a6f1a1d0201b6a022c8c3ce0d95`
 (`src`) and `8b21fa31a7a309c5f573ac60549b4f3bbb119a25bc4d0e613b1d31012c743762`
@@ -411,16 +411,16 @@ remain separate evidence.
 
 The configuration is the loader checker's own, unchanged: the pinned image above, `docker
 run --rm --pull=never --network none`, and the command
-`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_hardcaml_protemu_loader.v; hierarchy
--check -top tt_um_leemperor_hardcaml_protemu_loader; synth -top
-tt_um_leemperor_hardcaml_protemu_loader; stat'`. That is the production synthesis source,
+`yosys -p 'read_verilog /bundle/src/tt_um_leemperor_electrum_loader.v; hierarchy
+-check -top tt_um_leemperor_electrum_loader; synth -top
+tt_um_leemperor_electrum_loader; stat'`. That is the production synthesis source,
 including the explicit-flop `program` RAM. The checker discards stdout, so the counts
 were captured by running the identical container and command on the loader bundle emitted
 by the capture; the checker itself was also run, and passed, before and after. A
 supplementary count ran the `@loader-core-rtl` rule's host-Yosys command, without `-q`,
 on `loader_core` alone.
 
-**Checker path, `tt_um_leemperor_hardcaml_protemu_loader`** (Yosys 0.66):
+**Checker path, `tt_um_leemperor_electrum_loader`** (Yosys 0.66):
 
 | Cell type | Before | After | Delta |
 | --- | ---: | ---: | ---: |
