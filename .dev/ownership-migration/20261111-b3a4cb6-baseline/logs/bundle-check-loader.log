@@ -1,4 +1,0 @@
-PASS clock, source-list, and target configuration conflicts
-/tmp/protemu-adopted-gr70hk07/first 848f553ca3403d4830f3fdb2fc981f4d1b26b313119940f07e59cc2d30bab82b
-/tmp/protemu-adopted-gr70hk07/second 848f553ca3403d4830f3fdb2fc981f4d1b26b313119940f07e59cc2d30bab82b
-PASS repeatable bundle, manifest, metadata, and conflict checks

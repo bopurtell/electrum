@@ -1,4 +1,0 @@
-File "/home/wayne/devel/jane/hardcaml_protemu/.dev/final-layout/hardware/private-oracle/installed-check-final/consumers/reject_flat.ml", line 1, characters 19-49:
-1 | module Forbidden = Hardcaml_protemu.Emulator_core
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Error: Unbound module "Hardcaml_protemu"

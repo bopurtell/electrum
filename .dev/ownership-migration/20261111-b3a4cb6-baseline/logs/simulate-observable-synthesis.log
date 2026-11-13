@@ -1,2 +1,0 @@
-PASS p0 wrapper reset/disable/pin/timer trace
-/home/wayne/devel/jane/hardcaml_protemu/tinytapeout/test/tb.v:108: $finish called at 144000 (1ps)

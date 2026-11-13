@@ -1,3 +1,0 @@
-(executable
- (name consumer)
- (libraries core hardcaml_protemu.host_link_protocol hardcaml_protemu.host_link_wire))

@@ -1,3 +1,0 @@
-mkdir -p ../../../_flow_results/legacy/rtl-test
-iverilog -g2012 -Wall -Wno-timescale -s tb -o ../../../_flow_results/legacy/rtl-test/p0_wrapper ../src/p0_observable.v ../src/project.v ../../verif/observable/emitted/tb.v
-vvp ../../../_flow_results/legacy/rtl-test/p0_wrapper

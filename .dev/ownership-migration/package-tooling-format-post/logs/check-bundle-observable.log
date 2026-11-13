@@ -1,4 +1,0 @@
-PASS clock, source-list, and target configuration conflicts
-/tmp/protemu-adopted-rlf446ij/first bac91a5ec1b121f92003aa5831ba1a598e3f5018d16eca745ba929e56ad4da61
-/tmp/protemu-adopted-rlf446ij/second bac91a5ec1b121f92003aa5831ba1a598e3f5018d16eca745ba929e56ad4da61
-PASS repeatable bundle, manifest, metadata, and conflict checks

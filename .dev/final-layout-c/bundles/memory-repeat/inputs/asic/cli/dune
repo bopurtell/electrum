@@ -1,7 +1,0 @@
-(executable
- (name asic_bundle)
- (libraries core hardcaml_asic protemu_chip_project)
- (preprocess
-  (pps ppx_hardcaml ppx_jane))
- (lint
-  (pps ppx_js_style)))

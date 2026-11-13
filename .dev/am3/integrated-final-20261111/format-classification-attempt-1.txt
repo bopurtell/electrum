@@ -1,7 +1,0 @@
-Scoped formatting PASS. Global @fmt reports the same 23 baseline paths.
-The helper's initial classification assertion failed because it required whole-file
-byte identity even for command_dispatch.ml, whose module alias intentionally changed
-in AM3. This is an evidence-helper assumption, not an introduced formatting defect.
-Preserved original results: logs/global-format.log and format-backlog.json.
-Follow-up classification compares actual formatter edit lines with the saved
-format-post edits and verifies this source differs only by the canonical alias.

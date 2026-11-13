@@ -1,6 +1,0 @@
-File "dune", line 1, characters 39-55:
-1 | (executable (name consumer) (libraries hardcaml_protemu))
-                                           ^^^^^^^^^^^^^^^^
-Error: Library "hardcaml_protemu" not found.
--> required by _build/default/consumer.exe
--> required by alias all

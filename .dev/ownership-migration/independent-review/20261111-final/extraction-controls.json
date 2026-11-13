@@ -1,6 +1,0 @@
-{
-  "project_pinout_timing_resource_policy_declaration_exact": true,
-  "observable_constructor_exact_ignoring_indentation": true,
-  "package_memory_constructor_review": "Program_memory.create is the same width/depth/latency/name Single_port_ram binding factored out of Memory_design and Loader_design; call sites preserve construction order, clock, enables, address and data.",
-  "package_top_review": "Reset synchronizer, host pin mapping, external memory feedback, occupied zero, output gating and pin enables preserve the original Loader_design expressions."
-}

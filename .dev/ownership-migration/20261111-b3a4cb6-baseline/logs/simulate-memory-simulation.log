@@ -1,2 +1,0 @@
-PASS p0.7 whole-word load/readback, validity, bounds, and gating
-/home/wayne/devel/jane/hardcaml_protemu/tinytapeout/test/p0_memory_tb.v:149: $finish called at 392000 (1ps)

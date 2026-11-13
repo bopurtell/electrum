@@ -1,4 +1,0 @@
-PASS clock, source-list, and target configuration conflicts
-/tmp/protemu-adopted-wyygp0d4/first 7ccf6e65807096b429981dc75cf1c5255b008acf8a3e9888a2834cd4645d7cc9
-/tmp/protemu-adopted-wyygp0d4/second 7ccf6e65807096b429981dc75cf1c5255b008acf8a3e9888a2834cd4645d7cc9
-PASS repeatable bundle, manifest, metadata, and conflict checks

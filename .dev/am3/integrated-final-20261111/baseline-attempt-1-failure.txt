@@ -1,7 +1,0 @@
-Read-only local helper baseline attempt failed before any Dune run:
-python3 -B .dev/am3/integrated-final-20261111/check.py baseline
-AssertionError: ('bin/protemu.ml', 'bin/protemu.ml') at check.py:92
-The helper overreached by comparing unrelated CLI source to the pre-ownership
-snapshot. Restrict standalone generator correspondence to bin/generate*.ml;
-bundle CLI and its dependencies are already verified against exact format-post
-copied inputs. Preserve initial-state/hashes/patch; rerun confirms unchanged state.

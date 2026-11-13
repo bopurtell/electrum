@@ -1,1 +1,0 @@
-(executable (name consumer) (libraries hardcaml_protemu.host_link))

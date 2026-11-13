@@ -1,4 +1,0 @@
-PASS clock, source-list, and target configuration conflicts
-/tmp/protemu-adopted-izdi0w3j/first a4c863dad3e31f4dbf155117831581ec0cd2eebf5a74734e6aad8fa4860c818d
-/tmp/protemu-adopted-izdi0w3j/second a4c863dad3e31f4dbf155117831581ec0cd2eebf5a74734e6aad8fa4860c818d
-PASS repeatable bundle, manifest, metadata, and conflict checks
