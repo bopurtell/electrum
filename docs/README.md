@@ -2,6 +2,7 @@
 
 | Document | What it covers |
 | --- | --- |
+| [Tool installation progress](backlog/tool-installation-progress.md) | Implemented: visible installer stages, live build/test output, elapsed time, failure diagnostics, and verification; linked ASIC progress work |
 | [final_layout_migration.md](final_layout_migration.md) | Delivered final layout: singular ASIC owner, enforced IP libraries, removed public flat API, colocated software/model tests, firmware and historical archive |
 | [repository_layout.md](repository_layout.md) | Current RTL/verif/software-test ownership, library boundaries and compatibility paths |
 | [ownership_layout.md](ownership_layout.md) | Delivered ownership migration, identified baseline, exact preservation results and remaining AM/VO/PT.3 scope |

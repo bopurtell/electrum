@@ -5,8 +5,13 @@
 
 (rule
  (alias runtest)
- (deps test_install_tools.py install-tools.py ../tools-source.lock.json)
+ (deps test_install_tools.py install-tools.py install_progress.py ../tools-source.lock.json)
  (action (run python3 -B %{dep:test_install_tools.py})))
+
+(rule
+ (alias runtest)
+ (deps test_install_progress.py install_progress.py)
+ (action (run python3 -B %{dep:test_install_progress.py})))
 
 (rule
  (alias runtest)

@@ -8,15 +8,27 @@ import argparse
 import contextlib
 import fcntl
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
 import re
 import shlex
+import shutil
 import stat
 import subprocess
 import sys
 import uuid
+
+# This module is also loaded by path from release/simulation helpers, whose
+# sys.path need not contain scripts/. Resolve our sibling without changing it.
+_progress_spec = importlib.util.spec_from_file_location(
+    'electrum_install_progress', Path(__file__).with_name('install_progress.py'))
+_progress = importlib.util.module_from_spec(_progress_spec)
+_progress_spec.loader.exec_module(_progress)
+Cancelled = _progress.Cancelled
+cancellation_signals = _progress.cancellation_signals
+report, run_logged, stage = _progress.report, _progress.run_logged, _progress.stage
 
 ROOT = Path(__file__).resolve().parents[1]
 STORE = ROOT / '.dev/tools'
@@ -135,10 +147,7 @@ def environment(switch, prefix=None):
 def run(argv, cwd, env, log):
     if Path(argv[0]).name == 'dune':
         argv = [argv[0], argv[1], '--root', str(cwd), *argv[2:]]
-    print('+ ' + shlex.join(map(str, argv)), flush=True)
-    with log.open('ab') as stream:
-        subprocess.run(list(map(str, argv)), cwd=cwd, env=env, stdout=stream,
-                       stderr=subprocess.STDOUT, check=True)
+    run_logged(argv, cwd, env, log)
 
 
 @contextlib.contextmanager
@@ -159,7 +168,8 @@ def install(args):
     with (STORE / 'install.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         if (STORE / 'current.json').exists():
-            verify_selection()
+            with stage('Validate existing tools installation'):
+                verify_selection()
         generation = STORE / 'generations' / (args.resume or uuid.uuid4().hex)
         if args.resume:
             if (generation / 'receipt.json').exists():
@@ -172,6 +182,7 @@ def install(args):
             prior_capture = json.loads((generation / 'capture.json').read_text())
             if prior_capture['generation'] != str(generation) or prior_capture['switch_prefix'] != str(switch):
                 raise ValueError('resume selection differs from captured generation')
+            receipt['sources'] = prior_capture['sources'].copy()
             if 'source_policy' in prior_capture:
                 receipt['source_policy'] = prior_capture['source_policy']
                 verify_captured_policy(generation, receipt)
@@ -181,30 +192,59 @@ def install(args):
                 captured_lock='tools-source.lock.json', policy=policy,
                 identity_scope='captured compiler/library source inventory; not a CLI revision stamp')
             (generation / 'tools-source.lock.json').write_bytes(SOURCE_LOCK.read_bytes())
+            save_capture(generation, receipt)
         prefix = generation / 'prefix'
         log = generation / 'build.log'
+        report(f'Electrum local tools installation\nGeneration: {generation.name}\nLog: {log}')
+        report(f'If interrupted, resume with the same options plus --resume {generation.name}')
         for name, source in sources.items():
             captured = generation / 'source' / name
-            with build_lock(source):
-                prior = json.loads((generation / 'capture.json').read_text()) if args.resume else None
+            with stage(f'{name}: capture/verify sources'), build_lock(source):
+                if args.resume and not captured.exists() and name in receipt['sources']:
+                    pending = captured.with_name(captured.name + '.pending')
+                    verify_capture(pending, receipt['sources'][name])
+                    pending.rename(captured)
                 if captured.exists():
-                    record = prior['sources'][name]
-                    entries = {p: (v['kind'], os.fsencode(os.readlink(captured / p)) if v['kind'] == 'link'
-                               else (captured / p).read_bytes()) for p, v in record['files'].items()}
-                    if any(digest(data) != record['files'][p]['sha256'] for p, (_, data) in entries.items()):
-                        raise ValueError('captured source changed')
-                    receipt['sources'][name] = record
+                    if name not in receipt['sources']:
+                        raise ValueError('capture is incomplete; start a new generation: ' + str(captured))
+                    verify_capture(captured, receipt['sources'][name])
                 else:
                     capture_source(name, source, captured, generation, receipt, args)
             packages = 'hardcaml_asic' if name == 'asic' else 'hardcaml_workbench,hardcaml_workbench_provider'
             env = environment(switch, prefix)
-            run([switch / 'bin/dune', 'build', '-j10', '--only-packages', packages, '@install'], captured, env, log)
-            if name == 'asic':
-                run([switch / 'bin/dune', 'runtest', '-j1'], captured, env, log)
-            else:
-                run([switch / 'bin/dune', 'runtest', '-j2', 'backend/test/asic'], captured, env, log)
-            run([switch / 'bin/dune', 'install', '--prefix', prefix, *packages.split(',')], captured, env, log)
-        finish(generation, receipt, prefix, switch)
+            # New ASIC captures own their build/test/install presentation. Older
+            # pinned revisions retain the same verified sequence locally.
+            upstream = captured / 'scripts/install.py'
+            if name == 'asic' and upstream.is_file():
+                with stage('ASIC: upstream installer'):
+                    run([sys.executable, '-B', upstream, '--prefix', prefix,
+                         '--dune', switch / 'bin/dune', *(['--verbose'] if args.verbose else [])],
+                        captured, env, log)
+                continue
+            display = 'verbose' if args.verbose else 'short'
+            with stage(f'{name}: build {packages} (10 jobs)'):
+                run([switch / 'bin/dune', 'build', '--display', display, '-j10', '--only-packages', packages, '@install'], captured, env, log)
+            with stage(f'{name}: test'):
+                test_args = ['-j1'] if name == 'asic' else ['-j2', 'backend/test/asic']
+                run([switch / 'bin/dune', 'runtest', '--display', display,
+                     '--no-buffer', *test_args], captured, env, log)
+            with stage(f'{name}: install {packages}'):
+                run([switch / 'bin/dune', 'install', '--prefix', prefix, *packages.split(',')], captured, env, log)
+        with stage('Inventory installed files and select completed generation'):
+            finish(generation, receipt, prefix, switch)
+        report('Tools installed successfully. Next: source scripts/env.sh')
+
+
+def verify_capture(captured, record):
+    for name, entry in record['files'].items():
+        path = captured / name
+        info = path.lstat()
+        kind = ('link' if stat.S_ISLNK(info.st_mode) else
+                'executable' if stat.S_ISREG(info.st_mode) and info.st_mode & 0o111 else
+                'file' if stat.S_ISREG(info.st_mode) else 'unsupported')
+        data = os.fsencode(os.readlink(path)) if kind == 'link' else path.read_bytes()
+        if kind != entry['kind'] or digest(data) != entry['sha256']:
+            raise ValueError('captured source changed: ' + str(path))
 
 
 def capture_source(name, source, captured, generation, receipt, args):
@@ -223,24 +263,53 @@ def capture_source(name, source, captured, generation, receipt, args):
         record['compatibility_base_revision'] = policy['asic']['compatibility_base_revision']
     if mode == 'working-tree' and capture(source) != entries:
         raise ValueError('source changed during capture; retry: ' + str(source))
-    materialize(captured, entries)
+    # Publish only a complete capture. An interrupted temporary tree can safely
+    # be replaced on resume, without mistaking partial files for verified input.
+    pending = captured.with_name(captured.name + '.pending')
+    if pending.exists():
+        shutil.rmtree(pending)
+    materialize(pending, entries)
     # A few upstream source tests discover their root with Git.
     # This read-only metadata pointer needs no init, index or commit.
     gitdir = git(source, 'rev-parse', '--absolute-git-dir').decode().strip()
-    (captured / '.git').write_text('gitdir: ' + gitdir + '\n')
-    (generation / 'capture.json').write_text(json.dumps(receipt, indent=2) + '\n')
+    (pending / '.git').write_text('gitdir: ' + gitdir + '\n')
+    # Save the inventory first: resume can promote the verified pending tree,
+    # but must never see a published tree without its inventory.
+    save_capture(generation, receipt)
+    pending.rename(captured)
+
+
+def save_capture(generation, receipt):
+    pending = generation / 'capture.pending.json'
+    pending.write_text(json.dumps(receipt, indent=2) + '\n')
+    os.replace(pending, generation / 'capture.json')
 
 
 def finish(generation, receipt, prefix, switch):
     receipt.update(checks_passed=True, prefix=str(prefix), installed_sha256=inventory(prefix),
                    checks=['ASIC standard dune runtest -j1 (12 internal workers)',
                            'Workbench backend/test/asic -j2'], build_jobs=10)
-    (generation / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     selection = dict(schema_version=1, generation=str(generation), prefix=str(prefix),
-                     receipt=str(generation / 'receipt.json'))
+                      receipt=str(generation / 'receipt.json'))
     pending = STORE / ('selection-' + uuid.uuid4().hex + '.json')
-    pending.write_text(json.dumps(selection, indent=2) + '\n')
-    os.replace(pending, STORE / 'current.json')
+    pending_receipt = generation / 'receipt.pending.json'
+    try:
+        pending_receipt.write_text(json.dumps(receipt, indent=2) + '\n')
+        os.replace(pending_receipt, generation / 'receipt.json')
+        pending.write_text(json.dumps(selection, indent=2) + '\n')
+        os.replace(pending, STORE / 'current.json')
+    except BaseException:
+        # A receipt alone must not make a failed publication unresumable. Check
+        # selection on disk to cover a signal arriving just after os.replace.
+        selected = None
+        with contextlib.suppress(OSError, ValueError):
+            selected = json.loads((STORE / 'current.json').read_text())
+        if selected != selection:
+            (generation / 'receipt.json').unlink(missing_ok=True)
+        raise
+    finally:
+        pending.unlink(missing_ok=True)
+        pending_receipt.unlink(missing_ok=True)
     # Selection is data; env.sh asks this script to verify before activation.
     print(json.dumps(selection, indent=2))
 
@@ -306,6 +375,7 @@ def parse_args(argv=None):
     modes.add_argument('--development', dest='asic_source_mode', action='store_const', const='working-tree',
                        help='alias for --asic-source-mode working-tree; no Git commit required')
     parser.add_argument('--activation', action='store_true')
+    parser.add_argument('--verbose', action='store_true', help='Show full Dune build commands')
     parser.add_argument('--resume', help='Resume an interrupted unpublished generation, verifying its captured sources')
     args = parser.parse_args(argv)
     if args.asic_source_mode == 'working-tree' and args.asic_revision is not None:
@@ -325,7 +395,14 @@ def main():
 
 if __name__ == '__main__':
     try:
-        main()
+        with cancellation_signals():
+            main()
+    except Cancelled as error:
+        print(f'install-tools: {error}; incomplete generation retained for --resume', file=sys.stderr)
+        sys.exit(128 + error.signum)
+    except KeyboardInterrupt:
+        print('install-tools: interrupted; incomplete generation retained for --resume', file=sys.stderr)
+        sys.exit(130)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print('install-tools: ' + str(error), file=sys.stderr)
         sys.exit(2)

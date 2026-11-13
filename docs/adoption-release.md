@@ -46,6 +46,34 @@ source and choices; recompute previews after edits.
 
 ## Fresh installation and explicit refresh
 
+### Installation progress
+
+`scripts/install-tools.py` now prints named source-capture, build, test, install,
+and publication stages. Subprocess output is streamed live and also retained in
+the printed generation's `build.log`. Every 15 seconds, a running stage reports
+elapsed time even if the underlying tool is silent. These are activity messages,
+not estimates of percentage complete. Add `--verbose` for full Dune commands;
+the default uses Dune's short display and unbuffered test output.
+
+Diagnostics use stderr; successful selection JSON remains on stdout, and
+`--activation` remains shell-evaluable. Ctrl+C or SIGTERM stops supervised work
+and retains the incomplete generation. Resume using the same source/switch
+options plus the printed `--resume <generation-id>`; completed Dune work can be
+reused, but interrupted tests may run again.
+
+Electrum owns capture, Workbench installation, logging, receipts, and selection.
+If the captured ASIC revision includes `scripts/install.py`, Electrum delegates
+ASIC build/test/install to that script. The current committed ASIC pin predates
+it, so the default path supplies equivalent progress around the existing Dune
+sequence. Merely editing the sibling ASIC checkout does not change a pinned
+source capture. Explicit `--development` capture can use the new upstream script;
+normal adoption follows a future committed pin update.
+
+Builds use ten Dune jobs on the fallback/Workbench paths; ASIC tests use one
+Dune job. `HARDCAML_ASIC_TEST_WORKERS=12` applies to the result-store test pool,
+not every test. The new upstream installer defaults to four build jobs and
+preserves an explicitly supplied result-store worker count.
+
 Required base compiler/dependencies remain in switch `5.2.0+ox`. The local installer
 checks/builds independent source captures and installs a new private prefix without
 changing shared opam packages. ASIC's timing-reader and physical-runtime fixes are
