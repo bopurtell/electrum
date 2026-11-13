@@ -1,6 +1,7 @@
 # dune
 _build/
 *.install
+.dev/
 
 # ocaml
 *.cm[iox]
