@@ -365,7 +365,7 @@ def activation():
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--asic-source', type=Path, default=ROOT.parent / 'hardcaml_asic')
-    parser.add_argument('--workbench-source', type=Path, default=ROOT.parent / 'hardcaml_workbench')
+    parser.add_argument('--workbench-source', type=Path, default=ROOT.parent / 'silver')
     parser.add_argument('--switch', default='5.2.0+ox')
     parser.add_argument('--asic-revision',
                         help='Exact committed ASIC source (default tools-source.lock.json pinned_revision)')

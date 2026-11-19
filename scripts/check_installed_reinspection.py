@@ -41,9 +41,9 @@ def main():
     (output / 'detail.stderr').write_bytes(result.stderr)
     detail = json.loads(result.stdout)
     assert '-3.099803' in json.dumps(detail)
-    consumer = ROOT.parent / 'hardcaml_workbench/_build/default/backend/test/inspection/test_timing_analysis.exe'
+    consumer = ROOT.parent / 'silver/_build/default/backend/test/inspection/test_timing_analysis.exe'
     result = subprocess.run([str(consumer), '--retained-refresh', str(EXECUTION), str(provider)],
-                            cwd=ROOT.parent / 'hardcaml_workbench', capture_output=True, check=True, timeout=180)
+                            cwd=ROOT.parent / 'silver', capture_output=True, check=True, timeout=180)
     (output / 'production-service-consumer.stdout').write_bytes(result.stdout)
     (output / 'production-service-consumer.stderr').write_bytes(result.stderr)
     native_evidence = Path(re.search(r'Evidence: (\S+)', result.stdout.decode())[1])

@@ -23,7 +23,7 @@ import pt3b_provider as provider
 from fs2_wire import parse, sexp
 
 ROOT = Path(__file__).resolve().parents[2]
-WB = ROOT.parent / 'hardcaml_workbench'
+WB = ROOT.parent / 'silver'
 sys.path.insert(0, str(WB / 'demo/synthetic_flow'))
 from http_client import Client, field
 sys.path.insert(0, str(WB / 'test'))

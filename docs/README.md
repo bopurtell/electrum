@@ -67,7 +67,7 @@ the protocol authority; these structural migrations do not mark P3.6 complete.
   project/resource/target ownership, generated build bundles, and flow integration.
 - [Program-memory contract](../../hardcaml_asic/docs/program-memory-contract.md):
   authoritative `Single_port_ram` behavior and backend verification obligations.
-- [Workbench architecture](../../hardcaml_workbench/docs/hardcaml_workbench_architecture.md):
+- [Workbench architecture](../../silver/docs/hardcaml_workbench_architecture.md):
   independent projects, optional versioned driver integration, jobs, and artifacts.
 - [Tiny Tapeout integration guide](../asic/tinytapeout/README.md) and
   [historical experiment record format](../archive/legacy/tinytapeout/reports/README.md): current scripts,

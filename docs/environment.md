@@ -16,7 +16,7 @@ is captured from its working tree. For a normal installation, use this command
 ```sh
 python3 -B scripts/install-tools.py \
   --asic-source ../hardcaml_asic \
-  --workbench-source ../hardcaml_workbench
+  --workbench-source ../silver
 source scripts/env.sh
 ```
 

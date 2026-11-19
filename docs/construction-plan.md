@@ -76,7 +76,7 @@ the optional library runner is not required. Tool/PDK preparation remains an
 explicit operation outside ordinary elaboration. Migration preserves the current
 P0 path until the replacement passes equivalent checks.
 
-The [Workbench architecture](../../hardcaml_workbench/docs/hardcaml_workbench_architecture.md)
+The [Workbench architecture](../../silver/docs/hardcaml_workbench_architecture.md)
 keeps this project independently buildable. Workbench integration is optional and
 does not gate emulator hardware, ASIC integration, or tapeout. Sibling links use
 this workspace's `scaf`, `hardcaml_asic`, and `workbench` checkout names; they are

@@ -83,7 +83,7 @@ pin. Workbench remains an explicit working-tree capture:
 ```sh
 python3 -B scripts/install-tools.py \
   --asic-source ../hardcaml_asic \
-  --workbench-source ../hardcaml_workbench
+  --workbench-source ../silver
 source scripts/env.sh
 bash scripts/workbench.sh configure --toolchain-root /absolute/verified/toolchain
 bash scripts/workbench.sh prepare-simulation --pdk-root /absolute/verified/toolchain/pdk
