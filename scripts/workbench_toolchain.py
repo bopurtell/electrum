@@ -17,7 +17,7 @@ def digest(path):
 
 def validate(root, project_root, provider):
     root = Path(root).resolve(strict=True)
-    lock = project_root / 'asic/tinytapeout/toolchain.lock'
+    lock = project_root / 'asic_support/tinytapeout/toolchain.lock'
     pins = dict(line.split('=', 1) for line in lock.read_text().splitlines()
                 if line and not line.startswith('#'))
     result = dict(root=str(root), validation='pinned_metadata_only_no_EDA', eda_run=False,

@@ -13,7 +13,7 @@
     "identity": "receipt records actual checkout HEAD, dirty status, complete captured file inventory and tree_sha256"
   },
   "historical_provenance": {
-    "pt3a_lock": "asic/tinytapeout/asic-dependencies.lock",
+    "pt3a_lock": "asic_support/tinytapeout/asic-dependencies.lock",
     "role": "historical PT3a provider/evidence provenance; not the normal compiler/library selector"
   }
 }

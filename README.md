@@ -27,7 +27,8 @@ verification; `hardcaml_asic` supplies resource/backend tooling.
 | `ip/host_link/` | Serial endpoint, block verification, serial agent and endpoint environment |
 | `ip/electrum_system/` | Reusable `Electrum_top` system composition with external RAM interface |
 | `asics/electrum/` | The full Electrum chip: package top, flow collection and chip CLI |
-| `asic/` | Shared Tiny Tapeout infrastructure and legacy entry points; `asic/verif/` holds non-product wrappers and tests |
+| `asic_support/` | Shared Tiny Tapeout infrastructure and legacy entry points; `asic_support/verif/` holds non-product wrappers and tests |
+| `_flow_tools/` (ignored) | Provisioned EDA tools and vendor collateral; not authored source |
 | `verif/` | Shared plumbing, independent reference model, system peers and regression sweeps |
 | `spec/isa/`, `ip/host_link/protocol/` | Pure shared specifications; host-link byte operations live under `Codec` |
 | `firmware/examples/` | Actual chosen-ISA example programs |
@@ -71,7 +72,7 @@ flock ../.electrum-build.lock dune runtest -j2 ip/host_link/verif
 flock ../.electrum-build.lock dune runtest -j2 ip/emulator_core/verif
 ```
 
-All sessions share a maximum 20-job budget. The default `asic/flow.sh` can launch a real
+All sessions share a maximum 20-job budget. The default `asic_support/flow.sh` can launch a real
 physical flow; see [flow.md](docs/flow.md) before using it. It is not a generic
 regression shortcut.
 
@@ -88,6 +89,8 @@ bash scripts/workbench.sh client
 
 Omit `--source-only` to retain and revalidate a previously configured physical
 toolchain, or use `--toolchain-root` to select one explicitly.
+If upgrading from the old `asic/` layout, rerun `configure` so Silver's local
+companions point to `asic_support/`.
 
 Silver treats the root `dune-project` as one project.
 [`hardcaml-asic-targets.json`](hardcaml-asic-targets.json) registers one product
@@ -97,7 +100,7 @@ Tiny Tapeout wrapper. It has one `default` hardware variant. `flops` and
 default is `flops/balanced`.
 
 The memory and observable wrappers are verification fixtures under
-[`asic/verif/`](asic/verif/), not chips in Silver or whole-chip variants.
+[`asic_support/verif/`](asic_support/verif/), not chips in Silver or whole-chip variants.
 The legacy bundle selectors `loader`, `memory`, and `observable` still work;
 `loader` emits the full Electrum package and retains its existing RTL names.
 If Silver has a saved selection from the earlier three-target layout, select

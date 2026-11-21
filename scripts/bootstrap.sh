@@ -3,7 +3,7 @@
 # Explicit environment preparation for a fresh clone or worktree.
 #
 #   1. OCaml layer   scripts/ocaml-deps.sh                     switch + opam packages
-#   2. Flow layer    asic/tinytapeout/scripts/bootstrap-toolchain.sh  _flow_tools/, PDK, support
+#   2. Flow layer    asic_support/tinytapeout/scripts/bootstrap-toolchain.sh  _flow_tools/, PDK, support
 #                                                                tools, LibreLane image
 #   3. Shell layer   source scripts/env.sh                     (printed; a script
 #                                                               cannot do it)
@@ -11,7 +11,7 @@
 # Both layers are shell scripts called directly. Neither needs dune, so --check
 # validates the flow tools on a machine where the OCaml layer is still missing,
 # and never compiles an executable just to answer a question about Python and a
-# PDK. Building OCaml is the flow's own "build" step: ./asic/flow.sh build.
+# PDK. Building OCaml is the flow's own "build" step: ./asic_support/flow.sh build.
 #
 # Environment and local release commands:
 #
@@ -24,7 +24,7 @@
 # without touching the switch. ASIC and Workbench are never installed there.
 #
 # It prepares an environment. It does not stage a design, emit a bundle, or start
-# hardening: that is ./asic/flow.sh, and it is always an explicit command.
+# hardening: that is ./asic_support/flow.sh, and it is always an explicit command.
 #
 # See docs/environment.md; the flow itself is docs/flow.md.
 
@@ -47,7 +47,7 @@ Options:
   --no-container   Skip the Docker/Podman prerequisite. The pinned LibreLane
                    image is then not resolved either; supply a native LibreLane.
   --legacy-project Also stage and configure the legacy P0 project, for the
-                    legacy hardening scripts. ./asic/flow.sh does not use it.
+                    legacy hardening scripts. ./asic_support/flow.sh does not use it.
   --install-deps   Explicitly install missing published Electrum dependencies.
   --tools-only     Install captured ASIC + Workbench locally, then exit. No EDA
                    provisioning or shared-switch writes.
@@ -55,7 +55,7 @@ Options:
 
 Then:
   source scripts/env.sh    every new shell
-  ./asic/flow.sh           the ASIC flow (--help first; the bare form hardens)
+  ./asic_support/flow.sh           the ASIC flow (--help first; the bare form hardens)
 USAGE
 }
 
@@ -108,4 +108,4 @@ flow_args=()
 
 "$repo_root/scripts/ocaml-deps.sh" "${deps_args[@]}"
 
-exec "$repo_root/asic/tinytapeout/scripts/bootstrap-toolchain.sh" ${flow_args[@]+"${flow_args[@]}"}
+exec "$repo_root/asic_support/tinytapeout/scripts/bootstrap-toolchain.sh" ${flow_args[@]+"${flow_args[@]}"}

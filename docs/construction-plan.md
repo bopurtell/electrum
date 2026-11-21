@@ -2,7 +2,7 @@
 
 **Current source layout:** [repository_layout.md](repository_layout.md) and
 [final migration record](final_layout_migration.md) own current paths: wrapped IP
-libraries, singular `asic/`, owner-local software/verification tests and historical
+libraries, singular `asic_support/`, owner-local software/verification tests and historical
 `archive/legacy/`. Earlier path spellings below do not restore retired root source
 buckets or the public flat hardware API. Product contracts are unchanged.
 

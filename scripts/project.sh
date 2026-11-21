@@ -8,4 +8,4 @@ if [[ ! -f "$root/.dev/tools/current.json" ]]; then
     exit 2
 fi
 source "$root/scripts/env.sh"
-exec dune exec --root "$root" -j10 ./asic/cli/project.exe -- "$@"
+exec dune exec --root "$root" -j10 ./asic_support/cli/project.exe -- "$@"

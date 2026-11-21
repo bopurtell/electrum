@@ -3,12 +3,12 @@ open! Core
 (* The repository's command front door: [dune exec electrum -- <command>].
 
    Stateful work (provisioning, staging, hardening, precheck) stays in the scripts under
-   scripts/ and asic/tinytapeout/scripts/, which own their options and exit codes;
+   scripts/ and asic_support/tinytapeout/scripts/, which own their options and exit codes;
    commands here exec them so those codes reach the caller unchanged. Pure checks are dune
-   rules rather than commands: see asic/tinytapeout/src/dune and
-   asic/tinytapeout/test/dune. *)
+   rules rather than commands: see asic_support/tinytapeout/src/dune and
+   asic_support/tinytapeout/test/dune. *)
 
-let lock_file = "asic/tinytapeout/toolchain.lock"
+let lock_file = "asic_support/tinytapeout/toolchain.lock"
 
 (* Search upward from Dune's root or the executable, independent of directory depth.
    Prefer an outer source root over a copied lock beneath _build/default. *)
@@ -50,13 +50,13 @@ let flag_arg name = function
   | false -> []
 ;;
 
-let bootstrap_toolchain = "asic/tinytapeout/scripts/bootstrap-toolchain.sh"
+let bootstrap_toolchain = "asic_support/tinytapeout/scripts/bootstrap-toolchain.sh"
 let ocaml_deps = "scripts/ocaml-deps.sh"
 
 (* The canonical ASIC flow. Every command here that implements or hardens goes through
    this one script, so there is a single implementation path and a single set of exit
    codes. See docs/flow.md. *)
-let flow_script = "asic/flow.sh"
+let flow_script = "asic_support/flow.sh"
 
 let bootstrap =
   Command.basic
@@ -68,7 +68,7 @@ let bootstrap =
        the opam file. This command only reports on the opam switch; \
        ./scripts/bootstrap.sh is what installs into it. It prepares an environment and \
        stages no design: the legacy project is -legacy-project, and implementation is \
-       ./asic/flow.sh.")
+       ./asic_support/flow.sh.")
     (let%map_open.Command offline =
        flag "offline" no_arg ~doc:" reuse the environment; fetch and install nothing"
      and check = flag "check" no_arg ~doc:" validate and change nothing"
@@ -79,7 +79,7 @@ let bootstrap =
          "legacy-project"
          no_arg
          ~doc:
-           " also stage and configure the legacy P0 project (./asic/flow.sh does not use \
+           " also stage and configure the legacy P0 project (./asic_support/flow.sh does not use \
             it)"
      (* ./scripts/bootstrap.sh checks the OCaml layer before it can run dune at all.
         Without this, that check runs a second time here: same opam calls, same output,
@@ -140,13 +140,13 @@ let doctor =
 
 let flow =
   Command.basic
-    ~summary:"Run the adopted ASIC flow (an alias for ./asic/flow.sh)"
+    ~summary:"Run the adopted ASIC flow (an alias for ./asic_support/flow.sh)"
     ~readme:(fun () ->
-      "Passes the named steps to ./asic/flow.sh and returns its exit status unchanged. \
+      "Passes the named steps to ./asic_support/flow.sh and returns its exit status unchanged. \
        With no step it runs the whole flow, hardening included, which takes hours.\n\n\
-       ./asic/flow.sh --help is the help for the steps and the ELECTRUM_* overrides; this \
+       ./asic_support/flow.sh --help is the help for the steps and the ELECTRUM_* overrides; this \
        alias cannot show it, because -help is read by this command line first. \
-       ./asic/flow.sh is the canonical spelling and the one the documentation uses: the \
+       ./asic_support/flow.sh is the canonical spelling and the one the documentation uses: the \
        alias exists so a `electrum` habit still reaches the same runner, and it needs \
        neither dune nor an activated switch.")
     (let%map_open.Command steps = anon (sequence ("STEP" %: string)) in
@@ -158,12 +158,12 @@ let flow =
    keeps its script and an explicitly legacy name. *)
 let harden =
   Command.basic
-    ~summary:"Harden the emitted bundle: an alias for ./asic/flow.sh run"
+    ~summary:"Harden the emitted bundle: an alias for ./asic_support/flow.sh run"
     ~readme:(fun () ->
       "Runs the adopted flow's physical step on the bundle in $ELECTRUM_FLOW_OUT: mapped \
        CMOS5L synthesis and place-and-route, into a new run directory. It does not emit \
-       the bundle first, so `./asic/flow.sh build emit preflight` (or the whole \
-       `./asic/flow.sh`) comes before it.\n\n\
+       the bundle first, so `./asic_support/flow.sh build emit preflight` (or the whole \
+       `./asic_support/flow.sh`) comes before it.\n\n\
        This used to harden the legacy staged project, which is a different input. That \
        command is now `legacy-harden`, and its -tag and -no-docker flags belong to it: \
        they are rejected here rather than reinterpreted.")
@@ -207,7 +207,7 @@ let legacy_harden =
        from the committed RTL and the hand-maintained info.yaml and src/config.json, not \
        an emitted bundle. It needs `./scripts/bootstrap.sh --legacy-project` to have \
        staged that project. Kept until the adopted route is validated; new work belongs \
-       in ./asic/flow.sh.")
+       in ./asic_support/flow.sh.")
     (let%map_open.Command no_docker =
        flag "no-docker" no_arg ~doc:" use a native LibreLane"
      and tag =
@@ -215,7 +215,7 @@ let legacy_harden =
      in
      fun () ->
        exec
-         "asic/tinytapeout/scripts/harden-cmos5l.sh"
+         "asic_support/tinytapeout/scripts/harden-cmos5l.sh"
          (flag_arg "no-docker" no_docker
           @ Option.value_map tag ~default:[] ~f:(fun tag -> [ "--tag"; tag ])))
 ;;
@@ -224,13 +224,13 @@ let check =
   Command.basic
     ~summary:"RTL regression on the committed RTL: build, tests, lint, staging"
     ~readme:(fun () ->
-      "Legacy inputs: the committed asic/tinytapeout/src RTL and the hand-maintained \
+      "Legacy inputs: the committed asic_support/tinytapeout/src RTL and the hand-maintained \
        info.yaml and src/config.json. It runs dune build, the Hardcaml tests, the \
        wrapper simulation, Verilator lint and generic Yosys synthesis, then stages the \
        legacy project. The adopted bundle is checked instead by \
-       asic/tinytapeout/scripts/check-adopted-bundle.py, and built by ./asic/flow.sh \
+       asic_support/tinytapeout/scripts/check-adopted-bundle.py, and built by ./asic_support/flow.sh \
        build emit.")
-    (Command.Param.return (fun () -> exec "asic/tinytapeout/scripts/check-p0.sh" []))
+    (Command.Param.return (fun () -> exec "asic_support/tinytapeout/scripts/check-p0.sh" []))
 ;;
 
 let stage =
@@ -239,9 +239,9 @@ let stage =
     ~readme:(fun () ->
       "Writes _flow_results/legacy/p0-staged from the committed RTL and the \
        hand-maintained metadata and configuration, for legacy-harden and precheck. The \
-       adopted flow reads none of it: ./asic/flow.sh emit renders its inputs from the \
-       declaration in asic/project/chip_project.ml.")
-    (Command.Param.return (fun () -> exec "asic/tinytapeout/scripts/stage-project.sh" []))
+       adopted flow reads none of it: ./asic_support/flow.sh emit renders its inputs from the \
+       declaration in asic_support/project/chip_project.ml.")
+    (Command.Param.return (fun () -> exec "asic_support/tinytapeout/scripts/stage-project.sh" []))
 ;;
 
 let precheck =
@@ -249,9 +249,9 @@ let precheck =
     ~summary:"Legacy: Tiny Tapeout precheck on a legacy hardening run (needs Nix)"
     ~readme:(fun () ->
       "Reads the run left by legacy-harden under _flow_results/legacy/runs. The adopted \
-       flow runs the same upstream precheck as part of ./asic/flow.sh postcheck, against \
+       flow runs the same upstream precheck as part of ./asic_support/flow.sh postcheck, against \
        its own run directory, and needs no separate command.")
-    (Command.Param.return (fun () -> exec "asic/tinytapeout/scripts/precheck.sh" []))
+    (Command.Param.return (fun () -> exec "asic_support/tinytapeout/scripts/precheck.sh" []))
 ;;
 
 let command =
@@ -260,7 +260,7 @@ let command =
     ~readme:(fun () ->
       "First time on a machine or clone: ./scripts/bootstrap.sh\n\
        Each new shell: source scripts/env.sh\n\
-       The ASIC flow: ./asic/flow.sh (./asic/flow.sh --help)\n\
+       The ASIC flow: ./asic_support/flow.sh (./asic_support/flow.sh --help)\n\
        See docs/environment.md for the environment, docs/flow.md for the flow.")
     [ "bootstrap", bootstrap
     ; "doctor", doctor

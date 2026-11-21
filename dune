@@ -26,14 +26,14 @@
 (alias
  (name pt3a)
  (deps
-  (alias asic/verif/program_memory/runtest)
-  (alias asic/verif/bundle/pt3a)))
+  (alias asic_support/verif/program_memory/runtest)
+  (alias asic_support/verif/bundle/pt3a)))
 
 ; Opt-in emitted RTL replay with actual installed vendor functional models.
 (alias
  (name pt3b)
  (deps
-  (alias asic/verif/functional/pt3b)))
+  (alias asic_support/verif/functional/pt3b)))
 
 (rule
  (alias verification-long)

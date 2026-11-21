@@ -171,7 +171,7 @@ def validate_install(path, *, qualified=True, check_sources=True):
 
 
 def event_source_inventory(root):
-    paths = ('ip', 'spec/isa', 'firmware/examples', 'asic/rtl', 'asic/verif/workloads', 'verif/reference/model')
+    paths = ('ip', 'spec/isa', 'firmware/examples', 'asic_support/rtl', 'asic_support/verif/workloads', 'verif/reference/model')
     return {str(p.relative_to(root)): sha(p) for name in paths for p in sorted((root / name).rglob('*'))
             if p.is_file() and (p.suffix in ('.ml', '.mli', '.py', '.v') or p.name == 'dune')}
 

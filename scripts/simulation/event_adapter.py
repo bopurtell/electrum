@@ -16,12 +16,12 @@ import pt3b_provider as provider
 
 def readers(install):
     source = Path(install['generation']) / install['event']['source_directory']
-    sys.path.insert(0, str(source / 'asic/verif/workloads'))
+    sys.path.insert(0, str(source / 'asic_support/verif/workloads'))
     # Each adapter process owns one captured source generation. Cached modules
     # from another generation must not be silently used during qualification.
     for name in ('event_evidence', 'produce_event_response', 'event_response'):
         loaded = sys.modules.get(name)
-        if loaded is not None and Path(loaded.__file__).parent != source / 'asic/verif/workloads':
+        if loaded is not None and Path(loaded.__file__).parent != source / 'asic_support/verif/workloads':
             del sys.modules[name]
     return importlib.import_module('event_evidence')
 
@@ -58,7 +58,7 @@ def run_case(install, case, attempt, directory, *, run_command=None, evidence_re
             # reader errors. Only an actual HDL bench FATAL is a DUT/test failure.
             logs = [p for p in output.glob('command-*.stdout') if p.is_file()] if output.exists() else []
             design_failure = any(provider.bench_failed(provider.read(p, provider.LOG_LIMIT).decode('utf-8', 'replace'),
-                                                      execution['exit_code'], output / 'sources/asic/verif/workloads/event_response_tb.v')
+                                                      execution['exit_code'], output / 'sources/asic_support/verif/workloads/event_response_tb.v')
                                  for p in logs)
             if raw_path.exists():
                 inspected = api.inspect(raw_path)

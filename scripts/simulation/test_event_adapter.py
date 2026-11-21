@@ -66,7 +66,7 @@ class EventFixture(Fixture):
         if self.mode in ('design-failure', 'tool-error'):
             raw['status'] = 'failed'
             code = 1
-            text = ('FATAL: ' + str(output / 'sources/asic/verif/workloads/event_response_tb.v') + ':55: assertion\n'
+            text = ('FATAL: ' + str(output / 'sources/asic_support/verif/workloads/event_response_tb.v') + ':55: assertion\n'
                     if self.mode == 'design-failure' else 'missing simulator plugin')
             (output / 'command-000.stdout').write_text(text)
             (output / 'command-000.stderr').write_text('')

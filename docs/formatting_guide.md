@@ -10,7 +10,7 @@ New modules should follow these conventions, and existing modules should be brou
 when edited.
 
 The rules apply primarily to synthesizable modules under `ip/*/rtl` and
-`asic/rtl`, compiled by owner-local wrapped libraries. Testbench-local variables,
+`asic_support/rtl`, compiled by owner-local wrapped libraries. Testbench-local variables,
 software-only helpers, and direction-neutral value types follow the exceptions described
 below.
 

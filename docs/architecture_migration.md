@@ -1,7 +1,7 @@
 # Architecture and migration plan
 
 **Delivered layout follow-up:** [final hardware-first layout](final_layout_migration.md)
-uses singular `asic/`, owner-local wrapped hardware libraries, colocated software/
+uses singular `asic_support/`, owner-local wrapped hardware libraries, colocated software/
 model tests and explicit historical archives. The root facade and installed flat
 hardware API are removed; AM5 port grouping remains separately pending.
 
@@ -71,7 +71,7 @@ Future agent prompts must repeat this requirement alongside the no-commits and s
 2. Decompose by responsibility, state ownership, and useful interface contracts. Thin
    composition files are appropriate; a module is not split merely to increase file count.
 3. Source ownership follows `ip/<owner>/{rtl,verif}`, including reusable
-   `ip/electrum_system/`, and singular `asic/{rtl,project,cli,verif}`. Wrapped
+   `ip/electrum_system/`, and `asic_support/{rtl,project,cli,verif}`. Wrapped
    owner libraries now enforce explicit dependencies. Installed consumers use the
    `Electrum_*` owner roots; the flat `Electrum` API is removed. Only the
    frozen oracle retains a private test adapter. ASIC libraries keep resource/
@@ -98,8 +98,8 @@ differs from the current OCaml owner.
 | `Emulator_core` | `ip/emulator_core/rtl/emulator_core.ml` | Controller + execution + mechanisms |
 | Mechanisms | `ip/mechanisms/rtl/` and `staging/` | Existing leaf blocks and experimental compositions |
 | `Package_top` | `asics/electrum/rtl/package_top.ml` | Target-specific system/resource/pin/reset composition |
-| `Program_memory` | `asic/rtl/program_memory.ml` | Chip-owned storage binding, currently explicit Flops |
-| `Chip_project` | `asic/project/chip_project.ml` | Pinout, project declaration and source inventories |
+| `Program_memory` | `asic_support/rtl/program_memory.ml` | Chip-owned storage binding, currently explicit Flops |
+| `Chip_project` | `asic_support/project/chip_project.ml` | Pinout, project declaration and source inventories |
 | `Host_link_protocol` / `Codec` | `ip/host_link/protocol/` | Pure protocol vocabulary/layouts versus software byte conversion |
 
 `Electrum_top` and `Host_link` are compositions, not monolithic implementations of
@@ -228,7 +228,7 @@ ip/
   emulator_core/{rtl,verif}/     execution/dispatch/core and control-port agent
   host_link/{rtl,protocol,verif}/ endpoint/children, pure protocol, agents/environment
   electrum_system/rtl/            Electrum_top reusable system composition
-asic/
+asic_support/
   rtl/                          package tops, resource binding and bring-up designs
   project/                      ASIC project declaration and source inventory
   cli/                          bundle/project entry points
@@ -345,7 +345,7 @@ the broader AM4 owner-acceptance checklist complete implicitly.
 
 - [ ] Accept `electrum_chip_project` with `Package_top`, `Program_memory`, bring-up tops
   and reusable project construction under the chip owner.
-- [ ] Accept the thin argument-parsing/emission entry point in `asic/cli/`; tests must not need to
+- [ ] Accept the thin argument-parsing/emission entry point in `asic_support/cli/`; tests must not need to
   import a CLI module with top-level side effects to elaborate a production top.
 - [ ] Preserve resource policy (currently Flops), source roles, target constraints, package
   pin ABI, reset/output gating, and all existing flow modes.

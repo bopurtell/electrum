@@ -18,7 +18,7 @@ from workbench_toolchain import validate as validate_toolchain
 
 ROOT = Path(__file__).resolve().parents[1]
 STORE = ROOT / '.dev/workbench'
-TARGET = 'asic/cli/project.exe'
+TARGET = 'asic_support/cli/project.exe'
 CHIP_CATALOG = 'hardcaml-asic-targets.json'
 
 
@@ -187,6 +187,7 @@ def configure(args):
                 write(backup, old)
         write(path, data)
     state = dict(schema_version=1, project_root=str(ROOT), prefix=str(prefix),
+                  build_target=TARGET,
                   receipt=os.environ['ELECTRUM_TOOLS_RECEIPT'],
                   toolchain=str(tools),
                   physical_toolchain=physical,
@@ -227,15 +228,17 @@ def readiness(prefix, configuration):
     companions_match = all(regular(path) is not None and sha(regular(path)) == owned.get(kind)
                            for kind, path in paths.items())
     selection_matches = bool(configuration and configuration.get('prefix') == str(prefix))
+    target_matches = bool(configuration and configuration.get('build_target') == TARGET)
+    configure_required = not (selection_matches and target_matches)
     ready = (executable_ready(executable) and executable_ready(provider)
-             and chips['ready'] and companions_match and selection_matches)
+             and chips['ready'] and companions_match and not configure_required)
     toolchain = Path(configuration.get('toolchain', ROOT / '_flow_tools')) if configuration else ROOT / '_flow_tools'
     collateral = dict(python=(toolchain / 'venv/bin/python').is_file(),
                       support_tools=(toolchain / 'tt').is_dir(), pdk=(toolchain / 'pdk').is_dir())
     physical = dict(ready=False, status='missing_collateral' if not all(collateral.values()) else 'not_validated',
         requires_explicit_preflight=True, collateral_present=collateral, toolchain=str(toolchain),
         readiness_scope='metadata_only_no_EDA')
-    if configuration and configuration.get('physical_toolchain') and selection_matches:
+    if not configure_required and configuration.get('physical_toolchain'):
         try:
             validated = validate_toolchain(toolchain, ROOT, provider)
             physical.update(ready=ready, status='metadata_validated', metadata=validated)
@@ -243,21 +246,22 @@ def readiness(prefix, configuration):
         except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
             physical.update(status='metadata_validation_failed', diagnostic=str(error))
     simulation = dict(configured=bool(configuration and configuration.get('simulation_configured')), ready=False)
-    if simulation['configured'] and selection_matches:
+    if simulation['configured'] and not configure_required:
         try:
             simulation_configuration()
             simulation.update(ready=True, status='qualified_current_source')
         except (OSError, ValueError, KeyError, RuntimeError) as error:
             simulation.update(status='refresh_required', diagnostic=str(error),
                 refresh_command='bash scripts/workbench.sh prepare-simulation --pdk-root ' + str(toolchain / 'pdk'))
-    if not selection_matches:
+    if configure_required:
         physical.update(ready=False, status='configure_required')
         simulation.update(ready=False, status='configure_required')
-    return dict(ready=ready, configure_required=not selection_matches,
-        status='configure_required' if not selection_matches else ('ready' if ready else 'not_ready'),
+    return dict(ready=ready, configure_required=configure_required,
+         status='configure_required' if configure_required else ('ready' if ready else 'not_ready'),
         scope='source_operations_ready_physical_metadata_separate',
         source_operations=dict(ready=ready, requires_pdk=False, project_executable=str(executable),
-            provider_executable=str(provider), companions_match=companions_match, selection_matches=selection_matches,
+             provider_executable=str(provider), companions_match=companions_match, selection_matches=selection_matches,
+             target_matches=target_matches,
              chip_catalog=chips,
              operations=['chip list', 'flow list', 'flow describe', 'flow plan', 'flow emit', 'prepare', 'preparation-inspect'],
             compiled_source_consistency='not_attested; explicitly build after source edits'),
@@ -332,6 +336,8 @@ def main():
             config = json.loads((STORE / 'configuration.json').read_text())
             if config['prefix'] != str(prefix):
                 raise ValueError('tools selection changed; explicitly configure again')
+            if config.get('build_target') != TARGET:
+                raise ValueError('ASIC gateway path changed; explicitly configure again')
             for kind, expected in config['sha256'].items():
                 if sha(regular(ROOT / '.workbench' / ('hardcaml-workbench-' + kind + '.sexp'))) != expected:
                     raise ValueError('companion changed: ' + kind)

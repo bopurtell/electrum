@@ -2,7 +2,7 @@
 
 The [ASIC/Workbench adoption closeout](adoption-release.md) records an earlier
 installation and its exact evidence. The normal selector below has since moved
-to ASIC's `Chip_target` API and starter flow collections. The legacy `asic/flow.sh`
+to ASIC's `Chip_target` API and starter flow collections. The legacy `asic_support/flow.sh`
 workflow is a separate interface.
 
 ## Normal captured compiler/library selection
@@ -39,7 +39,7 @@ For working-tree mode, `revision`/`base_revision` name checkout HEAD provenance,
 record the actual captured bytes. A receipt does not implement the CLI's separate
 source-artifact stamping contract.
 
-`asic/tinytapeout/asic-dependencies.lock` still records historical PT3a provenance
+`asic_support/tinytapeout/asic-dependencies.lock` still records historical PT3a provenance
 (`b0b3384…`). That file and old private-provider receipts are preserved; neither
 silently selects the normal compiler/library. `tools-source.lock.json` records
 the normal compatibility base separately from an explicit development snapshot;
@@ -64,12 +64,12 @@ Run these commands from the repository root:
 ./scripts/bootstrap.sh          # check OCaml dependencies and prepare flow collateral
 ./scripts/bootstrap.sh --check  # report the state of every layer; change nothing
 source scripts/env.sh           # activate tools in each new shell
-./asic/flow.sh --help            # read the stages and overrides before implementation
+./asic_support/flow.sh --help            # read the stages and overrides before implementation
 ```
 
 `scripts/bootstrap.sh` prepares tools and stages no design by default.
-`asic/flow.sh` consumes that environment and never provisions by default. A bare
-`./asic/flow.sh` deliberately starts the full physical sequence and can take hours;
+`asic_support/flow.sh` consumes that environment and never provisions by default. A bare
+`./asic_support/flow.sh` deliberately starts the full physical sequence and can take hours;
 name the steps when you want only part of it. The flow's stages, overrides,
 artifacts and qualification status are in **[flow.md](flow.md)**.
 
@@ -86,7 +86,7 @@ flock ../.electrum-build.lock dune build -j2 @rtl
 ```
 
 `@rtl` runs emitted-RTL simulation/lint and generic synthesis, not physical
-implementation. `dune exec -j5 electrum -- flow` is an alias for `asic/flow.sh`,
+implementation. `dune exec -j5 electrum -- flow` is an alias for `asic_support/flow.sh`,
 including its full physical default. The public `electrum` name remains available
 through root `dune`'s binding to `software/cli/electrum.exe`; no CLI installation is
 needed. `dune exec -j5 electrum -- bootstrap` converges the flow layer once OCaml
@@ -103,9 +103,9 @@ bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
 | --- | --- | --- | --- |
 | 0. Host | git, Python/venv support, Docker-compatible runtime, HDL tools, Nix and group membership as needed | machine | you or your administrator; bootstrap detects prerequisites and prints guidance |
 | 1. OCaml | opam switch `5.2.0+ox` and published dependencies | machine, shared with other Hardcaml checkouts | `scripts/ocaml-deps.sh`; requests only missing packages |
-| 2. Flow | `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}` and the pinned LibreLane image | per checkout/worktree; an external support-tools checkout may be selected | `asic/tinytapeout/scripts/bootstrap-toolchain.sh`, pinned by `asic/tinytapeout/toolchain.lock` |
+| 2. Flow | `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}` and the pinned LibreLane image | per checkout/worktree; an external support-tools checkout may be selected | `asic_support/tinytapeout/scripts/bootstrap-toolchain.sh`, pinned by `asic_support/tinytapeout/toolchain.lock` |
 | 3. Shell | opam environment, `PDK_ROOT`, support-tools location and `_flow_tools/venv/bin` on `PATH` | one terminal | `source scripts/env.sh` |
-| 4. Build/execution | `_build/`, `_flow_results/{adopted,flow-*,archives}` | derived from source and each execution | Dune and `asic/flow.sh` |
+| 4. Build/execution | `_build/`, `_flow_results/{adopted,flow-*,archives}` | derived from source and each execution | Dune and `asic_support/flow.sh` |
 
 `--install-deps` adds missing published Electrum prerequisites to the shared
 switch. `scripts/ocaml-deps.sh --install --tool-deps` also adds the dependencies
@@ -129,8 +129,8 @@ the previously active environment from `PATH` instead of stacking environments.
 | --- | --- |
 | New machine | Install the relevant host prerequisites, then run `scripts/ocaml-deps.sh --install --tool-deps` and install the local tools as above. Switch creation and downloads can take substantial time/storage. |
 | Fresh clone or new worktree | Run `./scripts/bootstrap.sh --tools-only`, then `source scripts/env.sh`. For the legacy flow collateral, also run `./scripts/bootstrap.sh`. Environments are per checkout/worktree. |
-| New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 electrum -- doctor` for a report. `asic/flow.sh` does not require activation. |
-| Inspecting a recorded run | `ELECTRUM_RUN=/path/to/run ./asic/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
+| New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 electrum -- doctor` for a report. `asic_support/flow.sh` does not require activation. |
+| Inspecting a recorded run | `ELECTRUM_RUN=/path/to/run ./asic_support/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
 | Tools-source lock or opam dependencies changed | Run `scripts/ocaml-deps.sh --tool-deps` to check prerequisites, then `./scripts/bootstrap.sh --tools-only` to select a new local generation. The legacy flow-tool lock is checked by ordinary bootstrap. |
 | Offline | `./scripts/bootstrap.sh --offline` validates/reuses existing state without fetching. |
 | Interrupted bootstrap | Rerun; inspect any partial state the script identifies rather than deleting it automatically. |
@@ -140,14 +140,14 @@ the previously active environment from `PATH` instead of stacking environments.
 ## Ownership and storage
 
 - The product chip wrapper and named flows live in `asics/electrum/`; shared
-  ASIC inputs live in `asic/rtl/` and `asic/project/`. The bundle CLI is
-  `asic/cli/asic_bundle.ml`. Target locks/helpers are in `asic/tinytapeout/`.
+  ASIC inputs live in `asic_support/rtl/` and `asic_support/project/`. The bundle CLI is
+  `asic_support/cli/asic_bundle.ml`. Target locks/helpers are in `asic_support/tinytapeout/`.
 - Provisioned tools/runtime live under ignored `_flow_tools/`; design execution
   output lives under ignored `_flow_results/`. Legacy staging uses
   `_flow_results/legacy/p0-staged`.
 - The adopted bundle derives RTL source sets, timing constraints, TT metadata and
   configuration from the typed declaration. Hand-maintained
-  `asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` are legacy
+  `asic_support/tinytapeout/info.yaml` and `asic_support/tinytapeout/src/config.json` are legacy
   design inputs only.
 - Preserved physical evidence is under [`archive/legacy/`](../archive/legacy/);
   [`archive/INDEX.md`](../archive/INDEX.md) records the byte-preserved moves.

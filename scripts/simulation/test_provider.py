@@ -26,7 +26,7 @@ class Fixture:
         self.generation.mkdir()
         for name in ('p3_loader_tb.v', 'serial_trace.v', 'iverilog', 'vvp', 'model0.v', 'model1.v'):
             (self.generation / name).write_text('pure fixture ' + name)
-        shutil.copyfile(ROOT / 'asic/verif/functional/check_functional.py', self.generation / 'pt3b_oracle.py')
+        shutil.copyfile(ROOT / 'asic_support/verif/functional/check_functional.py', self.generation / 'pt3b_oracle.py')
         self.oracle = provider.oracle_module(self.generation)
         self.install = dict(contract='electrum.fs2-pt3b-install', schema_version=1,
             generation=str(self.generation), project_root=str(root), checks_passed=True,

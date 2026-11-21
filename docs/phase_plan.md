@@ -1,7 +1,7 @@
 # Protocol emulator phase plan
 
 **Final layout update, 2026-11-11:** [current repository layout](repository_layout.md)
-uses singular `asic/`, wrapped IP libraries, owner-local software/model tests and
+uses singular `asic_support/`, wrapped IP libraries, owner-local software/model tests and
 `archive/legacy/`. The installed flat hardware API is removed; only the frozen
 oracle has private compatibility support. [Final evidence](final_layout_migration.md)
 records unchanged hardware outputs,481 registrations and42 archived files.
@@ -56,12 +56,12 @@ the corresponding decision has evidence.
   dependencies and measured risk; use the architecture document for target context.
 
 Follow [formatting_guide.md](formatting_guide.md) for source changes. Current
-hardware lives under `ip/*/rtl` and `asic/rtl`, including the reusable system as
+hardware lives under `ip/*/rtl` and `asic_support/rtl`, including the reusable system as
 `ip/electrum_system`. Owner-local `verif/` and shared/system root `verif/` contain DUT
 verification; software/model/tool checks live in owner-local `test/` directories.
-`software/cli/` and `asic/cli/` retain command entry points, `spec/isa/` the instruction
+`software/cli/` and `asic_support/cli/` retain command entry points, `spec/isa/` the instruction
 specification/assembler, `verif/reference/model/` the independent model, and
-`asic/tinytapeout/` target integration. The model is a separate Dune
+`asic_support/tinytapeout/` target integration. The model is a separate Dune
 library, `electrum_f_model`, with no Hardcaml dependency, so a diagnostic model can never
 reach a synthesis source set and cannot share a mistake with the RTL; its tests live in
 `verif/reference/model/test/`. `spec/isa/` is a third library, `electrum.isa`, below both of them:

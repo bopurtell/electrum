@@ -12,7 +12,7 @@ models and monitors. A system importing an agent does not transfer its ownership
 Root `verif/` owns cross-owner infrastructure and whole-system verification.
 Silver owns the enclosing project. The root `hardcaml-asic-targets.json` registers
 one product chip, `electrum`. `asics/electrum/` owns its package top, named flow
-catalog, and CLI. `asic/` holds shared Tiny Tapeout infrastructure, the old
+catalog, and CLI. `asic_support/` holds shared Tiny Tapeout infrastructure, the old
 bundle/flow entry points, and verification. Its memory and observable wrappers
 are standalone test fixtures, not entries in the product chip catalog.
 Software/tool contracts use owner-local `test/`; there is no root test bucket.
@@ -46,7 +46,7 @@ ip/
     verif/archived/hl4a/          frozen but ACTIVE regression oracle
     verif/archived/support/       private old-API adapter for the frozen oracle only
   electrum_system/rtl/             Electrum_top system, external program-RAM port
-asic/
+asic_support/
   rtl/                           shared RAM binding
     bringup/p0_observable.ml
   project/                       shared chip declarations and input inventory
@@ -98,8 +98,8 @@ goldens, example files, program bytes and frozen regressions remain unchanged.
   builds the product declaration and supports rendering verification fixtures
   through the same bundle API. The full chip binds its flow IDs to resource policy
   and operation in `asics/electrum/flows/target.ml`.
-  `asic/cli/project.exe` is Silver's discovery/dispatch gateway and
-  `asic/cli/asic_bundle.exe` retains the legacy bundle interface.
+  `asic_support/cli/project.exe` is Silver's discovery/dispatch gateway and
+  `asic_support/cli/asic_bundle.exe` retains the legacy bundle interface.
 - `spec/isa/` and `verif/reference/model/` retain their independent APIs and the
   model has no Hardcaml dependency. Pure `electrum_firmware_examples` owns authored
   example programs, reexported type-identically by the model for compatibility.
@@ -118,7 +118,7 @@ one authored source in `verif/system/emitted/` and still runs against the reusab
 system, behavioral package and synthesis package. It retains its own wire/CRC
 expectations instead of deriving them from the implementation codec.
 
-`asic/tinytapeout/src/dune` and `asic/tinytapeout/test/dune` retain compatible generated
+`asic_support/tinytapeout/src/dune` and `asic_support/tinytapeout/test/dune` retain compatible generated
 targets/aliases and consume the owner-local benches. `@rtl` covers the existing
 tiers; the memory bench retains its explicit checker activation rather than being
 silently added to default execution.

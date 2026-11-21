@@ -36,7 +36,7 @@
   (ppx_expect :with-test)
   (base_quickcheck :with-test)
   (alcotest :with-test)
-   ; Repo tooling: asic/verif/observable/emit/generate.exe. Never installed, but needed for a root
+   ; Repo tooling: asic_support/verif/observable/emit/generate.exe. Never installed, but needed for a root
   ; `dune build`, so they ride with-test rather than being dropped.
   (core_unix :with-test)
   (jane_rope :with-test)

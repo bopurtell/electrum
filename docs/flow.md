@@ -1,6 +1,6 @@
 # The ASIC flow
 
-This is the source of truth for **`./asic/flow.sh`**: stages, inputs/outputs,
+This is the source of truth for **`./asic_support/flow.sh`**: stages, inputs/outputs,
 overrides, resuming and qualification status. The bundle contract is in
 [asic-adoption.md](asic-adoption.md), setup in [environment.md](environment.md),
 and the OCaml/Python boundary rationale in [tooling_theory1.md](tooling_theory1.md).
@@ -8,18 +8,18 @@ Commands below use the repository root unless explicitly labelled historical.
 
 ## The one path
 
-[`asic/flow.sh`](../asic/flow.sh) is the public implementation command. It
+[`asic_support/flow.sh`](../asic_support/flow.sh) is the public implementation command. It
 consumes an environment; [`scripts/bootstrap.sh`](../scripts/bootstrap.sh)
 prepares it. Normal bootstrap stages no design, and normal flow invocation does
 not provision. The transitional explicit `bootstrap` flow step provisions tools.
 Ordinary Dune build/test aliases do not start physical implementation.
 
 The adopted input is an immutable `hardcaml_asic` bundle. Its configuration comes
-from [`asic/project/chip_project.ml`](../asic/project/chip_project.ml), with
+from [`asic_support/project/chip_project.ml`](../asic_support/project/chip_project.ml), with
 chip wrappers in [`asics/`](../asics/), shared resource binding in
-[`asic/rtl/`](../asic/rtl/), and emission through
-[`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml). The hand-maintained
-`asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` belong only to
+[`asic_support/rtl/`](../asic_support/rtl/), and emission through
+[`asic_support/cli/asic_bundle.ml`](../asic_support/cli/asic_bundle.ml). The hand-maintained
+`asic_support/tinytapeout/info.yaml` and `asic_support/tinytapeout/src/config.json` belong only to
 [the legacy staged-project path](#the-legacy-path).
 
 ## Quick start
@@ -28,17 +28,17 @@ chip wrappers in [`asics/`](../asics/), shared resource binding in
 ./scripts/bootstrap.sh --tools-only  # select the local ASIC and Silver builds first
 ./scripts/bootstrap.sh          # prepare tools; normal mode stages no design
 source scripts/env.sh           # activation for commands typed in this shell
-./asic/flow.sh --help            # stages, overrides and resuming
+./asic_support/flow.sh --help            # stages, overrides and resuming
 ```
 
 To prepare a bundle without hardening:
 
 ```sh
 export ELECTRUM_FLOW_OUT="$PWD/_flow_results/my-experiment"
-./asic/flow.sh build emit preflight
+./asic_support/flow.sh build emit preflight
 ```
 
-A bare **`./asic/flow.sh` starts the full physical sequence**, allocates a fresh
+A bare **`./asic_support/flow.sh` starts the full physical sequence**, allocates a fresh
 output directory and can take hours. Named stages run only the requested work.
 The layout migration did not execute that full sequence; see
 [qualification](#verified-behavior-and-known-limits).
@@ -65,12 +65,12 @@ build → emit → preflight → run → postcheck → collect → report → ar
 
 `--full` explicitly requests the default sequence and fresh allocation. Steps run
 in the supplied order, and **no step produces an earlier step's prerequisites**.
-`./asic/flow.sh run` hardens an existing bundle; it does not emit one first.
+`./asic_support/flow.sh run` hardens an existing bundle; it does not emit one first.
 
 For example, after preparation and preflight above:
 
 ```sh
-./asic/flow.sh run postcheck collect report
+./asic_support/flow.sh run postcheck collect report
 ```
 
 ## Output and artifacts
@@ -93,7 +93,7 @@ For example, after preparation and preflight above:
 
 ### Environment
 
-`./asic/flow.sh --help` is authoritative.
+`./asic_support/flow.sh --help` is authoritative.
 
 | Variable | Meaning | Default |
 | --- | --- | --- |
@@ -123,8 +123,8 @@ separate invocation must name its run; the newest directory is never selected
 implicitly:
 
 ```sh
-ELECTRUM_RUN=/absolute/path/to/run ./asic/flow.sh postcheck collect report
-ELECTRUM_RUN=/absolute/path/to/run ./asic/flow.sh report
+ELECTRUM_RUN=/absolute/path/to/run ./asic_support/flow.sh postcheck collect report
+ELECTRUM_RUN=/absolute/path/to/run ./asic_support/flow.sh report
 ```
 
 `collect` and `report` read recorded artifacts using system `python3`; they need
@@ -135,7 +135,7 @@ unpacked executable run tree.
 ## Synthesis only
 
 ```sh
-ELECTRUM_STAGE=synthesis ./asic/flow.sh build emit preflight run collect report
+ELECTRUM_STAGE=synthesis ./asic_support/flow.sh build emit preflight run collect report
 ```
 
 This starts mapped synthesis, not just generic RTL checks. `postcheck` requires a
@@ -183,12 +183,12 @@ Historical evidence:
 ## Checking the flow itself
 
 ```sh
-./asic/tinytapeout/scripts/check-flow.sh  # stub orchestration, no physical tools
-flock ../.electrum-build.lock ./scripts/with-switch.sh dune build -j5 asic/cli/asic_bundle.exe
-python3 asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
+./asic_support/tinytapeout/scripts/check-flow.sh  # stub orchestration, no physical tools
+flock ../.electrum-build.lock ./scripts/with-switch.sh dune build -j5 asic_support/cli/asic_bundle.exe
+python3 asic_support/tinytapeout/scripts/check-adopted-bundle.py --metadata-only
 ```
 
-[`check-flow.sh`](../asic/tinytapeout/scripts/check-flow.sh) substitutes a stub for
+[`check-flow.sh`](../asic_support/tinytapeout/scripts/check-flow.sh) substitutes a stub for
 Dune. Its 17 checks cover arguments, allocation, resuming, caller-relative
 overrides, failures and signals. It uses temporary fixtures and may create the
 ignored `_flow_results/` parent for default-allocation checks; it starts no real
@@ -197,7 +197,7 @@ producer/physical tool. CI runs it separately from ordinary `runtest`.
 The bundle checker validates a different contract; its full mode runs HDL tools
 in the pinned image, while `--metadata-only` does not. See
 [ASIC adoption checks](asic-adoption.md#checks). The flow does not invoke this
-checker automatically. `./asic/flow.sh build emit preflight` exercises real
+checker automatically. `./asic_support/flow.sh build emit preflight` exercises real
 bundle generation and prerequisite validation without hardening, but still needs
 a provisioned environment for preflight.
 
@@ -205,25 +205,25 @@ a provisioned environment for preflight.
 
 | File | Role |
 | --- | --- |
-| [`asic/flow.sh`](../asic/flow.sh) | public entry point, root detection, full-run default, runner exit status |
-| [`adopted-flow.sh`](../asic/tinytapeout/scripts/adopted-flow.sh) | sequencing, allocation, summary/signals; builds via `scripts/with-switch.sh` |
-| [`adopted_phase4.py`](../asic/tinytapeout/scripts/adopted_phase4.py) | preflight, execution, postchecks, collection |
-| [`adopted_report.py`](../asic/tinytapeout/scripts/adopted_report.py) | recorded results and required verdicts |
-| [`adopted_archive.py`](../asic/tinytapeout/scripts/adopted_archive.py) | verified record/report extraction into new archives |
-| [`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml) | stable bundle CLI |
-| [`asic/project/chip_project.ml`](../asic/project/chip_project.ml) | typed declaration and canonical source inventory |
+| [`asic_support/flow.sh`](../asic_support/flow.sh) | public entry point, root detection, full-run default, runner exit status |
+| [`adopted-flow.sh`](../asic_support/tinytapeout/scripts/adopted-flow.sh) | sequencing, allocation, summary/signals; builds via `scripts/with-switch.sh` |
+| [`adopted_phase4.py`](../asic_support/tinytapeout/scripts/adopted_phase4.py) | preflight, execution, postchecks, collection |
+| [`adopted_report.py`](../asic_support/tinytapeout/scripts/adopted_report.py) | recorded results and required verdicts |
+| [`adopted_archive.py`](../asic_support/tinytapeout/scripts/adopted_archive.py) | verified record/report extraction into new archives |
+| [`asic_support/cli/asic_bundle.ml`](../asic_support/cli/asic_bundle.ml) | stable bundle CLI |
+| [`asic_support/project/chip_project.ml`](../asic_support/project/chip_project.ml) | typed declaration and canonical source inventory |
 
 Runner/reporter/archiver are consumer-side helpers; runtime does not reach into a
 `hardcaml_asic` source checkout. Recorded dependency revisions are in
-`asic/tinytapeout/asic-dependencies.lock` and `toolchain.lock`.
+`asic_support/tinytapeout/asic-dependencies.lock` and `toolchain.lock`.
 
 ## Aliases and compatibility
 
 | Command | Meaning |
 | --- | --- |
-| `dune exec -j5 electrum -- flow` | alias for `./asic/flow.sh`, including its physical default |
-| `dune exec -j5 electrum -- harden` | `./asic/flow.sh run` |
-| `asic/tinytapeout/scripts/adopted-flow.sh` | underlying runner; no arguments prints help |
+| `dune exec -j5 electrum -- flow` | alias for `./asic_support/flow.sh`, including its physical default |
+| `dune exec -j5 electrum -- harden` | `./asic_support/flow.sh run` |
+| `asic_support/tinytapeout/scripts/adopted-flow.sh` | underlying runner; no arguments prints help |
 
 `harden` rejects legacy `-tag`/`-no-docker` flags with an explicit diagnostic
 directing users to `legacy-harden`. They are not reinterpreted as adopted-flow
@@ -234,7 +234,7 @@ physical steps. It does not change the adopted runner into a native runner.
 ### The legacy path
 
 `electrum check`, `stage`, `legacy-harden` and `precheck` use committed P0 RTL and
-hand-maintained `asic/tinytapeout/info.yaml`/`src/config.json`. Explicit
+hand-maintained `asic_support/tinytapeout/info.yaml`/`src/config.json`. Explicit
 `./scripts/bootstrap.sh --legacy-project` stages/configures this input under
 `_flow_results/legacy/p0-staged`. The stage lock is
 `_flow_results/legacy/.stage.lock`; legacy logs are under
@@ -272,11 +272,11 @@ quickstart commands:
 
 | Historical root path | Current root path |
 | --- | --- |
-| `./flow.sh` | `./asic/flow.sh` |
+| `./flow.sh` | `./asic_support/flow.sh` |
 | `./bootstrap.sh` | `./scripts/bootstrap.sh` |
 | `source env.sh` | `source scripts/env.sh` |
-| `tinytapeout/scripts/` | `asic/tinytapeout/scripts/` |
-| `bin/asic_bundle.ml` | `asic/cli/asic_bundle.ml` (CLI), `asic/project/chip_project.ml` (declaration) |
+| `tinytapeout/scripts/` | `asic_support/tinytapeout/scripts/` |
+| `bin/asic_bundle.ml` | `asic_support/cli/asic_bundle.ml` (CLI), `asic_support/project/chip_project.ml` (declaration) |
 
 Real failed/interrupted-run reporting and current-top physical closure are not
 established by stub paths or historical observable results. The archived records

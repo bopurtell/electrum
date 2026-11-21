@@ -28,14 +28,14 @@
   ../electrum.opam
   ../tools-source.lock.json
   ../hardcaml-asic-targets.json
-  ../asic/tinytapeout/asic-dependencies.lock
-  ../asic/tinytapeout/toolchain.lock
+  ../asic_support/tinytapeout/asic-dependencies.lock
+  ../asic_support/tinytapeout/toolchain.lock
   (source_tree ../asics)
-  (source_tree ../asic/cli)
-  (source_tree ../asic/project)
-  (source_tree ../asic/rtl)
-  (source_tree ../asic/verif/memory/rtl)
-  (source_tree ../asic/verif/observable/rtl)
+  (source_tree ../asic_support/cli)
+  (source_tree ../asic_support/project)
+  (source_tree ../asic_support/rtl)
+  (source_tree ../asic_support/verif/memory/rtl)
+  (source_tree ../asic_support/verif/observable/rtl)
   (source_tree ../spec/isa)
   (source_tree ../ip/host_link/protocol)
   (source_tree ../ip/mechanisms/rtl)
@@ -46,11 +46,11 @@
  (action
   (progn
    (run python3 -B %{dep:check-chip-targets.py} %{workspace_root}
-    %{exe:../asic/cli/project.exe}
-    %{exe:../asic/cli/asic_bundle.exe}
+    %{exe:../asic_support/cli/project.exe}
+    %{exe:../asic_support/cli/asic_bundle.exe}
     %{bin:hardcaml-asic-targets}
     %{exe:../asics/electrum/cli/chip.exe})
    (run python3 -B %{dep:check-project-cli.py}
-    %{exe:../asic/cli/project.exe} %{workspace_root})
+    %{exe:../asic_support/cli/project.exe} %{workspace_root})
    (run python3 -B %{dep:check-timing-profile.py}
-    --project %{exe:../asic/cli/project.exe} --source-root %{workspace_root}))))
+    --project %{exe:../asic_support/cli/project.exe} --source-root %{workspace_root}))))

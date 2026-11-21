@@ -56,7 +56,7 @@ Sequential commands from this checkout, each under `flock ../.electrum-build.loc
 bash scripts/with-private-asic.sh dune build -j1 @pt3a
 bash scripts/with-private-asic.sh dune runtest -j1 ip/program_memory_controller/verif/backend_integration
 bash scripts/with-private-asic.sh dune runtest -j1
-bash scripts/with-private-asic.sh python3 -B asic/tinytapeout/scripts/check-adopted-bundle.py --metadata-only --kind loader --selection exact
+bash scripts/with-private-asic.sh python3 -B asic_support/tinytapeout/scripts/check-adopted-bundle.py --metadata-only --kind loader --selection exact
 ```
 
 All passed. Focused CLI/project/RTL lint and diff checks also passed. Coverage:

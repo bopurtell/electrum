@@ -8,22 +8,22 @@ PT.3a public-API and explicit Flops/Exact adoption is verified, and
 [PT.3a evidence and remaining gates](pt3a-adoption.md). Earlier P0 physical evidence
 below remains historical; it does not qualify the new macro-backed system.
 
-[`asic/project/chip_project.ml`](../asic/project/chip_project.ml) declares the
+[`asic_support/project/chip_project.ml`](../asic_support/project/chip_project.ml) declares the
 selectable `observable`, `memory` and `loader` Tiny Tapeout designs and their
-explicit source inventory. [`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml)
+explicit source inventory. [`asic_support/cli/asic_bundle.ml`](../asic_support/cli/asic_bundle.ml)
 is the stable emission CLI. ASIC-dependent constructors/resource bindings live
-in [`asic/rtl/`](../asic/rtl/), compiled as `electrum_asic_rtl`; the preserved
+in [`asic_support/rtl/`](../asic_support/rtl/), compiled as `electrum_asic_rtl`; the preserved
 `electrum_chip_project` library depends on it and canonical owner libraries.
 
 The observable design retains the pin map of
-`asic/tinytapeout/src/project.v`, two-edge reset release and immediate pad release
+`asic_support/tinytapeout/src/project.v`, two-edge reset release and immediate pad release
 on reset/disable. That committed wrapper, hand-maintained
-`asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` remain inputs
+`asic_support/tinytapeout/info.yaml` and `asic_support/tinytapeout/src/config.json` remain inputs
 of the legacy P0 path. The adopted path consumes generated bundle equivalents.
 
 ## Dependency and emission
 
-[`asic/tinytapeout/asic-dependencies.lock`](../asic/tinytapeout/asic-dependencies.lock)
+[`asic_support/tinytapeout/asic-dependencies.lock`](../asic_support/tinytapeout/asic-dependencies.lock)
 records ASIC revision `b0b3384acbe22c8a30264cbdf0c19008c58bf3c5` and matching
 collateral revisions. Emission uses `Project.emit_bundle`, with source inputs
 attached through `Project.create`. Memory and loader support explicit `program`
@@ -36,19 +36,19 @@ local installation is selected explicitly with `scripts/with-private-asic.sh`.
 Its generated prefix and receipt live under `.dev/pt3a-provider/`. This wrapper
 verifies installed hashes and does not perform installation. `scripts/bootstrap.sh`
 prepares the general environment;
-`asic/tinytapeout/toolchain.lock` records flow-tool provisioning. The emitted
+`asic_support/tinytapeout/toolchain.lock` records flow-tool provisioning. The emitted
 manifest captures requested revisions, and adopted preflight checks the matching
 consumer locks. Review lock changes explicitly when upgrading.
 
 From the repository root, run these sequentially under the shared build lock:
 
 ```sh
-flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune build -j1 asic/cli/asic_bundle.exe
-flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune build -j1 asic_support/cli/asic_bundle.exe
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic_support/cli/asic_bundle.exe -- \
   observable "$PWD/_flow_results/observable-bundle" "$PWD"
-flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic_support/cli/asic_bundle.exe -- \
   memory "$PWD/_flow_results/memory-bundle" "$PWD" --selection flops
-flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic/cli/asic_bundle.exe -- \
+flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune exec -j1 asic_support/cli/asic_bundle.exe -- \
   loader "$PWD/_flow_results/loader-exact-bundle" "$PWD" --selection exact
 ```
 
@@ -83,7 +83,7 @@ Metadata/declaration-only checking from the repository root:
 ```sh
 flock ../.electrum-build.lock bash scripts/with-private-asic.sh dune build -j1 @pt3a
 flock ../.electrum-build.lock bash scripts/with-private-asic.sh python3 -B \
-  asic/tinytapeout/scripts/check-adopted-bundle.py --kind loader --selection exact --metadata-only
+  asic_support/tinytapeout/scripts/check-adopted-bundle.py --kind loader --selection exact --metadata-only
 ```
 
 These checks emit twice, compare complete file-tree bytes and identities, verify source copies
@@ -112,7 +112,7 @@ is implied by the package/RTL checks.
 
 ## Running the flow
 
-[`./asic/flow.sh`](../asic/flow.sh) consumes the adopted bundle. Setup is
+[`./asic_support/flow.sh`](../asic_support/flow.sh) consumes the adopted bundle. Setup is
 `./scripts/bootstrap.sh` and per-shell `source scripts/env.sh`. Tool/runtime state
 is `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}`; execution outputs
 default to `_flow_results/{adopted,flow-*,archives}`. Stages, overrides, resuming,
@@ -134,9 +134,9 @@ See its [dated experiment record](../archive/legacy/tinytapeout/reports/2026-09-
 These September 2026 results are the last recorded full physical qualification.
 The 2026-11-11 layout work preserved all historical archive bytes and metadata;
 the [external relocation index](../archive/INDEX.md) maps their old paths/hashes.
-Historical `bin/asic_bundle.ml` now maps to `asic/cli/asic_bundle.ml` plus the
-extracted `asic/project/` declaration; old `tinytapeout/` maps to
-`asic/tinytapeout/`. Commands inside dated records intentionally remain unchanged.
+Historical `bin/asic_bundle.ml` now maps to `asic_support/cli/asic_bundle.ml` plus the
+extracted `asic_support/project/` declaration; old `tinytapeout/` maps to
+`asic_support/tinytapeout/`. Commands inside dated records intentionally remain unchanged.
 
 The layout migration validated orchestration with **17 stub checks** and checked
 nonphysical build/RTL/bundle preservation, including six unchanged emitted bundle

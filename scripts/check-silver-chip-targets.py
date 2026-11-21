@@ -14,7 +14,7 @@ from fs2_wire import parse, sexp
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GATEWAY = 'asic/cli/project.exe'
+GATEWAY = 'asic_support/cli/project.exe'
 
 
 def run(*argv, cwd):
@@ -128,7 +128,7 @@ def main():
         for name in ('dune', 'dune-project', 'electrum.opam', 'tools-source.lock.json',
                      'hardcaml-asic-targets.json'):
             shutil.copy2(ROOT / name, project / name)
-        for name in ('asic', 'asics', 'ip', 'spec', 'software', 'verif', 'scripts', 'firmware'):
+        for name in ('asic_support', 'asics', 'ip', 'spec', 'software', 'verif', 'scripts', 'firmware'):
             shutil.copytree(ROOT / name, project / name, ignore=shutil.ignore_patterns('__pycache__'))
         # Bundle provenance needs a real HEAD. Clone locally, without a checkout
         # or new commit, so the test never writes to the caller's Git metadata.

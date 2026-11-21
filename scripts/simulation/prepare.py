@@ -23,13 +23,13 @@ import pt3b_provider as provider
 
 ROOT = Path(__file__).resolve().parents[2]
 STORE = ROOT / '.dev/workbench/simulation'
-TARGET = 'asic/cli/asic_bundle.exe'
-EVENT_TARGETS = ('asic/verif/workloads/emit_event_response.exe',
-                 'asic/verif/workloads/reference_event_response.exe')
+TARGET = 'asic_support/cli/asic_bundle.exe'
+EVENT_TARGETS = ('asic_support/verif/workloads/emit_event_response.exe',
+                 'asic_support/verif/workloads/reference_event_response.exe')
 SOURCES = ('scripts/simulation/fs2_wire.py', 'scripts/simulation/pt3b_provider.py',
            'scripts/simulation/serial_trace.v', 'scripts/simulation/prepare.py',
            'scripts/simulation/event_adapter.py',
-           'asic/verif/functional/check_functional.py', 'asic/verif/bundle/check_bundle.py',
+           'asic_support/verif/functional/check_functional.py', 'asic_support/verif/bundle/check_bundle.py',
            'verif/system/emitted/p3_loader_tb.v')
 
 
@@ -96,15 +96,15 @@ def prepare(args):
         # The same normal local tool receipt used by env.sh, independently checked.
         tools = module(ROOT / 'scripts/install-tools.py', 'electrum_installed_tools')
         selection, tools_receipt = tools.verify_selection()
-        oracle = module(ROOT / 'asic/verif/functional/check_functional.py', 'pt3b_source_oracle')
-        snapshot_check = module(ROOT / 'asic/verif/bundle/check_bundle.py', 'pt3b_source_bundle')
+        oracle = module(ROOT / 'asic_support/verif/functional/check_functional.py', 'pt3b_source_oracle')
+        snapshot_check = module(ROOT / 'asic_support/verif/bundle/check_bundle.py', 'pt3b_source_bundle')
         env = tools.environment(Path(tools_receipt['switch_prefix']), Path(selection['prefix']))
-        sys.path.insert(0, str(ROOT / 'asic/verif/workloads'))
-        producer = module(ROOT / 'asic/verif/workloads/produce_event_response.py', 'source_event_producer')
+        sys.path.insert(0, str(ROOT / 'asic_support/verif/workloads'))
+        producer = module(ROOT / 'asic_support/verif/workloads/produce_event_response.py', 'source_event_producer')
         event_sources = {str(p.relative_to(ROOT)): provider.read(p, 64 * provider.LIMIT)
                          for p in producer.source_paths()}
         built, output = provider.command(['dune', 'build', '--root', str(ROOT), '-j2', TARGET,
-                                         'asic/cli/project.exe', *EVENT_TARGETS],
+                                         'asic_support/cli/project.exe', *EVENT_TARGETS],
                                         generation, 'build', timeout=1800, env=env)
         provider.require(built['exit_code'] == 0, 'source build failed; inspect retained build logs')
         after = {str(p.relative_to(ROOT)): provider.read(p, 64 * provider.LIMIT)
@@ -129,7 +129,7 @@ def prepare(args):
             'scripts/simulation/pt3b_provider.py': 'pt3b_provider.py',
             'scripts/simulation/event_adapter.py': 'event_adapter.py',
             'scripts/simulation/serial_trace.v': 'serial_trace.v',
-            'asic/verif/functional/check_functional.py': 'pt3b_oracle.py',
+            'asic_support/verif/functional/check_functional.py': 'pt3b_oracle.py',
             'verif/system/emitted/p3_loader_tb.v': 'p3_loader_tb.v',
         }
         for relative, installed in installed_sources.items():
@@ -147,8 +147,8 @@ def prepare(args):
             shutil.copyfile(ROOT / '_build/default' / target, destination)
             destination.chmod(0o555)
         value['event'] = dict(source_directory='source',
-            producer='source/asic/verif/workloads/produce_event_response.py',
-            bench='source/asic/verif/workloads/event_response_tb.v',
+            producer='source/asic_support/verif/workloads/produce_event_response.py',
+            bench='source/asic_support/verif/workloads/event_response_tb.v',
             emitter='bin/emit_event_response.exe', reference='bin/reference_event_response.exe',
             pdk_directory='model-pdk', results_root=str(ROOT / '_flow_results/workbench/event-response'))
         value['event_source_sha256'] = {p: hashlib.sha256(data).hexdigest() for p, data in event_sources.items()}

@@ -96,6 +96,8 @@ class Configuration(unittest.TestCase):
                 self.assertEqual((root / '.workbench/hardcaml-workbench-asic.sexp').read_text(), config)
                 state = json.loads((root / '.dev/workbench/configuration.json').read_text())
                 self.assertEqual(state['physical_toolchain'], metadata)
+                self.assertEqual(state['build_target'], wb.TARGET)
+                self.assertIn('asic_support/cli/project.exe', config)
                 status = wb.readiness(root / 'prefix', state)
                 self.assertTrue(status['physical']['ready'])
                 self.assertTrue(status['physical']['requires_explicit_preflight'])
@@ -134,8 +136,10 @@ class Configuration(unittest.TestCase):
                 path.write_bytes(data)
                 hashes[kind] = wb.sha(data)
             with patch.object(wb, 'ROOT', root):
-                configuration = {'sha256': hashes, 'prefix': str(prefix)}
+                configuration = {'sha256': hashes, 'prefix': str(prefix), 'build_target': wb.TARGET}
                 status = wb.readiness(prefix, configuration)
+                old_gateway = wb.readiness(prefix, dict(configuration, build_target='asic/cli/project.exe'))
+                old_receipt = wb.readiness(prefix, {'sha256': hashes, 'prefix': str(prefix)})
                 owner = root / '_build/default' / OWNERS['electrum']
                 owner.chmod(0o644)
                 not_executable = wb.readiness(prefix, configuration)
@@ -143,6 +147,10 @@ class Configuration(unittest.TestCase):
                 missing = wb.readiness(prefix, configuration)
             self.assertTrue(status['ready'])
             self.assertTrue(status['source_operations']['ready'])
+            for stale in (old_gateway, old_receipt):
+                self.assertTrue(stale['configure_required'])
+                self.assertTrue(stale['source_operations']['selection_matches'])
+                self.assertFalse(stale['source_operations']['target_matches'])
             self.assertFalse(status['source_operations']['requires_pdk'])
             self.assertEqual(status['preparation']['project_root'], str(root))
             self.assertEqual(status['preparation']['configuration_path'],
@@ -170,7 +178,7 @@ class Configuration(unittest.TestCase):
                 path.parent.mkdir(exist_ok=True)
                 path.write_text('known owned companion from prior prefix')
                 hashes[kind] = wb.sha(path.read_bytes())
-            config = dict(prefix=str(root / 'old-prefix'), sha256=hashes,
+            config = dict(prefix=str(root / 'old-prefix'), sha256=hashes, build_target=wb.TARGET,
                           physical_toolchain={'previous': 'validated'}, simulation_configured=True)
             with patch.object(wb, 'ROOT', root), patch.object(wb, 'validate_toolchain') as physical, \
                  patch.object(wb, 'simulation_configuration') as simulation:

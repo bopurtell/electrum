@@ -130,10 +130,10 @@ def main():
                 env.pop(key)
         env.update(TERM='xterm-256color', DUNEJOBS='2', OPAMJOBS='2', MAKEFLAGS='-j2')
         with (output / 'source-build.stdout').open('xb') as out, (output / 'source-build.stderr').open('xb') as err:
-            subprocess.run(['dune', 'build', '-j2', 'asic/cli/project.exe'], cwd=ROOT, env=env,
+            subprocess.run(['dune', 'build', '-j2', 'asic_support/cli/project.exe'], cwd=ROOT, env=env,
                            stdout=out, stderr=err, check=True, timeout=300)
         check = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/check-timing-profile.py'),
-            '--project', str(ROOT / '_build/default/asic/cli/project.exe'), '--source-root', str(ROOT),
+            '--project', str(ROOT / '_build/default/asic_support/cli/project.exe'), '--source-root', str(ROOT),
             '--output-root', str(output / 'source-validation'), '--retained-baseline-config',
             str(ROOT / '_flow_results/workbench/preparation/bundles/fcbd86b040f4be42404dbabc7cb182adb2f41ef42ba9a3a4f2cd4fa07396f43d/src/config.json')],
             cwd=ROOT, env=env, capture_output=True, check=True, timeout=120)
@@ -143,7 +143,7 @@ def main():
         plan_identity = validated['timing_repair']['plan_identity']
         manifest = json.loads((Path(validated['timing_repair']['bundle']) / 'manifest.json').read_text())
         freeze = {str(ROOT / item['path']): item['sha256'] for item in manifest['source_inputs']}
-        for path in (ROOT / '_build/default/asic/cli/project.exe', prefix / 'bin/hardcaml-asic-flow',
+        for path in (ROOT / '_build/default/asic_support/cli/project.exe', prefix / 'bin/hardcaml-asic-flow',
                      prefix / 'bin/hardcaml-workbench-daemon', prefix / 'bin/hardcaml-workbench'):
             freeze[str(path)] = sha(path)
         save(output / 'source-freeze.json', freeze)

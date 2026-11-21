@@ -6,5 +6,5 @@ memory; [`flows/`](flows/) holds `flops` and `stock_sram`, two ways to implement
 that same chip. Neither flow is a hardware variant.
 
 Shared Tiny Tapeout support and the standalone memory and observable test
-wrappers live under [`asic/`](../../asic/). Reusable RTL lives under
+wrappers live under [`asic_support/`](../../asic_support/). Reusable RTL lives under
 [`ip/`](../../ip/).

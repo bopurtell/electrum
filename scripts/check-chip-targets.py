@@ -82,7 +82,7 @@ with tempfile.TemporaryDirectory(prefix='electrum-chips-') as tmp:
         inputs = source_paths(bundle)
         assert f'asics/electrum/flows/flow_{flow}.ml' in inputs
         assert not any(p.startswith('asics/') and not p.startswith('asics/electrum/') for p in inputs)
-        assert not any(p.startswith(('asic/verif/memory/rtl/', 'asic/verif/observable/rtl/'))
+        assert not any(p.startswith(('asic_support/verif/memory/rtl/', 'asic_support/verif/observable/rtl/'))
                        for p in inputs)
 
         legacy = tmp / f'legacy-loader-{flow}'
@@ -101,7 +101,7 @@ with tempfile.TemporaryDirectory(prefix='electrum-chips-') as tmp:
         bundle = read_manifest(legacy)
         assert bundle['top_module'] == top and len(bundle['resources']) == resources
         assert bundle.get('macro_contract') is None
-        assert f'asic/verif/{kind}/rtl/{kind}_design.ml' in source_paths(bundle)
+        assert f'asic_support/verif/{kind}/rtl/{kind}_design.ml' in source_paths(bundle)
         assert (legacy / f'src/{top}.v').is_file() and (legacy / f'simulation/{top}.v').is_file()
 
     rejected = tmp / 'stale'

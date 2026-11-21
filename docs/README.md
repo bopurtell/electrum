@@ -69,7 +69,7 @@ the protocol authority; these structural migrations do not mark P3.6 complete.
   authoritative `Single_port_ram` behavior and backend verification obligations.
 - [Workbench architecture](../../silver/docs/hardcaml_workbench_architecture.md):
   independent projects, optional versioned driver integration, jobs, and artifacts.
-- [Tiny Tapeout integration guide](../asic/tinytapeout/README.md) and
+- [Tiny Tapeout integration guide](../asic_support/tinytapeout/README.md) and
   [historical experiment record format](../archive/legacy/tinytapeout/reports/README.md): current scripts,
   migration to ASIC-generated inputs, and build/execution evidence.
 
