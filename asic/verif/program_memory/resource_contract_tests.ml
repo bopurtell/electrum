@@ -145,8 +145,8 @@ let () =
       Chip_target.elaborate (project requirement "program") ~mode
       |> Or_error.ok_exn
       |> check requirement mode;
-      List.iter Electrum_chip_project.Chip_kind.[ Memory; Loader ] ~f:(fun kind ->
-        Electrum_chip_project.Chip_project.chip_target ~selection:requirement kind
+      List.iter Electrum_chip_project.Bundle_kind.[ Memory; Loader ] ~f:(fun kind ->
+        Electrum_chip_project.Chip_project.bundle_target ~selection:requirement kind
         |> Or_error.bind ~f:(Chip_target.elaborate ~mode)
         |> Or_error.ok_exn
         |> check requirement mode);

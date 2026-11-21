@@ -1,3 +1,0 @@
-(executable
- (name chip)
- (libraries chip_cli electrum_loader_flows))

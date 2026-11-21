@@ -4,8 +4,8 @@
  (deps (source_tree .))
  (action
   (with-stdout-to %{target}
-   (run %{bin:hardcaml-asic-starter} generate-collection asics/memory/flows %{deps}))))
+   (run %{bin:hardcaml-asic-starter} generate-collection asics/electrum/flows %{deps}))))
 
 (library
- (name electrum_memory_flows)
+ (name electrum_flows)
  (libraries core hardcaml_asic electrum_chip_project))

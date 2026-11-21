@@ -1,5 +1,6 @@
 open! Core
 
+(* Legacy bundle selectors, not Silver chip IDs. *)
 type t =
   | Loader
   | Memory
@@ -14,14 +15,8 @@ let id = function
   | Observable -> "observable"
 ;;
 
-let label = function
-  | Loader -> "Electrum serial loader"
-  | Memory -> "Program memory bring-up"
-  | Observable -> "Protocol mechanisms bring-up"
-;;
-
 let of_string id_to_find =
   match List.find all ~f:(fun kind -> String.equal (id kind) id_to_find) with
   | Some kind -> Ok kind
-  | None -> Or_error.error_string ("Unknown chip: " ^ id_to_find)
+  | None -> Or_error.error_string ("Unknown bundle kind: " ^ id_to_find)
 ;;

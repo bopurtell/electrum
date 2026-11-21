@@ -2,7 +2,6 @@
 module U = Unix
 open! Core
 open Hardcaml_asic
-open Electrum_chip_project
 
 let usage =
   "chip list [--json] | flow list|describe|plan|emit|run | \
@@ -45,18 +44,20 @@ let check_provider path =
 ;;
 
 type owner =
-  { kind : Chip_kind.t
+  { id : string
+  ; label : string
   ; catalog : unit -> Flow.Catalog.t Or_error.t
   ; source_inputs : string list
   ; target : flow:string -> profile:string -> Chip_target.t Or_error.t
   }
 
-let owner kind ~create ~source_inputs ~target =
-  let home = "asics/" ^ Chip_kind.id kind in
-  { kind
-  ; catalog = (fun () -> create ~default_flow:"flops" ~default_profile:"balanced")
-  ; source_inputs = (home ^ "/cli/dune") :: (home ^ "/cli/chip.ml") :: source_inputs
-  ; target
+let electrum =
+  let module Flows = Electrum_flows.Generated in
+  { id = "electrum"
+  ; label = "Electrum"
+  ; catalog = (fun () -> Flows.create ~default_flow:"flops" ~default_profile:"balanced")
+  ; source_inputs = "asics/electrum/cli/dune" :: "asics/electrum/cli/chip.ml" :: Flows.source_inputs
+  ; target = Electrum_flows.Target.create
   }
 ;;
 
@@ -142,9 +143,8 @@ let main ~select_owner named command args =
    | _ -> ());
   let print value = printf "%s\n%!" (if !json then Yojson.Safe.to_string value else Yojson.Safe.pretty_to_string value) in
   let owner = select_owner ?root:(Option.first_some !root !source) !chip in
-  let kind = owner.kind in
   Option.iter !variant ~f:(fun id ->
-    if not (String.equal id "default") then bad ("Unknown variant for " ^ Chip_kind.id kind ^ ": " ^ id));
+    if not (String.equal id "default") then bad ("Unknown variant for " ^ owner.id ^ ": " ^ id));
   let catalog = owner.catalog () |> ok in
   if named && String.equal command "list" then print (Flow_spec.list_to_yojson catalog)
   else if named && String.equal command "describe" then (
@@ -254,9 +254,9 @@ let run ~listing ~select_owner =
 ;;
 
 let run_owner owner =
-  let id = Chip_kind.id owner.kind in
+  let id = owner.id in
   run
-    ~listing:(fun () -> display_listing ~default:id [ id, Chip_kind.label owner.kind ])
+    ~listing:(fun () -> display_listing ~default:id [ id, owner.label ])
     ~select_owner:(fun ?root:_ chip ->
       Option.iter chip ~f:(fun requested ->
         if not (String.equal requested id)

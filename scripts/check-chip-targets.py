@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Exercise the actual Silver gateway and each registered chip executable without EDA."""
+"""Exercise the Electrum Silver gateway, owner CLI, and legacy bundles without EDA."""
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 
-root, gateway, bundle_cli, registry_cli, *executables = map(
+root, gateway, bundle_cli, registry_cli, owner = map(
     lambda arg: Path(arg).resolve(), sys.argv[1:])
 
 
@@ -24,86 +24,103 @@ def query(exe, *args, **kwargs):
     return json.loads(command(exe, *args, '--json', **kwargs))
 
 
+def read_manifest(directory):
+    return json.loads((directory / 'manifest.json').read_text())
+
+
+def source_paths(bundle):
+    return {item['path'] for item in bundle['source_inputs']}
+
+
 manifest = json.loads((root / 'hardcaml-asic-targets.json').read_text())
-lookup = dict(zip(('loader', 'memory', 'observable'), executables, strict=True))
-expected = {
-    'loader': ('stock_sram', 'electrum_loader', 1),
-    'memory': ('stock_sram_synthesis', 'electrum_memory', 1),
-    'observable': (None, 'electrum_observable', 0),
-}
+assert manifest['default_target'] == 'electrum'
+assert manifest['targets'] == [{'id': 'electrum', 'executable': 'asics/electrum/cli/chip.exe'}]
 
 assert json.loads(command(registry_cli, 'list')) == manifest
 listing = query(gateway, 'chip', 'list', cwd=root / 'ip')
-assert listing['default_chip'] == manifest['default_target'] == 'loader'
-assert {chip['id'] for chip in listing['chips']} == {t['id'] for t in manifest['targets']}
-assert query(gateway, 'flow', 'list') == query(lookup['loader'], 'flow', 'list')
+assert listing['default_chip'] == 'electrum'
+assert [chip['id'] for chip in listing['chips']] == ['electrum']
+assert listing == query(owner, 'chip', 'list')
+
+route = ('--chip', 'electrum', '--variant', 'default')
+flows = query(gateway, 'flow', 'list')
+assert flows == query(gateway, 'flow', 'list', *route) == query(owner, 'flow', 'list', *route)
+entries = {e['methodology']['id']: e for e in flows['declaration']['entries']}
+assert {'flops', 'stock_sram'} <= entries.keys()
+assert 'balanced' in {p['id'] for p in entries['flops']['profiles']}
+assert {'balanced', 'timing_repair'} <= {p['id'] for p in entries['stock_sram']['profiles']}
+assert entries['stock_sram']['default_profile'] == 'balanced'
+command(gateway, 'flow', 'describe', *route, '--flow', 'stock_sram_synthesis',
+        rejects='Unknown flow ID')
+for legacy_kind in ('loader', 'memory', 'observable'):
+    command(gateway, 'flow', 'list', '--chip', legacy_kind, rejects='Unknown chip target')
+    command(owner, 'flow', 'list', '--chip', legacy_kind, rejects='not owned')
+command(gateway, 'flow', 'list', '--chip', 'missing', rejects='Unknown chip target')
+command(gateway, 'flow', 'list', '--chip', 'electrum', '--variant', 'missing',
+        rejects='Unknown variant')
 
 with tempfile.TemporaryDirectory(prefix='electrum-chips-') as tmp:
     tmp = Path(tmp)
     plans = {}
-    for chip, (exact_flow, design, resources) in expected.items():
-        owner = lookup[chip]
-        route = ('--chip', chip, '--variant', 'default')
-        local = query(owner, 'chip', 'list')
-        assert local['default_chip'] == chip
-        assert [item['id'] for item in local['chips']] == [chip]
-        flows = query(gateway, 'flow', 'list', *route)
-        assert flows == query(owner, 'flow', 'list', *route)
-        entries = {e['methodology']['id']: e for e in flows['declaration']['entries']}
-        assert 'flops' in entries
-        for other_flow in {'stock_sram', 'stock_sram_synthesis'} - {exact_flow}:
-            assert other_flow not in entries
-            command(gateway, 'flow', 'describe', *route, '--flow', other_flow,
-                    rejects='Unknown flow ID')
-        request = ('--endpoint', 'synthesis', '--source-root', root)
+    for flow, selection in (('flops', 'flops'), ('stock_sram', 'exact')):
+        request = ('--flow', flow, '--endpoint', 'synthesis', '--source-root', root)
         plan = query(gateway, 'flow', 'plan', *route, *request)
-        plans[chip] = plan['plan_identity']
+        plans[flow] = plan['plan_identity']
         assert plan == query(owner, 'flow', 'plan', *request)
-        assert plan['project_name'] == design
-        emitted = query(gateway, 'flow', 'emit', *route, *request, '--results-root', tmp / chip,
-                        '--expected-plan-identity', plans[chip])
-        assert emitted['plan_identity'] == plans[chip]
+        assert plan['project_name'] == 'electrum_loader'
+        emitted = query(gateway, 'flow', 'emit', *route, *request, '--results-root', tmp / flow,
+                        '--expected-plan-identity', plans[flow])
+        assert emitted['plan_identity'] == plans[flow]
         path = Path(emitted['output_dir'])
-        bundle = json.loads((path / 'manifest.json').read_text())
-        assert len(bundle['resources']) == resources and bundle.get('macro_contract') is None
-        inputs = {item['path'] for item in bundle['source_inputs']}
-        assert f'asics/{chip}/flows/flow_flops.ml' in inputs
-        assert not any(p.startswith('asics/') and not p.startswith(f'asics/{chip}/') for p in inputs)
-        legacy = tmp / f'legacy-{chip}'
-        command(bundle_cli, chip, legacy, root)
-        for relative in ('constraints/top.sdc', f'src/{bundle["top_module"]}.v',
-                         f'simulation/{bundle["top_module"]}.v'):
+        bundle = read_manifest(path)
+        assert bundle['top_module'] == 'tt_um_leemperor_electrum_loader'
+        assert len(bundle['resources']) == 1
+        if selection == 'exact':
+            assert bundle['macro_contract']['schema_version'] == 2
+        else:
+            assert bundle.get('macro_contract') is None
+        inputs = source_paths(bundle)
+        assert f'asics/electrum/flows/flow_{flow}.ml' in inputs
+        assert not any(p.startswith('asics/') and not p.startswith('asics/electrum/') for p in inputs)
+        assert not any(p.startswith(('asic/verif/memory/rtl/', 'asic/verif/observable/rtl/'))
+                       for p in inputs)
+
+        legacy = tmp / f'legacy-loader-{flow}'
+        command(bundle_cli, '--selection', selection, '--operation', 'hardening', 'loader', legacy, root)
+        old_route = read_manifest(legacy)
+        for field in ('top_module', 'hardware_variant', 'resource_snapshot', 'simulation_resources',
+                      'synthesis_sources', 'simulation_sources', 'macro_contract'):
+            assert bundle.get(field) == old_route.get(field), field
+        for relative in ('constraints/top.sdc', *bundle['synthesis_sources'], *bundle['simulation_sources']):
             assert (path / relative).read_bytes() == (legacy / relative).read_bytes(), relative
-        if exact_flow:
-            exact = query(gateway, 'flow', 'plan', *route, '--flow', exact_flow, *request)
-            macro = json.loads(exact['bundle_manifest'])['macro_contract']
-            assert macro['schema_version'] == (2 if chip == 'loader' else 1)
-    assert len(set(plans.values())) == len(expected)
+
+    for kind, top, resources in (('memory', 'tt_um_leemperor_electrum_memory', 1),
+                                 ('observable', 'tt_um_leemperor_electrum', 0)):
+        legacy = tmp / f'legacy-{kind}'
+        command(bundle_cli, kind, legacy, root)
+        bundle = read_manifest(legacy)
+        assert bundle['top_module'] == top and len(bundle['resources']) == resources
+        assert bundle.get('macro_contract') is None
+        assert f'asic/verif/{kind}/rtl/{kind}_design.ml' in source_paths(bundle)
+        assert (legacy / f'src/{top}.v').is_file() and (legacy / f'simulation/{top}.v').is_file()
+
     rejected = tmp / 'stale'
-    command(gateway, 'flow', 'emit', '--chip', 'memory', '--endpoint', 'synthesis',
-            '--results-root', rejected, '--expected-plan-identity', plans['loader'],
+    command(gateway, 'flow', 'emit', *route, '--flow', 'flops', '--endpoint', 'synthesis',
+            '--results-root', rejected, '--expected-plan-identity', plans['stock_sram'],
             rejects='identity')
     assert not rejected.exists()
-    command(gateway, 'flow', 'list', '--chip', 'missing', rejects='missing')
-    command(gateway, 'flow', 'list', '--chip', 'memory', '--variant', 'missing',
-            rejects='Unknown variant')
-    command(lookup['memory'], 'flow', 'list', '--chip', 'loader', rejects='not owned')
-    command(gateway, 'flow', 'plan', '--chip', 'memory', '--flow', 'stock_sram_synthesis',
-            '--endpoint', 'floorplan', rejects='floorplan')
-    typed = ('--chip', 'observable', '--flow', 'flops', '--endpoint', 'synthesis',
-             '--set', 'SYNTH_ABC_BUFFERING=false')
+    typed = (*route, '--flow', 'flops', '--endpoint', 'synthesis', '--set', 'SYNTH_ABC_BUFFERING=false')
     planned = query(gateway, 'flow', 'plan', *typed)
-    assert planned['plan_identity'] != plans['observable']
+    assert planned['plan_identity'] != plans['flops']
     assert query(gateway, 'flow', 'emit', *typed, '--results-root', tmp / 'typed',
                  '--expected-plan-identity', planned['plan_identity'])['plan'] == planned
-    preparation = command(gateway, 'prepare', '--chip', 'memory', '--variant', 'default',
-                          '--flow', 'stock_sram_synthesis', '--results-root', tmp / 'prepare',
-                          '--json')
+    preparation = command(gateway, 'prepare', *route, '--flow', 'stock_sram',
+                          '--results-root', tmp / 'prepare', '--json')
     terminal = json.loads(preparation.splitlines()[-1])
     assert terminal['event'] == 'terminal' and terminal['record']['status'] == 'completed'
     assert terminal['record']['request'] == {
-        'project': 'electrum_memory', 'flow': 'stock_sram_synthesis',
+        'project': 'electrum_loader', 'flow': 'stock_sram',
         'variant': 'default', 'source_root': str(root),
     }
 
-print('Electrum chip registration, scoped flows, plan/emit and legacy RTL parity passed')
+print('Electrum-only registration, named-flow plan/emit, legacy bundles, and CLI-route RTL parity passed')

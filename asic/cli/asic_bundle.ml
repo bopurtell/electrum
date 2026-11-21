@@ -22,7 +22,7 @@ let check_conflicts ~selection ?operation kind =
         { key; value = `Int 1; reason = "negative integration check" }
       in
       let result =
-        Chip_project.chip_target
+        Chip_project.bundle_target
           ~selection
           ~operation
           ~overrides:(Chip_project.default_overrides ~selection ~operation @ [ conflicting ])
@@ -39,7 +39,7 @@ let check_conflicts ~selection ?operation kind =
 ;;
 
 let emit ~selection ?operation kind output_dir source_root =
-  let target = Chip_project.chip_target ~selection ?operation kind |> Or_error.ok_exn in
+  let target = Chip_project.bundle_target ~selection ?operation kind |> Or_error.ok_exn in
   let bundle =
     Chip_target.emit_bundle target ~source_root ~output_dir |> Or_error.ok_exn
   in
@@ -92,11 +92,11 @@ let main () =
     (match positional with
      | [ "--check-conflicts" ] -> check_conflicts ~selection ?operation Observable
      | [ "--check-conflicts"; kind ] ->
-       check_conflicts ~selection ?operation (Chip_kind.of_string kind |> Or_error.ok_exn)
+       check_conflicts ~selection ?operation (Bundle_kind.of_string kind |> Or_error.ok_exn)
      | [ output_dir; source_root ] ->
        emit ~selection ?operation Observable output_dir source_root
      | [ kind; output_dir; source_root ] ->
-       emit ~selection ?operation (Chip_kind.of_string kind |> Or_error.ok_exn) output_dir source_root
+       emit ~selection ?operation (Bundle_kind.of_string kind |> Or_error.ok_exn) output_dir source_root
      | _ -> failwith usage)
 ;;
 

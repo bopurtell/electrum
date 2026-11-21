@@ -97,7 +97,7 @@ differs from the current OCaml owner.
 | `Primitive_dispatch` | `ip/emulator_core/rtl/primitive_dispatch.ml` | Execution-command dispatch and mechanism composition |
 | `Emulator_core` | `ip/emulator_core/rtl/emulator_core.ml` | Controller + execution + mechanisms |
 | Mechanisms | `ip/mechanisms/rtl/` and `staging/` | Existing leaf blocks and experimental compositions |
-| `Package_top` | `asics/loader/rtl/package_top.ml` | Target-specific system/resource/pin/reset composition |
+| `Package_top` | `asics/electrum/rtl/package_top.ml` | Target-specific system/resource/pin/reset composition |
 | `Program_memory` | `asic/rtl/program_memory.ml` | Chip-owned storage binding, currently explicit Flops |
 | `Chip_project` | `asic/project/chip_project.ml` | Pinout, project declaration and source inventories |
 | `Host_link_protocol` / `Codec` | `ip/host_link/protocol/` | Pure protocol vocabulary/layouts versus software byte conversion |

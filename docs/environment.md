@@ -139,7 +139,7 @@ the previously active environment from `PATH` instead of stacking environments.
 
 ## Ownership and storage
 
-- Chip wrappers and named flow declarations live in `asics/<chip>/`; shared
+- The product chip wrapper and named flows live in `asics/electrum/`; shared
   ASIC inputs live in `asic/rtl/` and `asic/project/`. The bundle CLI is
   `asic/cli/asic_bundle.ml`. Target locks/helpers are in `asic/tinytapeout/`.
 - Provisioned tools/runtime live under ignored `_flow_tools/`; design execution

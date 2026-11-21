@@ -188,9 +188,9 @@ def check_bundle(root, bundle, kind, selection="flops", operation=None):
         "asic/project/dune", "asic/project/chip_project.ml", "asic/rtl/dune",
     } <= source_paths
     package_sources = {
-        "observable": {"asics/observable/rtl/observable_design.ml"},
-        "memory": {"asics/memory/rtl/memory_design.ml", "asic/rtl/program_memory.ml"},
-        "loader": {"asics/loader/rtl/package_top.ml", "asic/rtl/program_memory.ml"},
+        "observable": {"asic/verif/observable/rtl/observable_design.ml"},
+        "memory": {"asic/verif/memory/rtl/memory_design.ml", "asic/rtl/program_memory.ml"},
+        "loader": {"asics/electrum/rtl/package_top.ml", "asic/rtl/program_memory.ml"},
     }
     assert package_sources[kind] <= source_paths
     if kind == "observable":

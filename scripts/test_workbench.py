@@ -10,12 +10,12 @@ wb = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(wb)
 
 
-OWNERS = {chip: f'asics/{chip}/cli/chip.exe' for chip in ('loader', 'memory', 'observable')}
+OWNERS = {'electrum': 'asics/electrum/cli/chip.exe'}
 BUILD = ['dune', 'build', '-j10', *('./' + t for t in (wb.TARGET, *OWNERS.values()))]
 
 
 def catalog_fixture(root):
-    catalog = dict(schema_version=1, default_target='loader',
+    catalog = dict(schema_version=1, default_target='electrum',
                    targets=[dict(id=chip, executable=target) for chip, target in OWNERS.items()])
     (root / wb.CHIP_CATALOG).write_text(json.dumps(catalog))
     return catalog
@@ -33,7 +33,7 @@ class Configuration(unittest.TestCase):
     def test_resource_prepare_routes_chip_and_deferred_flow_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            argv = ['workbench.py', 'resource-prepare', '--chip', 'memory', '--flow', 'trial']
+            argv = ['workbench.py', 'resource-prepare', '--chip', 'electrum', '--flow', 'trial']
             with patch.object(wb, 'ROOT', root), \
                  patch.object(wb, 'selected', return_value=({}, root / 'prefix')), \
                  patch.object(wb.sys, 'argv', argv), patch.object(wb.subprocess, 'run') as run:
@@ -62,15 +62,15 @@ class Configuration(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             catalog = catalog_fixture(root)
-            catalog['targets'][1]['executable'] = '../foreign.exe'
+            catalog['targets'][0]['executable'] = '../foreign.exe'
             (root / wb.CHIP_CATALOG).write_text(json.dumps(catalog))
             with patch.object(wb, 'ROOT', root), patch.object(wb.subprocess, 'run') as run:
-                with self.assertRaisesRegex(ValueError, r'hardcaml-asic-targets\.json: .*memory'):
+                with self.assertRaisesRegex(ValueError, r'hardcaml-asic-targets\.json: .*electrum'):
                     wb.build()
                 run.assert_not_called()
                 source = wb.readiness(root / 'prefix', None)['source_operations']
                 self.assertFalse(source['ready'])
-                self.assertIn('memory', source['chip_catalog']['diagnostic'])
+                self.assertIn('electrum', source['chip_catalog']['diagnostic'])
 
     def test_explicit_toolchain_metadata_selects_venv_and_survives_later_configure(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -136,8 +136,10 @@ class Configuration(unittest.TestCase):
             with patch.object(wb, 'ROOT', root):
                 configuration = {'sha256': hashes, 'prefix': str(prefix)}
                 status = wb.readiness(prefix, configuration)
-                (root / '_build/default' / OWNERS['memory']).unlink()
-                (root / '_build/default' / OWNERS['observable']).chmod(0o644)
+                owner = root / '_build/default' / OWNERS['electrum']
+                owner.chmod(0o644)
+                not_executable = wb.readiness(prefix, configuration)
+                owner.unlink()
                 missing = wb.readiness(prefix, configuration)
             self.assertTrue(status['ready'])
             self.assertTrue(status['source_operations']['ready'])
@@ -148,13 +150,14 @@ class Configuration(unittest.TestCase):
             self.assertFalse(status['physical']['ready'])
             self.assertEqual(status['physical']['status'], 'missing_collateral')
             self.assertFalse(missing['ready'])
+            self.assertFalse(not_executable['ready'])
             self.assertFalse(missing['configure_required'])
             self.assertEqual(missing['status'], 'not_ready')
             chips = missing['source_operations']['chip_catalog']
             self.assertFalse(chips['ready'])
-            self.assertEqual(chips['default_target'], 'loader')
+            self.assertEqual(chips['default_target'], 'electrum')
             self.assertEqual({t['id']: t['ready'] for t in chips['targets']},
-                             dict(loader=True, memory=False, observable=False))
+                             dict(electrum=False))
 
     def test_status_requires_configure_after_selected_prefix_changes(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -15,6 +15,6 @@ let create ~flow ~profile =
           } ])
       else None
     in
-    Chip_project.chip_target ?overrides ~selection ~operation Loader
-  | _ -> Chip_project.chip_target Loader
+    Chip_project.electrum ?overrides ~selection ~operation ()
+  | _ -> Chip_project.electrum ()
 ;;

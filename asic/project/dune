@@ -1,6 +1,7 @@
 (library
  (name electrum_chip_project)
- (libraries core hardcaml hardcaml_asic electrum_loader_rtl electrum_memory_rtl electrum_observable_rtl)
+ (libraries core hardcaml hardcaml_asic electrum_chip_rtl
+  electrum_memory_fixture_rtl electrum_observable_fixture_rtl)
  (preprocess
   (pps ppx_hardcaml ppx_jane))
  (lint

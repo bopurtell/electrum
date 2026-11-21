@@ -37,8 +37,8 @@ def exercise(project, endpoint):
         assert value[0] == 'Ok', value
         return dict(value[1])
 
-    def flows(snapshot):
-        assert dict(snapshot['catalog_default'][0]) == {'flow': 'flops', 'profile': 'balanced'}
+    def flows(snapshot, default='flops'):
+        assert dict(snapshot['catalog_default'][0]) == {'flow': default, 'profile': 'balanced'}
         return {dict(flow)['id']: dict(flow) for flow in snapshot['flows']}
 
     def select(chip):
@@ -49,31 +49,32 @@ def exercise(project, endpoint):
 
     build()
     discovered = api('Discover')
-    assert {dict(chip)['id'] for chip in discovered['chips']} == {'loader', 'memory', 'observable'}
-    assert dict(discovered['chip_target'][0]) == {'chip': 'loader', 'variant': 'default'}
-    assert set(flows(discovered)) == {'flops', 'stock_sram'}
-    assert set(flows(select('memory'))) == {'flops', 'stock_sram_synthesis'}
-    assert set(flows(select('observable'))) == {'flops'}
+    assert [dict(chip)['id'] for chip in discovered['chips']] == ['electrum']
+    assert dict(discovered['chip_target'][0]) == {'chip': 'electrum', 'variant': 'default'}
+    baseline_flows = flows(discovered)
+    assert set(baseline_flows) == {'flops', 'stock_sram'}
+    assert set(baseline_flows['stock_sram']['profiles']) == {'balanced', 'timing_repair'}
 
-    authored = project / 'asics/memory/flows/flow_trial.ml'
-    new_flow = ('new-flow', 'trial', '--chip', 'memory', '--endpoint-stage', 'synthesis')
+    authored_path = 'asics/electrum/flows/flow_trial.ml'
+    authored = project / authored_path
+    new_flow = ('new-flow', 'trial', '--chip', 'electrum', '--endpoint-stage', 'synthesis')
     author(*new_flow)
     assert not authored.exists(), 'preview wrote source'
     author(*new_flow, '--apply')
     assert authored.is_file()
-    author('duplicate-profile', 'buffered', '--chip', 'memory', '--flow', 'flops',
+    author('duplicate-profile', 'buffered', '--chip', 'electrum', '--flow', 'flops',
            '--from', 'balanced', '--set', 'SYNTH_ABC_BUFFERING=true', '--apply')
     build()
-    memory = flows(select('memory'))
-    assert set(memory) == {'flops', 'stock_sram_synthesis', 'trial'}
-    assert set(memory['flops']['profiles']) == {'balanced', 'buffered'}
-    assert set(flows(select('loader'))) == {'flops', 'stock_sram'}
-    memory_plan_args = ('flow', 'plan', '--chip', 'memory', '--flow', 'trial',
-                        '--endpoint', 'synthesis', '--json')
-    memory_plan = json.loads(run(gateway, *memory_plan_args, cwd=project))
-    assert memory_plan['project_name'] == 'electrum_memory'
-    assert 'asics/memory/flows/flow_trial.ml' in memory_plan['bundle_manifest']
-    buffered = json.loads(run(gateway, 'flow', 'plan', '--chip', 'memory', '--flow', 'flops',
+    electrum_flows = flows(select('electrum'))
+    assert set(electrum_flows) == {'flops', 'stock_sram', 'trial'}
+    assert set(electrum_flows['flops']['profiles']) == {'balanced', 'buffered'}
+    assert electrum_flows['stock_sram'] == baseline_flows['stock_sram']
+    electrum_plan_args = ('flow', 'plan', '--chip', 'electrum', '--flow', 'trial',
+                          '--endpoint', 'synthesis', '--json')
+    electrum_plan = json.loads(run(gateway, *electrum_plan_args, cwd=project))
+    assert electrum_plan['project_name'] == 'electrum_loader'
+    assert authored_path in electrum_plan['bundle_manifest']
+    buffered = json.loads(run(gateway, 'flow', 'plan', '--chip', 'electrum', '--flow', 'flops',
                               '--profile', 'buffered', '--endpoint', 'synthesis', '--json',
                               cwd=project))
     assert json.loads(buffered['configuration_bytes'])['SYNTH_ABC_BUFFERING'] is True
@@ -83,34 +84,38 @@ def exercise(project, endpoint):
            '--apply')
     build()
     refreshed = api('Discover')
-    assert 'added' in {dict(chip)['id'] for chip in refreshed['chips']}
-    assert {dict(flow)['id'] for flow in select('added')['flows']} == {'standard'}
+    assert {dict(chip)['id'] for chip in refreshed['chips']} == {'electrum', 'added'}
+    assert set(flows(select('added'), default='standard')) == {'standard'}
+    assert flows(select('electrum')) == electrum_flows
     plan = json.loads(run(gateway, 'flow', 'plan', '--chip', 'added', '--flow', 'standard',
                           '--endpoint', 'synthesis', '--json', cwd=project))
     assert plan['project_name'] == 'added'
+    assert authored_path not in plan['bundle_manifest']
     manifest_path = project / 'hardcaml-asic-targets.json'
     manifest = json.loads(manifest_path.read_text())
     manifest['default_target'] = 'added'
     manifest_path.write_text(json.dumps(manifest))
     implicit = run(gateway, 'flow', 'list', '--json', cwd=project)
     assert implicit == run(gateway, 'flow', 'list', '--chip', 'added', '--json', cwd=project)
-    assert json.loads(run(gateway, *memory_plan_args, cwd=project)) == memory_plan
+    assert json.loads(run(gateway, *electrum_plan_args, cwd=project)) == electrum_plan
     assert not (project / '_flow_results').exists(), 'discovery/preview published results'
 
-    select('memory')
+    select('electrum')
     selection = [['flow', 'trial'], ['profile', 'balanced'], ['endpoint', 'synthesis'],
-                 ['assignments', []], ['chip_target', [[['chip', 'memory'], ['variant', 'default']]]]]
+                 ['assignments', []], ['chip_target', [[['chip', 'electrum'], ['variant', 'default']]]]]
     staged = api(sexp(['Stage_fresh', ['selection', selection], ['elaboration_only', 'true'],
                        ['expected_plan_identity', []]]))
     intent = dict(staged['fresh_intent'][0])
-    launched = api(sexp(['Launch_fresh', ['key', 'electrum-memory-source-only'],
+    launched = api(sexp(['Launch_fresh', ['key', 'electrum-source-only'],
                          ['intent_id', intent['id']]]))
     workflow, = (dict(w) for w in launched['workflows']
-                 if dict(w)['key'] == 'electrum-memory-source-only')
+                 if dict(w)['key'] == 'electrum-source-only')
     assert workflow['phase'] == 'Completed' and workflow['run'] == [], workflow
     prepared = dict(workflow['prepared'][0])
     bundle = json.loads((Path(prepared['bundle_directory']) / 'manifest.json').read_text())
-    assert bundle['project'] == 'electrum_memory'
+    assert bundle['project'] == electrum_plan['project_name']
+    assert bundle['top_module'] == 'tt_um_leemperor_electrum_loader'
+    assert authored_path in {item['path'] for item in bundle['source_inputs']}
 
 
 def main():

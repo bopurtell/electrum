@@ -34,6 +34,8 @@
   (source_tree ../asic/cli)
   (source_tree ../asic/project)
   (source_tree ../asic/rtl)
+  (source_tree ../asic/verif/memory/rtl)
+  (source_tree ../asic/verif/observable/rtl)
   (source_tree ../spec/isa)
   (source_tree ../ip/host_link/protocol)
   (source_tree ../ip/mechanisms/rtl)
@@ -47,9 +49,7 @@
     %{exe:../asic/cli/project.exe}
     %{exe:../asic/cli/asic_bundle.exe}
     %{bin:hardcaml-asic-targets}
-    %{exe:../asics/loader/cli/chip.exe}
-    %{exe:../asics/memory/cli/chip.exe}
-    %{exe:../asics/observable/cli/chip.exe})
+    %{exe:../asics/electrum/cli/chip.exe})
    (run python3 -B %{dep:check-project-cli.py}
     %{exe:../asic/cli/project.exe} %{workspace_root})
    (run python3 -B %{dep:check-timing-profile.py}

@@ -1,9 +1,7 @@
 {
   "schema_version": 1,
-  "default_target": "loader",
+  "default_target": "electrum",
   "targets": [
-    { "id": "loader", "executable": "asics/loader/cli/chip.exe" },
-    { "id": "memory", "executable": "asics/memory/cli/chip.exe" },
-    { "id": "observable", "executable": "asics/observable/cli/chip.exe" }
+    { "id": "electrum", "executable": "asics/electrum/cli/chip.exe" }
   ]
 }

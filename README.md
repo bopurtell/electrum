@@ -26,8 +26,8 @@ verification; `hardcaml_asic` supplies resource/backend tooling.
 | `ip/emulator_core/` | Execution, primitive dispatch, core composition and control-port agent |
 | `ip/host_link/` | Serial endpoint, block verification, serial agent and endpoint environment |
 | `ip/electrum_system/` | Reusable `Electrum_top` system composition with external RAM interface |
-| `asics/{loader,memory,observable}/` | Chip-local package tops, flow collections and owner CLIs |
-| `asic/` | Shared Tiny Tapeout declarations, RAM binding, Silver gateway, and integration verification |
+| `asics/electrum/` | The full Electrum chip: package top, flow collection and chip CLI |
+| `asic/` | Shared Tiny Tapeout infrastructure and legacy entry points; `asic/verif/` holds non-product wrappers and tests |
 | `verif/` | Shared plumbing, independent reference model, system peers and regression sweeps |
 | `spec/isa/`, `ip/host_link/protocol/` | Pure shared specifications; host-link byte operations live under `Codec` |
 | `firmware/examples/` | Actual chosen-ISA example programs |
@@ -89,30 +89,34 @@ bash scripts/workbench.sh client
 Omit `--source-only` to retain and revalidate a previously configured physical
 toolchain, or use `--toolchain-root` to select one explicitly.
 
-Silver treats the root `dune-project` as one project. `hardcaml_asic` elaborates
-the separately registered chips in [`hardcaml-asic-targets.json`](hardcaml-asic-targets.json):
+Silver treats the root `dune-project` as one project.
+[`hardcaml-asic-targets.json`](hardcaml-asic-targets.json) registers one product
+chip, `electrum`: the serial loader, emulator core, and program memory in one
+Tiny Tapeout wrapper. It has one `default` hardware variant. `flops` and
+`stock_sram` (through `timing`) are flows for implementing the same chip; the
+default is `flops/balanced`.
 
-| Chip | Flows |
-| --- | --- |
-| `loader` (default) | `flops`; `stock_sram` through `timing` |
-| `memory` | `flops`; `stock_sram_synthesis` at `synthesis` only |
-| `observable` | `flops`; no registered program RAM |
+The memory and observable wrappers are verification fixtures under
+[`asic/verif/`](asic/verif/), not chips in Silver or whole-chip variants.
+The legacy bundle selectors `loader`, `memory`, and `observable` still work;
+`loader` emits the full Electrum package and retains its existing RTL names.
+If Silver has a saved selection from the earlier three-target layout, select
+`electrum / default`; old run records keep their original identities.
 
-Use **`--chip` to select hardware**, **`--flow` to select its methodology**, and
-**`--profile` to select settings for that flow**. All three chips default to
-`flops/balanced` and expose a single `default` hardware variant. For example:
+Use **`--flow`** to choose an implementation flow and **`--profile`** to
+choose its settings. `--chip electrum` is optional:
 
 ```sh
 bash scripts/project.sh chip list --json
-bash scripts/project.sh flow plan --chip memory --flow stock_sram_synthesis \
+bash scripts/project.sh flow plan --chip electrum --flow stock_sram \
   --endpoint synthesis --json
 ```
 
-Silver can add flow files or duplicate typed profile settings in a chip's
-`flows/` collection. Rebuild with `bash scripts/workbench.sh build` to pick up
+Silver can add flow files or duplicate typed profile settings in
+`asics/electrum/flows/`. Rebuild with `bash scripts/workbench.sh build` to pick up
 new declarations; adding a flow does not change the default. New named flows
 use the chip's flop baseline unless you bind a different resource policy in
-its `flows/target.ml`. Loader's existing `stock_sram/timing_repair` is an
+`asics/electrum/flows/target.ml`. The existing `stock_sram/timing_repair` is an
 explicit chip-owned override, not a typed setting inherited by profile
 duplicates. It changes only post-global-route timing repair. **Electrum still
 misses 48 MHz slow-corner setup**; this migration does not qualify physical timing.
