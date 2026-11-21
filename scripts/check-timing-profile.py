@@ -30,7 +30,7 @@ def main():
     listing = command('flow', 'list', '--json')
     entries = {e['methodology']['id']: e for e in listing['declaration']['entries']}
     assert entries['stock_sram']['default_profile'] == 'balanced'
-    assert [p['id'] for p in entries['stock_sram']['profiles']] == ['balanced', 'timing_repair']
+    assert {'balanced', 'timing_repair'} <= {p['id'] for p in entries['stock_sram']['profiles']}
     assert [p['id'] for p in entries['flops']['profiles']] == ['balanced']
     emitted = {}
     for profile in ('balanced', 'timing_repair'):

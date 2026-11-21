@@ -19,13 +19,38 @@
  (action (run python3 -B %{dep:test_workbench.py})))
 
 (rule
- (alias project-cli)
- (deps check-project-cli.py)
- (action (run python3 -B %{dep:check-project-cli.py}
-    %{exe:../asic/cli/project.exe} %{workspace_root})))
-
-(rule
- (alias timing-profile)
- (deps check-timing-profile.py)
- (action (run python3 -B %{dep:check-timing-profile.py}
-   --project %{exe:../asic/cli/project.exe} --source-root %{workspace_root})))
+ (aliases runtest chip-targets project-cli timing-profile)
+ (deps
+  check-chip-targets.py
+  check-project-cli.py
+  check-timing-profile.py
+  ../dune-project
+  ../electrum.opam
+  ../tools-source.lock.json
+  ../hardcaml-asic-targets.json
+  ../asic/tinytapeout/asic-dependencies.lock
+  ../asic/tinytapeout/toolchain.lock
+  (source_tree ../asics)
+  (source_tree ../asic/cli)
+  (source_tree ../asic/project)
+  (source_tree ../asic/rtl)
+  (source_tree ../spec/isa)
+  (source_tree ../ip/host_link/protocol)
+  (source_tree ../ip/mechanisms/rtl)
+  (source_tree ../ip/program_memory_controller/rtl)
+  (source_tree ../ip/emulator_core/rtl)
+  (source_tree ../ip/host_link/rtl)
+  (source_tree ../ip/electrum_system/rtl))
+ (action
+  (progn
+   (run python3 -B %{dep:check-chip-targets.py} %{workspace_root}
+    %{exe:../asic/cli/project.exe}
+    %{exe:../asic/cli/asic_bundle.exe}
+    %{bin:hardcaml-asic-targets}
+    %{exe:../asics/loader/cli/chip.exe}
+    %{exe:../asics/memory/cli/chip.exe}
+    %{exe:../asics/observable/cli/chip.exe})
+   (run python3 -B %{dep:check-project-cli.py}
+    %{exe:../asic/cli/project.exe} %{workspace_root})
+   (run python3 -B %{dep:check-timing-profile.py}
+    --project %{exe:../asic/cli/project.exe} --source-root %{workspace_root}))))

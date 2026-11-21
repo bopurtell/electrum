@@ -6,16 +6,14 @@
 #
 # The switch is shared with every other Hardcaml checkout on the machine, so this
 # script's own default is to check and print commands; changes happen only with
-# --install, and only ever add. ./scripts/bootstrap.sh passes --install unless it was given
-# --check, so the converging and the reporting mode both have one obvious spelling.
+# --install. ./scripts/bootstrap.sh only passes it with --install-deps.
 #
 # `opam install . --deps-only` is deliberately not used, not even as a dry run:
 # against a shared switch it proposes recompiling packages other repositories
 # depend on. Dependencies are checked and installed by name instead.
 #
-# A dependency no opam repository carries is a sibling checkout in this workspace
-# (hardcaml_asic today). Those are pinned to the checkout rather than installed by
-# name; see the pinning block below for why the pin kind matters.
+# ASIC and Workbench themselves are installed to a project-local prefix by
+# install-tools.py, never by this script.
 
 set -euo pipefail
 
@@ -30,19 +28,20 @@ readonly repo_root
 readonly opam_file="$repo_root/electrum.opam"
 
 install=0
+tool_deps=0
 
 usage() {
     cat <<'USAGE'
-Usage: scripts/ocaml-deps.sh [--install]
+Usage: scripts/ocaml-deps.sh [--install] [--tool-deps]
 
 Checks that the OxCaml opam switch exists and has this repository's opam
 dependencies. Changes nothing unless --install is given.
 
 Options:
-  --install    Create the switch if it is missing (about 30 minutes), pin any
-               dependency that lives in this workspace rather than an opam
-               repository, install what is still missing, then verify it all
-               arrived. Installed packages are never upgraded or downgraded.
+  --install    Create the switch if it is missing (about 30 minutes),
+               install missing published packages, then verify them.
+  --tool-deps  Include dependencies needed to build/test the normal local
+               ASIC and Workbench selection from the sibling checkouts.
   -h, --help   Show this message.
 
 Environment:
@@ -57,6 +56,7 @@ USAGE
 while [[ $# -gt 0 ]]; do
     case $1 in
         --install) install=1 ;;
+        --tool-deps) tool_deps=1 ;;
         -h|--help) usage; exit 0 ;;
         *) usage >&2; exit 1 ;;
     esac
@@ -103,13 +103,37 @@ case $version in
     *) die "$EX_PREREQ" "switch '$SWITCH' has OCaml $version, expected 5.2.0+ox" ;;
 esac
 
-# Every dependency in the opam file except documentation. opam 2.1 has no
-# --with-dev-setup, so filtered entries are read by name rather than resolved.
-mapfile -t wanted < <(
-    opam show --just-file --raw -f depends "$opam_file" \
-        | grep -v 'with-doc' \
-        | awk -F'"' 'NF > 1 { print $2 }')
-[[ ${#wanted[@]} -gt 0 ]] || die "$EX_PREREQ" "could not read depends from $opam_file"
+# Include test and developer dependencies but not documentation. Read the
+# committed ASIC manifest, not the sibling checkout's potentially dirty bytes.
+depends() {
+    opam show --just-file --raw -f depends "$1"
+}
+
+asic_depends() (
+    manifest=$(mktemp "${TMPDIR:-/tmp}/electrum-asic.XXXXXXXX.opam") || exit
+    trap 'rm -f -- "$manifest"' EXIT
+    git -C "$1" show "$2:hardcaml_asic.opam" > "$manifest" && depends "$manifest"
+)
+
+dependencies=$(depends "$opam_file") || die "$EX_PREREQ" "could not read depends from $opam_file"
+if [[ $tool_deps -eq 1 ]]; then
+    workspace=$(dirname "$repo_root")
+    revision=$(python3 "$repo_root/scripts/install-tools.py" --print-asic-revision) ||
+        die "$EX_PREREQ" "could not read the normal ASIC source selection"
+    asic_deps=$(asic_depends "$workspace/hardcaml_asic" "$revision") ||
+        die "$EX_PREREQ" "could not read ASIC dependencies at $revision" \
+            "Fetch the locked commit into $workspace/hardcaml_asic."
+    for pkg in hardcaml_workbench hardcaml_workbench_provider; do
+        manifest="$workspace/silver/$pkg.opam"
+        workbench_deps=$(depends "$manifest") || die "$EX_PREREQ" "could not read depends from $manifest"
+        dependencies+=$'\n'"$workbench_deps"
+    done
+    dependencies+=$'\n'"$asic_deps"
+fi
+mapfile -t wanted < <(awk -F'"' '
+    NF > 1 && !/with-doc/ && $2 !~ /^(hardcaml_asic|hardcaml_workbench|hardcaml_workbench_provider)$/ && !seen[$2]++ { print $2 }
+' <<< "$dependencies")
+[[ ${#wanted[@]} -gt 0 ]] || die "$EX_PREREQ" "no published OCaml dependencies found"
 
 # Fills [missing] with the wanted packages the switch does not have.
 #
@@ -133,82 +157,32 @@ find_missing() {
     done
 }
 
-# The selected local release supplies ASIC without a shared opam pin/install.
-if [[ -f "$repo_root/.dev/tools/current.json" ]]; then
-    python3 "$repo_root/scripts/install-tools.py" --activation >/dev/null || \
-        die "$EX_PREREQ" "local tools selection failed validation"
-    local_wanted=()
-    for pkg in "${wanted[@]}"; do
-        [[ $pkg == hardcaml_asic ]] || local_wanted+=("$pkg")
-    done
-    wanted=("${local_wanted[@]}")
-    info "hardcaml_asic supplied by the verified local tools prefix"
-fi
-
 find_missing
 
-# A missing package that no opam repository carries cannot be installed by name, and
-# opam fails the whole transaction over it, so every other missing package stays
-# missing too. The cause here is a workspace sibling (~/devel/jane/<pkg>, see the
-# workspace CLAUDE.md) that is built from a checkout rather than published, so it is
-# pinned to that checkout instead of installed by name.
-#
-# The pin is --kind=path, not the git kind opam picks by default for a directory that
-# happens to be a git repository: path follows the working tree, so uncommitted work in
-# the sibling is what this switch builds against. That is the point of having the
-# checkout. It also means opam wants a rebuild after edits there, which is the cost.
-if [[ ${#missing[@]} -gt 0 ]]; then
-    workspace=$(dirname "$repo_root")
-    unpublished=()
-    for pkg in "${missing[@]}"; do
-        opam show --switch="$SWITCH" "$pkg" >/dev/null 2>&1 || unpublished+=("$pkg")
-    done
+# Do not accept Electrum's older Dune floor for a local Silver build.
+check_dune_version() {
+    dune_version=$(opam exec --switch="$SWITCH" -- dune --version) ||
+        die "$EX_PREREQ" "could not read the installed Dune version"
+    opam admin compare-versions "$dune_version" --geq 3.22
+}
 
-    pinnable=()
-    stranded=()
-    for pkg in "${unpublished[@]}"; do
-        if [[ -f "$workspace/$pkg/$pkg.opam" ]]; then
-            pinnable+=("$pkg")
-        else
-            stranded+=("$pkg")
+if [[ $tool_deps -eq 1 ]]; then
+    for i in "${!missing[@]}"; do
+        if [[ ${missing[$i]} == dune ]]; then
+            missing[$i]='dune>=3.22'
         fi
     done
-
-    # Nothing to pin them to: neither this script nor opam can proceed.
-    if [[ ${#stranded[@]} -gt 0 ]]; then
-        lines=()
-        for pkg in "${stranded[@]}"; do
-            lines+=("  $pkg: no opam repository has it, and $workspace/$pkg is not a checkout of it")
-        done
-        die "$EX_PREREQ" "cannot resolve: ${stranded[*]}" \
-            "Clone them into the workspace (./sync.sh there), or drop them from" \
-            "$opam_file:" "${lines[@]}"
-    fi
-
-    if [[ ${#pinnable[@]} -gt 0 ]]; then
-        pin_cmds=()
-        for pkg in "${pinnable[@]}"; do
-            pin_cmds+=("  opam pin add --switch=$SWITCH --kind=path --yes $pkg $workspace/$pkg")
-        done
-        if [[ $install -eq 0 ]]; then
-            die "$EX_PREREQ" "not published to any opam repository: ${pinnable[*]}" \
-                "Rerun with --install to pin the workspace checkout, or run:" \
-                "${pin_cmds[@]}"
-        fi
-        for pkg in "${pinnable[@]}"; do
-            info "pinning $pkg to $workspace/$pkg"
-            opam pin add --switch="$SWITCH" --kind=path --yes "$pkg" "$workspace/$pkg"
-        done
-        # Pinning builds and installs, so the switch has moved on.
-        find_missing
+    if printf '%s\n' "${installed[@]}" | grep -qx dune && ! check_dune_version; then
+        missing+=('dune>=3.22')
     fi
 fi
 
 if [[ ${#missing[@]} -gt 0 ]]; then
     if [[ $install -eq 0 ]]; then
+        printf -v install_args ' %q' "${missing[@]}"
         die "$EX_PREREQ" "missing opam packages: ${missing[*]}" \
-            "Rerun with --install (./scripts/bootstrap.sh does that by default), or run:" \
-            "  opam install --switch=$SWITCH ${missing[*]}"
+            "Rerun with --install (preserving --tool-deps if used), or run:" \
+            "  opam install --switch=$SWITCH$install_args"
     fi
 
     info "installing ${missing[*]}"
@@ -219,6 +193,10 @@ if [[ ${#missing[@]} -gt 0 ]]; then
     # still absent here becomes a "Library not found" from dune much later.
     requested=("${missing[@]}")
     find_missing
+    if [[ $tool_deps -eq 1 ]]; then
+        check_dune_version ||
+            die "$EX_PREREQ" "Silver requires Dune 3.22 or newer (found $dune_version)"
+    fi
     [[ ${#missing[@]} -eq 0 ]] || die "$EX_PREREQ" \
         "still missing after installing ${requested[*]}: ${missing[*]}" \
         "opam reported success. Install one of them on its own to see why:" \

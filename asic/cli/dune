@@ -7,8 +7,14 @@
  (lint
   (pps ppx_js_style)))
 
+(library
+ (name chip_cli)
+ (modules chip_cli)
+ (libraries core hardcaml_asic hardcaml_asic.execution electrum_chip_project yojson unix)
+ (preprocess (pps ppx_jane)))
+
 (executable
  (name project)
  (modules project)
- (libraries core hardcaml_asic hardcaml_asic.execution electrum_chip_project yojson unix)
- (preprocess (pps ppx_jane)))
+ (libraries core unix hardcaml_asic electrum_chip_project chip_cli
+  electrum_loader_flows electrum_memory_flows electrum_observable_flows))

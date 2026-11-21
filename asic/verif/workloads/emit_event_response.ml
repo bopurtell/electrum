@@ -2,7 +2,7 @@
 (* Author: Bohdan Purtell *)
 (* Module: "emit_event_response.ml" *)
 (* Verification-only composition: production core + production program RAM helper.
-   Project.elaborate deliberately stops before TT interface/physical-flow resolution.
+   Chip_target.elaborate deliberately stops before TT interface/physical-flow resolution.
    Direct Control_port transport; no Host_link, TT package/reset/pad wrapper.
    There is no external RAM-data input or other bypass for the selected RAM. *)
 open! Core
@@ -69,13 +69,13 @@ let () =
     let policy = Resource_policy.create
       [{ selector = Resource_policy.Selector.instance_exn "program"; requirement }]
       |> Or_error.ok_exn in
-    let project = Project.create ~name:"electrum_event_response_verification"
+    let project = Chip_target.create ~name:"electrum_event_response_verification"
       ~metadata:{title="Event response verification"; author="Electrum";
                  description="Production loaded core with observed public ports"}
       ~design:(module Design)
       ~target:{harness=Tiny_tapeout {tiles=T6x4}; technology=Technology.ihp_sg13cmos5l}
       ~flow:(Flow.librelane Synthesis) ~policy () |> Or_error.ok_exn in
-    let elaborated = Project.elaborate project ~mode |> Or_error.ok_exn in
+    let elaborated = Chip_target.elaborate project ~mode |> Or_error.ok_exn in
     let circuit = Elaboration.Elaborated_project.circuit elaborated in
     let resources = Elaboration.Elaborated_project.resources elaborated in
     if List.length resources <> 1 then failwith "expected exactly one program resource";

@@ -16,7 +16,8 @@ Ordinary Dune build/test aliases do not start physical implementation.
 
 The adopted input is an immutable `hardcaml_asic` bundle. Its configuration comes
 from [`asic/project/chip_project.ml`](../asic/project/chip_project.ml), with
-package/resource constructors in [`asic/rtl/`](../asic/rtl/) and emission through
+chip wrappers in [`asics/`](../asics/), shared resource binding in
+[`asic/rtl/`](../asic/rtl/), and emission through
 [`asic/cli/asic_bundle.ml`](../asic/cli/asic_bundle.ml). The hand-maintained
 `asic/tinytapeout/info.yaml` and `asic/tinytapeout/src/config.json` belong only to
 [the legacy staged-project path](#the-legacy-path).
@@ -24,6 +25,7 @@ package/resource constructors in [`asic/rtl/`](../asic/rtl/) and emission throug
 ## Quick start
 
 ```sh
+./scripts/bootstrap.sh --tools-only  # select the local ASIC and Silver builds first
 ./scripts/bootstrap.sh          # prepare tools; normal mode stages no design
 source scripts/env.sh           # activation for commands typed in this shell
 ./asic/flow.sh --help            # stages, overrides and resuming

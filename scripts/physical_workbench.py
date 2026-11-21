@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One owned stock_sram/timing_repair through-Timing Workbench journey.
+"""Historical 2026-11-12 stock_sram/timing_repair Workbench acceptance journey.
 
 Default is UI/source validation only. --launch allows exactly one production PTY
 launch. Normal root companions are read unchanged; daemon/client state is private.
@@ -113,7 +113,8 @@ def main():
         workbench.stopped()
         tools = module(ROOT / 'scripts/install-tools.py', 'physical_selected_tools')
         selection, installed = tools.verify_selection()
-        assert installed['sources']['asic']['revision'] == '3335f47cf8ac0ae065aa161705e57305389ef396'
+        if installed['sources']['asic']['revision'] != '3335f47cf8ac0ae065aa161705e57305389ef396':
+            raise ValueError('this historical journey requires the original ASIC acceptance capture')
         prefix = Path(selection['prefix'])
         config_paths = list((ROOT / '.workbench').glob('*.sexp'))
         config_hashes = {str(p): sha(p) for p in config_paths}

@@ -22,12 +22,12 @@ let check_conflicts ~selection ?operation kind =
         { key; value = `Int 1; reason = "negative integration check" }
       in
       let result =
-        Chip_project.project
+        Chip_project.chip_target
           ~selection
           ~operation
           ~overrides:(Chip_project.default_overrides ~selection ~operation @ [ conflicting ])
           kind
-        |> Or_error.bind ~f:Project.elaborate_for_flow
+        |> Or_error.bind ~f:Chip_target.elaborate_for_flow
       in
       match result with
       | Ok _ -> failwithf "%s conflict was accepted" label ()
@@ -39,9 +39,9 @@ let check_conflicts ~selection ?operation kind =
 ;;
 
 let emit ~selection ?operation kind output_dir source_root =
-  let project = Chip_project.project ~selection ?operation kind |> Or_error.ok_exn in
+  let target = Chip_project.chip_target ~selection ?operation kind |> Or_error.ok_exn in
   let bundle =
-    Project.emit_bundle project ~source_root ~output_dir |> Or_error.ok_exn
+    Chip_target.emit_bundle target ~source_root ~output_dir |> Or_error.ok_exn
   in
   printf "%s %s\n" output_dir (Bundle.identity bundle)
 ;;
@@ -90,12 +90,13 @@ let main () =
   | args ->
     let selection, operation, positional = parse None None [] args in
     (match positional with
-     | [ "--check-conflicts" ] -> check_conflicts ~selection ?operation "observable"
-     | [ "--check-conflicts"; kind ] -> check_conflicts ~selection ?operation kind
+     | [ "--check-conflicts" ] -> check_conflicts ~selection ?operation Observable
+     | [ "--check-conflicts"; kind ] ->
+       check_conflicts ~selection ?operation (Chip_kind.of_string kind |> Or_error.ok_exn)
      | [ output_dir; source_root ] ->
-       emit ~selection ?operation "observable" output_dir source_root
+       emit ~selection ?operation Observable output_dir source_root
      | [ kind; output_dir; source_root ] ->
-       emit ~selection ?operation kind output_dir source_root
+       emit ~selection ?operation (Chip_kind.of_string kind |> Or_error.ok_exn) output_dir source_root
      | _ -> failwith usage)
 ;;
 

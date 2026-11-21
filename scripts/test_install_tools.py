@@ -63,6 +63,13 @@ class Receipt(unittest.TestCase):
         with patch.object(tools, 'source_policy', side_effect=AssertionError('not an activation selector')):
             self.assertTrue(tools.parse_args(['--activation']).activation)
 
+    def test_print_asic_revision_needs_no_checkout_or_installation(self):
+        result = subprocess.run([sys.executable, '-B', tools.__file__, '--print-asic-revision',
+                                 '--asic-source', '/not-a-checkout'],
+                                capture_output=True, check=True, text=True, timeout=5)
+        self.assertEqual(result.stdout, tools.source_policy()['asic']['pinned_revision'] + '\n')
+        self.assertEqual(result.stderr, '')
+
     def test_development_capture_records_actual_dirty_bytes_not_a_clean_revision_stamp(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -73,7 +80,7 @@ class Receipt(unittest.TestCase):
                        'flow/physical_runtime.py': ('executable', b'updated helper digest\n')}
             def git(owner, *args):
                 if args == ('rev-parse', 'HEAD'):
-                    return b'3335f47cf8ac0ae065aa161705e57305389ef396\n'
+                    return b'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n'
                 if args == ('status', '--porcelain', '--untracked-files=all'):
                     return b' M lib/api.ml\n M flow/physical_runtime.py\n'
                 if args == ('rev-parse', '--absolute-git-dir'):
@@ -137,6 +144,21 @@ class Receipt(unittest.TestCase):
             (generation / 'tools-source.lock.json').write_bytes(data + b'unknown edit')
             with self.assertRaisesRegex(ValueError, 'source policy changed'):
                 tools.verify_captured_policy(generation, {'source_policy': policy})
+
+    def test_default_capture_resumed_before_asic_uses_archived_pin(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archived = 'b' * 40
+            receipt = dict(sources={}, source_policy={'policy': {'asic': {
+                'pinned_revision': archived, 'compatibility_base_revision': archived}}})
+            args = tools.parse_args([])
+            self.assertNotEqual(args.asic_revision, archived)
+            with patch.object(tools, 'committed', return_value=(archived, {})) as committed, \
+                 patch.object(tools, 'source_record', return_value=dict(revision='c' * 40)), \
+                 patch.object(tools, 'git', return_value=b'/read-only/gitdir\n'):
+                tools.capture_source('asic', root, root / 'captured', root, receipt, args)
+            committed.assert_called_once_with(root, archived)
+            self.assertEqual(receipt['sources']['asic']['revision'], archived)
 
     def test_inventory_fences_activation_and_deduplicates_path(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -246,8 +268,8 @@ class InstallStages(unittest.TestCase):
     def generation(self):
         return sorted((self.store / 'generations').iterdir())[-1]
 
-    def test_old_pin_fallback_stages_verbose_and_machine_stdout(self):
-        tools.install(self.args('--verbose'))
+    def test_historical_capture_fallback_stages_verbose_and_machine_stdout(self):
+        tools.install(self.args('--verbose', '--asic-revision', 'a' * 40))
         self.assertEqual(len(self.commands), 6)
         for argv, cwd, env, log in self.commands:
             self.assertEqual(argv[2:4], ['--root', str(cwd)])
@@ -270,7 +292,7 @@ class InstallStages(unittest.TestCase):
         self.assertIn('LIVE fake subprocess output', self.stderr.getvalue())
         tools.verify_selection()
 
-    def test_optional_captured_asic_installer_receives_explicit_options(self):
+    def test_captured_asic_installer_and_workbench_use_correct_build_environment(self):
         self.upstream = True
         tools.install(self.args('--verbose'))
         self.assertEqual(len(self.commands), 4)
@@ -279,7 +301,14 @@ class InstallStages(unittest.TestCase):
         self.assertEqual(argv[argv.index('--dune') + 1], str(self.switch / 'bin/dune'))
         self.assertIn('--verbose', argv)
         self.assertIn('[DONE] ASIC: upstream installer', self.stderr.getvalue())
-        tools.verify_selection()
+        selection, receipt = tools.verify_selection()
+        prefix = Path(selection['prefix'])
+        self.assertEqual(env['PATH'].split(':')[0], str(self.switch / 'bin'))
+        self.assertEqual(env['OCAMLPATH'], str(self.switch / 'lib'))
+        for _, _, env, _ in self.commands[1:]:
+            self.assertEqual(env['PATH'].split(':')[0], str(prefix / 'bin'))
+            self.assertEqual(env['OCAMLPATH'].split(':')[0], str(prefix / 'lib'))
+        self.assertEqual(receipt['asic_build_jobs'], 4)
 
     def test_upstream_failure_does_not_publish_or_start_workbench(self):
         self.upstream = True

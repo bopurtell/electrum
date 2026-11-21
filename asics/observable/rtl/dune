@@ -1,0 +1,5 @@
+(library
+ (name electrum_observable_rtl)
+ (libraries core hardcaml hardcaml_asic electrum_asic_bringup)
+ (preprocess (pps ppx_hardcaml ppx_jane))
+ (lint (pps ppx_js_style)))

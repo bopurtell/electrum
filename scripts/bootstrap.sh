@@ -20,9 +20,8 @@
 #   ./scripts/bootstrap.sh --tools-only  install captured ASIC + Workbench locally
 #
 # Explicit --install-deps installs missing packages into the opam switch, shared with
-# every other Hardcaml checkout on the machine. Only ever additions: nothing here
-# upgrades or downgrades a package another checkout depends on. Use
-# --check to see what is missing without touching the switch.
+# every other Hardcaml checkout on the machine. Use --check to see what is missing
+# without touching the switch. ASIC and Workbench are never installed there.
 #
 # It prepares an environment. It does not stage a design, emit a bundle, or start
 # hardening: that is ./asic/flow.sh, and it is always an explicit command.
@@ -49,9 +48,9 @@ Options:
                    image is then not resolved either; supply a native LibreLane.
   --legacy-project Also stage and configure the legacy P0 project, for the
                     legacy hardening scripts. ./asic/flow.sh does not use it.
-  --install-deps   Explicitly allow shared-switch dependency installation/pinning.
+  --install-deps   Explicitly install missing published Electrum dependencies.
   --tools-only     Install captured ASIC + Workbench locally, then exit. No EDA
-                   provisioning or shared-switch writes; builds at -j10, tests -j1/-j2.
+                   provisioning or shared-switch writes.
   -h, --help       Show this message.
 
 Then:
@@ -86,6 +85,7 @@ if [[ $tools_only -eq 1 ]]; then
         echo "bootstrap: --tools-only is a separate local installation command" >&2
         exit 1
     fi
+    "$repo_root/scripts/ocaml-deps.sh" --tool-deps
     exec python3 "$repo_root/scripts/install-tools.py"
 fi
 

@@ -134,7 +134,8 @@ def environment(switch, prefix=None):
     for key in ('DUNE_BUILD_DIR', 'DUNE_WORKSPACE', 'DUNE_PROFILE', 'OCAMLFIND_CONF',
                 'OCAMLFIND_DESTDIR', 'OCAMLFIND_TOOLCHAIN'):
         env.pop(key, None)
-    env.update(PATH=f'{switch}/bin:/usr/local/bin:/usr/bin:/bin',
+    path = f'{switch}/bin:/usr/local/bin:/usr/bin:/bin'
+    env.update(PATH=f'{prefix}/bin:{path}' if prefix else path,
                OCAMLPATH=f'{prefix}/lib:{switch}/lib' if prefix else str(switch / 'lib'),
                CAML_LD_LIBRARY_PATH=f'{switch}/lib/stublibs',
                OPAM_SWITCH_PREFIX=str(switch), OCAMLLIB=str(switch / 'lib/ocaml'),
@@ -211,7 +212,10 @@ def install(args):
                 else:
                     capture_source(name, source, captured, generation, receipt, args)
             packages = 'hardcaml_asic' if name == 'asic' else 'hardcaml_workbench,hardcaml_workbench_provider'
-            env = environment(switch, prefix)
+            # Do not let an ASIC rebuild on resume pick its own partially
+            # installed artifacts. Silver, however, must see the new ASIC
+            # binaries and libraries before any shared-switch copies.
+            env = environment(switch, prefix if name == 'workbench' else None)
             # New ASIC captures own their build/test/install presentation. Older
             # pinned revisions retain the same verified sequence locally.
             upstream = captured / 'scripts/install.py'
@@ -231,7 +235,7 @@ def install(args):
             with stage(f'{name}: install {packages}'):
                 run([switch / 'bin/dune', 'install', '--prefix', prefix, *packages.split(',')], captured, env, log)
         with stage('Inventory installed files and select completed generation'):
-            finish(generation, receipt, prefix, switch)
+            finish(generation, receipt, prefix)
         report('Tools installed successfully. Next: source scripts/env.sh')
 
 
@@ -249,7 +253,16 @@ def verify_capture(captured, record):
 
 def capture_source(name, source, captured, generation, receipt, args):
     mode = args.asic_source_mode if name == 'asic' else 'working-tree'
-    revision, entries = committed(source, args.asic_revision) if mode == 'committed' else (None, capture(source))
+    if name == 'asic':
+        policy = receipt['source_policy']['policy'] if 'source_policy' in receipt else source_policy()
+    if mode == 'committed':
+        # A resume before ASIC capture must use the generation's archived pin,
+        # not a newer checkout's default.
+        requested = (policy['asic']['pinned_revision'] if getattr(args, 'asic_revision_is_default', False)
+                     else args.asic_revision)
+        revision, entries = committed(source, requested)
+    else:
+        revision, entries = None, capture(source)
     receipt['sources'][name] = source_record(source, entries)
     record = receipt['sources'][name]
     record.update(mode=mode, base_revision=revision or record['revision'], source_artifact_revision_stamped=False)
@@ -259,7 +272,6 @@ def capture_source(name, source, captured, generation, receipt, args):
     else:
         record['revision_semantics'] = 'checkout HEAD provenance only; tree_sha256/files identify actual captured working bytes'
     if name == 'asic':
-        policy = receipt['source_policy']['policy'] if 'source_policy' in receipt else source_policy()
         record['compatibility_base_revision'] = policy['asic']['compatibility_base_revision']
     if mode == 'working-tree' and capture(source) != entries:
         raise ValueError('source changed during capture; retry: ' + str(source))
@@ -285,10 +297,11 @@ def save_capture(generation, receipt):
     os.replace(pending, generation / 'capture.json')
 
 
-def finish(generation, receipt, prefix, switch):
+def finish(generation, receipt, prefix):
     receipt.update(checks_passed=True, prefix=str(prefix), installed_sha256=inventory(prefix),
                    checks=['ASIC standard dune runtest -j1 (12 internal workers)',
-                           'Workbench backend/test/asic -j2'], build_jobs=10)
+                           'Workbench backend/test/asic -j2'], build_jobs=10,
+                   asic_build_jobs=4 if (generation / 'source/asic/scripts/install.py').is_file() else 10)
     selection = dict(schema_version=1, generation=str(generation), prefix=str(prefix),
                       receipt=str(generation / 'receipt.json'))
     pending = STORE / ('selection-' + uuid.uuid4().hex + '.json')
@@ -374,13 +387,17 @@ def parse_args(argv=None):
                        help='committed: pinned release; working-tree: explicit full dirty/hash capture')
     modes.add_argument('--development', dest='asic_source_mode', action='store_const', const='working-tree',
                        help='alias for --asic-source-mode working-tree; no Git commit required')
-    parser.add_argument('--activation', action='store_true')
+    output = parser.add_mutually_exclusive_group()
+    output.add_argument('--activation', action='store_true')
+    output.add_argument('--print-asic-revision', action='store_true',
+                        help='Print the normal lockfile pin without activating or installing')
     parser.add_argument('--verbose', action='store_true', help='Show full Dune build commands')
     parser.add_argument('--resume', help='Resume an interrupted unpublished generation, verifying its captured sources')
     args = parser.parse_args(argv)
     if args.asic_source_mode == 'working-tree' and args.asic_revision is not None:
         parser.error('--asic-revision is a committed selection; working-tree records its actual HEAD as provenance')
-    if args.asic_source_mode == 'committed' and args.asic_revision is None and not args.activation:
+    args.asic_revision_is_default = args.asic_source_mode == 'committed' and args.asic_revision is None
+    if args.asic_revision_is_default and not (args.activation or args.print_asic_revision):
         args.asic_revision = source_policy()['asic']['pinned_revision']
     return args
 
@@ -389,6 +406,8 @@ def main():
     args = parse_args()
     if args.activation:
         activation()
+    elif args.print_asic_revision:
+        print(source_policy()['asic']['pinned_revision'])
     else:
         install(args)
 

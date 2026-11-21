@@ -3,6 +3,7 @@ open! Hardcaml
 open! Hardcaml_asic
 open! Electrum_controller
 open! Electrum_system
+open! Electrum_asic_rtl
 module I = Tt_cmos5l.I
 module O = Tt_cmos5l.O
 

@@ -5,11 +5,9 @@
 #
 #   asic/tinytapeout/scripts/check-flow.sh
 #
-# Nothing here implements anything. Dune is replaced by a stub opam that either
-# fails or sleeps, so a failed or interrupted flow can be exercised in seconds
-# and repeatedly; the checks that need real tools are the flow's own steps and
-# the end-to-end smoke run, not this. Everything is written under a temporary
-# directory that is removed on exit.
+# Nothing here implements anything. The failure/signal cases run copied entry
+# points against a stub with-switch.sh, so an installed prefix or shared switch
+# cannot cause a real build or hardening run.
 set -uo pipefail
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -44,23 +42,6 @@ expect() {
         printf 'ok   %s\n' "$name"
     fi
 }
-
-# A stub opam standing in for the pinned switch. MODE picks what `dune` does:
-# "fail" for a failing step, "sleep" for one long enough to interrupt.
-mkdir -p "$tmp/stub"
-cat >"$tmp/stub/opam" <<'STUB'
-#!/usr/bin/env bash
-case "$1 $2" in
-  "switch list") echo "${OPAM_SWITCH:-5.2.0+ox}"; exit 0 ;;
-esac
-shift 3   # opam exec --switch=... --
-case "${STUB_MODE:-fail}" in
-  sleep) sleep 10 ;;
-  *) echo "stub dune: $*" >&2; exit 1 ;;
-esac
-STUB
-chmod +x "$tmp/stub/opam"
-stub_path="$tmp/stub:$PATH"
 
 # ---------------------------------------------------------------------------
 # Help and argument handling, on a machine with no toolchain at all. env -i
@@ -153,7 +134,22 @@ fi
 # A default full invocation allocates its own directory. The build step fails
 # here, which is the point twice over: the allocation is visible, and nothing
 # after it runs.
-first=$(PATH="$stub_path" "$flow" 2>&1); status=$?
+repo_root="$tmp/checkout"
+mkdir -p "$repo_root/asic/tinytapeout/scripts" "$repo_root/scripts"
+cp "$flow" "$repo_root/asic/flow.sh"
+cp "$script_dir/adopted-flow.sh" "$repo_root/asic/tinytapeout/scripts/"
+flow="$repo_root/asic/flow.sh"
+cat >"$repo_root/scripts/with-switch.sh" <<'STUB'
+#!/usr/bin/env bash
+[[ $1 == dune ]] || exit 2
+case "${STUB_MODE:-fail}" in
+  sleep) exec sleep 10 ;;
+  *) echo "stub dune: $*" >&2; exit 1 ;;
+esac
+STUB
+chmod +x "$repo_root/scripts/with-switch.sh"
+
+first=$("$flow" 2>&1); status=$?
 expect "the default invocation allocates a fresh output directory" 1 "$first" $status \
     "$repo_root/_flow_results/flow-" "failed at step: build"
 expect "a failed stage stops the ones that depend on it" 1 "$first" $status \
@@ -166,7 +162,7 @@ for later in "emit bundle into" "preflight" "starting LibreLane" "results will b
 done
 checked=$((checked + 1))
 
-second=$(PATH="$stub_path" "$flow" 2>&1)
+second=$("$flow" 2>&1)
 allocated() { printf '%s\n' "$1" | sed -n 's/^flow: output directory //p'; }
 first_dir=$(allocated "$first")
 second_dir=$(allocated "$second")
@@ -185,7 +181,7 @@ rmdir "$first_dir" "$second_dir" 2>/dev/null
 # diagnostics are.
 # ---------------------------------------------------------------------------
 log="$tmp/interrupt.log"
-PATH="$stub_path" STUB_MODE=sleep ELECTRUM_FLOW_OUT="$tmp/interrupted" \
+STUB_MODE=sleep ELECTRUM_FLOW_OUT="$tmp/interrupted" \
     "$flow" build >"$log" 2>&1 &
 flow_pid=$!
 sleep 1

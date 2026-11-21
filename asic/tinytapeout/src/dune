@@ -104,9 +104,11 @@
  (deps
   ../../../dune-project
   ../../../electrum.opam
+  ../../../tools-source.lock.json
   (source_tree ../../cli)
   (source_tree ../../project)
   (source_tree ../../rtl)
+  (source_tree ../../../asics/loader/rtl)
   (source_tree ../../../spec/isa)
   (source_tree ../../../ip/host_link/protocol)
   (source_tree ../../../ip/mechanisms/rtl)

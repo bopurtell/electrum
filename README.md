@@ -26,7 +26,8 @@ verification; `hardcaml_asic` supplies resource/backend tooling.
 | `ip/emulator_core/` | Execution, primitive dispatch, core composition and control-port agent |
 | `ip/host_link/` | Serial endpoint, block verification, serial agent and endpoint environment |
 | `ip/electrum_system/` | Reusable `Electrum_top` system composition with external RAM interface |
-| `asic/` | This ASIC's package tops, RAM binding, project/CLI, target integration and verification |
+| `asics/{loader,memory,observable}/` | Chip-local package tops, flow collections and owner CLIs |
+| `asic/` | Shared Tiny Tapeout declarations, RAM binding, Silver gateway, and integration verification |
 | `verif/` | Shared plumbing, independent reference model, system peers and regression sweeps |
 | `spec/isa/`, `ip/host_link/protocol/` | Pure shared specifications; host-link byte operations live under `Codec` |
 | `firmware/examples/` | Actual chosen-ISA example programs |
@@ -44,14 +45,13 @@ architecture plans.
 
 Activate the checked local ASIC/Workbench installation in each shell. The project
 uses the current public ASIC API; the shared opam installation may still expose an
-older one. See [normal setup and acceptance](docs/adoption-release.md) for installing
+older one. See [environment setup](docs/environment.md) for installing
 or refreshing the local tools without changing the shared switch.
 
-Normal fresh installs select ASIC commit `4b6bb60` from
-[`tools-source.lock.json`](tools-source.lock.json), including the committed
-timing-reader and physical-runtime fixes. Workbench is captured from its working
-tree. Explicit ASIC development capture remains available via `--development`;
-changing the pin does not refresh an existing local installation or its receipts.
+Normal installs select the chip-target and flow-collection-capable ASIC provider
+recorded in [`tools-source.lock.json`](tools-source.lock.json). Silver is captured
+from its working tree. Explicit ASIC development capture remains available via
+`--development`. Refresh older tool receipts before building this checkout.
 
 ```sh
 source scripts/env.sh
@@ -71,25 +71,57 @@ flock ../.electrum-build.lock dune runtest -j2 ip/host_link/verif
 flock ../.electrum-build.lock dune runtest -j2 ip/emulator_core/verif
 ```
 
-All sessions share a maximum20-job budget. The default `asic/flow.sh` can launch a real
+All sessions share a maximum 20-job budget. The default `asic/flow.sh` can launch a real
 physical flow; see [flow.md](docs/flow.md) before using it. It is not a generic
 regression shortcut.
 
-## Workbench and ASIC adoption
+## Silver and chip targets
 
 ```sh
+bash scripts/bootstrap.sh --tools-only
+bash scripts/workbench.sh configure --source-only
 bash scripts/workbench.sh status
 bash scripts/workbench.sh daemon
 # In a second terminal:
 bash scripts/workbench.sh client
 ```
 
-The normal project exposes named `flops` and `stock_sram` flows, source/resource
-preparation, four serial-system cases and three event-response cases in Testing,
-and actual waveform artifacts. The opt-in `stock_sram/timing_repair` profile changes
-only post-global-route timing repair. It does not change hardware or the cycle
-contract. **Electrum still misses 48 MHz slow-corner setup**; Workbench accurately
-inspects that negative result. Tooling acceptance is separate from design acceptance.
+Omit `--source-only` to retain and revalidate a previously configured physical
+toolchain, or use `--toolchain-root` to select one explicitly.
+
+Silver treats the root `dune-project` as one project. `hardcaml_asic` elaborates
+the separately registered chips in [`hardcaml-asic-targets.json`](hardcaml-asic-targets.json):
+
+| Chip | Flows |
+| --- | --- |
+| `loader` (default) | `flops`; `stock_sram` through `timing` |
+| `memory` | `flops`; `stock_sram_synthesis` at `synthesis` only |
+| `observable` | `flops`; no registered program RAM |
+
+Use **`--chip` to select hardware**, **`--flow` to select its methodology**, and
+**`--profile` to select settings for that flow**. All three chips default to
+`flops/balanced` and expose a single `default` hardware variant. For example:
+
+```sh
+bash scripts/project.sh chip list --json
+bash scripts/project.sh flow plan --chip memory --flow stock_sram_synthesis \
+  --endpoint synthesis --json
+```
+
+Silver can add flow files or duplicate typed profile settings in a chip's
+`flows/` collection. Rebuild with `bash scripts/workbench.sh build` to pick up
+new declarations; adding a flow does not change the default. New named flows
+use the chip's flop baseline unless you bind a different resource policy in
+its `flows/target.ml`. Loader's existing `stock_sram/timing_repair` is an
+explicit chip-owned override, not a typed setting inherited by profile
+duplicates. It changes only post-global-route timing repair. **Electrum still
+misses 48 MHz slow-corner setup**; this migration does not qualify physical timing.
+
+`dune build @scripts/chip-targets` checks plans and bundles, including RTL parity
+between the named-flow and legacy CLI paths.
+With the project-local tools active, `python3 -B scripts/check-silver-chip-targets.py`
+also checks discovery, selection, authoring and source-only bundle preparation
+through a real Silver daemon in a temporary checkout, without a PDK.
 
 [Current commands, nine-part status and retained evidence](docs/adoption-release.md).
 

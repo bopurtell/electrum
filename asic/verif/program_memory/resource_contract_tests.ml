@@ -43,7 +43,7 @@ let policy requirement name =
 ;;
 
 let project requirement name =
-  Project.create
+  Chip_target.create
     ~name:"program_resource_test"
     ~metadata:{ title = "Program resource"; author = "test"; description = "PT.3a" }
     ~design:(module Design)
@@ -142,17 +142,17 @@ let check requirement mode elaborated =
 let () =
   List.iter [ Resource_policy.Requirement.Flops; Exact ] ~f:(fun requirement ->
     List.iter [ Elaboration.Mode.Simulation; Implementation ] ~f:(fun mode ->
-      Project.elaborate (project requirement "program") ~mode
+      Chip_target.elaborate (project requirement "program") ~mode
       |> Or_error.ok_exn
       |> check requirement mode;
-      List.iter [ "memory"; "loader" ] ~f:(fun kind ->
-        Electrum_chip_project.Chip_project.project ~selection:requirement kind
-        |> Or_error.bind ~f:(Project.elaborate ~mode)
+      List.iter Electrum_chip_project.Chip_kind.[ Memory; Loader ] ~f:(fun kind ->
+        Electrum_chip_project.Chip_project.chip_target ~selection:requirement kind
+        |> Or_error.bind ~f:(Chip_target.elaborate ~mode)
         |> Or_error.ok_exn
         |> check requirement mode);
       require
         "misspelled policy must fail"
-        (Or_error.is_error (Project.elaborate (project requirement "progam") ~mode)));
+        (Or_error.is_error (Chip_target.elaborate (project requirement "progam") ~mode)));
     require
       "no implicit policy for another resource"
       (Or_error.is_error

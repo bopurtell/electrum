@@ -1,5 +1,9 @@
 # Normal ASIC/Workbench adoption — 2026-11-12 closeout
 
+This is a historical record of the accepted installation below, not a current
+tool selector. See [Environment and entry points](environment.md) for the
+current locked ASIC revision and installation instructions.
+
 ## Result
 
 **Normal installed tooling is complete in the accepted scope below.** Electrum
@@ -63,11 +67,10 @@ reused, but interrupted tests may run again.
 
 Electrum owns capture, Workbench installation, logging, receipts, and selection.
 If the captured ASIC revision includes `scripts/install.py`, Electrum delegates
-ASIC build/test/install to that script. The current committed ASIC pin predates
-it, so the default path supplies equivalent progress around the existing Dune
+ASIC build/test/install to that script. The committed ASIC pin at this closeout
+predated it, so that path supplied equivalent progress around the existing Dune
 sequence. Merely editing the sibling ASIC checkout does not change a pinned
-source capture. Explicit `--development` capture can use the new upstream script;
-normal adoption follows a future committed pin update.
+source capture.
 
 Builds use ten Dune jobs on the fallback/Workbench paths; ASIC tests use one
 Dune job. `HARDCAML_ASIC_TEST_WORKERS=12` applies to the result-store test pool,
@@ -76,9 +79,9 @@ preserves an explicitly supplied result-store worker count.
 
 Required base compiler/dependencies remain in switch `5.2.0+ox`. The local installer
 checks/builds independent source captures and installs a new private prefix without
-changing shared opam packages. ASIC's timing-reader and physical-runtime fixes are
-committed in `4b6bb60562c0133db9e3ccc6b183736e5658a3f0`, now the normal lockfile
-pin. Workbench remains an explicit working-tree capture:
+changing shared opam packages. ASIC's timing-reader and physical-runtime fixes
+were committed in `4b6bb60562c0133db9e3ccc6b183736e5658a3f0`, the lockfile pin
+at closeout. Workbench was an explicit working-tree capture:
 
 ```sh
 python3 -B scripts/install-tools.py \
@@ -97,9 +100,9 @@ or silently reprovisioned. Status distinguishes metadata readiness from actual
 physical preflight/execution. Physical runs use the supported tool6/Docker CPU6/STA1
 profile; builds and simulations are not run concurrently with that EDA allocation.
 
-`bootstrap.sh --tools-only` uses the same committed `pinned_revision` from
-`tools-source.lock.json` (`4b6bb60`); `compatibility_base_revision` remains `3335f47`
-as the compatibility baseline, not the source selector. For subsequent uncommitted
+At closeout, `bootstrap.sh --tools-only` used the committed `pinned_revision`
+from `tools-source.lock.json` (`4b6bb60`); `3335f47` described the compatibility
+baseline, not the source selector. For subsequent uncommitted
 ASIC development, explicitly add `--asic-source-mode working-tree` (or
 `--development`). Base HEADs alone do not reproduce dirty source captures: receipts
 retain the full bytes, hashes and dirty attribution. No P6 compiled-source stamp is claimed.
@@ -271,7 +274,7 @@ timing-inspection paths. All owned daemons/clients/children stopped; no EDA rema
 This does not qualify every future backlog item, multi-macro profile, full signoff,
 P6 compiled-source stamping, platform portability or unsupported linked exceptions.
 The owner subsequently committed/pushed ASIC as `4b6bb60` and Electrum as `edbcee9`;
-Workbench still has uncommitted tooling changes. The normal ASIC selector now uses
+Workbench still had uncommitted tooling changes. The normal ASIC selector then used
 that committed revision; the retained acceptance evidence above remains tied to
 its original working-tree captures. No Git staging, commits, pushes or authorship
 changes were performed by the agent during the closeout or this selector update.

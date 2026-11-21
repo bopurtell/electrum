@@ -1,6 +1,6 @@
 # Repository ownership and verification layout
 
-Current layout after the 2026-11-11 [final ownership/library migration](final_layout_migration.md).
+Current layout builds on the [final ownership/library migration](final_layout_migration.md).
 The [AM3 protocol/Codec separation](architecture_migration.md#am3--protocol-library-and-codec-separation)
 remains implemented; canonical protocol source now lives with its IP at
 `ip/host_link/protocol/`.
@@ -10,7 +10,10 @@ remains implemented; canonical protocol source now lives with its IP at
 An IP owns its RTL and verification, including interface-specific agents, stimulus,
 models and monitors. A system importing an agent does not transfer its ownership.
 Root `verif/` owns cross-owner infrastructure and whole-system verification.
-`asic/` owns this single ASIC's package/resource integration and verification.
+Silver owns the enclosing project. The root `hardcaml-asic-targets.json` registers
+the ASIC chip targets, not their flows. Each `asics/<chip>/` owns its package
+top, named flow catalog, and CLI. `asic/` owns shared resource/platform integration
+and the existing Tiny Tapeout verification and evidence tooling.
 Software/tool contracts use owner-local `test/`; there is no root test bucket.
 Directory spelling does not change Dune's `runtest` semantics.
 
@@ -43,14 +46,18 @@ ip/
     verif/archived/support/       private old-API adapter for the frozen oracle only
   electrum_system/rtl/             Electrum_top system, external program-RAM port
 asic/
-  rtl/                           package/observable/memory tops and RAM binding
+  rtl/                           shared RAM binding
     bringup/p0_observable.ml
-  project/                       electrum_chip_project library, declaration and input inventory
-  cli/                           ASIC bundle executable
+  project/                       shared chip declarations and input inventory
+  cli/                           shared chip CLI, Silver gateway and legacy bundle executable
   verif/observable/              P0 core and package-peer checks
   verif/memory/emitted/          explicitly selected memory-package peer
   tinytapeout/                   target collateral and physical-flow helpers
   flow.sh                        explicit physical-flow front door
+asics/{loader,memory,observable}/
+  rtl/                           chip-specific Tiny Tapeout wrapper
+  flows/                         generated collection from tracked flow/profile declarations
+  cli/                           direct, chip-specific entry point
 verif/
   common/                        Observation, Replay, Env; qualification in local test/
   backends/conformance/          simulator scheduling qualification and local test/
@@ -85,8 +92,12 @@ goldens, example files, program bytes and frozen regressions remain unchanged.
 - The original flat name exists only in a private non-installed adapter under
   `ip/host_link/verif/archived/support/`, for the unchanged frozen HL4a suite.
   Canonical owners have no reverse dependency on it; it does not compile RTL copies.
-- `electrum_asic_rtl` owns ASIC-dependent package compositions/`Program_memory`;
-  `electrum_chip_project` owns the declaration. `asic/cli/asic_bundle.ml` is the CLI.
+- `electrum_asic_rtl` owns the shared ASIC-dependent `Program_memory` binding.
+  The chip wrapper libraries compose that binding and the reusable IP as needed.
+  `electrum_chip_project` builds `Hardcaml_asic.Chip_target` declarations;
+  each chip binds its own flow IDs to resource policy and operation.
+  `asic/cli/project.exe` is Silver's discovery/dispatch gateway and
+  `asic/cli/asic_bundle.exe` retains the legacy bundle interface.
 - `spec/isa/` and `verif/reference/model/` retain their independent APIs and the
   model has no Hardcaml dependency. Pure `electrum_firmware_examples` owns authored
   example programs, reexported type-identically by the model for compatibility.

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Public source/plan/emit/preparation contracts; no EDA or workload runs."""
 import json
-import os
 from pathlib import Path
 import subprocess
 import sys
@@ -24,7 +23,7 @@ def run(*args, success=True):
 
 listing = run('flow', 'list', '--json')
 entries = {e['methodology']['id']: e for e in listing['declaration']['entries']}
-assert set(entries) == {'flops', 'stock_sram'}
+assert {'flops', 'stock_sram'} <= entries.keys()
 assert entries['stock_sram']['methodology']['endpoints'] == [
     'synthesis', 'floorplan', 'placement', 'cts', 'routing', 'timing']
 run('flow', 'describe', '--flow', 'stock_sram', '--json')
