@@ -4,11 +4,11 @@
 #
 # Installs nothing and is safe to source repeatedly. It sets up what a new shell
 # lacks after a reboot or in a new terminal: the opam switch, the flow variables
-# written by the bootstrap, and the project Python environment on PATH.
+# written by bootstrap.
 #
 # None of this is needed by the repository's scripts, which locate their own
-# tools; it is for running dune, python, librelane, etc. by hand. Precheck's
-# separate _flow_tools/precheck-venv is never activated: precheck.sh calls it directly.
+# tools; it is for running Dune and Silver by hand. The managed Python 3.11
+# interpreters belong to the flow and precheck, not to interactive host commands.
 
 # Sourced into an interactive shell, where the user's aliases and functions are
 # live: a `paste`, `grep` or `cd` of their own would run in place of the real
@@ -44,7 +44,9 @@ _electrum_clean_owned_path() {
             "$_electrum_root"/.dev/pt3a-provider/bin|\
             "$_electrum_root"/.dev/pt3a-provider/prefix/bin|\
             "$_electrum_root"/.dev/pt3a-provider/prefix/lib|\
-            "$_electrum_root"/.dev/pt3a-provider/prefix/lib/*) continue ;;
+            "$_electrum_root"/.dev/pt3a-provider/prefix/lib/*|\
+            "$_electrum_root"/_flow_tools/venv/bin|\
+            "$_electrum_root"/_flow_tools/.venv/bin) continue ;;
         esac
         if [ -n "$_electrum_old_prefix" ]; then
             case $_electrum_entry in
@@ -144,25 +146,8 @@ if [ -f "$_electrum_root/_flow_tools/toolchain-env.sh" ]; then
     . "$_electrum_root/_flow_tools/toolchain-env.sh"
 fi
 
-# 4. Python environment. The same effect as _flow_tools/venv/bin/activate without changing
-#    the prompt. Any previously active environment (another worktree's, or this
-#    one from an earlier source) is removed from PATH first, so re-sourcing
-#    switches rather than stacks, and the flow venv always leads the opam bin.
-if [ -x "$_electrum_root/_flow_tools/venv/bin/python" ]; then
-    _electrum_path=
-    _electrum_rest=$PATH:
-    while [ -n "$_electrum_rest" ]; do
-        _electrum_entry=${_electrum_rest%%:*}
-        _electrum_rest=${_electrum_rest#*:}
-        if [ -n "$_electrum_entry" ] \
-            && { [ -z "${VIRTUAL_ENV:-}" ] || [ "$_electrum_entry" != "$VIRTUAL_ENV/bin" ]; } \
-            && [ "$_electrum_entry" != "$_electrum_root/_flow_tools/venv/bin" ]; then
-            _electrum_path=${_electrum_path:+$_electrum_path:}$_electrum_entry
-        fi
-    done
-    export VIRTUAL_ENV="$_electrum_root/_flow_tools/venv"
-    export PATH="$VIRTUAL_ENV/bin:$_electrum_path"
-    unset PYTHONHOME _electrum_path _electrum_rest _electrum_entry
-fi
+case ${VIRTUAL_ENV:-} in
+    "$_electrum_root"/_flow_tools/venv|"$_electrum_root"/_flow_tools/.venv) unset VIRTUAL_ENV ;;
+esac
 
 unset _electrum_root

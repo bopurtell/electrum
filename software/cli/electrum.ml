@@ -50,8 +50,7 @@ let flag_arg name = function
   | false -> []
 ;;
 
-let bootstrap_toolchain = "asic_support/tinytapeout/scripts/bootstrap-toolchain.sh"
-let ocaml_deps = "scripts/ocaml-deps.sh"
+let bootstrap_script = "scripts/bootstrap.sh"
 
 (* The canonical ASIC flow. Every command here that implements or hardens goes through
    this one script, so there is a single implementation path and a single set of exit
@@ -62,13 +61,9 @@ let bootstrap =
   Command.basic
     ~summary:"Converge the OCaml and flow environments on the lockfile"
     ~readme:(fun () ->
-      "Checks the opam switch and dependencies, then creates or updates \
-       _flow_tools/venv, _flow_tools/precheck-venv, the PDK, the support-tools checkout \
-       and the pinned LibreLane image. Rerun after a pull that changes toolchain.lock or \
-       the opam file. This command only reports on the opam switch; \
-       ./scripts/bootstrap.sh is what installs into it. It prepares an environment and \
-       stages no design: the legacy project is -legacy-project, and implementation is \
-       ./asic_support/flow.sh.")
+      "Runs ./scripts/bootstrap.sh: checks OCaml prerequisites, selects local ASIC and \
+       Silver tools, and provisions the pinned physical toolchain and its managed Python. \
+       No design is staged unless -legacy-project is selected.")
     (let%map_open.Command offline =
        flag "offline" no_arg ~doc:" reuse the environment; fetch and install nothing"
      and check = flag "check" no_arg ~doc:" validate and change nothing"
@@ -81,19 +76,10 @@ let bootstrap =
          ~doc:
            " also stage and configure the legacy P0 project (./asic_support/flow.sh does not use \
             it)"
-     (* ./scripts/bootstrap.sh checks the OCaml layer before it can run dune at all.
-        Without this, that check runs a second time here: same opam calls, same output,
-        one invocation. Each layer is checked exactly once per bootstrap. *)
-     and skip_ocaml_check =
-       flag
-         "skip-ocaml-check"
-         no_arg
-         ~doc:" the caller already checked the OCaml layer (./scripts/bootstrap.sh does)"
      in
      fun () ->
-       if (not skip_ocaml_check) && not (run ocaml_deps []) then exit 2;
        exec
-         bootstrap_toolchain
+         bootstrap_script
          (flag_arg "offline" offline
           @ flag_arg "check" check
           @ flag_arg "no-container" no_container
@@ -116,7 +102,7 @@ let report_shell () =
     printf "    %-12s %s\n" var status
   in
   expect ~var:"PDK_ROOT" ~want:(root ^/ "_flow_tools/pdk");
-  expect ~var:"VIRTUAL_ENV" ~want:(root ^/ "_flow_tools/venv")
+  expect ~var:"FLOW_PY" ~want:(root ^/ "_flow_tools/.venv/bin/python")
 ;;
 
 let doctor =
@@ -126,16 +112,14 @@ let doctor =
        flag "no-container" no_arg ~doc:" skip the Docker/Podman prerequisite"
      in
      fun () ->
-       let ocaml_ok = run ocaml_deps [] in
        let flow_ok =
-         run bootstrap_toolchain ("--check" :: flag_arg "no-container" no_container)
+         run bootstrap_script ("--check" :: flag_arg "no-container" no_container)
        in
        report_shell ();
        let verdict ok = if ok then "ok" else "needs ./scripts/bootstrap.sh" in
        printf "\n==> Summary\n";
-       printf "    %-12s %s\n" "OCaml" (verdict ocaml_ok);
-       printf "    %-12s %s\n" "flow" (verdict flow_ok);
-       if not (ocaml_ok && flow_ok) then exit 2)
+       printf "    %-12s %s\n" "bootstrap" (verdict flow_ok);
+       if not flow_ok then exit 2)
 ;;
 
 let flow =

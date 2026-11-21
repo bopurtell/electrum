@@ -17,6 +17,28 @@ spec.loader.exec_module(tools)
 
 
 class Receipt(unittest.TestCase):
+    def test_ensure_requires_matching_revision_switch_and_silver_binaries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            prefix = Path(tmp)
+            binaries = prefix / 'bin'
+            binaries.mkdir()
+            args = tools.parse_args(['--ensure'])
+            asic = dict(mode='committed', base_revision=args.asic_revision)
+            receipt = dict(sources={'asic': asic}, prefix=str(prefix),
+                           switch_prefix='/opam/' + args.switch)
+            for name in ('hardcaml-asic-flow', 'hardcaml-asic-starter', 'hardcaml-asic-targets',
+                         'silver', 'silver-daemon', 'silver-author'):
+                executable = binaries / name
+                executable.touch()
+                executable.chmod(0o755)
+            self.assertTrue(tools.current_default_tools(args, receipt))
+            self.assertFalse(tools.current_default_tools(args, dict(receipt, switch_prefix='/opam/other')))
+            asic['base_revision'] = '0' * 40
+            self.assertFalse(tools.current_default_tools(args, receipt))
+            asic['base_revision'] = args.asic_revision
+            (binaries / 'silver-daemon').unlink()
+            self.assertFalse(tools.current_default_tools(args, receipt))
+
     def test_dynamic_import_does_not_require_scripts_on_sys_path(self):
         script = Path(tools.__file__).resolve()
         result = subprocess.run([sys.executable, '-I', '-B', '-c',

@@ -79,16 +79,18 @@ regression shortcut.
 ## Silver and chip targets
 
 ```sh
-bash scripts/bootstrap.sh --tools-only
-bash scripts/workbench.sh configure --source-only
-bash scripts/workbench.sh status
-bash scripts/workbench.sh daemon
-# In a second terminal:
-bash scripts/workbench.sh client
+./scripts/bootstrap.sh
+./scripts/workbench.sh configure
+./scripts/workbench.sh open
 ```
 
-Omit `--source-only` to retain and revalidate a previously configured physical
-toolchain, or use `--toolchain-root` to select one explicitly.
+Bootstrap ensures the local ASIC and Silver installation and provisions
+`_flow_tools/` with the provider's pinned Python 3.11, without changing the
+system Python. For discovery and source-only preparation, use
+`bootstrap.sh --tools-only` and `workbench.sh configure --source-only` instead.
+Use `configure --toolchain-root PATH` to select an existing external toolchain.
+`open` runs the selected Silver in the project environment. From an already
+activated Bash shell, plain `silver` works too.
 If upgrading from the old `asic/` layout, rerun `configure` so Silver's local
 companions point to `asic_support/`.
 

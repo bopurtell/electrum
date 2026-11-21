@@ -5,6 +5,11 @@
 
 (rule
  (alias runtest)
+ (deps test_bootstrap.py bootstrap.sh)
+ (action (run python3 -B %{dep:test_bootstrap.py})))
+
+(rule
+ (alias runtest)
  (deps test_install_tools.py install-tools.py install_progress.py ../tools-source.lock.json)
  (action (run python3 -B %{dep:test_install_tools.py})))
 

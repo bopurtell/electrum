@@ -258,8 +258,12 @@ load_toolchain() {
     fi
     tool_tt=${ELECTRUM_TT:-${TT_SUPPORT_TOOLS_DIR:-$repo_root/_flow_tools/tt}}
     tool_pdk=${ELECTRUM_PDK_ROOT:-${PDK_ROOT:-$repo_root/_flow_tools/pdk}}
-    tool_python=${ELECTRUM_FLOW_PY:-$repo_root/_flow_tools/venv/bin/python}
-    tool_precheck_python=${ELECTRUM_PRECHECK_PY:-$repo_root/_flow_tools/precheck-venv/bin/python}
+    local flow_python="$repo_root/_flow_tools/.venv/bin/python"
+    local precheck_python="$repo_root/_flow_tools/.venv-precheck/bin/python"
+    [[ -x $flow_python ]] || flow_python="$repo_root/_flow_tools/venv/bin/python"
+    [[ -x $precheck_python ]] || precheck_python="$repo_root/_flow_tools/precheck-venv/bin/python"
+    tool_python=${ELECTRUM_FLOW_PY:-$flow_python}
+    tool_precheck_python=${ELECTRUM_PRECHECK_PY:-$precheck_python}
     if [[ ! -d $tool_tt || ! -d $tool_pdk || ! -x $tool_python ]]; then
         echo "flow: flow tools are not provisioned; run ./scripts/bootstrap.sh" >&2
         echo "flow: (./scripts/bootstrap.sh --check names what is missing)" >&2
@@ -278,7 +282,7 @@ need_run() {
 
 step_bootstrap() {
     say "provision flow tools"
-    "$script_dir/bootstrap-toolchain.sh" --adopted-only
+    "$repo_root/scripts/bootstrap.sh"
 }
 
 step_build() {

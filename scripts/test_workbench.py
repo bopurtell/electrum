@@ -30,6 +30,22 @@ def executable_fixtures(root, prefix):
 
 
 class Configuration(unittest.TestCase):
+    def test_open_executes_selected_silver_in_project_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            prefix = root / 'prefix'
+            (root / 'configuration.json').write_text('{}')
+            with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', root), \
+                 patch.object(wb, 'selected', return_value=({}, prefix)), \
+                 patch.object(wb.sys, 'argv', ['workbench.py', 'open']), \
+                 patch.object(wb, 'readiness', return_value={'source_operations': {'ready': True}}), \
+                 patch.object(wb.os, 'chdir') as chdir, patch.object(wb.os, 'execv') as execv:
+                wb.main()
+                chdir.assert_called_once_with(root)
+                silver = str(prefix / 'bin/silver')
+                execv.assert_called_once_with(silver, [silver, '--standalone', '--project-root',
+                                                       str(root), '--environment', 'inherited'])
+
     def test_resource_prepare_routes_chip_and_deferred_flow_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -122,6 +138,28 @@ class Configuration(unittest.TestCase):
                     wb.configure(args)
                 run.assert_not_called()
                 self.assertFalse((root / '.workbench').exists())
+
+    def test_configure_uses_managed_local_tools_instead_of_missing_old_toolchain(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            store = root / '.dev/workbench'
+            local = root / '_flow_tools'
+            catalog_fixture(root)
+            python = local / '.venv/bin/python'
+            python.parent.mkdir(parents=True)
+            python.touch()
+            store.mkdir(parents=True)
+            state = store / 'configuration.json'
+            state.write_text(json.dumps(dict(sha256={}, toolchain=str(root / 'missing'),
+                                             physical_toolchain={'old': True})))
+            args = type('Args', (), dict(toolchain=None, simulation_config=None))()
+            with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', store), \
+                 patch.object(wb, 'stopped'), patch.object(wb, 'selected', return_value=({}, root / 'prefix')), \
+                 patch.object(wb, 'build'), patch.dict(wb.os.environ, ELECTRUM_TOOLS_RECEIPT='receipt'), \
+                 patch.object(wb, 'validate_toolchain', return_value={'python': {'path': str(python)}}) as validate:
+                wb.configure(args)
+                validate.assert_called_once_with(local, root, root / 'prefix/bin/hardcaml-asic-flow')
+            self.assertEqual(json.loads(state.read_text())['toolchain'], str(local))
 
     def test_source_readiness_is_independent_of_absent_physical_collateral(self):
         with tempfile.TemporaryDirectory() as tmp:

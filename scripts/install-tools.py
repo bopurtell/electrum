@@ -159,6 +159,19 @@ def build_lock(root):
         yield
 
 
+def current_default_tools(args, receipt=None):
+    if receipt is None:
+        _, receipt = verify_selection()
+    asic = receipt['sources']['asic']
+    binaries = Path(receipt['prefix']) / 'bin'
+    return (asic['mode'] == 'committed'
+            and asic['base_revision'] == args.asic_revision
+            and Path(receipt['switch_prefix']).name == args.switch
+            and all(os.access(binaries / name, os.X_OK) for name in
+                    ('hardcaml-asic-flow', 'hardcaml-asic-starter', 'hardcaml-asic-targets',
+                     'silver', 'silver-daemon', 'silver-author')))
+
+
 def install(args):
     if args.resume and not re.fullmatch(r'[0-9a-f]{32}', args.resume):
         raise ValueError('--resume requires a generation ID')
@@ -170,7 +183,10 @@ def install(args):
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         if (STORE / 'current.json').exists():
             with stage('Validate existing tools installation'):
-                verify_selection()
+                _, selected = verify_selection()
+                if getattr(args, 'ensure', False) and current_default_tools(args, selected):
+                    report('Reusing the verified project-local ASIC and Silver installation')
+                    return
         generation = STORE / 'generations' / (args.resume or uuid.uuid4().hex)
         if args.resume:
             if (generation / 'receipt.json').exists():
@@ -389,6 +405,10 @@ def parse_args(argv=None):
                        help='alias for --asic-source-mode working-tree; no Git commit required')
     output = parser.add_mutually_exclusive_group()
     output.add_argument('--activation', action='store_true')
+    output.add_argument('--ensure', action='store_true',
+                        help='Reuse a verified installation at the requested committed ASIC pin')
+    output.add_argument('--check-current', action='store_true',
+                        help='Check the normal pinned selection without installing anything')
     output.add_argument('--print-asic-revision', action='store_true',
                         help='Print the normal lockfile pin without activating or installing')
     parser.add_argument('--verbose', action='store_true', help='Show full Dune build commands')
@@ -396,6 +416,8 @@ def parse_args(argv=None):
     args = parser.parse_args(argv)
     if args.asic_source_mode == 'working-tree' and args.asic_revision is not None:
         parser.error('--asic-revision is a committed selection; working-tree records its actual HEAD as provenance')
+    if (args.ensure or args.check_current) and (args.resume or args.asic_source_mode != 'committed'):
+        parser.error('--ensure and --check-current require a committed selection and cannot resume')
     args.asic_revision_is_default = args.asic_source_mode == 'committed' and args.asic_revision is None
     if args.asic_revision_is_default and not (args.activation or args.print_asic_revision):
         args.asic_revision = source_policy()['asic']['pinned_revision']
@@ -406,6 +428,9 @@ def main():
     args = parse_args()
     if args.activation:
         activation()
+    elif args.check_current:
+        if not current_default_tools(args):
+            raise ValueError('local tools are out of date; run scripts/bootstrap.sh without --check or --offline')
     elif args.print_asic_revision:
         print(source_policy()['asic']['pinned_revision'])
     else:

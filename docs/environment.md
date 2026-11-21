@@ -60,8 +60,7 @@ tools installation entry point.
 Run these commands from the repository root:
 
 ```sh
-./scripts/bootstrap.sh --tools-only  # select the local ASIC and Silver builds first
-./scripts/bootstrap.sh          # check OCaml dependencies and prepare flow collateral
+./scripts/bootstrap.sh          # ensure local ASIC/Silver and provision flow collateral
 ./scripts/bootstrap.sh --check  # report the state of every layer; change nothing
 source scripts/env.sh           # activate tools in each new shell
 ./asic_support/flow.sh --help            # read the stages and overrides before implementation
@@ -89,8 +88,7 @@ flock ../.electrum-build.lock dune build -j2 @rtl
 implementation. `dune exec -j5 electrum -- flow` is an alias for `asic_support/flow.sh`,
 including its full physical default. The public `electrum` name remains available
 through root `dune`'s binding to `software/cli/electrum.exe`; no CLI installation is
-needed. `dune exec -j5 electrum -- bootstrap` converges the flow layer once OCaml
-exists and only reports on the OCaml layer.
+needed. `dune exec -j5 electrum -- bootstrap` delegates to the same bootstrap script.
 
 The remaining `electrum` commands (`check`, `stage`, `legacy-harden`, `precheck`)
 drive the legacy staged project, a different input from the adopted bundle.
@@ -103,8 +101,8 @@ bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
 | --- | --- | --- | --- |
 | 0. Host | git, Python/venv support, Docker-compatible runtime, HDL tools, Nix and group membership as needed | machine | you or your administrator; bootstrap detects prerequisites and prints guidance |
 | 1. OCaml | opam switch `5.2.0+ox` and published dependencies | machine, shared with other Hardcaml checkouts | `scripts/ocaml-deps.sh`; requests only missing packages |
-| 2. Flow | `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}` and the pinned LibreLane image | per checkout/worktree; an external support-tools checkout may be selected | `asic_support/tinytapeout/scripts/bootstrap-toolchain.sh`, pinned by `asic_support/tinytapeout/toolchain.lock` |
-| 3. Shell | opam environment, `PDK_ROOT`, support-tools location and `_flow_tools/venv/bin` on `PATH` | one terminal | `source scripts/env.sh` |
+| 2. Flow | `_flow_tools/{python,.venv,.venv-precheck,pdk,tt,toolchain-env.sh}` and the pinned LibreLane image | per checkout/worktree; an existing external toolchain may be selected | installed `hardcaml-asic-flow provision` |
+| 3. Shell | opam environment, selected Silver/ASIC on `PATH`, and optional flow-tool paths | one terminal | `source scripts/env.sh` |
 | 4. Build/execution | `_build/`, `_flow_results/{adopted,flow-*,archives}` | derived from source and each execution | Dune and `asic_support/flow.sh` |
 
 `--install-deps` adds missing published Electrum prerequisites to the shared
@@ -112,23 +110,23 @@ switch. `scripts/ocaml-deps.sh --install --tool-deps` also adds the dependencies
 of the locked ASIC and sibling Silver sources. Neither command pins ASIC or
 Workbench into the shared switch; use the local tools installer for them.
 
-Layers 1 and 2 are plain shell called directly by `scripts/bootstrap.sh`, so
-`--check` can report a missing OCaml environment without first compiling a CLI.
+Bootstrap checks OCaml prerequisites before installing a local tool generation.
+`--check` reports missing prerequisites or provisioning without installing anything.
 Layer 3 must be sourced because a child process cannot change its parent's shell.
 The repository's scripts locate their own tools; flow builds use
 `scripts/with-switch.sh`. Activation is for commands you type by hand.
 
-`scripts/env.sh` reads `_flow_tools/toolchain-env.sh` and activates only
-`_flow_tools/venv`; precheck uses `_flow_tools/precheck-venv/bin/python` explicitly
-because its package pins conflict with the main environment. Re-sourcing removes
-the previously active environment from `PATH` instead of stacking environments.
+`scripts/env.sh` reads `_flow_tools/toolchain-env.sh`. The flow and precheck
+use their own explicit Python 3.11 interpreter paths; neither replaces the
+system or interactive Python. The older non-dot venv directories are for the
+explicit legacy bootstrap only.
 
 ## Scenarios
 
 | Situation | Run / action |
 | --- | --- |
 | New machine | Install the relevant host prerequisites, then run `scripts/ocaml-deps.sh --install --tool-deps` and install the local tools as above. Switch creation and downloads can take substantial time/storage. |
-| Fresh clone or new worktree | Run `./scripts/bootstrap.sh --tools-only`, then `source scripts/env.sh`. For the legacy flow collateral, also run `./scripts/bootstrap.sh`. Environments are per checkout/worktree. |
+| Fresh clone or new worktree | Run `./scripts/bootstrap.sh`, then `./scripts/workbench.sh configure` and `source scripts/env.sh`. For source operations only, use `--tools-only` and `configure --source-only`. |
 | New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 electrum -- doctor` for a report. `asic_support/flow.sh` does not require activation. |
 | Inspecting a recorded run | `ELECTRUM_RUN=/path/to/run ./asic_support/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
 | Tools-source lock or opam dependencies changed | Run `scripts/ocaml-deps.sh --tool-deps` to check prerequisites, then `./scripts/bootstrap.sh --tools-only` to select a new local generation. The legacy flow-tool lock is checked by ordinary bootstrap. |

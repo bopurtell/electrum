@@ -3,19 +3,18 @@
 # Explicit environment preparation for a fresh clone or worktree.
 #
 #   1. OCaml layer   scripts/ocaml-deps.sh                     switch + opam packages
-#   2. Flow layer    asic_support/tinytapeout/scripts/bootstrap-toolchain.sh  _flow_tools/, PDK, support
-#                                                                tools, LibreLane image
-#   3. Shell layer   source scripts/env.sh                     (printed; a script
+#   2. Local tools  scripts/install-tools.py                 ASIC + Silver
+#   3. Flow layer   hardcaml-asic-flow provision              managed Python, PDK,
+#                                                             TT tools, LibreLane image
+#   4. Shell layer  source scripts/env.sh                     (printed; a script
 #                                                               cannot do it)
 #
-# Both layers are shell scripts called directly. Neither needs dune, so --check
-# validates the flow tools on a machine where the OCaml layer is still missing,
-# and never compiles an executable just to answer a question about Python and a
-# PDK. Building OCaml is the flow's own "build" step: ./asic_support/flow.sh build.
+# --check only validates prerequisites and an already-installed provider; it
+# never compiles one just to answer a question about Python and the PDK.
 #
 # Environment and local release commands:
 #
-#   ./scripts/bootstrap.sh           check dependencies and prepare flow collateral
+#   ./scripts/bootstrap.sh           select local tools and prepare flow collateral
 #   ./scripts/bootstrap.sh --check   verify every layer and change nothing
 #   ./scripts/bootstrap.sh --tools-only  install captured ASIC + Workbench locally
 #
@@ -37,8 +36,8 @@ usage() {
     cat <<'USAGE'
 Usage: ./scripts/bootstrap.sh [options]
 
-With no options: checks OCaml dependencies, then prepares the flow environment.
-Local ASIC + Workbench: python3 scripts/install-tools.py (no shared-switch writes).
+With no options: prepares the pinned local ASIC and Silver tools, then provisions
+the physical toolchain with managed Python 3.11. Does not launch a flow.
 
 Options:
   --check          Validate every layer and change nothing. Missing packages are
@@ -46,8 +45,8 @@ Options:
   --offline        Reuse the flow environment; fetch and install nothing.
   --no-container   Skip the Docker/Podman prerequisite. The pinned LibreLane
                    image is then not resolved either; supply a native LibreLane.
-  --legacy-project Also stage and configure the legacy P0 project, for the
-                    legacy hardening scripts. ./asic_support/flow.sh does not use it.
+  --legacy-project Use the older Tiny Tapeout bootstrap to stage the legacy P0
+                   project. The normal Electrum chip does not use it.
   --install-deps   Explicitly install missing published Electrum dependencies.
   --tools-only     Install captured ASIC + Workbench locally, then exit. No EDA
                    provisioning or shared-switch writes.
@@ -99,6 +98,7 @@ fi
 
 deps_args=()
 [[ $install_deps -eq 0 ]] || deps_args+=(--install)
+[[ $legacy_project -ne 0 ]] || deps_args+=(--tool-deps)
 
 flow_args=()
 [[ $check -eq 0 ]] || flow_args+=(--check)
@@ -108,4 +108,15 @@ flow_args=()
 
 "$repo_root/scripts/ocaml-deps.sh" "${deps_args[@]}"
 
-exec "$repo_root/asic_support/tinytapeout/scripts/bootstrap-toolchain.sh" ${flow_args[@]+"${flow_args[@]}"}
+if [[ $legacy_project -eq 1 ]]; then
+    exec "$repo_root/asic_support/tinytapeout/scripts/bootstrap-toolchain.sh" "${flow_args[@]}"
+fi
+
+if [[ $check -eq 1 || $offline -eq 1 ]]; then
+    python3 -B "$repo_root/scripts/install-tools.py" --check-current
+else
+    python3 -B "$repo_root/scripts/install-tools.py" --ensure
+fi
+source "$repo_root/scripts/env.sh"
+exec "$ELECTRUM_TOOLS_PREFIX/bin/hardcaml-asic-flow" provision \
+    --toolchain "$repo_root/_flow_tools" "${flow_args[@]}"

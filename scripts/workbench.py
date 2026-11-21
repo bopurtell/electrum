@@ -132,16 +132,22 @@ def configure(args):
     ownership = STORE / 'configuration.json'
     prior = json.loads(regular(ownership)) if ownership.exists() else {'sha256': {}}
     source_only = getattr(args, 'source_only', False)
+    local_tools = ROOT / '_flow_tools'
+    prior_tools = Path(prior.get('toolchain', local_tools))
+    managed_installed = (local_tools / '.venv/bin/python').is_file()
     if source_only:
-        tools = ROOT / '_flow_tools'
+        tools = local_tools
     elif args.toolchain:
         tools = args.toolchain.resolve()
+    elif prior_tools.is_dir() and prior.get('physical_toolchain'):
+        tools = prior_tools
     else:
-        tools = Path(prior.get('toolchain', ROOT / '_flow_tools'))
+        tools = local_tools if managed_installed else prior_tools
     physical = (validate_toolchain(tools, ROOT, prefix / 'bin/hardcaml-asic-flow')
-                if not source_only and (args.toolchain or prior.get('physical_toolchain')) else None)
+                if not source_only and (args.toolchain or prior.get('physical_toolchain') or managed_installed)
+                else None)
     build()
-    python = physical['python']['path'] if physical else str(tools / 'venv/bin/python')
+    python = physical['python']['path'] if physical else str(tools / '.venv/bin/python')
     configs = {
         'asic': record([('schema_version', 1),
             ('project_executable', str(ROOT / '_build/default' / TARGET)),
@@ -233,7 +239,7 @@ def readiness(prefix, configuration):
     ready = (executable_ready(executable) and executable_ready(provider)
              and chips['ready'] and companions_match and not configure_required)
     toolchain = Path(configuration.get('toolchain', ROOT / '_flow_tools')) if configuration else ROOT / '_flow_tools'
-    collateral = dict(python=(toolchain / 'venv/bin/python').is_file(),
+    collateral = dict(python=(toolchain / '.venv/bin/python').is_file(),
                       support_tools=(toolchain / 'tt').is_dir(), pdk=(toolchain / 'pdk').is_dir())
     physical = dict(ready=False, status='missing_collateral' if not all(collateral.values()) else 'not_validated',
         requires_explicit_preflight=True, collateral_present=collateral, toolchain=str(toolchain),
@@ -296,6 +302,7 @@ def main():
     simulation.add_argument('--pdk-root', type=Path, required=True)
     for name in ('status', 'build', 'daemon', 'client'):
         commands.add_parser(name)
+    commands.add_parser('open', help='open Silver standalone with the selected Electrum tools')
     inspection = commands.add_parser('preparation-inspect', help='read an exact retained Electrum source-preparation attempt')
     inspection.add_argument('attempt', type=Path)
     resource = commands.add_parser('resource-prepare', help='explicit source-only preparation; no physical collateral required')
@@ -324,6 +331,15 @@ def main():
         print(json.dumps(dict(selection=json.loads((ROOT / '.dev/tools/current.json').read_text()),
             configuration=configuration, readiness=readiness(prefix, configuration),
             project_executable=str(ROOT / '_build/default' / TARGET)), indent=2))
+        return
+    if args.command == 'open':
+        config = json.loads((STORE / 'configuration.json').read_text())
+        if not readiness(prefix, config)['source_operations']['ready']:
+            raise ValueError('Electrum is not ready; run workbench.sh configure or check status')
+        silver = str(prefix / 'bin/silver')
+        os.chdir(ROOT)
+        os.execv(silver, [silver, '--standalone', '--project-root', str(ROOT),
+                          '--environment', 'inherited'])
         return
     STORE.mkdir(parents=True, exist_ok=True)
     with (STORE / 'session.lock').open('a') as lock:

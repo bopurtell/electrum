@@ -25,8 +25,7 @@ chip wrappers in [`asics/`](../asics/), shared resource binding in
 ## Quick start
 
 ```sh
-./scripts/bootstrap.sh --tools-only  # select the local ASIC and Silver builds first
-./scripts/bootstrap.sh          # prepare tools; normal mode stages no design
+./scripts/bootstrap.sh          # install local tools and provision managed Python; stages no design
 source scripts/env.sh           # activation for commands typed in this shell
 ./asic_support/flow.sh --help            # stages, overrides and resuming
 ```
