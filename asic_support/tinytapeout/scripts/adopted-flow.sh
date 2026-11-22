@@ -15,7 +15,7 @@
 # still prints help when called with no arguments, because it predates the wrapper
 # and a bare invocation must not turn into a multi-hour physical run.
 #
-# Nothing here provisions tools. Bootstrapping is ./scripts/bootstrap.sh (or the
+# Nothing here provisions tools. Bootstrapping is ./bootstrap.sh (or the
 # "bootstrap" step, kept for the transition); the flow consumes what it left.
 set -euo pipefail
 
@@ -47,7 +47,7 @@ Steps:
   collect     write results.json for a run
   report      print the physical/timing summary for a run
   archive     promote the run's records and reports into _flow_results/archives/
-  bootstrap   provision flow tools (transitional; prefer ./scripts/bootstrap.sh)
+  bootstrap   provision flow tools (transitional; prefer ./bootstrap.sh)
   --full      the default sequence above, in a fresh output directory. This is
               what ./asic_support/flow.sh runs when given no steps.
 
@@ -265,8 +265,8 @@ load_toolchain() {
     tool_python=${ELECTRUM_FLOW_PY:-$flow_python}
     tool_precheck_python=${ELECTRUM_PRECHECK_PY:-$precheck_python}
     if [[ ! -d $tool_tt || ! -d $tool_pdk || ! -x $tool_python ]]; then
-        echo "flow: flow tools are not provisioned; run ./scripts/bootstrap.sh" >&2
-        echo "flow: (./scripts/bootstrap.sh --check names what is missing)" >&2
+        echo "flow: flow tools are not provisioned; run ./bootstrap.sh" >&2
+        echo "flow: (./bootstrap.sh --check names what is missing)" >&2
         echo "flow: or set ELECTRUM_TT, ELECTRUM_PDK_ROOT, and ELECTRUM_FLOW_PY" >&2
         return 2
     fi
@@ -282,7 +282,7 @@ need_run() {
 
 step_bootstrap() {
     say "provision flow tools"
-    "$repo_root/scripts/bootstrap.sh"
+    "$repo_root/bootstrap.sh"
 }
 
 step_build() {

@@ -79,20 +79,20 @@ regression shortcut.
 ## Silver and chip targets
 
 ```sh
-./scripts/bootstrap.sh
-./scripts/workbench.sh configure
-./scripts/workbench.sh open
+./bootstrap.sh
+silver
 ```
 
 Bootstrap ensures the local ASIC and Silver installation and provisions
 `_flow_tools/` with the provider's pinned Python 3.11, without changing the
 system Python. For discovery and source-only preparation, use
 `bootstrap.sh --tools-only` and `workbench.sh configure --source-only` instead.
-Use `configure --toolchain-root PATH` to select an existing external toolchain.
-`open` runs the selected Silver in the project environment. From an already
-activated Bash shell, plain `silver` works too.
-If upgrading from the old `asic/` layout, rerun `configure` so Silver's local
-companions point to `asic_support/`.
+Bootstrap builds the chip CLI and writes the local Silver settings and
+`dune-workspace`. It is safe to rerun: when the setup and build inputs are
+unchanged, it skips installation, provisioning, and Dune. Use `--refresh` to
+force a fresh validation, or `--check` to validate without changing anything.
+Use `workbench.sh configure --toolchain-root PATH` only to select an existing
+external toolchain. A recent Silver and Dune must be on `PATH`.
 
 Silver treats the root `dune-project` as one project.
 [`hardcaml-asic-targets.json`](hardcaml-asic-targets.json) registers one product

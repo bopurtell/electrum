@@ -17,6 +17,21 @@ spec.loader.exec_module(tools)
 
 
 class Receipt(unittest.TestCase):
+    def test_install_lock_reports_contention_and_ensure_waits(self):
+        with tempfile.TemporaryFile() as lock, \
+             patch.object(tools.fcntl, 'flock', side_effect=[BlockingIOError(), None]) as flock, \
+             patch.object(tools, 'report') as report:
+            tools.acquire_install_lock(lock, wait=True)
+            self.assertEqual([call.args for call in flock.call_args_list],
+                             [(lock, tools.fcntl.LOCK_EX | tools.fcntl.LOCK_NB),
+                              (lock, tools.fcntl.LOCK_EX)])
+            self.assertIn('waiting', report.call_args.args[0])
+        with tempfile.TemporaryFile() as lock, \
+             patch.object(tools.fcntl, 'flock', side_effect=BlockingIOError()) as flock:
+            with self.assertRaisesRegex(ValueError, 'another Electrum tools installation'):
+                tools.acquire_install_lock(lock, wait=False)
+            self.assertEqual(flock.call_count, 1)
+
     def test_ensure_requires_matching_revision_switch_and_silver_binaries(self):
         with tempfile.TemporaryDirectory() as tmp:
             prefix = Path(tmp)

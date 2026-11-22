@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Opt-in Silver integration: run on a temporary source copy, without PDK or EDA."""
 import json
+import os
 from pathlib import Path
 import selectors
 import shutil
@@ -11,6 +12,7 @@ import tempfile
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent / 'simulation'))
 from fs2_wire import parse, sexp
+from workbench import dune_workspace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,6 +50,12 @@ def exercise(project, endpoint):
         return run('silver-author', *args, '--endpoint', endpoint, '--root', project, cwd=project)
 
     build()
+    # No --project-root, --standalone, shell activation, or project launcher:
+    # plain Silver should discover the checkout and query the configured chip.
+    plain = parse(run('silver', '--api', '--standalone-state-dir', project.parent / 'plain-state',
+                      '--asic-operation', 'Discover', '--wait', cwd=project))
+    assert plain[0] == 'Ok', plain
+    assert [dict(chip)['id'] for chip in dict(plain[1])['chips']] == ['electrum']
     discovered = api('Discover')
     assert [dict(chip)['id'] for chip in discovered['chips']] == ['electrum']
     assert dict(discovered['chip_target'][0]) == {'chip': 'electrum', 'variant': 'default'}
@@ -130,6 +138,11 @@ def main():
             shutil.copy2(ROOT / name, project / name)
         for name in ('asic_support', 'asics', 'ip', 'spec', 'software', 'verif', 'scripts', 'firmware'):
             shutil.copytree(ROOT / name, project / name, ignore=shutil.ignore_patterns('__pycache__'))
+        (project / 'dune-workspace').write_bytes(dune_workspace(Path(provider).parent.parent))
+        # Exercise the bootstrap-generated workspace, not the activation of the
+        # shell running this test. Silver's own Dune subprocesses inherit this.
+        for name in ('OCAMLPATH', 'OCAMLFIND_CONF', 'DUNE_WORKSPACE', 'DUNE_BUILD_DIR'):
+            os.environ.pop(name, None)
         # Bundle provenance needs a real HEAD. Clone locally, without a checkout
         # or new commit, so the test never writes to the caller's Git metadata.
         git_root = tmp / 'provenance'

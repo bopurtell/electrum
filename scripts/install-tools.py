@@ -172,6 +172,17 @@ def current_default_tools(args, receipt=None):
                      'silver', 'silver-daemon', 'silver-author')))
 
 
+def acquire_install_lock(lock, *, wait):
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError as error:
+        if not wait:
+            raise ValueError('another Electrum tools installation is running; '
+                             'let it finish or run ./bootstrap.sh to wait') from error
+        report('Another Electrum tools installation is running; waiting for it to finish…')
+        fcntl.flock(lock, fcntl.LOCK_EX)
+
+
 def install(args):
     if args.resume and not re.fullmatch(r'[0-9a-f]{32}', args.resume):
         raise ValueError('--resume requires a generation ID')
@@ -180,7 +191,7 @@ def install(args):
     switch = Path(subprocess.check_output(['opam', 'var', '--switch=' + args.switch, 'prefix'], text=True).strip()).resolve(strict=True)
     STORE.mkdir(parents=True, exist_ok=True)
     with (STORE / 'install.lock').open('a') as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        acquire_install_lock(lock, wait=getattr(args, 'ensure', False))
         if (STORE / 'current.json').exists():
             with stage('Validate existing tools installation'):
                 _, selected = verify_selection()
@@ -430,7 +441,7 @@ def main():
         activation()
     elif args.check_current:
         if not current_default_tools(args):
-            raise ValueError('local tools are out of date; run scripts/bootstrap.sh without --check or --offline')
+            raise ValueError('local tools are out of date; run ./bootstrap.sh without --check or --offline')
     elif args.print_asic_revision:
         print(source_policy()['asic']['pinned_revision'])
     else:

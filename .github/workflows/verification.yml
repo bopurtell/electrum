@@ -58,7 +58,7 @@ jobs:
       - name: Check relocated flow entry points without provisioning or hardening
         working-directory: scaf
         run: |
-          for script in scripts/*.sh asic_support/flow.sh asic_support/tinytapeout/scripts/*.sh; do
+          for script in bootstrap.sh scripts/*.sh asic_support/flow.sh asic_support/tinytapeout/scripts/*.sh; do
             bash -n "$script"
           done
           ./asic_support/tinytapeout/scripts/check-flow.sh

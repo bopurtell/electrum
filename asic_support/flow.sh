@@ -10,7 +10,7 @@
 # hardens it with LibreLane, and runs the postchecks. That takes hours. Name the
 # steps when you want only part of it.
 #
-# This flow consumes an environment; it never provisions one. ./scripts/bootstrap.sh
+# This flow consumes an environment; it never provisions one. ./bootstrap.sh
 # prepares the pinned OCaml and flow tools, and `source scripts/env.sh` activates them
 # for commands you type by hand. Neither is required by the flow itself: every
 # step locates its own tools, and dune runs through the pinned switch.

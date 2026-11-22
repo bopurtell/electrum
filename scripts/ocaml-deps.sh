@@ -6,7 +6,7 @@
 #
 # The switch is shared with every other Hardcaml checkout on the machine, so this
 # script's own default is to check and print commands; changes happen only with
-# --install. ./scripts/bootstrap.sh only passes it with --install-deps.
+# --install. ./bootstrap.sh only passes it with --install-deps.
 #
 # `opam install . --deps-only` is deliberately not used, not even as a dry run:
 # against a shared switch it proposes recompiling packages other repositories

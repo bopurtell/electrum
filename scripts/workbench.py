@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 from workbench_toolchain import validate as validate_toolchain
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,10 +62,13 @@ def chip_catalog():
         raise ValueError(f'{CHIP_CATALOG}: {error}') from error
 
 
-def build():
+def build(workspace=None):
     _, owners = chip_catalog()
     targets = dict.fromkeys([TARGET, *owners.values()])
-    subprocess.run(['dune', 'build', '-j10', *('./' + target for target in targets)],
+    build_args = ['dune', 'build', '-j10']
+    if workspace is not None:
+        build_args.extend(('--workspace', str(workspace)))
+    subprocess.run([*build_args, *('./' + target for target in targets)],
                    cwd=ROOT, check=True)
 
 
@@ -90,6 +94,15 @@ def sexp(value):
 
 def record(fields):
     return (sexp([[key, value] for key, value in fields]) + '\n').encode()
+
+
+def dune_workspace(prefix):
+    # Dune subprocesses launched by plain Silver use the selected provider,
+    # independent of the shell's OCAMLPATH and any shared-switch ASIC package.
+    return (f'(lang dune 3.17)\n'
+            f'(context (default (paths '
+            f'(OCAMLPATH ({sexp(prefix / "lib")} :standard)) '
+            f'(PATH ({sexp(prefix / "bin")} :standard)))))\n').encode()
 
 
 def write(path, data):
@@ -146,7 +159,12 @@ def configure(args):
     physical = (validate_toolchain(tools, ROOT, prefix / 'bin/hardcaml-asic-flow')
                 if not source_only and (args.toolchain or prior.get('physical_toolchain') or managed_installed)
                 else None)
-    build()
+    workspace = ROOT / 'dune-workspace'
+    workspace_data = dune_workspace(prefix)
+    prior_workspace = regular(workspace)
+    if (prior_workspace is not None and prior_workspace != workspace_data
+            and sha(prior_workspace) != prior.get('dune_workspace_sha256')):
+        raise ValueError('existing dune-workspace is not owned by bootstrap; refusing overwrite')
     python = physical['python']['path'] if physical else str(tools / '.venv/bin/python')
     configs = {
         'asic': record([('schema_version', 1),
@@ -172,33 +190,53 @@ def configure(args):
         if data is None or sha(data) != prior['sha256']['simulation']:
             raise ValueError('unknown simulation companion edit; refusing adoption')
         configs['simulation'] = data
+    existing_configs = {}
     for kind, data in configs.items():
         filename = 'hardcaml-workbench-' + kind + '.sexp'
         path = ROOT / '.workbench' / filename
         old = regular(path)
+        existing_configs[kind] = old
         # Also respect Workbench's root-level companion compatibility location.
         legacy = regular(ROOT / filename)
         if legacy is not None and legacy != data:
             raise ValueError('existing root companion differs; inspect it explicitly: ' + filename)
         if old is not None and old != data and sha(old) != prior['sha256'].get(kind):
             raise ValueError('unknown user companion edit; refusing overwrite: ' + str(path))
+    state = dict(schema_version=1, project_root=str(ROOT), prefix=str(prefix),
+                 build_target=TARGET, dune_workspace_sha256=sha(workspace_data),
+                 receipt=os.environ['ELECTRUM_TOOLS_RECEIPT'], toolchain=str(tools),
+                 physical_toolchain=physical,
+                 sha256={kind: sha(data) for kind, data in configs.items()},
+                 simulation_configured='simulation' in configs)
+    if prior_workspace == workspace_data and existing_configs == configs and prior == state:
+        # Dune does an incremental check against its existing workspace. No
+        # temporary workspace, companion rewrite, or new generation on a no-op.
+        build()
+        print('Silver project settings are already current.')
+        return
+    STORE.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(dir=STORE, prefix='workspace-') as pending:
+        pending.write(workspace_data)
+        pending.flush()
+        build(Path(pending.name))
     stopped()
+    if regular(workspace) != prior_workspace:
+        raise ValueError('dune-workspace changed while configuring')
     # Retain exact old owned bytes before publishing an explicitly requested update.
     for kind, data in configs.items():
         path = ROOT / '.workbench' / ('hardcaml-workbench-' + kind + '.sexp')
         old = regular(path)
-        if old is not None and old != data:
+        if old != existing_configs[kind]:
+            raise ValueError('Silver companion changed while configuring: ' + str(path))
+        if old == data:
+            continue
+        if old is not None:
             backup = STORE / 'history' / (kind + '-' + sha(old) + '.sexp')
             if not backup.exists():
                 write(backup, old)
         write(path, data)
-    state = dict(schema_version=1, project_root=str(ROOT), prefix=str(prefix),
-                  build_target=TARGET,
-                  receipt=os.environ['ELECTRUM_TOOLS_RECEIPT'],
-                  toolchain=str(tools),
-                  physical_toolchain=physical,
-                 sha256={kind: sha(data) for kind, data in configs.items()},
-                 simulation_configured='simulation' in configs)
+    if prior_workspace != workspace_data:
+        write(workspace, workspace_data)
     write(ownership, (json.dumps(state, indent=2) + '\n').encode())
     print(json.dumps(state, indent=2))
 
@@ -235,7 +273,10 @@ def readiness(prefix, configuration):
                            for kind, path in paths.items())
     selection_matches = bool(configuration and configuration.get('prefix') == str(prefix))
     target_matches = bool(configuration and configuration.get('build_target') == TARGET)
-    configure_required = not (selection_matches and target_matches)
+    active_workspace = regular(ROOT / 'dune-workspace')
+    workspace_matches = bool(configuration and active_workspace is not None
+                             and sha(active_workspace) == configuration.get('dune_workspace_sha256'))
+    configure_required = not (selection_matches and target_matches and workspace_matches)
     ready = (executable_ready(executable) and executable_ready(provider)
              and chips['ready'] and companions_match and not configure_required)
     toolchain = Path(configuration.get('toolchain', ROOT / '_flow_tools')) if configuration else ROOT / '_flow_tools'
@@ -268,6 +309,7 @@ def readiness(prefix, configuration):
         source_operations=dict(ready=ready, requires_pdk=False, project_executable=str(executable),
              provider_executable=str(provider), companions_match=companions_match, selection_matches=selection_matches,
              target_matches=target_matches,
+             workspace_matches=workspace_matches,
              chip_catalog=chips,
              operations=['chip list', 'flow list', 'flow describe', 'flow plan', 'flow emit', 'prepare', 'preparation-inspect'],
             compiled_source_consistency='not_attested; explicitly build after source edits'),
@@ -302,7 +344,6 @@ def main():
     simulation.add_argument('--pdk-root', type=Path, required=True)
     for name in ('status', 'build', 'daemon', 'client'):
         commands.add_parser(name)
-    commands.add_parser('open', help='open Silver standalone with the selected Electrum tools')
     inspection = commands.add_parser('preparation-inspect', help='read an exact retained Electrum source-preparation attempt')
     inspection.add_argument('attempt', type=Path)
     resource = commands.add_parser('resource-prepare', help='explicit source-only preparation; no physical collateral required')
@@ -331,15 +372,6 @@ def main():
         print(json.dumps(dict(selection=json.loads((ROOT / '.dev/tools/current.json').read_text()),
             configuration=configuration, readiness=readiness(prefix, configuration),
             project_executable=str(ROOT / '_build/default' / TARGET)), indent=2))
-        return
-    if args.command == 'open':
-        config = json.loads((STORE / 'configuration.json').read_text())
-        if not readiness(prefix, config)['source_operations']['ready']:
-            raise ValueError('Electrum is not ready; run workbench.sh configure or check status')
-        silver = str(prefix / 'bin/silver')
-        os.chdir(ROOT)
-        os.execv(silver, [silver, '--standalone', '--project-root', str(ROOT),
-                          '--environment', 'inherited'])
         return
     STORE.mkdir(parents=True, exist_ok=True)
     with (STORE / 'session.lock').open('a') as lock:

@@ -11,8 +11,8 @@ Run commands below from the repository root unless a historical block says
 otherwise:
 
 ```sh
-./scripts/bootstrap.sh --check
-./scripts/bootstrap.sh
+./bootstrap.sh --check
+./bootstrap.sh
 source scripts/env.sh
 ./asic_support/flow.sh --help
 ```
@@ -154,7 +154,7 @@ Explicitly prepare the legacy staged project with:
 
 ```sh
 TT_SUPPORT_TOOLS_DIR=/absolute/path/to/tt-support-tools-cmos5l \
-  ./scripts/bootstrap.sh --legacy-project
+  ./bootstrap.sh --legacy-project
 ```
 
 It is staged under `_flow_results/legacy/p0-staged`, with a validated `tt` link.

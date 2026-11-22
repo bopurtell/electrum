@@ -131,7 +131,7 @@ unset _electrum_rest _electrum_entry _electrum_clean _electrum_first
 if command -v opam >/dev/null 2>&1; then
     eval "$(opam env --switch="${OPAM_SWITCH:-5.2.0+ox}" --set-switch)"
 else
-    echo "env.sh: opam not found; run ./scripts/bootstrap.sh" >&2
+    echo "env.sh: opam not found; run ./bootstrap.sh" >&2
 fi
 
 # 2. Apply the validated project-local compiler/library/tool selection. Metadata

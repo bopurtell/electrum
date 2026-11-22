@@ -50,7 +50,7 @@ let flag_arg name = function
   | false -> []
 ;;
 
-let bootstrap_script = "scripts/bootstrap.sh"
+let bootstrap_script = "bootstrap.sh"
 
 (* The canonical ASIC flow. Every command here that implements or hardens goes through
    this one script, so there is a single implementation path and a single set of exit
@@ -61,7 +61,7 @@ let bootstrap =
   Command.basic
     ~summary:"Converge the OCaml and flow environments on the lockfile"
     ~readme:(fun () ->
-      "Runs ./scripts/bootstrap.sh: checks OCaml prerequisites, selects local ASIC and \
+      "Runs ./bootstrap.sh: checks OCaml prerequisites, selects local ASIC and \
        Silver tools, and provisions the pinned physical toolchain and its managed Python. \
        No design is staged unless -legacy-project is selected.")
     (let%map_open.Command offline =
@@ -116,7 +116,7 @@ let doctor =
          run bootstrap_script ("--check" :: flag_arg "no-container" no_container)
        in
        report_shell ();
-       let verdict ok = if ok then "ok" else "needs ./scripts/bootstrap.sh" in
+       let verdict ok = if ok then "ok" else "needs ./bootstrap.sh" in
        printf "\n==> Summary\n";
        printf "    %-12s %s\n" "bootstrap" (verdict flow_ok);
        if not flow_ok then exit 2)
@@ -189,7 +189,7 @@ let legacy_harden =
     ~readme:(fun () ->
       "The pre-adoption physical path: it hardens the staged legacy P0 project built \
        from the committed RTL and the hand-maintained info.yaml and src/config.json, not \
-       an emitted bundle. It needs `./scripts/bootstrap.sh --legacy-project` to have \
+       an emitted bundle. It needs `./bootstrap.sh --legacy-project` to have \
        staged that project. Kept until the adopted route is validated; new work belongs \
        in ./asic_support/flow.sh.")
     (let%map_open.Command no_docker =
@@ -242,7 +242,7 @@ let command =
   Command.group
     ~summary:"Host, simulator, environment, and ASIC flow commands for electrum"
     ~readme:(fun () ->
-      "First time on a machine or clone: ./scripts/bootstrap.sh\n\
+      "First time on a machine or clone: ./bootstrap.sh\n\
        Each new shell: source scripts/env.sh\n\
        The ASIC flow: ./asic_support/flow.sh (./asic_support/flow.sh --help)\n\
        See docs/environment.md for the environment, docs/flow.md for the flow.")

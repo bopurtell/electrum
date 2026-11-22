@@ -9,7 +9,7 @@ Commands below use the repository root unless explicitly labelled historical.
 ## The one path
 
 [`asic_support/flow.sh`](../asic_support/flow.sh) is the public implementation command. It
-consumes an environment; [`scripts/bootstrap.sh`](../scripts/bootstrap.sh)
+consumes an environment; [`bootstrap.sh`](../bootstrap.sh)
 prepares it. Normal bootstrap stages no design, and normal flow invocation does
 not provision. The transitional explicit `bootstrap` flow step provisions tools.
 Ordinary Dune build/test aliases do not start physical implementation.
@@ -25,7 +25,7 @@ chip wrappers in [`asics/`](../asics/), shared resource binding in
 ## Quick start
 
 ```sh
-./scripts/bootstrap.sh          # install local tools and provision managed Python; stages no design
+./bootstrap.sh          # install local tools and provision managed Python; stages no design
 source scripts/env.sh           # activation for commands typed in this shell
 ./asic_support/flow.sh --help            # stages, overrides and resuming
 ```
@@ -60,7 +60,7 @@ build → emit → preflight → run → postcheck → collect → report → ar
 | `collect` | Collects recorded run artifacts | explicit run | `results.json` |
 | `report` | Prints timing/physical verdicts; fails required nonpassing verdicts | recorded/collected results | terminal summary |
 | `archive` | Copies verified records/reports from a `completed` run | completed run | `$ELECTRUM_FLOW_RESULTS/<date>-<run id>/` |
-| `bootstrap` | Explicit transitional flow-tool provisioning; prefer `scripts/bootstrap.sh` | host prerequisites | `_flow_tools/` |
+| `bootstrap` | Explicit transitional flow-tool provisioning; prefer `./bootstrap.sh` | host prerequisites | `_flow_tools/` |
 
 `--full` explicitly requests the default sequence and fresh allocation. Steps run
 in the supplied order, and **no step produces an earlier step's prerequisites**.
@@ -234,7 +234,7 @@ physical steps. It does not change the adopted runner into a native runner.
 
 `electrum check`, `stage`, `legacy-harden` and `precheck` use committed P0 RTL and
 hand-maintained `asic_support/tinytapeout/info.yaml`/`src/config.json`. Explicit
-`./scripts/bootstrap.sh --legacy-project` stages/configures this input under
+`./bootstrap.sh --legacy-project` stages/configures this input under
 `_flow_results/legacy/p0-staged`. The stage lock is
 `_flow_results/legacy/.stage.lock`; legacy logs are under
 `_flow_results/legacy/logs`, and preserved prior legacy runs under
@@ -272,7 +272,7 @@ quickstart commands:
 | Historical root path | Current root path |
 | --- | --- |
 | `./flow.sh` | `./asic_support/flow.sh` |
-| `./bootstrap.sh` | `./scripts/bootstrap.sh` |
+| `./scripts/bootstrap.sh` | `./bootstrap.sh` |
 | `source env.sh` | `source scripts/env.sh` |
 | `tinytapeout/scripts/` | `asic_support/tinytapeout/scripts/` |
 | `bin/asic_bundle.ml` | `asic_support/cli/asic_bundle.ml` (CLI), `asic_support/project/chip_project.ml` (declaration) |

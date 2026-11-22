@@ -60,13 +60,13 @@ tools installation entry point.
 Run these commands from the repository root:
 
 ```sh
-./scripts/bootstrap.sh          # ensure local ASIC/Silver and provision flow collateral
-./scripts/bootstrap.sh --check  # report the state of every layer; change nothing
+./bootstrap.sh          # ensure local ASIC/Silver and provision flow collateral
+./bootstrap.sh --check  # report the state of every layer; change nothing
 source scripts/env.sh           # activate tools in each new shell
 ./asic_support/flow.sh --help            # read the stages and overrides before implementation
 ```
 
-`scripts/bootstrap.sh` prepares tools and stages no design by default.
+`bootstrap.sh` prepares tools and stages no design by default.
 `asic_support/flow.sh` consumes that environment and never provisions by default. A bare
 `./asic_support/flow.sh` deliberately starts the full physical sequence and can take hours;
 name the steps when you want only part of it. The flow's stages, overrides,
@@ -92,7 +92,7 @@ needed. `dune exec -j5 electrum -- bootstrap` delegates to the same bootstrap sc
 
 The remaining `electrum` commands (`check`, `stage`, `legacy-harden`, `precheck`)
 drive the legacy staged project, a different input from the adopted bundle.
-`./scripts/bootstrap.sh --legacy-project` explicitly stages/configures it; normal
+`./bootstrap.sh --legacy-project` explicitly stages/configures it; normal
 bootstrap does not. See [the legacy path](flow.md#the-legacy-path).
 
 ## Layers
@@ -126,11 +126,11 @@ explicit legacy bootstrap only.
 | Situation | Run / action |
 | --- | --- |
 | New machine | Install the relevant host prerequisites, then run `scripts/ocaml-deps.sh --install --tool-deps` and install the local tools as above. Switch creation and downloads can take substantial time/storage. |
-| Fresh clone or new worktree | Run `./scripts/bootstrap.sh`, then `./scripts/workbench.sh configure` and `source scripts/env.sh`. For source operations only, use `--tools-only` and `configure --source-only`. |
+| Fresh clone or new worktree | Run `./bootstrap.sh`, then `silver` from the checkout. For source operations only, use `--tools-only` and `configure --source-only`. |
 | New terminal or reboot | `source scripts/env.sh`; use `dune exec -j5 electrum -- doctor` for a report. `asic_support/flow.sh` does not require activation. |
 | Inspecting a recorded run | `ELECTRUM_RUN=/path/to/run ./asic_support/flow.sh report`; collection/reporting need system Python and recorded artifacts, not OCaml or a PDK. |
-| Tools-source lock or opam dependencies changed | Run `scripts/ocaml-deps.sh --tool-deps` to check prerequisites, then `./scripts/bootstrap.sh --tools-only` to select a new local generation. The legacy flow-tool lock is checked by ordinary bootstrap. |
-| Offline | `./scripts/bootstrap.sh --offline` validates/reuses existing state without fetching. |
+| Tools-source lock or opam dependencies changed | Run `scripts/ocaml-deps.sh --tool-deps` to check prerequisites, then `./bootstrap.sh` to refresh the local tools and Silver settings. |
+| Offline | `./bootstrap.sh --offline` validates/reuses existing state without fetching. |
 | Interrupted bootstrap | Rerun; inspect any partial state the script identifies rather than deleting it automatically. |
 | Python/OS/group-membership drift | Run `doctor`; inspect any environment that needs recreation. Bootstrap does not delete an existing environment for you. |
 | Editor/LSP outside an activated shell | Select switch `5.2.0+ox` in the editor; sourcing `scripts/env.sh` affects that terminal only. |

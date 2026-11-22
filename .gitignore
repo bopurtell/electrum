@@ -33,6 +33,7 @@ electrum-artifacts/
 # ASIC execution outputs and provisioned tools/runtime
 /_flow_results/
 /_flow_tools/
+/dune-workspace
 
 # Local PT.3 dependency installation and retained verification evidence
 /.dev/pt3a-provider/

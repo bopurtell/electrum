@@ -34,7 +34,7 @@ Use the recorded library revision in an isolated prefix, as described in the
 The ordinary shared switch was observed to contain an older ASIC API; the verified
 local installation is selected explicitly with `scripts/with-private-asic.sh`.
 Its generated prefix and receipt live under `.dev/pt3a-provider/`. This wrapper
-verifies installed hashes and does not perform installation. `scripts/bootstrap.sh`
+verifies installed hashes and does not perform installation. `bootstrap.sh`
 prepares the general environment;
 `asic_support/tinytapeout/toolchain.lock` records flow-tool provisioning. The emitted
 manifest captures requested revisions, and adopted preflight checks the matching
@@ -113,7 +113,7 @@ is implied by the package/RTL checks.
 ## Running the flow
 
 [`./asic_support/flow.sh`](../asic_support/flow.sh) consumes the adopted bundle. Setup is
-`./scripts/bootstrap.sh` and per-shell `source scripts/env.sh`. Tool/runtime state
+`./bootstrap.sh` and per-shell `source scripts/env.sh`. Tool/runtime state
 is `_flow_tools/{venv,precheck-venv,pdk,tt,toolchain-env.sh}`; execution outputs
 default to `_flow_results/{adopted,flow-*,archives}`. Stages, overrides, resuming,
 failure behavior and archiving are specified in **[flow.md](flow.md)**.

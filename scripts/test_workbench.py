@@ -30,21 +30,20 @@ def executable_fixtures(root, prefix):
 
 
 class Configuration(unittest.TestCase):
-    def test_open_executes_selected_silver_in_project_root(self):
+    def test_configure_refuses_to_overwrite_user_workspace(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            prefix = root / 'prefix'
-            (root / 'configuration.json').write_text('{}')
-            with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', root), \
-                 patch.object(wb, 'selected', return_value=({}, prefix)), \
-                 patch.object(wb.sys, 'argv', ['workbench.py', 'open']), \
-                 patch.object(wb, 'readiness', return_value={'source_operations': {'ready': True}}), \
-                 patch.object(wb.os, 'chdir') as chdir, patch.object(wb.os, 'execv') as execv:
-                wb.main()
-                chdir.assert_called_once_with(root)
-                silver = str(prefix / 'bin/silver')
-                execv.assert_called_once_with(silver, [silver, '--standalone', '--project-root',
-                                                       str(root), '--environment', 'inherited'])
+            workspace = root / 'dune-workspace'
+            workspace.write_text('(lang dune 3.22)\n')
+            args = type('Args', (), dict(toolchain=None, simulation_config=None))()
+            with patch.object(wb, 'ROOT', root), patch.object(wb, 'STORE', root / '.dev/workbench'), \
+                 patch.object(wb, 'stopped'), \
+                 patch.object(wb, 'selected', return_value=({}, root / 'prefix')), \
+                 patch.object(wb, 'build') as build:
+                with self.assertRaisesRegex(ValueError, 'not owned'):
+                    wb.configure(args)
+                build.assert_not_called()
+            self.assertEqual(workspace.read_text(), '(lang dune 3.22)\n')
 
     def test_resource_prepare_routes_chip_and_deferred_flow_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -102,11 +101,18 @@ class Configuration(unittest.TestCase):
                  patch.object(wb, 'validate_toolchain', return_value=metadata) as validate, \
                  patch.dict(wb.os.environ, ELECTRUM_TOOLS_RECEIPT=str(root / 'receipt.json')):
                 wb.configure(args)
-                run.assert_called_once_with(BUILD, cwd=root, check=True)
+                argv = run.call_args.args[0]
+                self.assertEqual(argv[:4], [*BUILD[:3], '--workspace'])
+                self.assertEqual(argv[5:], BUILD[3:])
+                self.assertIn(str(root / 'prefix/lib'), (root / 'dune-workspace').read_text())
+                self.assertIn(str(root / 'prefix/bin'), (root / 'dune-workspace').read_text())
                 config = (root / '.workbench/hardcaml-workbench-asic.sexp').read_text()
                 self.assertIn(str(tools / '.venv/bin/python'), config)
                 self.assertIn(str(root / '_build/default' / wb.TARGET), config)
                 self.assertIn(wb.TARGET, (root / '.workbench/hardcaml-workbench-preparation.sexp').read_text())
+                with patch.object(wb, 'write', side_effect=AssertionError('warm configure rewrote state')):
+                    wb.configure(args)
+                run.assert_called_with(BUILD, cwd=root, check=True)
                 args.toolchain = None
                 wb.configure(args)
                 self.assertEqual((root / '.workbench/hardcaml-workbench-asic.sexp').read_text(), config)
@@ -118,13 +124,13 @@ class Configuration(unittest.TestCase):
                 self.assertTrue(status['physical']['ready'])
                 self.assertTrue(status['physical']['requires_explicit_preflight'])
                 self.assertEqual(status['physical']['readiness_scope'], 'metadata_only_no_EDA')
-                self.assertEqual(validate.call_count, 3)
+                self.assertEqual(validate.call_count, 4)
                 args.source_only = True
                 wb.configure(args)
                 refreshed = json.loads((root / '.dev/workbench/configuration.json').read_text())
                 self.assertEqual(refreshed['toolchain'], str(root / '_flow_tools'))
                 self.assertIsNone(refreshed['physical_toolchain'])
-                self.assertEqual(validate.call_count, 3)
+                self.assertEqual(validate.call_count, 4)
 
     def test_invalid_toolchain_cannot_build_or_publish(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -174,7 +180,10 @@ class Configuration(unittest.TestCase):
                 path.write_bytes(data)
                 hashes[kind] = wb.sha(data)
             with patch.object(wb, 'ROOT', root):
-                configuration = {'sha256': hashes, 'prefix': str(prefix), 'build_target': wb.TARGET}
+                workspace = wb.dune_workspace(prefix)
+                (root / 'dune-workspace').write_bytes(workspace)
+                configuration = {'sha256': hashes, 'prefix': str(prefix), 'build_target': wb.TARGET,
+                                 'dune_workspace_sha256': wb.sha(workspace)}
                 status = wb.readiness(prefix, configuration)
                 old_gateway = wb.readiness(prefix, dict(configuration, build_target='asic/cli/project.exe'))
                 old_receipt = wb.readiness(prefix, {'sha256': hashes, 'prefix': str(prefix)})

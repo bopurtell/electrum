@@ -5,7 +5,7 @@
 
 (rule
  (alias runtest)
- (deps test_bootstrap.py bootstrap.sh)
+ (deps test_bootstrap.py ../bootstrap.sh)
  (action (run python3 -B %{dep:test_bootstrap.py})))
 
 (rule
